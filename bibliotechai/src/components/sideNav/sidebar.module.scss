@@ -1,0 +1,66 @@
+.sidebar {
+  width: 25rem;
+  height: 100vh;
+  background-color: var(--redMain);
+  padding: 1rem;
+  transition: all 0.3s linear;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font);
+  color: white;
+}
+
+.heading {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 20px;
+  font-weight: bolder;
+  font-size: 1.3em;
+  padding-bottom: 2em;
+}
+
+.icons {
+  color: var(--neutral1);
+  padding-right: 20px;
+}
+
+.items {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  padding-bottom: 1.2em;
+  padding-right: 5em;
+}
+
+.link {
+  display: flex;
+  align-items: center;
+}
+
+.line {
+  width: 15em;
+  height: 0.1em;
+
+  background-color: var(--redActive);
+  border: 0;
+}
+
+.profile {
+  display: flex;
+  flex-direction: flex;
+  justify-items: left;
+  gap: 21px;
+  padding-top: 20px;
+}
+
+.information {
+  font-size: 0.8em;
+}
+
+.information2 {
+  font-size: 0.8em;
+  color: var(--neutral3);
+}
