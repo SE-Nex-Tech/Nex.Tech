@@ -20,7 +20,7 @@ git clone https://github.com/SE-Nex-Tech/Nex.Tech.git
 ### 2. Navigate to the App Directory
 
     ```bash
-    cd Nex.Tech
+    cd bibliotechai
     ```
 
 ### 3. Install dependencies
