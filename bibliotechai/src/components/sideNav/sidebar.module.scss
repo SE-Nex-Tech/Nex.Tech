@@ -1,3 +1,5 @@
+@import "/bibliotechai/src/styles/variables.scss";
+
 .sidebar {
   width: 25rem;
   height: 100vh;
@@ -9,7 +11,7 @@
   align-items: center;
   justify-content: center;
   font-family: var(--font);
-  color: white;
+  color: $background;
 }
 
 .heading {
