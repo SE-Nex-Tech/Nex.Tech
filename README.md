@@ -6,6 +6,11 @@
 
 1. [Node.js](https://nodejs.org/) installed on your machine.
 2. A code editor (e.g., Visual Studio Code, Sublime Text).
+3. Check whether you have installed all these packages:
+   - sass (https://www.npmjs.com/package/sass)
+   - sass-loader (https://www.npmjs.com/package/sass-loader)
+   - css-loader (https://www.npmjs.com/package/css-loader)
+   - style-loader(https://www.npmjs.com/package/style-loader)
 
 ## Steps
 

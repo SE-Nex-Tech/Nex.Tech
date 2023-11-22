@@ -1,16 +1,15 @@
-@import "/bibliotechai/src/styles/variables.scss";
+@import "../../styles/variables.scss";
 
 .sidebar {
   width: 25rem;
   height: 100vh;
-  background-color: var(--redMain);
-  padding: 1rem;
+  background-color: $redMain;
   transition: all 0.3s linear;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: var(--font);
+  font-family: $font;
   color: $background;
 }
 
@@ -25,16 +24,29 @@
 }
 
 .icons {
-  color: var(--neutral1);
-  padding-right: 20px;
+  color: $neutral1;
+  padding-right: 10px;
 }
 
 .items {
   font-size: 1rem;
   display: flex;
   align-items: center;
-  padding-bottom: 1.2em;
-  padding-right: 5em;
+  width: 230px;
+  height: 40px;
+  margin-bottom: 1.2em;
+  margin-left: 2em;
+  padding: 0.2em;
+  border-radius: 14px;
+}
+.items:hover {
+  background-color: $redActive;
+  transition: all 0.3s linear;
+
+  padding-left: 15px;
+  box-shadow: 4px 4px 11px -4px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 4px 4px 11px -4px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 4px 4px 11px -4px rgba(0, 0, 0, 0.35);
 }
 
 .link {
@@ -46,7 +58,7 @@
   width: 15em;
   height: 0.1em;
 
-  background-color: var(--redActive);
+  background-color: $redActive;
   border: 0;
 }
 
@@ -54,15 +66,15 @@
   display: flex;
   flex-direction: flex;
   justify-items: left;
-  gap: 21px;
+  gap: 9px;
   padding-top: 20px;
 }
 
 .information {
-  font-size: 0.8em;
+  font-size: 0.75em;
 }
 
 .information2 {
-  font-size: 0.8em;
-  color: var(--neutral3);
+  font-size: 0.7em;
+  color: $neutral3;
 }

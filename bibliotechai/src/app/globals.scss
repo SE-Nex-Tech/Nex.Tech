@@ -29,3 +29,12 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  margin: 5rem 7rem 5rem 7rem;
+}

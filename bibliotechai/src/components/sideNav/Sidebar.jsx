@@ -22,39 +22,39 @@ const sideBarItems = [
   },
   {
     name: "QR Scanner",
-    href: "/",
+    href: "/qrscanner",
     icon: IconQrcode,
   },
   {
     name: "Books",
-    href: "/",
+    href: "/books",
     icon: IconBooks,
   },
   {
     name: "eBooks",
-    href: "/",
+    href: "/ebooks",
     icon: IconDeviceMobile,
   },
   {
     name: "Games",
-    href: "/",
+    href: "/games",
     icon: IconDice,
   },
   {
     name: "Reports",
-    href: "/",
+    href: "/adreport",
     icon: IconReport,
   },
   {
     name: "Database",
-    href: "/",
+    href: "/addatabase",
     icon: IconDatabase,
   },
 ];
 
 function Sidebar() {
   return (
-    <div>
+    <div className={styles.container}>
       <aside className={styles.sidebar}>
         <div className={styles.heading}>
           <h1>BiblioTechAI</h1>
@@ -69,7 +69,7 @@ function Sidebar() {
         <ul className={styles.list}>
           {sideBarItems.map(({ name, href, icon: Icon }) => (
             <li className={styles.items} key={name}>
-              <Link href="/" className={styles.link}>
+              <Link href={href} className={styles.link}>
                 <span className={styles.icons}>
                   <Icon size="28px" />
                 </span>
