@@ -1,0 +1,240 @@
+/*!********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[13].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[13].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[12].oneOf[13].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[12].oneOf[13].use[5]!./src/app/globals.scss ***!
+  \********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+:root {
+  --bg: #f8faef;
+  --redMain: #8d1038;
+  --redActive: #780e30;
+  --neutral5: #202020;
+  --neutral4: #4a4949;
+  --neutral3: #5f5f5f;
+  --neutral2: #989898;
+  --neutral1: #ebebeb;
+  --font: "Plus Jakarta Sans";
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.container {
+  margin: 5rem 7rem 5rem 7rem;
+}
+/*!**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[12].oneOf[9].use[3]!./node_modules/next/dist/build/webpack/loaders/resolve-url-loader/index.js??ruleSet[1].rules[12].oneOf[9].use[4]!./node_modules/next/dist/compiled/sass-loader/cjs.js??ruleSet[1].rules[12].oneOf[9].use[5]!./src/components/sideNav/sidebar.module.scss ***!
+  \**************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+.sidebar_sidebar__YQkyV {
+  width: 25rem;
+  height: 100vh;
+  background-color: #8d1038;
+  transition: all 0.5s;
+  -webkit-transition: all 0.25s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  color: #f8faef;
+  position: relative;
+}
+
+.sidebar_heading__v_v0r {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 60px;
+  font-weight: bolder;
+  font-size: 1em;
+  padding-bottom: 2em;
+}
+
+.sidebar_headingLeft__r2qSk {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.sidebar_headingRight__a6Tkd {
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  position: absolute;
+  bottom: 90%; /* Adjust as needed */
+  left: 87%;
+  border-radius: 100%;
+}
+
+.sidebar_chevron__qJYCK {
+  background-color: #e8b031;
+  color: #8d1038;
+  transition: all;
+  border-radius: 100%;
+  height: 20px;
+  width: 20px;
+  box-shadow: 1px 1px 4px;
+}
+
+.sidebar_chevron__qJYCK:hover {
+  background-color: #ebebeb;
+  transition: all 0.5s;
+  -webkit-transition: all 0.25s;
+}
+
+.sidebar_icons__2z6sb {
+  color: #ebebeb;
+  padding: 15px;
+}
+
+.sidebar_collapsed__upBvP {
+  width: 90px;
+}
+
+.sidebar_hide__jhDED {
+  display: none;
+}
+
+.sidebar_items__wJBIP {
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  max-width: 230px;
+  height: 40px;
+  margin-bottom: 1.2em;
+  padding: 0.2em;
+  border-radius: 14px;
+}
+
+.sidebar_items__wJBIP:hover {
+  background: rgb(141, 16, 56);
+  background: linear-gradient(180deg, rgb(141, 16, 56) 0%, rgb(113, 26, 54) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8d1038",endColorstr="#711a36",GradientType=1);
+  transition: all 0.3s linear;
+  box-shadow: 4px 4px 11px -4px rgba(0, 0, 0, 0.35);
+  -webkit-box-shadow: 4px 4px 11px -4px rgba(0, 0, 0, 0.35);
+  -moz-box-shadow: 4px 4px 11px -4px rgba(0, 0, 0, 0.35);
+}
+
+.sidebar_isActive__cZgpp {
+  background: rgb(141, 16, 56);
+  background: linear-gradient(180deg, rgb(141, 16, 56) 0%, rgb(113, 26, 54) 100%);
+}
+
+.sidebar_link__uv64H {
+  display: flex;
+  align-items: center;
+}
+
+.sidebar_line__bSH_G {
+  width: 15em;
+  height: 0.1em;
+  background-color: #e8b031;
+  border: 0;
+}
+
+.sidebar_profile__Rjmi3 {
+  display: flex;
+  flex-direction: flex;
+  justify-items: left;
+  gap: 9px;
+  padding-top: 20px;
+}
+
+.sidebar_information__vMWe5 {
+  font-size: 0.75em;
+}
+
+.sidebar_information2__sKcV0 {
+  font-size: 0.7em;
+  color: #989898;
+}
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** css ./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[12].oneOf[2].use[1]!./node_modules/next/dist/build/webpack/loaders/next-font-loader/index.js??ruleSet[1].rules[12].oneOf[2].use[2]!./node_modules/next/font/google/target.css?{"path":"src\\app\\layout.js","import":"Inter","arguments":[{"subsets":["latin"]}],"variableName":"inter"} ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/* cyrillic-ext */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/ec159349637c90ad-s.woff2) format('woff2');
+  unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
+}
+/* cyrillic */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/513657b02c5c193f-s.woff2) format('woff2');
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+/* greek-ext */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/fd4db3eb5472fc27-s.woff2) format('woff2');
+  unicode-range: U+1F00-1FFF;
+}
+/* greek */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/51ed15f9841b9f9d-s.woff2) format('woff2');
+  unicode-range: U+0370-03FF;
+}
+/* vietnamese */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/05a31a2ca4975f99-s.woff2) format('woff2');
+  unicode-range: U+0102-0103, U+0110-0111, U+0128-0129, U+0168-0169, U+01A0-01A1, U+01AF-01B0, U+0300-0301, U+0303-0304, U+0308-0309, U+0323, U+0329, U+1EA0-1EF9, U+20AB;
+}
+/* latin-ext */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/d6b16ce4a6175f26-s.woff2) format('woff2');
+  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* latin */
+@font-face {
+  font-family: '__Inter_e66fe9';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(/_next/static/media/c9a5bc6a7c948fb0-s.p.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}@font-face {font-family: '__Inter_Fallback_e66fe9';src: local("Arial");ascent-override: 90.20%;descent-override: 22.48%;line-gap-override: 0.00%;size-adjust: 107.40%
+}.__className_e66fe9 {font-family: '__Inter_e66fe9', '__Inter_Fallback_e66fe9';font-style: normal
+}
+
