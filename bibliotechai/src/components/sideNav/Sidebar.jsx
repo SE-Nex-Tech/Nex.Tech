@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import Image from "next/image";
 import styles from "@/components/sideNav/sidebar.module.scss";
 import logo from "@/images/logo.png";
@@ -13,6 +15,8 @@ import { IconReport } from "@tabler/icons-react";
 import { IconDatabase } from "@tabler/icons-react";
 import { IconUserCircle } from "@tabler/icons-react";
 import { IconLogout } from "@tabler/icons-react";
+import { IconChevronLeftPipe } from "@tabler/icons-react";
+import { IconChevronRightPipe } from "@tabler/icons-react";
 
 const sideBarItems = [
   {
@@ -53,46 +57,84 @@ const sideBarItems = [
 ];
 
 function Sidebar() {
+  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsCollapsed((prevIsCollapsed) => !prevIsCollapsed);
+  };
+
+  const focusActive = (index) => {
+    setIsActive(index);
+  };
+
   return (
-    <div className={styles.container}>
-      <aside className={styles.sidebar}>
-        <div className={styles.heading}>
-          <h1>BiblioTechAI</h1>
+    <aside
+      className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ""}`}
+    >
+      <div className={styles.heading}>
+        <div className={styles.headingLeft}>
           <Image
             src={logo}
-            width={100}
-            height={115}
+            width={isCollapsed ? 50 : 100} // Adjust the values as needed
+            height={isCollapsed ? 57.5 : 115} // Adjust the values as needed
             className={styles.logo}
             alt="logo"
           />
+          {!isCollapsed && <h1>BiblioTechAI</h1>}
         </div>
-        <ul className={styles.list}>
-          {sideBarItems.map(({ name, href, icon: Icon }) => (
-            <li className={styles.items} key={name}>
+      </div>
+      <button className={styles.headingRight} onClick={toggleSidebar}>
+        {isCollapsed ? (
+          <IconChevronRightPipe className={styles.chevron} />
+        ) : (
+          <IconChevronLeftPipe className={styles.chevron} />
+        )}
+      </button>
+      <ul className={styles.list}>
+        {sideBarItems.map(({ name, href, icon: Icon }, index) => (
+          <li
+            className={`${styles.items} ${
+              isActive === index ? styles.isActive : ""
+            }`}
+            key={name}
+            onClick={() => focusActive(index)}
+          >
+            {isCollapsed ? (
+              <Link href={href} className={styles.link}>
+                <span className={styles.icons}>
+                  <Icon size="28px" />
+                </span>
+              </Link>
+            ) : (
               <Link href={href} className={styles.link}>
                 <span className={styles.icons}>
                   <Icon size="28px" />
                 </span>
                 <span className={styles.name}>{name}</span>
               </Link>
-            </li>
-          ))}
-        </ul>
-        <hr className={styles.line} />
-        <div className={styles.profile}>
-          <Link href="/" className={styles.link}>
-            <IconUserCircle size="28px" />
-          </Link>
-          <div>
-            <p className={styles.information}>Carl Mitzchel Padua</p>
-            <p className={styles.information2}>admin1@gmail.com</p>
+            )}
+          </li>
+        ))}
+      </ul>
+      {!isCollapsed && (
+        <>
+          <hr className={styles.line} />
+          <div className={styles.profile}>
+            <Link href="/" className={styles.link}>
+              <IconUserCircle size="28px" />
+            </Link>
+            <div>
+              <p className={styles.information}>Carl Mitzchel Padua</p>
+              <p className={styles.information2}>admin1@gmail.com</p>
+            </div>
+            <Link href="/" className={styles.link}>
+              <IconLogout size="28px" />
+            </Link>
           </div>
-          <Link href="/" className={styles.link}>
-            <IconLogout size="28px" />
-          </Link>
-        </div>
-      </aside>
-    </div>
+        </>
+      )}
+    </aside>
   );
 }
 
