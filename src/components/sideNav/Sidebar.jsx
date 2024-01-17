@@ -6,7 +6,7 @@ import styles from "@/components/sideNav/sidebar.module.scss";
 import logo from "@/images/logo.png";
 import Link from "next/link";
 
-import { Icon123, IconHome } from "@tabler/icons-react";
+import { IconHome } from "@tabler/icons-react";
 import { IconQrcode } from "@tabler/icons-react";
 import { IconBooks } from "@tabler/icons-react";
 import { IconDeviceMobile } from "@tabler/icons-react";
