@@ -6,17 +6,19 @@ import styles from "@/components/sideNav/sidebar.module.scss";
 import logo from "@/images/logo.png";
 import Link from "next/link";
 
-import { IconHome } from "@tabler/icons-react";
-import { IconQrcode } from "@tabler/icons-react";
-import { IconBooks } from "@tabler/icons-react";
-import { IconDeviceMobile } from "@tabler/icons-react";
-import { IconDice } from "@tabler/icons-react";
-import { IconReport } from "@tabler/icons-react";
-import { IconDatabase } from "@tabler/icons-react";
-import { IconUserCircle } from "@tabler/icons-react";
-import { IconLogout } from "@tabler/icons-react";
-import { IconChevronLeftPipe } from "@tabler/icons-react";
-import { IconChevronRightPipe } from "@tabler/icons-react";
+import {
+  IconHome,
+  IconQrcode,
+  IconBooks,
+  IconDeviceMobile,
+  IconDice,
+  IconReport,
+  IconDatabase,
+  IconUserCircle,
+  IconLogout,
+  IconChevronLeftPipe,
+  IconChevronRightPipe,
+} from "@tabler/icons-react";
 
 const sideBarItems = [
   {
