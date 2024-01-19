@@ -5,6 +5,7 @@ import Image from "next/image";
 import styles from "@/components/sideNav/sidebar.module.scss";
 import logo from "@/images/logo.png";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 import {
   IconHome,
@@ -57,6 +58,26 @@ const sideBarItems = [
     icon: IconDatabase,
   },
 ];
+
+const User = () => {
+  const { data: session } = useSession();
+
+  return (
+    <p className={styles.information}>
+      {session && session.user && session.user.name}
+    </p>
+  );
+};
+
+const Email = () => {
+  const { data: session } = useSession();
+
+  return (
+    <p className={styles.information2}>
+      {session && session.user && session.user.email}
+    </p>
+  );
+};
 
 function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -127,8 +148,8 @@ function Sidebar() {
               <IconUserCircle size="28px" />
             </Link>
             <div>
-              <p className={styles.information}>Carl Mitzchel Padua</p>
-              <p className={styles.information2}>admin1@gmail.com</p>
+              <User />
+              <Email />
             </div>
             <Link href="/" className={styles.link}>
               <IconLogout size="28px" />
