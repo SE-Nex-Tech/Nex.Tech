@@ -1,8 +1,12 @@
 import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { compare } from "bcrypt";
+const { PrismaClient } = require("@prisma/client");
+
+const prisma = new PrismaClient();
 
 export const authOptions = {
-  sessions: {
+  session: {
     strategy: "jwt",
   },
   providers: [
@@ -17,9 +21,33 @@ export const authOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        //Handle Auth
-        const user = { id: "1", name: "chy", email: "test@test.com" };
-        return user;
+        if (!credentials?.email || !credentials.password) {
+          //Null returns an invalid dataset, not an error, but the credentials weren't correct
+          return null;
+        }
+        const user = await prisma.user.findUnique({
+          where: {
+            email: credentials.email,
+          },
+        });
+
+        if (!user) {
+          return null;
+        }
+
+        const isPasswordValid = await compare(
+          credentials.password,
+          user.password
+        );
+
+        if (!isPasswordValid) {
+          return null;
+        }
+        return {
+          id: user.id + "",
+          email: user.email,
+          name: user.name,
+        };
       },
     }),
   ],
