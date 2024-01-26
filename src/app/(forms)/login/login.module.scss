@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+
+.input {
+  transition: none;
+  border-radius: 25px;
+  min-width: 400px;
+  height: 40px;
+  font-size: 16px;
+
+  &:focus-within {
+    outline: 1px solid #e8b031;
+    border-color: transparent;
+  }
+}
+
+.btn,
+.btn2 {
+  min-width: 400px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.btn {
+  background-color: #8d1038;
+  border-radius: 25px;
+}
+
+.btn2 {
+  background-color: transparent;
+  border-color: #8d1038;
+  color: #8d1038;
+  border-width: 3px;
+  border-radius: 25px;
+}
+
+.forgot {
+  color: #e8b031;
+  font-weight: normal;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.container {
+  /* Center vertically and horizontally */
+  display: flex;
+  width: 80%;
+  height: 60%;
+  position: relative;
+  border-radius: 25px;
+
+  .logo {
+    position: absolute;
+    left: 1%;
+  }
+}
+
+.login_container__Rpq2E {
+  display: flex;
+  width: 80%;
+  height: 60%;
+  position: relative;
+
+  overflow: hidden;
+}
+
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ebebeb;
+
+  .left,
+  .right {
+    flex: 1;
+  }
+
+  .left {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20px;
+    border-radius: 25px 0px 0px 25px;
+
+    .leftUpper,
+    .leftLower {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+  }
+
+  .right {
+    width: 500px;
+    position: relative;
+
+    .building {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+      border-radius: 0px 25px 25px 0px;
+    }
+
+    .gradientOverlay {
+      border-radius: 0px 25px 25px 0px;
+      z-index: 1;
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: rgb(141, 16, 56);
+      background: -moz-linear-gradient(
+        45deg,
+        rgba(141, 16, 56, 0.4948354341736695) 0%,
+        rgba(113, 26, 54, 0.850577731092437) 100%
+      );
+      background: -webkit-linear-gradient(
+        45deg,
+        rgba(141, 16, 56, 0.4948354341736695) 0%,
+        rgba(113, 26, 54, 0.850577731092437) 100%
+      );
+      background: linear-gradient(
+        45deg,
+        rgba(141, 16, 56, 0.4948354341736695) 0%,
+        rgba(113, 26, 54, 0.850577731092437) 100%
+      );
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8d1038",endColorstr="#711a36",GradientType=1);
+    }
+  }
+}

@@ -1,0 +1,9 @@
+.label {
+  position: absolute;
+  z-index: 1;
+  pointer-events: none;
+  color: var(--mantine-color-placeholder);
+  font-weight: 400;
+  font-size: var(--mantine-font-size-sm);
+  transition: color 100ms ease, transform 100ms ease, font-size 100ms ease;
+}

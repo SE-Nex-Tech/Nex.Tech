@@ -1,12 +1,13 @@
+"use client";
+
+import { signIn } from "next-auth/react";
 import React from "react";
 
 const page = () => {
   return (
     <div>
-      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid
-      repellendus nam, alias perferendis quisquam quaerat quia neque optio
-      dolores molestiae quibusdam voluptatibus pariatur. Assumenda facilis culpa
-      ipsam voluptatibus nostrum minus?
+      THIS IS JUST A TEST
+      <button onClick={() => signIn()}>TEST</button>
     </div>
   );
 };
