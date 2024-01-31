@@ -1,0 +1,24 @@
+@import "../../styles/variables.scss";
+
+.container {
+  height: 100px;
+  margin-bottom: 1rem;
+  min-width: 100%;
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 5rem;
+  padding-right: 5rem;
+  box-shadow: 0px 7px 7px 0px rgba(0, 0, 0, 0.1);
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .date {
+    font-weight: normal;
+  }
+}

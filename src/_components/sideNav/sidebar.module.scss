@@ -141,9 +141,11 @@
 .profile {
   display: flex;
   flex-direction: flex;
-  justify-items: left;
+  justify-items: center;
+  align-items: center;
   gap: 9px;
   padding-top: 20px;
+  cursor: pointer;
 }
 
 .information {
