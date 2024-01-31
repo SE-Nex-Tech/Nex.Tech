@@ -8,7 +8,7 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <div className={styles.container}>
-      <pre>{JSON.stringify(session)}</pre>
+      <pre></pre>
     </div>
   );
 }
