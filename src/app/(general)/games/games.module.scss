@@ -1,0 +1,136 @@
+.center {
+  font-family: "Plus Jakarta Sans", sans-serif;
+
+  .main_container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-width: 100%;
+    margin: auto;
+  }
+}
+
+.first_row {
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
+}
+
+.books_carousel,
+.games_carousel {
+  background-color: #ffffff;
+  border-radius: 15px;
+  min-width: auto;
+  height: auto;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9em;
+  .carousel_body {
+    display: flex;
+    flex-direction: row;
+    width: 250px;
+
+    .book {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      text-align: center;
+    }
+  }
+}
+
+.indicator {
+  height: 10px;
+  width: 30px;
+  background-color: #bcbcbc;
+  transition: linear 0.1s;
+
+  &[data-active] {
+    width: 50px;
+    background-color: #e8b031;
+  }
+}
+
+.help {
+  display: flex;
+  min-width: 450px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: end;
+  text-align: right;
+  font-size: 0.7em;
+  color: white;
+  gap: 1em;
+
+  .browse_books {
+    height: 33.33%;
+    width: 100%;
+    background-color: #5f5f5f;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    align-items: center;
+    padding-right: 2em;
+    gap: 1.2em;
+    border-radius: 15px;
+    transition: background-color 350ms linear;
+    cursor: pointer;
+  }
+
+  .browse_games {
+    height: 33.33%;
+    width: 100%;
+    background-color: #989898;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 2em;
+    gap: 1.2em;
+    border-radius: 15px;
+    transition: background-color 350ms linear;
+    cursor: pointer;
+  }
+
+  .reserve {
+    height: 33.33%;
+    width: 100%;
+    background-color: #8d1038;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    padding-right: 2em;
+    gap: 1.2em;
+    border-radius: 15px;
+    transition: background-color 350ms linear;
+    cursor: pointer;
+  }
+}
+
+.browse_books:hover {
+  background-color: rgba(5, 5, 5, 0.683);
+}
+.browse_games:hover {
+  background-color: rgba(5, 5, 5, 0.477);
+}
+.reserve:hover {
+  background-color: #7f0e32;
+}
+
+.browse_books:hover .icon {
+  transform: translateX(5px);
+  transition: transform 0.3s ease-in-out;
+}
+.browse_games:hover .icon {
+  transform: translateX(5px);
+  transition: transform 0.3s ease-in-out;
+}
+.reserve:hover .icon {
+  transform: translateX(5px);
+  transition: transform 0.3s ease-in-out;
+}
