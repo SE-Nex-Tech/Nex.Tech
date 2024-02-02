@@ -6,6 +6,8 @@ const getPageTitle = (pathname) => {
       return "Books Catalog";
     case "/games":
       return "Games Catalog";
+    case "/dashboard":
+      return "Dashboard";
     default:
       return "Default Title"; // Replace with your default title
   }

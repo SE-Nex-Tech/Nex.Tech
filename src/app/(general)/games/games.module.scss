@@ -8,6 +8,7 @@
     align-items: center;
     min-width: 100%;
     margin: auto;
+    gap: 2em;
   }
 }
 
@@ -15,14 +16,15 @@
   display: flex;
   flex-direction: row;
   gap: 3em;
+  width: 85%;
 }
 
-.books_carousel,
-.games_carousel {
+.books_carousel2,
+.games_carousel2 {
   background-color: #ffffff;
   border-radius: 15px;
-  min-width: auto;
-  height: auto;
+  min-width: 30%;
+  height: 80%;
   padding: 1em;
   display: flex;
   flex-direction: column;
@@ -32,7 +34,7 @@
   .carousel_body {
     display: flex;
     flex-direction: row;
-    width: 250px;
+    width: 300px;
 
     .book {
       display: flex;
@@ -40,8 +42,55 @@
       align-items: center;
       justify-content: center;
       width: 70%;
+      padding-bottom: 1.5em;
       text-align: center;
     }
+  }
+}
+
+.books_carousel,
+.games_carousel {
+  background-color: #ffffff;
+  border-radius: 15px;
+  min-width: auto;
+  height: 80%;
+  padding: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 0.9em;
+  .carousel_body {
+    display: flex;
+    flex-direction: row;
+    width: 300px;
+
+    .book {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 70%;
+      padding-bottom: 1.5em;
+      text-align: center;
+    }
+  }
+}
+
+.carousel_body2 {
+  display: flex;
+  flex-direction: row;
+  width: 400px;
+  gap: 2em;
+
+  .book {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    text-align: center;
+    padding-bottom: 1.5em;
   }
 }
 
@@ -59,7 +108,7 @@
 
 .help {
   display: flex;
-  min-width: 450px;
+  width: 90%;
   flex-direction: column;
   justify-content: center;
   align-items: end;
@@ -133,4 +182,42 @@
 .reserve:hover .icon {
   transform: translateX(5px);
   transition: transform 0.3s ease-in-out;
+}
+
+.mainLib {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.second_row {
+  display: flex;
+  flex-direction: row;
+  gap: 3em;
+  width: 85%;
+}
+
+.three_row {
+  width: 85%;
+}
+
+.mainLib {
+  background-color: #8d1038;
+  color: white;
+  border-radius: 15px;
+  height: 50px;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+.mainLib:hover .icon {
+  transform: translateX(5px);
+  transition: transform 0.3s ease-in-out;
+}
+
+.mainLib:hover {
+  background-color: #7f0e32;
+  cursor: pointer;
 }

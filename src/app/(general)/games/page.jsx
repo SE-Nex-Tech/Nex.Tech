@@ -16,7 +16,11 @@ import "@mantine/carousel/styles.css";
 
 const page = () => {
   const current = usePathname();
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const autoplay = useRef(Autoplay({ delay: 4000 }));
+  const autoplay2 = useRef(Autoplay({ delay: 4000 }));
+  const autoplay3 = useRef(Autoplay({ delay: 4000 }));
+  const autoplay4 = useRef(Autoplay({ delay: 4000 }));
+
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -24,24 +28,18 @@ const page = () => {
       <div>
         <Header currentRoute={current} />
       </div>
-      <Center
-        className={styles.center}
-        maw="100%"
-        m={30}
-        h="81.5%"
-        bg="var(--mantine-color-gray-light)"
-      >
+      <Center className={styles.center} maw="100%" m={25} h="81.5%">
         <div className={styles.main_container}>
           <div className={styles.first_row}>
             <div className={styles.books_carousel}>
               <h1>New Books</h1>
               <Carousel
                 withIndicators
-                height={250}
+                height={210}
                 w={300}
-                // plugins={[autoplay.current]}
-                // onMouseEnter={autoplay.current.stop}
-                // onMouseLeave={autoplay.current.reset}
+                plugins={[autoplay.current]}
+                onMouseEnter={autoplay.current.stop}
+                onMouseLeave={autoplay.current.reset}
                 classNames={styles}
               >
                 <Carousel.Slide
@@ -111,11 +109,11 @@ const page = () => {
               <h1>New Games</h1>
               <Carousel
                 withIndicators
-                height={250}
+                height={210}
                 w={300}
-                // plugins={[autoplay.current]}
-                // onMouseEnter={autoplay.current.stop}
-                // onMouseLeave={autoplay.current.reset}
+                plugins={[autoplay2.current]}
+                onMouseEnter={autoplay2.current.stop}
+                onMouseLeave={autoplay2.current.reset}
                 classNames={styles}
               >
                 <Carousel.Slide
@@ -196,8 +194,179 @@ const page = () => {
               </div>
             </div>
           </div>
-          <div className={styles.second_row}>2</div>
-          <div className={styles.three_row}>3</div>
+          <div className={styles.second_row}>
+            <div className={styles.books_carousel2}>
+              <h1>Most Popular Books</h1>
+              <Carousel
+                withIndicators
+                height={210}
+                w={540}
+                plugins={[autoplay3.current]}
+                onMouseEnter={autoplay3.current.stop}
+                onMouseLeave={autoplay3.current.reset}
+                classNames={styles}
+              >
+                <Carousel.Slide
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div className={styles.carousel_body2}>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                  </div>
+                </Carousel.Slide>
+                <Carousel.Slide
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div className={styles.carousel_body2}>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                  </div>
+                </Carousel.Slide>
+                <Carousel.Slide
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div className={styles.carousel_body2}>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                  </div>
+                </Carousel.Slide>
+              </Carousel>
+            </div>
+            <div className={styles.books_carousel2}>
+              <h1>Most Popular Games</h1>
+              <Carousel
+                withIndicators
+                height={210}
+                w={540}
+                plugins={[autoplay4.current]}
+                onMouseEnter={autoplay4.current.stop}
+                onMouseLeave={autoplay4.current.reset}
+                classNames={styles}
+              >
+                <Carousel.Slide
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div className={styles.carousel_body2}>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                  </div>
+                </Carousel.Slide>
+                <Carousel.Slide
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div className={styles.carousel_body2}>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                  </div>
+                </Carousel.Slide>
+                <Carousel.Slide
+                  style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingBottom: "20px",
+                  }}
+                >
+                  <div className={styles.carousel_body2}>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+
+                    <div className={styles.book}>
+                      <Skeleton height={150} width="100%" />
+                      <p>Introduction to Computing</p>
+                    </div>
+                  </div>
+                </Carousel.Slide>
+              </Carousel>
+            </div>
+          </div>
+
+          <div className={styles.three_row}>
+            <div className={styles.mainLib}>
+              Visit UST Miguel Benavides Library Website
+              <IconCircleArrowRightFilled className={styles.icon} />
+            </div>
+          </div>
         </div>
         <Modal.Root
           opened={opened}
@@ -207,7 +376,7 @@ const page = () => {
           size={800}
         >
           <Modal.Overlay />
-          <Modal.Content>
+          <Modal.Content style={{ padding: "3em" }}>
             <Modal.Header>
               <Modal.Title>
                 <h1 className={styles.modal_title}>How to Borrow / Reserve?</h1>

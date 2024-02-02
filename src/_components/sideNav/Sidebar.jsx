@@ -84,7 +84,7 @@ const Email = () => {
 };
 
 function Sidebar() {
-  const [isCollapsed, setIsCollapsed] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(true);
   const [isActive, setIsActive] = useState(false);
 
   const toggleSidebar = () => {
