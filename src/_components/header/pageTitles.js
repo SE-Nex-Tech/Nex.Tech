@@ -8,6 +8,8 @@ const getPageTitle = (pathname) => {
       return "Games Catalog";
     case "/dashboard":
       return "Dashboard";
+    case "/landing":
+      return "Home";
     default:
       return "Default Title"; // Replace with your default title
   }

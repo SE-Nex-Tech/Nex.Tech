@@ -13,3 +13,15 @@ model User {
   password String
   name     String?
 }
+
+model Books {
+  id                     Int    @id @default(autoincrement())
+  book_barcode           Int
+  book_call_num          String @db.Text
+  book_title             String @db.Text
+  book_accession_num     Int
+  book_author            String @db.Text
+  book_edition           String @db.Text
+  book_publication_place String @db.Text
+  book_publisher         String @db.Text
+}
