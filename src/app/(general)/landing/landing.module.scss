@@ -89,6 +89,7 @@
   height: 85px;
   min-width: 400px;
   padding-right: 2em;
+  cursor: pointer;
 
   h1 {
     font-family: "Plus Jakarta Sans", sans-serif;
@@ -99,4 +100,11 @@
 
 .button {
   font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }

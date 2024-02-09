@@ -11,3 +11,10 @@
 .qr_reader {
   width: 50%;
 }
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
