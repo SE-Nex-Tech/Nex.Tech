@@ -5,15 +5,30 @@ import React, { useState, useCallback, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./qrscanner.module.scss";
 import { QrReader } from "react-qr-reader";
-import { Center } from "@mantine/core";
+import { Center, Text } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
+import { modals, openConfirmModal } from "@mantine/modals";
 
 const QRScanner = () => {
   const [data, setData] = useState("No result");
-  const [opened, { open, close }] = useDisclosure(false);
+
+  const openModalBorrow = (result) => {
+    const parsedData = JSON.parse(result?.text);
+    modals.openConfirmModal({
+      title: "Borrow Book Information",
+      size: "sm",
+      radius: "md",
+      withCloseButton: false,
+      centered: true,
+      children: <Text size="sm">{parsedData.book}</Text>,
+      labels: { confirm: "Confirm", cancel: "Cancel" },
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => console.log("Confirmed"),
+    });
+  };
 
   function handleScanSuccess(result) {
     try {
@@ -26,7 +41,7 @@ const QRScanner = () => {
 
       switch (parsedData.type) {
         case "Borrow":
-          open();
+          openModalBorrow(result);
           break;
         case "Reserve":
           console.log("Reserving", parsedData.book); // Or perform reserve actions
@@ -69,9 +84,7 @@ const QRScanner = () => {
           style={{ width: "10px", height: "10px" }}
         />
         <p>{data}</p>
-        <Modal opened={opened} onClose={close} title="Authentication" centered>
-          <h1>CHY</h1>
-        </Modal>
+        <Button onClick={() => openModalBorrow()}>Open Modal</Button>
       </Center>
     </>
   );
