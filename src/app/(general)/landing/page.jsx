@@ -17,18 +17,13 @@ import {
   createTheme,
   Skeleton,
   Button,
-  Modal,
 } from "@mantine/core";
 import { Carousel, Embla } from "@mantine/carousel";
-import Link from "next/link";
-import { useDisclosure } from "@mantine/hooks";
 
 const page = () => {
   const current = usePathname();
 
   const autoplay = useRef(Autoplay({ delay: 2000 }));
-
-  const [opened, { open, close }] = useDisclosure(false);
 
   const theme = createTheme({
     components: {
@@ -242,32 +237,18 @@ const page = () => {
               flexDirection: "column",
             }}
           >
-            <Link href="/books">
-              <div className={styles.browseBooks}>
-                <h1>Browse Books</h1>
-                <IconCircleArrowRightFilled />
-              </div>
-            </Link>
-
-            <Link href="/games">
-              <div className={styles.browseGames}>
-                <h1>Browse Board Games</h1>
-                <IconCircleArrowRightFilled />
-              </div>
-            </Link>
-            <div className={styles.reserve} onClick={open}>
+            <div className={styles.browseBooks}>
+              <h1>Browse Books</h1>
+              <IconCircleArrowRightFilled />
+            </div>
+            <div className={styles.browseGames}>
+              <h1>Browse Board Games</h1>
+              <IconCircleArrowRightFilled />
+            </div>
+            <div className={styles.reserve}>
               <h1>How to Reserve or Borrow</h1>
               <IconCircleArrowRightFilled />
             </div>
-
-            <Modal
-              opened={opened}
-              onClose={close}
-              centered
-              title="How to Reserve or Borrow"
-            >
-              Description
-            </Modal>
           </Container>
         </Container>
 
