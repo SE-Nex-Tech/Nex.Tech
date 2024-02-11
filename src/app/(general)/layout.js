@@ -6,6 +6,7 @@ import "@mantine/core/styles.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import Header from "@/_components/header/Header";
 import { usePathname, useRouter } from "next/navigation";
+import { ModalsProvider } from "@mantine/modals";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,12 +24,14 @@ export default function RootLayout({ children }) {
       <body className={inter.className}>
         <div className="row">
           <MantineProvider>
-            <Providers>
-              {<Sidebar />}
-              <div className="body">
-                <div className="container">{children}</div>
-              </div>
-            </Providers>
+            <ModalsProvider>
+              <Providers>
+                {<Sidebar />}
+                <div className="body">
+                  <div className="container">{children}</div>
+                </div>
+              </Providers>
+            </ModalsProvider>
           </MantineProvider>
         </div>
       </body>

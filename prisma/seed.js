@@ -1,5 +1,8 @@
 const { PrismaClient } = require("@prisma/client");
 const { hash } = require("bcrypt");
+const fs = require("fs");
+const csv = require("csv-parser");
+const csvFilePath = "E:/Downloads/books.csv";
 
 const prisma = new PrismaClient();
 
@@ -14,7 +17,7 @@ async function main() {
       password,
     },
   });
-  const createMany = await prisma.user.createMany({
+  const createUsers = await prisma.user.createMany({
     data: [
       { email: "edjin@edjin.com", name: "edjin", password },
       { email: "carl@carl.com", name: "carl", password },
@@ -24,7 +27,25 @@ async function main() {
     skipDuplicates: true,
   });
   console.log({ user });
+
+  const books = [];
+  fs.createReadStream(csvFilePath)
+    .pipe(csv())
+    .on("data", (row) => {
+      row.book_barcode = parseInt(row.book_barcode, 10);
+      row.book_accession_num = parseInt(row.book_accession_num, 10);
+      books.push(row);
+    })
+    .on("end", async () => {
+      await prisma.books.createMany({
+        data: books,
+        skipDuplicates: true,
+      });
+
+      await prisma.$disconnect();
+    });
 }
+
 main()
   .then(() => prisma.$disconnect())
   .catch(async (e) => {
