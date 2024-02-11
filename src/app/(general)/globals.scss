@@ -22,7 +22,6 @@
 
 body {
   overflow-x: hidden;
-  background-color: var(--bg);
 }
 
 a {
@@ -35,6 +34,13 @@ a {
   flex-direction: row;
 }
 
+.body {
+  display: flex;
+  flex-direction: column;
+  background-color: #ebebeb;
+  width: 100%;
+}
+
 .container {
-  margin: 5rem 7rem 5rem 7rem;
+  height: 100%;
 }

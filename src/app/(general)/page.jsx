@@ -8,7 +8,10 @@ export default async function Home() {
   const session = await getServerSession(authOptions);
   return (
     <div className={styles.container}>
-      <pre></pre>
+      Lorem ipsum dolor, sit amet consectetur adipisicing elit. Eos velit
+      placeat rem beatae dolores nisi eveniet sapiente quae, fugit modi,
+      veritatis odio quidem, obcaecati temporibus facilis quisquam. Ut,
+      accusamus dolore!
     </div>
   );
 }
