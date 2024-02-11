@@ -5,12 +5,15 @@ import Image from "next/image";
 import styles from "@/components/sideNav/sidebar.module.scss";
 import logo from "@/images/logo.png";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 import {
   IconHome,
   IconQrcode,
   IconBooks,
-  IconDeviceMobile,
   IconDice,
   IconReport,
   IconDatabase,
@@ -37,11 +40,6 @@ const sideBarItems = [
     icon: IconBooks,
   },
   {
-    name: "eBooks",
-    href: "/ebooks",
-    icon: IconDeviceMobile,
-  },
-  {
     name: "Games",
     href: "/games",
     icon: IconDice,
@@ -58,6 +56,26 @@ const sideBarItems = [
   },
 ];
 
+const User = () => {
+  const { data: session } = useSession();
+
+  return (
+    <p className={styles.information}>
+      {session && session.user && session.user.name}
+    </p>
+  );
+};
+
+const Email = () => {
+  const { data: session } = useSession();
+
+  return (
+    <p className={styles.information2}>
+      {session && session.user && session.user.email}
+    </p>
+  );
+};
+
 function Sidebar() {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -70,6 +88,8 @@ function Sidebar() {
     setIsActive(index);
   };
 
+  const notify = () => toast("Successfully signed out!");
+
   return (
     <aside
       className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ""}`}
@@ -78,8 +98,8 @@ function Sidebar() {
         <div className={styles.headingLeft}>
           <Image
             src={logo}
-            width={isCollapsed ? 50 : 100} // Adjust the values as needed
-            height={isCollapsed ? 57.5 : 115} // Adjust the values as needed
+            width={isCollapsed ? 50 : 105} // Adjust the values as needed
+            height={isCollapsed ? 57.5 : 130} // Adjust the values as needed
             className={styles.logo}
             alt="logo"
           />
@@ -127,11 +147,18 @@ function Sidebar() {
               <IconUserCircle size="28px" />
             </Link>
             <div>
-              <p className={styles.information}>Carl Mitzchel Padua</p>
-              <p className={styles.information2}>admin1@gmail.com</p>
+              <User />
+              <Email />
             </div>
             <Link href="/" className={styles.link}>
-              <IconLogout size="28px" />
+              <IconLogout
+                size="28px"
+                onClick={() => {
+                  notify();
+                  signOut({ redirect: false, callbackUrl: "/" });
+                }}
+              />
+              <ToastContainer toastStyle={{ backgroundColor: "white" }} />
             </Link>
           </div>
         </>
