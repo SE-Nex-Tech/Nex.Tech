@@ -260,26 +260,24 @@ const Dashboard = () => {
                     ))}
                   </tbody>
                 </table>
-                <div>
-                  <button onClick={() => table.setPageIndex(0)}>
-                    First Page
-                  </button>
+                <div className={styles.page_btn}>
+                  <button onClick={() => table.setPageIndex(0)}>First</button>
                   <button
-                    onClick={() => table.previousPage}
+                    onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                   >
-                    Previous Page
+                    Previous
                   </button>
                   <button
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
-                    Next Page
+                    Next
                   </button>
                   <button
                     onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                   >
-                    Last Page
+                    Last
                   </button>
                 </div>
               </Tabs.Panel>

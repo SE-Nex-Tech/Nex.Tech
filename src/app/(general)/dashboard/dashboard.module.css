@@ -1,0 +1,196 @@
+.center {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  position: relative;
+  transition: all 0.3s linear;
+}
+
+.first_row {
+  background-color: #ffffff;
+  min-width: 100%;
+  border-radius: 15px;
+  height: 350px;
+  overflow-y: auto;
+}
+
+.cover_holder {
+  height: 100%;
+  width: 60%;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  padding: 2px;
+}
+.cover_holder .cover {
+  height: 125px;
+  width: 87px;
+  border: 4px solid #4a4949;
+}
+
+.main_table {
+  border-spacing: 0 15px;
+  width: 100%;
+  margin: auto;
+  padding: 1.5em;
+  text-align: center;
+}
+.main_table tr:not(:first-child) {
+  height: 120px;
+  outline: 2px solid rgba(95, 95, 95, 0.2431372549);
+  border-radius: 15px;
+  box-shadow: -1px 10px 14px -7px rgba(0, 0, 0, 0.32);
+  -webkit-box-shadow: -1px 10px 14px -7px rgba(0, 0, 0, 0.32);
+  -moz-box-shadow: -1px 10px 14px -7px rgba(0, 0, 0, 0.32);
+}
+
+.root {
+  transition: all 0.3s linear;
+  padding: 1em;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.list {
+  height: 40px;
+  font-weight: bold;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+}
+
+.tabLabel {
+  font-size: 1.2em;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.tab {
+  transition: all 0.3s linear;
+}
+.tab:hover, .tab:active {
+  background-color: #e8b031;
+}
+
+.second_row {
+  min-width: 100%;
+  border-radius: 15px;
+  height: 390px;
+  display: flex;
+  flex-direction: row;
+  gap: 2em;
+}
+.second_row .database {
+  background-color: #ffffff;
+  width: 50%;
+  border-radius: 15px;
+  padding: 2em;
+  overflow: auto;
+}
+.second_row .database .header_database {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.second_row .database h1 {
+  font-size: 1.5em;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: bold;
+  margin-bottom: 1em;
+}
+.second_row .database .button {
+  color: white;
+  font-weight: bold;
+  font-size: 0.9em;
+  background-color: #8d1038;
+  width: 90px;
+  max-width: 90px;
+  height: 35px;
+  border-radius: 25px;
+  outline: transparent;
+  border: transparent;
+  transition: all 0.3s linear;
+}
+.second_row .button:hover {
+  background-color: #7c0e31;
+}
+.second_row .button:focus {
+  border: 2px solid rgba(82, 82, 82, 0.384);
+}
+.second_row .reports {
+  background-color: #ffffff;
+  width: 50%;
+  border-radius: 15px;
+  padding: 2em;
+}
+.second_row .root2 {
+  transition: all 0.3s linear;
+  padding: 1em;
+}
+.second_row .list2 {
+  height: 40px;
+  font-weight: bold;
+  top: 0;
+  z-index: 10;
+  background-color: #ffffff;
+}
+.second_row .tabLabel2 {
+  font-size: 1.2em;
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+.second_row .tab2 {
+  transition: all 0.3s linear;
+}
+.second_row .tab2:hover, .second_row .tab2:active {
+  background-color: #e8b031;
+}
+
+.database_table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.database_table .database_header,
+.database_table .database_body_row {
+  text-align: center;
+}
+.database_table .database_header th,
+.database_table .database_header td,
+.database_table .database_body_row th,
+.database_table .database_body_row td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+.database_table .database_header th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: center;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.page_btn {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: right;
+  gap: 1rem;
+  outline: none;
+  border: none;
+}
+.page_btn button {
+  padding: 0.4em;
+  font-size: 16px;
+  background-color: #8d1038;
+  border-radius: 10px;
+  color: white;
+}
+
+.page_btn button:hover {
+  background-color: #7c0e31;
+}/*# sourceMappingURL=dashboard.module.css.map */

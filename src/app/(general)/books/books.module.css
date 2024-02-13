@@ -1,0 +1,105 @@
+.root {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.indicator {
+  height: 10px;
+  width: 30px;
+  background-color: #bcbcbc;
+  transition: linear 0.2s;
+}
+.indicator[data-active] {
+  width: 50px;
+  background-color: #e8b031;
+}
+
+.legend {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 1.5em;
+}
+
+.holder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.titleDiv {
+  width: 95px;
+}
+
+.title {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 0.8em;
+}
+
+.browseBooks {
+  background-color: #5f5f5f;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  gap: 1.2em;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 20px;
+  height: 85px;
+  min-width: 350px;
+  padding-right: 2em;
+}
+.browseBooks h1 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.browseGames {
+  background-color: #989898;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  gap: 1.2em;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 20px;
+  height: 85px;
+  min-width: 350px;
+  padding-right: 2em;
+}
+.browseGames h1 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.reserve {
+  background-color: #8d1038;
+  display: flex;
+  flex-direction: row;
+  justify-content: right;
+  align-items: center;
+  gap: 1.2em;
+  border-radius: 15px;
+  color: white;
+  margin-bottom: 20px;
+  height: 85px;
+  min-width: 400px;
+  padding-right: 2em;
+}
+.reserve h1 {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+.button {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}/*# sourceMappingURL=books.module.css.map */

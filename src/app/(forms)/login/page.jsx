@@ -9,18 +9,32 @@ import logo from "@/images/logo.png";
 import building from "@/images/building.jpg";
 import Link from "next/link";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
   const email = useRef("");
   const password = useRef("");
 
+  const router = useRouter();
+
   const onSubmit = async () => {
     const result = await signIn("credentials", {
       email: email.current,
       password: password.current,
-      redirect: true,
-      callbackUrl: "/dashboard",
+      redirect: false,
+      callbackUrl: "/",
     });
+
+    if (result.ok) {
+      toast.success("Logged in successfully, please wait", { autoClose: 2000 });
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 2000);
+    } else {
+      toast.error("Incorrect Credentials!");
+    }
   };
 
   return (
@@ -70,6 +84,7 @@ const Login = () => {
           <Image src={building} className={styles.building} />
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };
