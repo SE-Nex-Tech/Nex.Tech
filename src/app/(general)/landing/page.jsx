@@ -264,14 +264,48 @@ const page = () => {
               opened={opened}
               onClose={close}
               centered
-              title="How to Borrow / Reserve?"
               size="lg"
+              title={
+                <h2 style={{ fontWeight: "bold" }}>How to Borrow / Reserve?</h2>
+              }
             >
-              1.&nbsp;Go to the "Browse Books" or "Browse Board Games" to be
-              directed to the Books Catalog or Board Games Catalog <br />{" "}
-              2.&nbsp;Search and select any Book or Board Game in their
+              &nbsp;1.&nbsp;Go to the "Browse Books" or "Browse Board Games" to
+              be directed to the Books Catalog or Board Games Catalog <br />{" "}
+              &nbsp;2.&nbsp;Search and select any Book or Board Game in their
               respective catalog.
               <br />
+              <br /> &nbsp;
+              <span style={{ fontWeight: "bold" }}>
+                If the item is not currently being used:
+              </span>{" "}
+              <br />
+              &nbsp;1.&nbsp;Click the "Borrow" button to borrow the item.
+              <br />
+              &nbsp;2.&nbsp;Fill out the Borrow Request form.
+              <br />
+              &nbsp;3.&nbsp;Wait for the receipt to pop up.
+              <br />
+              &nbsp;4.&nbsp;Present the QR Code receipt to the librarian so that
+              they may authorize your request.
+              <br />
+              <br />
+              <span style={{ fontWeight: "bold" }}>
+                If the item is currently being used:
+              </span>{" "}
+              <br />
+              &nbsp;1.&nbsp;Check the reservation queue in the pop-up upon
+              clicking on the item you want to borrow.
+              <br />
+              &nbsp;2.&nbsp;Fill out the Reservation Request Form to continue
+              reserving the item for future use.
+              <br />
+              &nbsp;3.&nbsp;Wait for the Reserve Receipt to pop up.
+              <br />
+              &nbsp;4.&nbsp;Wait for an email notification stating that the item
+              is now available.
+              <br />
+              &nbsp;5.&nbsp;Present the QR code receipt to the librarian so that
+              they may authorize your request.
             </Modal>
           </Container>
         </Container>

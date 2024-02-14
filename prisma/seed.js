@@ -2,7 +2,7 @@ const { PrismaClient } = require("@prisma/client");
 const { hash } = require("bcrypt");
 const fs = require("fs");
 const csv = require("csv-parser");
-const csvFilePath = "E:/Downloads/books.csv";
+const csvFilePath = "/Users/chy/Projects/Nex.Tech/src/data/mock.csv";
 
 const prisma = new PrismaClient();
 
