@@ -11,6 +11,7 @@ import styles from "./dashboard.module.scss";
 import { IconBooks, IconDice, IconUsers } from "@tabler/icons-react";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { useMemo, useEffect, useState } from "react";
+import { useSession, getSession } from "next-auth/react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -19,6 +20,16 @@ import {
 } from "@tanstack/react-table";
 
 const Dashboard = () => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <Loader color="yellow" size="xl" />;
+  }
+
+  if (status === "unauthenticated") {
+    return <h1>Not Logged In</h1>;
+  }
+
   const current = usePathname();
   const iconStyle = { width: rem(20), height: rem(20) };
   const prisma = new PrismaClient();

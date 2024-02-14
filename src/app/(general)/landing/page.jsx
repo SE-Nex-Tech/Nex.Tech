@@ -264,9 +264,14 @@ const page = () => {
               opened={opened}
               onClose={close}
               centered
-              title="How to Reserve or Borrow"
+              title="How to Borrow / Reserve?"
+              size="lg"
             >
-              Description
+              1.&nbsp;Go to the "Browse Books" or "Browse Board Games" to be
+              directed to the Books Catalog or Board Games Catalog <br />{" "}
+              2.&nbsp;Search and select any Book or Board Game in their
+              respective catalog.
+              <br />
             </Modal>
           </Container>
         </Container>
