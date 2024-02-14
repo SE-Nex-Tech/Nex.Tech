@@ -2,6 +2,14 @@
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
+.center {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
+  position: relative;
+  transition: all 0.3s linear;
+}
 .indicator {
   height: 10px;
   width: 30px;
