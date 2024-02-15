@@ -22,29 +22,53 @@ Open a terminal and navigate to the directory where you want to clone the reposi
 git clone https://github.com/SE-Nex-Tech/Nex.Tech.git
 ```
 
-### 2. Navigate to the App Directory
-
-    ```bash
-    cd bibliotechai
-    ```
-
-### 3. Install dependencies
+### 2. Install dependencies
 
     This command installs the necessary Node.js modules specified in the package.json file.
 
+    npm:
     ```bash
     npm install
     ```
 
-### 4. Run the server
+    yarn:
+    ```bash
+    yarn
+    ```
+
+### 3.1 Run the server in development mode
 
     Start the development server with the following command:
 
+    npm:
     ```bash
     npm run dev
     ```
 
-### 5. Access the App
+    yarn:
+    ```bash
+    yarn dev
+    ```
+
+    > Note: development mode is not the optimized version of the app; waiting times will be slow. Build the app instead if you don't need to debug the source code.
+
+### 3.2 Build the app and run the server
+
+Enter the commands for
+
+npm:
+```bash
+npm run build
+npm run start
+```
+
+yarn:
+```bash
+yarn build
+yarn start
+```
+
+### 4. Access the App
 
     Open a web browser and navigate to http://localhost:3000. You should see the Next.js app running locally.
 
