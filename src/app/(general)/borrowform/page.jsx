@@ -3,15 +3,21 @@
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import { TextInput, Select, Button, NumberInput } from '@mantine/core';
-import { React } from "react";
+import { TextInput, Select, Button, NumberInput, Radio, Modal } from '@mantine/core';
+import React, { useState, useCallback, useEffect } from "react";
 import { DateInput } from "@mantine/dates";
+import { useDisclosure } from "@mantine/hooks";
 
 const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
+  const [value, setValue] = useState('react');
+  const [opened, { open, close }] = useDisclosure(false);
+
+
 
   return (
+
     <div>
       <Header currentRoute={current} />
       <div className={styles.mainBody}>
@@ -33,11 +39,15 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>User Type:</label>
-                  <Button.Group>
-                    <Button variant="default">Student</Button>
-                    <Button variant="">Faculty</Button>
-                    <Button variant="">Staff</Button>
-                  </Button.Group>
+                  <Radio.Group
+                    value={value}
+                    onChange={setValue}
+                    name="userType"
+                  >
+                    <Radio value="student" label="Student" />
+                    <Radio value="faculty" label="Faculty" />
+                    <Radio value="staff" label="Staff" />
+                  </Radio.Group>
                 </div>
 
                 <div className={styles.input}>
@@ -86,19 +96,124 @@ const BorrowForm = () => {
               <div className={styles.itemInfo}>
                 <div className={styles.imageContainer}></div>
                 <div className={styles.itemDetails}>
-                  <p>Title: Introduction to Computing</p>
-                  <p>Author: Santos, Jose A.</p>
-                  <p>Call No.: QA76.73.J38 .H788j 2022</p>
-                  <p>Accession No.: 2015831231</p>
-                  <p>Edition: 11th Edition</p>
-                  <p>Publisher: AI Publishing Inc.</p>
-                  <p>Publication Place: New York City</p>
-                  <p>Copyright Date: 06/13/2016</p>
+
+                  <div className={styles.info}>
+                    <h4>Title:</h4>
+                    <h4 className={styles.infoTitle}>Introduction to Computing</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Author:</h4>
+                    <h4>Santos, Jose A.</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Call No.:</h4>
+                    <h4>QA76.73.J38 .H788j 2022</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Accession No.:</h4>
+                    <h4>2015831231</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Edition:</h4>
+                    <h4>11th Edition</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Publisher:</h4>
+                    <h4>AI Publishing Inc.</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Publication Place:</h4>
+                    <h4>New York City</h4>
+                  </div>
+
+                  <div className={styles.info}>
+                    <h4>Copyright Date:</h4>
+                    <h4>06/13/2016</h4>
+                  </div>
+
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <button> Submit Form </button>
-                <button> Go Back </button>
+
+                <button className={styles.submitBtn} onClick={open}> Submit Form </button>
+                <button className={styles.backBtn}> Go Back </button>
+
+
+                <Modal
+                  opened={opened}
+                  onClose={close}
+                  centered
+                  withCloseButton={false}
+                  size="50%">
+                  <div className={styles.receiptContainer}>
+                    <h2>Request Receipt</h2>
+                    <div className={styles.infoContainer}>
+                      <div className={styles.receiptInfo}>
+                        <div className={styles.qrContainer}></div>
+                        <div className={styles.receiptLabel}>
+                          <h4>Receipt No.:</h4>
+                          <h4>20231204734</h4>
+                        </div>
+                      </div>
+                      <div className={styles.requestDetails}>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Call No.:</h4>
+                          <h4>QA76.73.J38 .H788j 2022</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Accession No.:</h4>
+                          <h4>2015831231</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Request Date:</h4>
+                          <h4>12/01/23 02:30PM</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Student No.:</h4>
+                          <h4>2021157407</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Name:</h4>
+                          <h4>Carl Mitzchel Padua</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Department:</h4>
+                          <h4>Computer Science</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Year Level:</h4>
+                          <h4>3rd Year</h4>
+                        </div>
+
+                        <div className={styles.reqInfo}>
+                          <h4>Section:</h4>
+                          <h4>3CSC</h4>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div className={styles.reminder}>
+                      Kindly show the receipt before and after borrowing the book.
+                    </div>
+                    <div className={styles.receiptBtnContainer}>
+                      <button className={styles.downloadBtn}> Download </button>
+                      <button className={styles.backBtn}> Go Back </button>
+                    </div>
+                  </div>
+                </Modal>
               </div>
             </div>
           </div>
