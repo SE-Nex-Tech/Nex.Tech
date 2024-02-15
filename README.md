@@ -24,33 +24,33 @@ git clone https://github.com/SE-Nex-Tech/Nex.Tech.git
 
 ### 2. Install dependencies
 
-    This command installs the necessary Node.js modules specified in the package.json file.
+This command installs the necessary Node.js modules specified in the package.json file.
 
-    npm:
-    ```bash
-    npm install
-    ```
+npm:
+```bash
+npm install
+```
 
-    yarn:
-    ```bash
-    yarn
-    ```
+yarn:
+```bash
+yarn
+```
 
 ### 3.1 Run the server in development mode
 
-    Start the development server with the following command:
+Start the development server with the following command:
 
-    npm:
-    ```bash
-    npm run dev
-    ```
+npm:
+```bash
+npm run dev
+```
 
-    yarn:
-    ```bash
-    yarn dev
-    ```
+yarn:
+```bash
+yarn dev
+```
 
-    > Note: development mode is not the optimized version of the app; waiting times will be slow. Build the app instead if you don't need to debug the source code.
+> Note: development mode is not the optimized version of the app; waiting times will be slow. Build the app instead if you don't need to debug the source code.
 
 ### 3.2 Build the app and run the server
 
@@ -70,10 +70,10 @@ yarn start
 
 ### 4. Access the App
 
-    Open a web browser and navigate to http://localhost:3000. You should see the Next.js app running locally.
+Open a web browser and navigate to http://localhost:3000. You should see the Next.js app running locally.
 
-    Any changes you make to the code will automatically trigger hot reloading, so you can see updates without restarting the server.
+Any changes you make to the code will automatically trigger hot reloading, so you can see updates without restarting the server.
 
 ### 6. Stop the server
 
-    To stop the development server, go back to the terminal where it's running and press Ctrl + C.
+To stop the development server, go back to the terminal where it's running and press Ctrl + C.
