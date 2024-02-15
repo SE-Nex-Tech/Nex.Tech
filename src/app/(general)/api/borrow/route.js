@@ -1,10 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
+import { borrow } from './borrow.js';
 
 export async function GET(request) {
   const params = Object.fromEntries(await request.nextUrl.searchParams);
-
+  console.log("Borrow/route.js GET params -----------------------------");
   console.log(params);
-  return new Response("hello world");
+  return Response.redirect(new URL('/books', request.url));
 }
 
 export async function POST(request) {
@@ -16,5 +17,7 @@ export async function POST(request) {
   
   // TODO: create reservation at db
   console.log("Book Reserved");
-  return Response.redirect(new URL('/books', request.url));
+  console.log(await borrow(params['materialID']));
+  // return Response.redirect(new URL('/books', request.url));
+  return new Response('hello world');
 }
