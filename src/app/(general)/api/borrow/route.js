@@ -17,7 +17,7 @@ export async function POST(request) {
   
   // TODO: create reservation at db
   console.log("Book Reserved");
-  console.log(await borrow(params['materialID']));
+  console.log(await borrow(params));
   // return Response.redirect(new URL('/books', request.url));
   return new Response('hello world');
 }
