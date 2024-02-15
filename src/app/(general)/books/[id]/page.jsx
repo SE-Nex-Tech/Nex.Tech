@@ -6,6 +6,7 @@ import Header from "@/_components/header/Header";
 import { Center, Skeleton } from "@mantine/core";
 import styles from "./bookpage.module.scss";
 import Link from "next/link";
+import { IconChevronLeft } from "@tabler/icons-react";
 
 const BookPage = () => {
   const { id } = useParams();
@@ -39,7 +40,8 @@ const BookPage = () => {
       </div>
       <Center className={styles.center} maw="100%" m={25} h="81.5%">
         <Link href={"/books"} className={styles.navigator}>
-          Book Information
+          <IconChevronLeft size={32} />
+          Go Back{" "}
         </Link>
         <div className={styles.main_container}>
           <div className={styles.row_one}>
