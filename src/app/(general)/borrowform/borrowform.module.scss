@@ -1,0 +1,59 @@
+@import "/Users/Tuff Gaming/Documents/Programming Files/Nex.Tech/Nex.Tech/src/styles/variables.scss";
+
+.mainBody {
+    width: 100%;
+    height: 80vh;
+    padding: 5vh 18vw 5vh 18vw;
+}
+
+.formContainer {
+    width: 100%;
+    height: 100%;
+    background-color: #FFFFFF;
+    border-radius: 0.6rem;
+    padding: 4vh 4vw 4vh 4vw;
+}
+
+.formContents{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+}
+
+.fieldContainer{
+    width: 60%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.formTitle {
+    text-decoration: underline;
+}
+
+.formFields{
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: 0vh 1.5vw 0vh 1.5vw;
+}
+
+.input {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    align-items: center;
+}
+
+.itemContainer{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+}
