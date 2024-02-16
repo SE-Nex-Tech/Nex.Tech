@@ -13,23 +13,22 @@ export async function borrow(req) {
   console.log("Book to borrow: ----------------");
   console.log(books);
 
-  const aiw = await prisma.books.create({
+  const borrow_material_record = await prisma.request.create({
     data: borrow_book(req)
   })
 
-  console.log(aiw);
+  console.log(borrow_material_record);
+  console.log(new Date().toLocaleString());
   return 'end of borrow';
 }
 
 function borrow_book(params) {
   return {
-      book_barcode: 696969,
-      book_call_num: "hatdog",
-      book_title: "hatdog",
-      book_accession_num: 123,
-      book_author: "hev abi",
-      book_edition: "0.6",
-      book_publication_place: "sa bahay",
-      book_publisher: "OC records"
-    }
+    request_datetime: params['requestDate'],
+    request_user_type: params['userType'],
+    request_type: params['requestType'],
+    borrow_datetime: new Date().toLocaleString(),
+    return_datetime: null,
+    request_status: "borrow",
+  }
 }
