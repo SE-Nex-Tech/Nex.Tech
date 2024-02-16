@@ -7,14 +7,14 @@ import { TextInput, Select, Button, NumberInput, Radio, Modal } from '@mantine/c
 import React, { useState, useCallback, useEffect } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
+import ReactDOM from 'react-dom';
+import {QRCodeSVG} from 'qrcode.react';
 
 const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
   const [value, setValue] = useState('react');
   const [opened, { open, close }] = useDisclosure(false);
-
-
 
   return (
 
@@ -39,15 +39,11 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>User Type:</label>
-                  <Radio.Group
-                    value={value}
-                    onChange={setValue}
-                    name="userType"
-                  >
-                    <Radio value="student" label="Student" />
-                    <Radio value="faculty" label="Faculty" />
-                    <Radio value="staff" label="Staff" />
-                  </Radio.Group>
+                  <Button.Group value={null}>
+                    <Button name="studentBtn" variant="primary">Student</Button>
+                    <Button name="facultyBtn" variant="default">Faculty</Button>
+                    <Button name="staffBtn" variant="default">Staff</Button>
+                  </Button.Group>
                 </div>
 
                 <div className={styles.input}>
@@ -96,6 +92,8 @@ const BorrowForm = () => {
               <div className={styles.itemInfo}>
                 <div className={styles.imageContainer}></div>
                 <div className={styles.itemDetails}>
+
+                  <TextInput name="itemId" value="" type="hidden" />
 
                   <div className={styles.info}>
                     <h4>Title:</h4>
@@ -150,12 +148,15 @@ const BorrowForm = () => {
                   onClose={close}
                   centered
                   withCloseButton={false}
-                  size="50%">
+                  size="50%"
+                  closeOnClickOutside={false}>
                   <div className={styles.receiptContainer}>
                     <h2>Request Receipt</h2>
                     <div className={styles.infoContainer}>
                       <div className={styles.receiptInfo}>
-                        <div className={styles.qrContainer}></div>
+                        <div className={styles.qrContainer}>
+
+                        </div>
                         <div className={styles.receiptLabel}>
                           <h4>Receipt No.:</h4>
                           <h4>20231204734</h4>
@@ -210,7 +211,7 @@ const BorrowForm = () => {
                     </div>
                     <div className={styles.receiptBtnContainer}>
                       <button className={styles.downloadBtn}> Download </button>
-                      <button className={styles.backBtn}> Go Back </button>
+                      <button className={styles.backBtn} onClick={close}> Go Back </button>
                     </div>
                   </div>
                 </Modal>
