@@ -9,7 +9,7 @@ export async function POST(request) {
 
   let entity = (params['entity'] == 'books') ? prisma.books : prisma.games;
 
-  let books = await entity.findMany({
+  let result = await entity.findMany({
     where: params['where']
   });
 
@@ -19,12 +19,12 @@ export async function POST(request) {
       contains: params['contains'],
       mode: "insensitive"
     }
-    books = await entity.findMany({
+    result = await entity.findMany({
       where: condition
     });
   }
 
   prisma.$disconnect();
 
-  return NextResponse.json(books);
+  return NextResponse.json(result);
 }
