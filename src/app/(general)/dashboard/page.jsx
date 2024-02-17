@@ -11,6 +11,7 @@ import styles from "./dashboard.module.scss";
 import { IconBooks, IconDice, IconUsers } from "@tabler/icons-react";
 import { Prisma, PrismaClient } from "@prisma/client";
 import { useMemo, useEffect, useState } from "react";
+import { useSession, getSession } from "next-auth/react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -19,6 +20,16 @@ import {
 } from "@tanstack/react-table";
 
 const Dashboard = () => {
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return <Loader color="yellow" size="xl" />;
+  }
+
+  if (status === "unauthenticated") {
+    return <h1>Not Logged In</h1>;
+  }
+
   const current = usePathname();
   const iconStyle = { width: rem(20), height: rem(20) };
   const prisma = new PrismaClient();
@@ -260,26 +271,24 @@ const Dashboard = () => {
                     ))}
                   </tbody>
                 </table>
-                <div>
-                  <button onClick={() => table.setPageIndex(0)}>
-                    First Page
-                  </button>
+                <div className={styles.page_btn}>
+                  <button onClick={() => table.setPageIndex(0)}>First</button>
                   <button
-                    onClick={() => table.previousPage}
+                    onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                   >
-                    Previous Page
+                    Previous
                   </button>
                   <button
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
-                    Next Page
+                    Next
                   </button>
                   <button
                     onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                   >
-                    Last Page
+                    Last
                   </button>
                 </div>
               </Tabs.Panel>

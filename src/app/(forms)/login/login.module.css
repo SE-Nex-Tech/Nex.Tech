@@ -1,0 +1,110 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap");
+.input {
+  transition: none;
+  border-radius: 25px;
+  min-width: 400px;
+  height: 40px;
+  font-size: 16px;
+}
+.input:focus-within {
+  outline: 1px solid #e8b031;
+  border-color: transparent;
+}
+
+.btn,
+.btn2 {
+  min-width: 400px;
+  height: 40px;
+  font-size: 16px;
+}
+
+.btn {
+  background-color: #8d1038;
+  border-radius: 25px;
+}
+
+.btn2 {
+  background-color: transparent;
+  border-color: #8d1038;
+  color: #8d1038;
+  border-width: 3px;
+  border-radius: 25px;
+}
+
+.forgot {
+  color: #e8b031;
+  font-weight: normal;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+.container {
+  /* Center vertically and horizontally */
+  display: flex;
+  width: 80%;
+  height: 60%;
+  position: relative;
+  border-radius: 25px;
+}
+.container .logo {
+  position: absolute;
+  left: 1%;
+}
+
+.login_container__Rpq2E {
+  display: flex;
+  width: 80%;
+  height: 60%;
+  position: relative;
+  overflow: hidden;
+}
+
+.parent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #ebebeb;
+}
+.parent .left,
+.parent .right {
+  flex: 1;
+}
+.parent .left {
+  background-color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  border-radius: 25px 0px 0px 25px;
+}
+.parent .left .leftUpper,
+.parent .left .leftLower {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.parent .right {
+  width: 500px;
+  position: relative;
+}
+.parent .right .building {
+  -o-object-fit: cover;
+     object-fit: cover;
+  height: 100%;
+  width: 100%;
+  border-radius: 0px 25px 25px 0px;
+}
+.parent .right .gradientOverlay {
+  border-radius: 0px 25px 25px 0px;
+  z-index: 1;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgb(141, 16, 56);
+  background: linear-gradient(45deg, rgba(141, 16, 56, 0.4948354342) 0%, rgba(113, 26, 54, 0.8505777311) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#8d1038",endColorstr="#711a36",GradientType=1);
+}/*# sourceMappingURL=login.module.css.map */
