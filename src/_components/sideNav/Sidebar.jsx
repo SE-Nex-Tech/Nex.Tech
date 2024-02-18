@@ -58,7 +58,7 @@ const sideBarItems = [
   },
   {
     name: "Database",
-    href: "/addatabase",
+    href: "/dbpage",
     icon: IconDatabase,
   },
 ];
