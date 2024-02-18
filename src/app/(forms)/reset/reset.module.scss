@@ -129,3 +129,14 @@
     }
   }
 }
+
+.name {
+  display: flex;
+  flex-direction: row;
+  width: 50px;
+  gap: 0.8em;
+
+  input {
+    min-width: 195px;
+  }
+}

@@ -1,9 +1,9 @@
-import { Inter } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { Providers } from "../(general)/providers/providers";
 import "@mantine/core/styles.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 
-const inter = Inter({ subsets: ["latin"] });
+const plusjakartasans = Plus_Jakarta_Sans({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Login | Bibliotechai",
@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
       <head>
         <ColorSchemeScript />
       </head>
-      <body className={inter.className}>
+      <body className={plusjakartasans.className}>
         <div className="row">
           <MantineProvider>
             <Providers>

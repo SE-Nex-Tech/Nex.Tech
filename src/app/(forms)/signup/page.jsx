@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import styles from "./login.module.scss";
+import styles from "./signup.module.scss";
 import { Input, Button, PasswordInput } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 import Image from "next/image";
@@ -13,29 +13,29 @@ import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const Login = () => {
-  const email = useRef("");
-  const password = useRef("");
+const Signup = () => {
+  //   const email = useRef("");
+  //   const password = useRef("");
 
-  const router = useRouter();
+  //   const router = useRouter();
 
-  const onSubmit = async () => {
-    const result = await signIn("credentials", {
-      email: email.current,
-      password: password.current,
-      redirect: false,
-      callbackUrl: "/",
-    });
+  //   const onSubmit = async () => {
+  //     const result = await signIn("credentials", {
+  //       email: email.current,
+  //       password: password.current,
+  //       redirect: false,
+  //       callbackUrl: "/",
+  //     });
 
-    if (result.ok) {
-      toast.success("Logged in successfully, please wait", { autoClose: 2000 });
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 2000);
-    } else {
-      toast.error("Incorrect Credentials!");
-    }
-  };
+  //     if (result.ok) {
+  //       toast.success("Logged in successfully, please wait", { autoClose: 2000 });
+  //       setTimeout(() => {
+  //         router.push("/dashboard");
+  //       }, 2000);
+  //     } else {
+  //       toast.error("Incorrect Credentials!");
+  //     }
+  //   };
 
   return (
     <div className={styles.parent}>
@@ -49,35 +49,29 @@ const Login = () => {
         />
         <div className={styles.left}>
           <div className={styles.leftUpper}>
+            <div className={styles.name}>
+              <Input placeholder="First Name" classNames={styles} />
+              <Input placeholder="Last Name" classNames={styles} />
+            </div>
+            <Input placeholder="Email" classNames={styles} />
             <Input
-              placeholder="Email"
-              leftSection={<IconAt size={16} />}
+              placeholder="Employee / Student Number"
               classNames={styles}
-              onChange={(e) => (email.current = e.target.value)}
             />
             <PasswordInput
               placeholder="Password"
               withAsterisk
-              leftSection={<IconLock size={16} />}
               classNames={styles}
-              onChange={(e) => (password.current = e.target.value)}
             />
           </div>
           <div className={styles.leftLower}>
-            <Button classNames={{ root: styles.btn }} onClick={onSubmit}>
-              Login
-            </Button>
-
-            <Link href="/signup">
-              <Button classNames={{ root: styles.btn2 }}>Sign Up</Button>
+            {/* must remove link and replace it with onClick function */}
+            <Link href="/login">
+              <Button classNames={{ root: styles.btn }}>
+                Create an account
+              </Button>
             </Link>
           </div>
-          <h2 className={styles.forgot}>
-            <Link href="/verify" className={styles.forgot}>
-              {" "}
-              Forgot Password?
-            </Link>
-          </h2>
         </div>
         <div className={styles.right}>
           <div className={styles.gradientOverlay}></div>
@@ -89,4 +83,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Signup;
