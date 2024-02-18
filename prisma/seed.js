@@ -31,22 +31,22 @@ async function main() {
   });
   console.log({ admin });
 
-  const books = [];
-  fs.createReadStream(csvFilePath)
-    .pipe(csv())
-    .on("data", (row) => {
-      row.barcode = parseInt(row.barcode, 10);
-      row.accession_num = parseInt(row.accession_num, 10);
-      books.push(row);
-    })
-    .on("end", async () => {
-      await prisma.books.createMany({
-        data: books,
-        skipDuplicates: true,
-      });
+  // const books = [];
+  // fs.createReadStream(csvFilePath)
+  //   .pipe(csv())
+  //   .on("data", (row) => {
+  //     row.barcode = parseInt(row.barcode, 10);
+  //     row.accession_num = parseInt(row.accession_num, 10);
+  //     books.push(row);
+  //   })
+  //   .on("end", async () => {
+  //     await prisma.books.createMany({
+  //       data: books,
+  //       skipDuplicates: true,
+  //     });
 
-      await prisma.$disconnect();
-    });
+  //     await prisma.$disconnect();
+  //   });
 }
 
 main()

@@ -7,7 +7,7 @@ CREATE TYPE "UserType" AS ENUM ('Student', 'Faculty', 'Staff');
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" SERIAL NOT NULL,
-    "name" TEXT,
+    "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
 
@@ -25,8 +25,8 @@ CREATE TABLE "Books" (
     "edition" TEXT NOT NULL,
     "publication_place" TEXT NOT NULL,
     "publisher" TEXT NOT NULL,
-    "copyright_date" TEXT,
-    "status" TEXT,
+    "copyright_date" DATE NOT NULL,
+    "status" TEXT NOT NULL,
 
     CONSTRAINT "Books_pkey" PRIMARY KEY ("id")
 );
@@ -38,7 +38,7 @@ CREATE TABLE "Boardgames" (
     "title" TEXT NOT NULL,
     "accession_num" INTEGER NOT NULL,
     "publisher" TEXT NOT NULL,
-    "copyright_date" TEXT NOT NULL,
+    "copyright_date" DATE NOT NULL,
     "status" TEXT NOT NULL,
 
     CONSTRAINT "Boardgames_pkey" PRIMARY KEY ("id")
@@ -48,8 +48,8 @@ CREATE TABLE "Boardgames" (
 CREATE TABLE "Request" (
     "id" SERIAL NOT NULL,
     "date" TEXT NOT NULL,
-    "borrow_date" TEXT NOT NULL,
-    "return_date" TEXT NOT NULL,
+    "borrow_date" DATE,
+    "return_date" DATE,
     "status" TEXT NOT NULL,
     "type" "RequestType" NOT NULL,
     "user_type" "UserType" NOT NULL,

@@ -9,7 +9,7 @@ datasource db {
 
 model Admin {
   id       Int     @id @default(autoincrement())
-  name     String?
+  name     String
   email    String  @unique
   password String
 
@@ -25,8 +25,8 @@ model Books {
   edition           String @db.Text
   publication_place String @db.Text
   publisher         String @db.Text
-  copyright_date    String? @db.Text
-  status            String? @db.Text
+  copyright_date    DateTime @db.Date
+  status            String @db.Text
   bookRequests      BookRequest[]
 }
 
@@ -36,16 +36,16 @@ model Boardgames {
   title             String @db.Text
   accession_num     Int
   publisher         String @db.Text
-  copyright_date    String @db.Text
+  copyright_date    DateTime @db.Date
   status            String @db.Text    
   boardgameRequests BoardgameRequest[]   
 }
 
 model Request {
   id                Int    @id @default(autoincrement())
-  date              String @db.Text
-  borrow_date       String @db.Text
-  return_date       String @db.Text
+  date              DateTime? @db.Date
+  borrow_date       DateTime? @db.Date
+  return_date       DateTime? @db.Date
   status            String @db.Text
   type              RequestType
   bookRequests      BookRequest?
@@ -65,7 +65,7 @@ model BookRequest {
   request_id        Int         @id
   request           Request     @relation(fields: [request_id], references: [id])
   book_id           Int    
-  book              Books        @relation(fields: [book_id], references: [id]) 
+  book              Books       @relation(fields: [book_id], references: [id]) 
 }
 
 model BoardgameRequest {
