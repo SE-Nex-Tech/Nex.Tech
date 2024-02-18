@@ -9,9 +9,9 @@ datasource db {
 
 model Admin {
   id       Int     @id @default(autoincrement())
-  name     String
-  email    String  @unique
-  password String
+  name     String  @db.Text
+  email    String  @db.Text @unique
+  password String  @db.Text
 
 }
 
@@ -41,7 +41,7 @@ model Boardgames {
   boardgameRequests BoardgameRequest[]   
 }
 
-model Request {
+model Requests {
   id                Int    @id @default(autoincrement())
   date              DateTime? @db.Date
   borrow_date       DateTime? @db.Date
@@ -63,14 +63,14 @@ enum RequestType {
 
 model BookRequest {
   request_id        Int         @id
-  request           Request     @relation(fields: [request_id], references: [id])
+  request           Requests     @relation(fields: [request_id], references: [id])
   book_id           Int    
   book              Books       @relation(fields: [book_id], references: [id]) 
 }
 
 model BoardgameRequest {
   request_id        Int         @id 
-  request           Request     @relation(fields:[request_id], references: [id])
+  request           Requests     @relation(fields:[request_id], references: [id])
   boardgame_id      Int
   boardgame         Boardgames   @relation(fields: [boardgame_id], references: [id])
 }
@@ -84,7 +84,7 @@ enum UserType {
 
 model Student {
   request_id        Int         @id 
-  request           Request     @relation(fields:[request_id], references: [id])
+  request           Requests     @relation(fields:[request_id], references: [id])
   student_num       String @db.Text
   name              String @db.Text
   department        String @db.Text
@@ -95,7 +95,7 @@ model Student {
 
 model Faculty {
   request_id        Int         @id 
-  request           Request     @relation(fields:[request_id], references: [id])
+  request           Requests     @relation(fields:[request_id], references: [id])
   employee_num      String @db.Text
   name              String @db.Text
   department        String @db.Text
@@ -105,7 +105,7 @@ model Faculty {
 
 model Staff {
   request_id        Int         @id 
-  request           Request     @relation(fields:[request_id], references: [id])
+  request           Requests     @relation(fields:[request_id], references: [id])
   employee_num      String @db.Text
   name              String @db.Text
   email             String @db.Text

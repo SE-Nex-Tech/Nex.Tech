@@ -45,16 +45,16 @@ CREATE TABLE "Boardgames" (
 );
 
 -- CreateTable
-CREATE TABLE "Request" (
+CREATE TABLE "Requests" (
     "id" SERIAL NOT NULL,
-    "date" TEXT NOT NULL,
+    "date" DATE,
     "borrow_date" DATE,
     "return_date" DATE,
     "status" TEXT NOT NULL,
     "type" "RequestType" NOT NULL,
     "user_type" "UserType" NOT NULL,
 
-    CONSTRAINT "Request_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Requests_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -111,22 +111,22 @@ CREATE TABLE "Staff" (
 CREATE UNIQUE INDEX "Admin_email_key" ON "Admin"("email");
 
 -- AddForeignKey
-ALTER TABLE "BookRequest" ADD CONSTRAINT "BookRequest_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "BookRequest" ADD CONSTRAINT "BookRequest_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Requests"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BookRequest" ADD CONSTRAINT "BookRequest_book_id_fkey" FOREIGN KEY ("book_id") REFERENCES "Books"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "BoardgameRequest" ADD CONSTRAINT "BoardgameRequest_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "BoardgameRequest" ADD CONSTRAINT "BoardgameRequest_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Requests"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "BoardgameRequest" ADD CONSTRAINT "BoardgameRequest_boardgame_id_fkey" FOREIGN KEY ("boardgame_id") REFERENCES "Boardgames"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Student" ADD CONSTRAINT "Student_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Student" ADD CONSTRAINT "Student_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Requests"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Faculty" ADD CONSTRAINT "Faculty_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Faculty" ADD CONSTRAINT "Faculty_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Requests"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Staff" ADD CONSTRAINT "Staff_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Request"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Staff" ADD CONSTRAINT "Staff_request_id_fkey" FOREIGN KEY ("request_id") REFERENCES "Requests"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
