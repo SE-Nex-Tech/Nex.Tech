@@ -7,21 +7,106 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
+model Admin {
   id       Int     @id @default(autoincrement())
+  name     String?
   email    String  @unique
   password String
-  name     String?
+
 }
 
 model Books {
-  id                     Int    @id @default(autoincrement())
-  book_barcode           Int
-  book_call_num          String @db.Text
-  book_title             String @db.Text
-  book_accession_num     Int
-  book_author            String @db.Text
-  book_edition           String @db.Text
-  book_publication_place String @db.Text
-  book_publisher         String @db.Text
+  id                Int    @id @default(autoincrement())
+  barcode           Int
+  call_num          String @db.Text
+  title             String @db.Text
+  accession_num     Int
+  author            String @db.Text
+  edition           String @db.Text
+  publication_place String @db.Text
+  publisher         String @db.Text
+  copyright_date    String? @db.Text
+  status            String? @db.Text
+  bookRequests      BookRequest[]
+}
+
+model Boardgames {
+  id                Int    @id @default(autoincrement())
+  call_num          String @db.Text
+  title             String @db.Text
+  accession_num     Int
+  publisher         String @db.Text
+  copyright_date    String @db.Text
+  status            String @db.Text    
+  boardgameRequests BoardgameRequest[]   
+}
+
+model Request {
+  id                Int    @id @default(autoincrement())
+  date              String @db.Text
+  borrow_date       String @db.Text
+  return_date       String @db.Text
+  status            String @db.Text
+  type              RequestType
+  bookRequests      BookRequest?
+  boardgameRequests BoardgameRequest?
+  user_type         UserType
+  user_student      Student?
+  user_faculty      Faculty?
+  user_staff        Staff?
+}
+
+enum RequestType {
+  Book
+  Boardgame
+}
+
+model BookRequest {
+  request_id        Int         @id
+  request           Request     @relation(fields: [request_id], references: [id])
+  book_id           Int    
+  book              Books        @relation(fields: [book_id], references: [id]) 
+}
+
+model BoardgameRequest {
+  request_id        Int         @id 
+  request           Request     @relation(fields:[request_id], references: [id])
+  boardgame_id      Int
+  boardgame         Boardgames   @relation(fields: [boardgame_id], references: [id])
+}
+
+enum UserType {
+  Student
+  Faculty
+  Staff
+}
+
+
+model Student {
+  request_id        Int         @id 
+  request           Request     @relation(fields:[request_id], references: [id])
+  student_num       String @db.Text
+  name              String @db.Text
+  department        String @db.Text
+  year_level        String @db.Text
+  section           String @db.Text
+  email             String @db.Text
+}
+
+model Faculty {
+  request_id        Int         @id 
+  request           Request     @relation(fields:[request_id], references: [id])
+  employee_num      String @db.Text
+  name              String @db.Text
+  department        String @db.Text
+  email             String @db.Text
+}
+
+
+model Staff {
+  request_id        Int         @id 
+  request           Request     @relation(fields:[request_id], references: [id])
+  employee_num      String @db.Text
+  name              String @db.Text
+  email             String @db.Text
 }

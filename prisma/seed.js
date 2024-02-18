@@ -11,16 +11,16 @@ const prisma = new PrismaClient();
 
 async function main() {
   const password = await hash("test", 12);
-  const user = await prisma.user.upsert({
+  const admin = await prisma.admin.upsert({
     where: { email: "test@test.com" },
     update: {},
     create: {
       email: "test@test.com",
-      name: "Test User",
+      name: "Test Admin",
       password,
     },
   });
-  const createUsers = await prisma.user.createMany({
+  const createAdmins = await prisma.admin.createMany({
     data: [
       { email: "edjin@edjin.com", name: "edjin", password },
       { email: "carl@carl.com", name: "carl", password },
@@ -29,14 +29,14 @@ async function main() {
     ],
     skipDuplicates: true,
   });
-  console.log({ user });
+  console.log({ admin });
 
   const books = [];
   fs.createReadStream(csvFilePath)
     .pipe(csv())
     .on("data", (row) => {
-      row.book_barcode = parseInt(row.book_barcode, 10);
-      row.book_accession_num = parseInt(row.book_accession_num, 10);
+      row.barcode = parseInt(row.barcode, 10);
+      row.accession_num = parseInt(row.accession_num, 10);
       books.push(row);
     })
     .on("end", async () => {

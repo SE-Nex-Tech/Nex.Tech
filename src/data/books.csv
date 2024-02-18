@@ -1,4 +1,4 @@
-book_barcode,book_call_num,book_title,book_accession_num,book_author,book_edition,book_publication_place,book_publisher
+barcode,call_num,title,accession_num,author,edition,publication_place,publisher
 11111,6,Targets,52,Rana Bratt,2,Buliu,Flashspan
 11112,100,"Dreamers, The",13,Michaelina Gillott,7,Herīs,Edgepulse
 11113,81,3 Simoa,64,Karlan Jermey,4,Tabatinga,Skipstorm
