@@ -48,10 +48,10 @@ const BookPage = () => {
             <div className={styles.main_information}>
               <Skeleton className={styles.img_holder}></Skeleton>
               <p>Call No.: QA76.73.J38 .H788j 2022</p>
-              <h1>{book.book_title}</h1>
+              <h1>{book.title}</h1>
               <p>
                 <span style={{ fontWeight: "bold" }}>Author:</span>{" "}
-                {book.book_author}
+                {book.author}
               </p>
             </div>
             <div className={styles.information}>

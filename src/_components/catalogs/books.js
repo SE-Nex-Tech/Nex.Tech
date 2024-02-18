@@ -48,8 +48,8 @@ const Books = () => {
           <Link href={`/books/${book.id}`} className={styles.container}>
             <div key={book.id}>
               <Skeleton className={styles.img_holder}></Skeleton>
-              <h2 className={styles.book_title}>{book.book_title}</h2>
-              <p className={styles.book_author}>{book.book_author}</p>
+              <h2 className={styles.book_title}>{book.title}</h2>
+              <p className={styles.book_author}>{book.author}</p>
             </div>
           </Link>
         ))}
