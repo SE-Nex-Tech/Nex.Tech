@@ -7,7 +7,6 @@ const path = require("path");
 const booksFilePath = path.resolve(__dirname, "../src/data/books.csv");
 const boardgamesFilePath = path.resolve(__dirname, "../src/data/boardgames.csv");
 const requestsFilePath = path.resolve(__dirname, "../src/data/requests.csv");
-const bookRequestsFilePath = path.resolve(__dirname, "../src/data/bookrequests.csv");
 
 
 const prisma = new PrismaClient();
@@ -27,49 +26,198 @@ async function main() {
     .on("end", async () => {
       for (const data of requests) {
         if (data.type == "Book") {
-          const request = await prisma.requests.create({
-            data: {
+          if (data.user_type == "Student") {
+            const request = await prisma.requests.create({
+              data: {
 
-              date: data.date,
-              borrow_date: data.borrow_date,
-              return_date: data.return_date,
-              status: data.status,
-              type: data.type,
-              user_type: data.user_type,
-              bookRequests: {
-                create:
-                {
-                  book: {
-                    connect: { id: Math.floor(Math.random() * 200) + 1 },
+                date: data.date,
+                borrow_date: data.borrow_date,
+                return_date: data.return_date,
+                status: data.status,
+                type: data.type,
+                user_type: data.user_type,
+                bookRequests: {
+                  create:
+                  {
+                    book: {
+                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                    },
                   },
+
                 },
+                user_student: {
+                  create:
+                  {
+                    student_num: "2021131421",
+                    name: "Sample Name",
+                    department: "Computer Science",
+                    year_level: "3rd Year",
+                    section: "3CSC",
+                    email: "sample@email.com",
+                  }
+                }
 
               },
-            },
-          });
+            });
+          } else if (data.user_type == "Faculty") {
+            const request = await prisma.requests.create({
+              data: {
+
+                date: data.date,
+                borrow_date: data.borrow_date,
+                return_date: data.return_date,
+                status: data.status,
+                type: data.type,
+                user_type: data.user_type,
+                bookRequests: {
+                  create:
+                  {
+                    book: {
+                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                    },
+                  },
+
+                },
+                user_faculty: {
+                  create:
+                  {
+                    employee_num: "2021131232",
+                    name: "Sample Name",
+                    email: "sample@email.com",
+                    department: "Information Technology",
+                  }
+                }
+
+              },
+            });
+          } else if (data.user_type == "Staff") {
+            const request = await prisma.requests.create({
+              data: {
+
+                date: data.date,
+                borrow_date: data.borrow_date,
+                return_date: data.return_date,
+                status: data.status,
+                type: data.type,
+                user_type: data.user_type,
+                bookRequests: {
+                  create:
+                  {
+                    book: {
+                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                    },
+                  },
+
+                },
+                user_staff: {
+                  create:
+                  {
+                    employee_num: "2021131232",
+                    name: "Sample Name",
+                    email: "sample@email.com",
+                  }
+                }
+
+              },
+            });
+          }
+
         }
 
         if (data.type == "Boardgame") {
-          const request = await prisma.requests.create({
-            data: {
+          if (data.user_type == "Student") {
+            const request = await prisma.requests.create({
+              data: {
 
-              date: data.date,
-              borrow_date: data.borrow_date,
-              return_date: data.return_date,
-              status: data.status,
-              type: data.type,
-              user_type: data.user_type,
-              boardgameRequests: {
-                create:
-                {
-                  boardgame: {
-                    connect: { id: Math.floor(Math.random() * 200) + 1 },
+                date: data.date,
+                borrow_date: data.borrow_date,
+                return_date: data.return_date,
+                status: data.status,
+                type: data.type,
+                user_type: data.user_type,
+                boardgameRequests: {
+                  create:
+                  {
+                    boardgame: {
+                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                    },
                   },
-                },
 
+                },
+                user_student: {
+                  create:
+                  {
+                    student_num: "2021131421",
+                    name: "Sample Name",
+                    department: "Computer Science",
+                    year_level: "3rd Year",
+                    section: "3CSC",
+                    email: "sample@email.com",
+                  }
+                }
               },
-            },
-          });
+            });
+          } else if (data.user_type == "Faculty") {
+            const request = await prisma.requests.create({
+              data: {
+
+                date: data.date,
+                borrow_date: data.borrow_date,
+                return_date: data.return_date,
+                status: data.status,
+                type: data.type,
+                user_type: data.user_type,
+                boardgameRequests: {
+                  create:
+                  {
+                    boardgame: {
+                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                    },
+                  },
+
+                },
+                user_faculty: {
+                  create:
+                  {
+                    employee_num: "2021131232",
+                    name: "Sample Name",
+                    email: "sample@email.com",
+                    department: "Information Technology",
+                  }
+                }
+              },
+            });
+          } else if (data.user_type == "Staff") {
+            const request = await prisma.requests.create({
+              data: {
+
+                date: data.date,
+                borrow_date: data.borrow_date,
+                return_date: data.return_date,
+                status: data.status,
+                type: data.type,
+                user_type: data.user_type,
+                boardgameRequests: {
+                  create:
+                  {
+                    boardgame: {
+                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                    },
+                  },
+
+                },
+                user_staff: {
+                  create:
+                  {
+                    employee_num: "2021131232",
+                    name: "Sample Name",
+                    email: "sample@email.com",
+                  }
+                }
+              },
+            });
+          }
+
         }
       }
 

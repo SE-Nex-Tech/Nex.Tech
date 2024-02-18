@@ -87,10 +87,10 @@ model Student {
   request           Requests     @relation(fields:[request_id], references: [id])
   student_num       String @db.Text
   name              String @db.Text
+  email             String @db.Text
   department        String @db.Text
   year_level        String @db.Text
   section           String @db.Text
-  email             String @db.Text
 }
 
 model Faculty {
@@ -98,8 +98,8 @@ model Faculty {
   request           Requests     @relation(fields:[request_id], references: [id])
   employee_num      String @db.Text
   name              String @db.Text
-  department        String @db.Text
   email             String @db.Text
+  department        String @db.Text
 }
 
 

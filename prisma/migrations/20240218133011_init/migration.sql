@@ -78,10 +78,10 @@ CREATE TABLE "Student" (
     "request_id" INTEGER NOT NULL,
     "student_num" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
     "department" TEXT NOT NULL,
     "year_level" TEXT NOT NULL,
     "section" TEXT NOT NULL,
-    "email" TEXT NOT NULL,
 
     CONSTRAINT "Student_pkey" PRIMARY KEY ("request_id")
 );
@@ -91,8 +91,8 @@ CREATE TABLE "Faculty" (
     "request_id" INTEGER NOT NULL,
     "employee_num" TEXT NOT NULL,
     "name" TEXT NOT NULL,
-    "department" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "department" TEXT NOT NULL,
 
     CONSTRAINT "Faculty_pkey" PRIMARY KEY ("request_id")
 );
