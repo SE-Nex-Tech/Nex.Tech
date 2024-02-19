@@ -16,8 +16,8 @@ import Link from "next/link";
 const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
-  const [value, setValue] = useState('react');
   const [opened, { open, close }] = useDisclosure(false);
+  const [selectedButton, setSelectedButton] = useState("Student");
 
   const { id } = useParams();
   const [book, setBook] = useState([]);
@@ -50,16 +50,27 @@ const BorrowForm = () => {
     copyright_date = format(Date.parse(book.copyright_date), "MM/dd/yyyy");
   }
 
+  const requestCode = useRef("201314214");
   const requestType = useRef("Book");
-  const requestDate = useRef("");
-  const callNum = useRef("");
-  const userType = useRef("");
+  const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
+  const userType = useRef("");
   const userName = useRef("");
   const userEmail = useRef("");
   const userDepartment = useRef("");
   const yearLevel = useRef("");
   const section = useRef("");
+  const status = useRef();
+
+  var bookId;
+  var callNum;
+
+  console.log(studentNumber.current);
+
+  if (book) {
+    bookId = book.id;
+    callNum = book.call_num;
+  }
 
   return (
 
@@ -80,31 +91,38 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>Request Date:</label>
                   <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly="true"
-                  // onChange={(e) => (requestDate.current = e.target.value)}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>User Type:</label>
                   <Button.Group value={null}>
-                    <Button name="studentBtn" variant="primary">Student</Button>
-                    <Button name="facultyBtn" variant="default">Faculty</Button>
-                    <Button name="staffBtn" variant="default">Staff</Button>
+                    <Button name="studentBtn" variant={selectedButton === "Student" ? "primary" : "default"} onClick={() => {
+                      userType.current = "Student";
+                      setSelectedButton("Student");
+                    }} >Student</Button>
+                    <Button name="facultyBtn" variant={selectedButton === "Faculty" ? "primary" : "default"} onClick={() => {
+                      userType.current = "Faculty";
+                      setSelectedButton("Faculty");
+                    }}>Faculty</Button>
+                    <Button name="staffBtn" variant={selectedButton === "Staff" ? "primary" : "default"} onClick={() => {
+                      userType.current = "Staff";
+                      setSelectedButton("Staff");
+                    }}>Staff</Button>
                   </Button.Group>
                 </div>
 
                 <div className={styles.input}>
                   <label>Student No.:</label>
                   <NumberInput name="studentNumber" placeholder="Enter Student Number" hideControls
-                    value={value} onChange={setValue}
-                  // onChange={(e) => (studentNumber.current = e.target.value)}
+                    onChange={(value) => (studentNumber.current = value)}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>Name:</label>
                   <TextInput name="userName" placeholder="Enter Name"
-                  // onChange={(e) => (userName.current = e.target.value)}
+                    onChange={(e) => (userName.current = e.target.value)}
                   />
 
                 </div>
@@ -112,7 +130,7 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>Email:</label>
                   <TextInput name="userEmail" placeholder="Enter Email Address"
-                  // onChange={(e) => (userEmail.current = e.target.value)}
+                    onChange={(e) => (userEmail.current = e.target.value)}
                   />
                 </div>
 
@@ -122,7 +140,7 @@ const BorrowForm = () => {
                     name="userDepartment"
                     placeholder="Select Department"
                     data={['Information Technology', 'Information Systems', 'Computer Science']}
-                  // onChange={(e) => (userDepartment.current = value)}
+                    onChange={(value) => (userDepartment.current = value)}
                   />
                 </div>
 
@@ -132,14 +150,14 @@ const BorrowForm = () => {
                     name="yearLevel"
                     placeholder="Select Year Level"
                     data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
-                  // onChange={(e) => (yearLevel.current = e.target.value)}
+                    onChange={(value) => (yearLevel.current = value)}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>Section:</label>
                   <TextInput name="section" placeholder="Enter Section"
-                  // onChange={(e) => (section.current = e.target.value)}
+                    onChange={(e) => (section.current = e.target.value)}
                   />
                 </div>
 
@@ -203,7 +221,7 @@ const BorrowForm = () => {
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>
 
-
+                ``
 
                 <Modal
                   opened={opened}
@@ -222,11 +240,11 @@ const BorrowForm = () => {
                             fgColor="#E8B031"
                             value={JSON.stringify(
                               {
-                                requestCode: "1324154123421",
-                                requestDate: requestDate.current,
-                                requestType: requestType.current,
-                                callNum: callNum.current,
+                                requestCode: requestCode.current,
+                                requestDate: requestDate,
                                 userType: userType.current,
+                                requestType: requestType.current,
+                                bookId: bookId,
                                 studentNumber: studentNumber.current,
                                 userName: userName.current,
                                 userEmail: userEmail.current,
@@ -240,7 +258,7 @@ const BorrowForm = () => {
 
                         <div className={styles.receiptLabel}>
                           <h4>Receipt No.:</h4>
-                          <h4>20231204734</h4>
+                          <h4>{requestCode.current}</h4>
                         </div>
 
                       </div>
@@ -248,12 +266,12 @@ const BorrowForm = () => {
 
                         <div className={styles.reqInfo}>
                           <h4>Call No.:</h4>
-                          <h4>{callNum.current}</h4>
+                          <h4>{callNum}</h4>
                         </div>
 
                         <div className={styles.reqInfo}>
                           <h4>Request Date:</h4>
-                          <h4>{requestDate.current}</h4>
+                          <h4>{requestDate}</h4>
                         </div>
 
                         <div className={styles.reqInfo}>
