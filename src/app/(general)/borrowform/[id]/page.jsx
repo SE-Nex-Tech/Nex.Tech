@@ -60,7 +60,7 @@ const BorrowForm = () => {
   const userDepartment = useRef("");
   const yearLevel = useRef("");
   const section = useRef("");
-  const status = useRef();
+  const status = useRef("Pending");
 
   var bookId;
   var callNum;
@@ -244,6 +244,7 @@ const BorrowForm = () => {
                                 requestDate: requestDate,
                                 userType: userType.current,
                                 requestType: requestType.current,
+                                status: "pending",
                                 bookId: bookId,
                                 studentNumber: studentNumber.current,
                                 userName: userName.current,
