@@ -9,6 +9,9 @@ import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import ReactDOM from 'react-dom';
 import { QRCodeSVG } from 'qrcode.react';
+import { useParams } from "next/navigation";
+import { format } from "date-fns";
+import Link from "next/link";
 
 const BorrowForm = () => {
   const current = usePathname();
@@ -16,9 +19,40 @@ const BorrowForm = () => {
   const [value, setValue] = useState('react');
   const [opened, { open, close }] = useDisclosure(false);
 
+  const { id } = useParams();
+  const [book, setBook] = useState([]);
+  const [loading, setLoading] = useState(true);
+  var copyright_date = "";
+
+  useEffect(() => {
+    const fetchBook = async () => {
+      try {
+        const response = await fetch(`/api/books`);
+        const data = await response.json();
+        const selectedBook = data.find((book) => book.id === parseInt(id));
+        setBook(selectedBook);
+        setLoading(false);
+      } catch (error) {
+        console.error("Error fetching book:", error);
+      }
+    };
+
+    fetchBook();
+
+
+  }, [id]);
+
+  if (!book) {
+    return <div>Book not found</div>;
+  }
+
+  if (book.copyright_date) {
+    copyright_date = format(Date.parse(book.copyright_date), "MM/dd/yyyy");
+  }
+
   const requestType = useRef("Book");
   const requestDate = useRef("");
-  const callNum = useRef("QA76.73.J38 .H788j 2022");
+  const callNum = useRef("");
   const userType = useRef("");
   const studentNumber = useRef("");
   const userName = useRef("");
@@ -26,8 +60,6 @@ const BorrowForm = () => {
   const userDepartment = useRef("");
   const yearLevel = useRef("");
   const section = useRef("");
-
-
 
   return (
 
@@ -48,7 +80,7 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>Request Date:</label>
                   <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly="true"
-                    // onChange={(e) => (requestDate.current = e.target.value)}
+                  // onChange={(e) => (requestDate.current = e.target.value)}
                   />
                 </div>
 
@@ -72,7 +104,7 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>Name:</label>
                   <TextInput name="userName" placeholder="Enter Name"
-                    // onChange={(e) => (userName.current = e.target.value)}
+                  // onChange={(e) => (userName.current = e.target.value)}
                   />
 
                 </div>
@@ -80,7 +112,7 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>Email:</label>
                   <TextInput name="userEmail" placeholder="Enter Email Address"
-                    // onChange={(e) => (userEmail.current = e.target.value)}
+                  // onChange={(e) => (userEmail.current = e.target.value)}
                   />
                 </div>
 
@@ -90,7 +122,7 @@ const BorrowForm = () => {
                     name="userDepartment"
                     placeholder="Select Department"
                     data={['Information Technology', 'Information Systems', 'Computer Science']}
-                    // onChange={(e) => (userDepartment.current = value)}
+                  // onChange={(e) => (userDepartment.current = value)}
                   />
                 </div>
 
@@ -100,14 +132,14 @@ const BorrowForm = () => {
                     name="yearLevel"
                     placeholder="Select Year Level"
                     data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
-                    // onChange={(e) => (yearLevel.current = e.target.value)}
+                  // onChange={(e) => (yearLevel.current = e.target.value)}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>Section:</label>
                   <TextInput name="section" placeholder="Enter Section"
-                    // onChange={(e) => (section.current = e.target.value)}
+                  // onChange={(e) => (section.current = e.target.value)}
                   />
                 </div>
 
@@ -124,42 +156,42 @@ const BorrowForm = () => {
 
                   <div className={styles.info}>
                     <h4>Title:</h4>
-                    <h4 className={styles.infoTitle}>Introduction to Computing</h4>
+                    <h4 className={styles.infoTitle}>{book.title}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Author:</h4>
-                    <h4>Santos, Jose A.</h4>
+                    <h4>{book.author}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Call No.:</h4>
-                    <h4>QA76.73.J38 .H788j 2022</h4>
+                    <h4>{book.call_num}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Accession No.:</h4>
-                    <h4>2015831231</h4>
+                    <h4>{book.accession_num}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Edition:</h4>
-                    <h4>11th Edition</h4>
+                    <h4>{book.edition}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Publisher:</h4>
-                    <h4>AI Publishing Inc.</h4>
+                    <h4>{book.publisher}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Publication Place:</h4>
-                    <h4>New York City</h4>
+                    <h4>{book.publication_place}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Copyright Date:</h4>
-                    <h4>06/13/2016</h4>
+                    <h4>{copyright_date}</h4>
                   </div>
 
                 </div>
@@ -167,7 +199,10 @@ const BorrowForm = () => {
               <div className={styles.buttonContainer}>
 
                 <button className={styles.submitBtn} onClick={open}> Submit Form </button>
-                <button className={styles.backBtn}> Go Back </button>
+                <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
+                  <button className={styles.backBtn}> Go Back </button>
+                </Link>
+
 
 
                 <Modal
@@ -198,7 +233,7 @@ const BorrowForm = () => {
                                 userDepartment: userDepartment.current,
                                 yearLevel: yearLevel.current,
                                 section: section.current,
-                                
+
                               }
                             )} />
                         </div>

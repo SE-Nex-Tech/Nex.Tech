@@ -122,13 +122,15 @@
     font-weight: bold;
 }
 
+
 .backBtn {
+    width: 100%;
     border-radius: 1rem;
     border: none;
     background-color: $neutral2;
     color: #FFFFFF;
     padding: 0.7vh 0vw 0.7vh 0vw;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 .downloadBtn {
@@ -193,7 +195,7 @@
 
 .requestDetails {
     height: 100%;
-    width: 40%;
+    width: 50%;
     display: flex;
     flex-direction: column;
     justify-content: center;
