@@ -10,8 +10,8 @@ const EditButton = () => {
       <Modal
         opened={opened}
         onClose={close}
-        title="Edit database"
-        size="xl"
+        title="Edit"
+        size={900}
         centered
         overlayProps={{
           backgroundOpacity: 0.55,

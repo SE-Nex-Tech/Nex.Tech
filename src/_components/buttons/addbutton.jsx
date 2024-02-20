@@ -6,7 +6,18 @@ const AddButton = () => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Edit database" centered>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Add"
+        size="xl"
+        centered
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
+        withCloseButton={false}
+      >
         TEST2
       </Modal>
 

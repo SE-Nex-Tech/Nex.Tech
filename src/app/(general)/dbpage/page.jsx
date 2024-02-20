@@ -20,6 +20,7 @@ import Link from "next/link";
 import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
+import TableBody from "@/_components/tables/table";
 
 const Database = () => {
   const current = usePathname();
@@ -133,93 +134,7 @@ const Database = () => {
             </Tabs.List>
 
             <Tabs.Panel value="books">
-              <table className={styles.database_table}>
-                {table.getHeaderGroups().map((headerGroup) => (
-                  <tr key={headerGroup.id} className={styles.database_header}>
-                    {headerGroup.headers
-                      .filter((header) =>
-                        [
-                          "id",
-                          "book_author",
-                          "book_title",
-                          "book_publisher",
-                          "book_publication_place",
-                          "book_edition",
-                          "book_accession_num",
-                          "book_call_num",
-                          "book_barcode",
-                        ].includes(header.id)
-                      )
-                      .map((header) => (
-                        <th key={header.id}>
-                          {flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                        </th>
-                      ))}
-                  </tr>
-                ))}
-
-                <tbody className={styles.database_body}>
-                  {table.getRowModel().rows.map((row) => (
-                    <tr key={row.id} className={styles.database_body_row}>
-                      {row
-                        .getVisibleCells()
-                        .filter((cell) =>
-                          visibleColumns.includes(
-                            cell.column.columnDef.accessorKey
-                          )
-                        )
-                        .map((cell) => (
-                          <td>
-                            {flexRender(
-                              cell.column.columnDef.cell,
-                              cell.getContext()
-                            )}
-                          </td>
-                        ))}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-              <div className={styles.page_btn}>
-                <Button
-                  variant="filled"
-                  color="rgb(141, 16, 56)"
-                  radius="xl"
-                  onClick={() => table.setPageIndex(0)}
-                >
-                  First
-                </Button>
-
-                <Button
-                  variant="filled"
-                  color="rgb(141, 16, 56)"
-                  radius="xl"
-                  onClick={() => table.previousPage()}
-                  disabled={!table.getCanPreviousPage()}
-                >
-                  Previous
-                </Button>
-                <Button
-                  variant="filled"
-                  color="rgb(141, 16, 56)"
-                  radius="xl"
-                  onClick={() => table.nextPage()}
-                  disabled={!table.getCanNextPage()}
-                >
-                  Next
-                </Button>
-                <Button
-                  variant="filled"
-                  color="rgb(141, 16, 56)"
-                  radius="xl"
-                  onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                >
-                  Last
-                </Button>
-              </div>
+              <TableBody pageSize={6} disablePageButton={false} />
             </Tabs.Panel>
 
             <Tabs.Panel value="games">Messages tab content</Tabs.Panel>

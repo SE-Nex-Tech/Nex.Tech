@@ -6,7 +6,18 @@ const DeleteButton = () => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
-      <Modal opened={opened} onClose={close} title="Edit database" centered>
+      <Modal
+        opened={opened}
+        onClose={close}
+        title="Archive"
+        size={650}
+        centered
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
+        withCloseButton={false}
+      >
         TEST3
       </Modal>
 
