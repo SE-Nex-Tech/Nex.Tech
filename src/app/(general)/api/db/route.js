@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+const { hash } = require('bcrypt');
 
 const prisma = new PrismaClient();
 
@@ -22,6 +23,37 @@ export async function POST(request) {
     result = await entity.findMany({
       where: condition
     });
+  }
+
+  if (params['create'] != undefined) {
+
+    if (params['entity'] == 'books') {
+      const conditions = params['data'];
+      conditions['copyright_date'] = new Date(conditions['copyright_date']).toISOString();
+      // conditions['id'] = Date.now();
+      // console.log(conditions)
+      result = await entity.create({
+        data: conditions
+      })
+
+      result['id'] = result['id'].toString();
+      console.log(result);
+    }
+    else {
+      const conditions = params['data'];
+      conditions['copyright_date'] = new Date(conditions['copyright_date']).toISOString();
+      conditions['id'] = Date.now();
+      result = await entity.create({
+        data: conditions
+      })
+    }
+  }
+
+  else if (params['update'] != undefined) {
+    
+    if (params['entity'] == 'books') {
+      const conditions = params['data']
+    }
   }
 
   prisma.$disconnect();
