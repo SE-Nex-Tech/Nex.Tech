@@ -52,7 +52,23 @@ export async function POST(request) {
   else if (params['update'] != undefined) {
     
     if (params['entity'] == 'books') {
-      const conditions = params['data']
+      let filter = params['where']
+      let info = params['data']
+      info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
+      const result = await entity.update({
+        where: filter,
+        data: info
+      })
+    }
+
+    else {
+      let filter = params['where']
+      let info = params['data']
+      info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
+      const result = await entity.update({
+        where: filter,
+        data: info
+      })
     }
   }
 
