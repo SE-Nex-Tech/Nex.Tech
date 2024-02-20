@@ -4,6 +4,8 @@ const getPageTitle = (pathname) => {
       return "Home";
     case "/books":
       return "Books Catalog";
+    case "/borrowform":
+        return "Borrow Request Form";
     case "/games":
       return "Games Catalog";
     case "/dashboard":
