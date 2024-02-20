@@ -16,6 +16,10 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import Sort from "@/_components/sort/sort";
+import Link from "next/link";
+import EditButton from "@/_components/buttons/editbutton";
+import AddButton from "@/_components/buttons/addbutton";
+import DeleteButton from "@/_components/buttons/deletebutton";
 
 const Database = () => {
   const current = usePathname();
@@ -104,13 +108,14 @@ const Database = () => {
             radius="xl"
           />
           <Sort />
-          <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
-            Edit
-          </Button>
+          <EditButton />
+          <AddButton />
+          <DeleteButton />
         </div>
         <div className={styles.table_container}>
           <Tabs
             color="#e8b031"
+            mih="85%"
             radius="md"
             defaultValue="books"
             variant="outline"
@@ -119,6 +124,7 @@ const Database = () => {
               tabLabel: styles.tabLabel2,
               tab: styles.tab2,
               root: styles.root2,
+              panel: styles.panel,
             }}
           >
             <Tabs.List justify="flex-end">
