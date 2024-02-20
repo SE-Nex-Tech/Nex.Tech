@@ -72,6 +72,15 @@ export async function POST(request) {
     }
   }
 
+  else if (params['delete'] != undefined) {
+
+    let conditions = params['where']
+
+    const result = await entity.delete({
+      where: conditions
+    })
+  }
+
   prisma.$disconnect();
 
   return NextResponse.json(result);
