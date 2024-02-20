@@ -200,12 +200,9 @@ function Sidebar() {
           {sideBarItems
             .filter(
               ({ href }) =>
-                ![
-                  "/dashboard",
-                  "/qrscanner",
-                  "/adreport",
-                  "/addatabase",
-                ].includes(href)
+                !["/dashboard", "/qrscanner", "/adreport", "/dbpage"].includes(
+                  href
+                )
             )
             .map(({ name, href, icon: Icon }, index) => (
               <li
