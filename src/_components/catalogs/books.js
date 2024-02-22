@@ -50,6 +50,7 @@ const Books = () => {
               <Skeleton className={styles.img_holder}></Skeleton>
               <h2 className={styles.book_title}>{book.title}</h2>
               <p className={styles.book_author}>{book.author}</p>
+              <p className={styles.book_status}>{book.status}</p>
             </div>
           </Link>
         ))}
