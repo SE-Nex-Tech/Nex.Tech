@@ -25,12 +25,21 @@ const BorrowForm = () => {
   var copyright_date = "";
 
   useEffect(() => {
+
     const fetchBook = async () => {
       try {
-        const response = await fetch(`/api/books`);
-        const data = await response.json();
-        const selectedBook = data.find((book) => book.id === parseInt(id));
-        setBook(selectedBook);
+        const response = await fetch('/api/db', {
+          method: "POST",
+          body: JSON.stringify({
+            entity: 'books',
+            where: {
+              id: parseInt(id)
+            }
+          })
+        });
+
+        const selectedBook = await response.json()
+        setBook(selectedBook[0]);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching book:", error);
@@ -38,7 +47,6 @@ const BorrowForm = () => {
     };
 
     fetchBook();
-
 
   }, [id]);
 
@@ -85,12 +93,12 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>Request Type:</label>
-                  <TextInput name="requestType" value="Book" readOnly="true" />
+                  <TextInput name="requestType" value="Book" readOnly={true} />
                 </div>
 
                 <div className={styles.input}>
                   <label>Request Date:</label>
-                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly="true"
+                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
                   />
                 </div>
 
