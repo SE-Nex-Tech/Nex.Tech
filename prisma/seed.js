@@ -36,7 +36,8 @@ async function main() {
   fs.createReadStream(booksFilePath)
     .pipe(csv())
     .on("data", (row) => {
-      row.id = parseInt(row.id, 10);
+      // row.id = parseInt(row.id, 10);
+      delete row.id
       row.barcode = parseInt(row.barcode, 10);
       row.accession_num = parseInt(row.accession_num, 10);
       row.copyright_date = new Date(row.copyright_date);
