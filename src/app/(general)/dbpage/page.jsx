@@ -26,6 +26,7 @@ const Database = () => {
   const current = usePathname();
 
   const [data, setData] = useState([]);
+  const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
@@ -107,11 +108,13 @@ const Database = () => {
             placeholder="Search"
             leftSection={<IconSearch size={16} />}
             radius="xl"
+            w={rem(300)}
           />
           <Sort />
-          <EditButton />
-          <AddButton />
-          <DeleteButton />
+          <AddButton selectedRows={selectedRows} />
+
+          <EditButton selectedRows={selectedRows} />
+          <DeleteButton selectedRows={selectedRows} />
         </div>
         <div className={styles.table_container}>
           <Tabs
@@ -134,9 +137,13 @@ const Database = () => {
             </Tabs.List>
 
             <Tabs.Panel value="books">
-              <TableBody pageSize={6} disablePageButton={false} />
+              <TableBody
+                pageSize={6}
+                disablePageButton={false}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
             </Tabs.Panel>
-
             <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
           </Tabs>
         </div>

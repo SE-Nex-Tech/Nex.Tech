@@ -3,23 +3,23 @@ import { useState } from "react";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import EditForm from "../crudforms/edit";
-const EditButton = () => {
+const EditButton = ({ selectedRows }) => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
       <Modal
         opened={opened}
         onClose={close}
-        title="Edit"
-        size={900}
+        size="lg"
         centered
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3,
         }}
         withCloseButton={false}
+        style={{ overflowY: "auto" }}
       >
-        <EditForm />
+        <EditForm selectedRows={selectedRows} />
       </Modal>
 
       <Button
@@ -27,6 +27,8 @@ const EditButton = () => {
         variant="filled"
         color="rgb(141, 16, 56)"
         radius="xl"
+        disabled={selectedRows.length === 0 || selectedRows.length > 1}
+        style={{ transition: "all 0.2s" }}
       >
         Edit
       </Button>

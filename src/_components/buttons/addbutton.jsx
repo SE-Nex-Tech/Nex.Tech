@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
+import AddForm from "../crudforms/add";
 const AddButton = () => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
@@ -9,7 +10,6 @@ const AddButton = () => {
       <Modal
         opened={opened}
         onClose={close}
-        title="Add"
         size="xl"
         centered
         overlayProps={{
@@ -18,7 +18,7 @@ const AddButton = () => {
         }}
         withCloseButton={false}
       >
-        TEST2
+        <AddForm />
       </Modal>
 
       <Button

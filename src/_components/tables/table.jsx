@@ -9,11 +9,16 @@ import {
 } from "@tanstack/react-table";
 import styles from "./table.module.scss";
 
-const TableBody = ({ pageSize, disablePageButton, disableCheckbox }) => {
+const TableBody = ({
+  pageSize,
+  disablePageButton,
+  disableCheckbox,
+  selectedRows,
+  setSelectedRows,
+}) => {
   // Update prop name to disablePageButton
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [selectedRows, setSelectedRows] = useState([]);
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
   const headerMapping = {
@@ -70,8 +75,8 @@ const TableBody = ({ pageSize, disablePageButton, disableCheckbox }) => {
 
   const handleCheckboxChange = (row) => {
     setSelectedRows((prevRows) => {
-      if (prevRows.find((selectedRow) => selectedRow.id === row.id)) {
-        return prevRows.filter((selectedRow) => selectedRow.id !== row.id);
+      if (prevRows.find((selectedRows) => selectedRows.id === row.id)) {
+        return prevRows.filter((selectedRows) => selectedRows.id !== row.id);
       } else {
         return [
           ...prevRows,
@@ -79,7 +84,12 @@ const TableBody = ({ pageSize, disablePageButton, disableCheckbox }) => {
             id: row.id,
             book_barcode: row.original.book_barcode,
             book_call_num: row.original.book_call_num,
-            // Add other fields as needed
+            book_title: row.original.book_title,
+            book_accession_num: row.original.book_accession_num,
+            book_author: row.original.book_author,
+            book_edition: row.original.book_edition,
+            book_publication_place: row.original.book_publication_place,
+            book_publisher: row.original.book_publisher,
           },
         ];
       }
@@ -118,13 +128,16 @@ const TableBody = ({ pageSize, disablePageButton, disableCheckbox }) => {
               )}
           </Table.Tr>
         </Table.Thead>
-        <Table.Tbody className={styles.database_body}>
+        <Table.Tbody
+          className={styles.database_body}
+          selectedRows={selectedRows}
+        >
           {table.getRowModel().rows.map((row) => (
             <Table.Tr
               key={row.id}
               className={styles.database_body_row}
               bg={
-                selectedRows.find((selectedRow) => selectedRow.id === row.id)
+                selectedRows?.find((selectedRows) => selectedRows.id === row.id)
                   ? "var(--mantine-color-yellow-light)"
                   : undefined
               }
@@ -134,7 +147,7 @@ const TableBody = ({ pageSize, disablePageButton, disableCheckbox }) => {
                   <Checkbox
                     aria-label="Select row"
                     checked={
-                      selectedRows.find(
+                      selectedRows?.find(
                         (selectedRow) => selectedRow.id === row.id
                       ) !== undefined
                     }
