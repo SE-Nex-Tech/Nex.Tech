@@ -24,13 +24,53 @@ const BorrowForm = () => {
   const [loading, setLoading] = useState(true);
   var copyright_date = "";
 
+  const [reservation, setReservation] = useState(0);
+
+  const makeReservation = async () => {
+
+    open();
+
+    const borrow = await fetch('/api/borrow', {
+      method: 'POST',
+      body: JSON.stringify({
+        entity: 'books',
+        date: new Date().toISOString(),
+        materialID: parseInt(id),
+        type: requestType.current,
+        user_type: userType.current,
+        studentID: studentNumber.current.toString(),
+        name: userName.current,
+        email: userEmail.current,
+        department: userDepartment.current,
+        year_level: yearLevel.current,
+        section: section.current
+      })
+    })
+
+    const result = await borrow.json()
+
+    console.log('Reservation entry: ============')
+    console.log(result)
+
+    setReservation(result['id'])
+  }
+
   useEffect(() => {
+
     const fetchBook = async () => {
       try {
-        const response = await fetch(`/api/books`);
-        const data = await response.json();
-        const selectedBook = data.find((book) => book.id === parseInt(id));
-        setBook(selectedBook);
+        const response = await fetch('/api/db', {
+          method: "POST",
+          body: JSON.stringify({
+            entity: 'books',
+            where: {
+              id: parseInt(id)
+            }
+          })
+        });
+
+        const selectedBook = await response.json()
+        setBook(selectedBook[0]);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching book:", error);
@@ -38,7 +78,6 @@ const BorrowForm = () => {
     };
 
     fetchBook();
-
 
   }, [id]);
 
@@ -54,18 +93,16 @@ const BorrowForm = () => {
   const requestType = useRef("Book");
   const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
-  const userType = useRef("");
+  const userType = useRef("Student");
   const userName = useRef("");
   const userEmail = useRef("");
-  const userDepartment = useRef("");
+  const userDepartment = useRef("None");
   const yearLevel = useRef("");
   const section = useRef("");
   const status = useRef("Pending");
 
   var bookId;
   var callNum;
-
-  console.log(studentNumber.current);
 
   if (book) {
     bookId = book.id;
@@ -85,12 +122,12 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>Request Type:</label>
-                  <TextInput name="requestType" value="Book" readOnly="true" />
+                  <TextInput name="requestType" value="Book" readOnly={true} />
                 </div>
 
                 <div className={styles.input}>
                   <label>Request Date:</label>
-                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly="true"
+                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
                   />
                 </div>
 
@@ -216,7 +253,7 @@ const BorrowForm = () => {
               </div>
               <div className={styles.buttonContainer}>
 
-                <button className={styles.submitBtn} onClick={open}> Submit Form </button>
+                <button className={styles.submitBtn} onClick={makeReservation}> Submit Form </button>
                 <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>
@@ -240,19 +277,7 @@ const BorrowForm = () => {
                             fgColor="#E8B031"
                             value={JSON.stringify(
                               {
-                                requestCode: requestCode.current,
-                                requestDate: requestDate,
-                                userType: userType.current,
-                                requestType: requestType.current,
-                                status: "pending",
-                                bookId: bookId,
-                                studentNumber: studentNumber.current,
-                                userName: userName.current,
-                                userEmail: userEmail.current,
-                                userDepartment: userDepartment.current,
-                                yearLevel: yearLevel.current,
-                                section: section.current,
-
+                                id: reservation
                               }
                             )} />
                         </div>
