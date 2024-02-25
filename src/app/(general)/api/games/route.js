@@ -5,22 +5,16 @@ const prisma = new PrismaClient();
 
 export async function GET(request) {
   const params = Object.fromEntries(await request.nextUrl.searchParams);
-  const books = await prisma.books.findMany();
+  const games = await prisma.games.findMany();
   // console.log(params['andy'] == 'value');
-  return NextResponse.json(books);
+  return NextResponse.json(games);
 }
 
 export async function POST(request) {
   const params = await request.json();
   console.log(params);
 
-  // const books = (params['where'] == undefined) ? await prisma.books.findMany() : await prisma.books.findMany(
-  //   {
-  //     where: params['where'],
-  //   }
-  // );
-
-  let books = await prisma.books.findMany({
+  let games = await prisma.games.findMany({
     where: params['where']
   });
 
@@ -30,10 +24,10 @@ export async function POST(request) {
       contains: params['contains'],
       mode: "insensitive"
     }
-    books = await prisma.books.findMany({
+    games = await prisma.games.findMany({
       where: condition
     });
   }
 
-  return NextResponse.json(books);
+  return NextResponse.json(games);
 }
