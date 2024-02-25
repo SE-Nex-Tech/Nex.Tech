@@ -50,7 +50,7 @@ model Requests {
   type              RequestType
   bookRequests      BookRequest?
   boardgameRequests BoardgameRequest?
-  user_type         UserType
+  user_type         String @db.Text
   user_student      Student?
   user_faculty      Faculty?
   user_staff        Staff?
