@@ -41,13 +41,18 @@ export async function POST(request) {
     }
     else {
       console.log('has numbers')
-      const condition = {}
-      condition[params['attribute']] = parseInt(params['contains'])
-
-      console.log(condition)
+      const numAttributes = ['id', 'barcode', 'accession_num']
+      const ors = []
+      for (let i = 0; i < numAttributes.length; i++) {
+        const clause = {}
+        clause[numAttributes[i]] = parseInt(params['contains'])
+        ors.push(clause)
+      }
 
       result = await entity.findMany({
-        where: condition
+        where: {
+          OR: ors
+        }
       })
 
       return NextResponse.json(result)
