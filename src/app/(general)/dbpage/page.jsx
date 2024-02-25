@@ -93,6 +93,27 @@ const Database = () => {
     );
   }
 
+  const searchItems = async (key) => {
+    if (key.length == 0) {
+      const reset = await fetch('/api/books')
+
+      const result = await reset.json()
+      setData(result);
+      return
+    }
+    const response = await fetch('/api/db', {
+      method: 'POST',
+      body: JSON.stringify({
+        entity: 'books',
+        search: 1,
+        contains: key
+      })
+    })
+
+    const result = await response.json();
+    setData(result)
+  }
+
   return (
     <>
       <div>
@@ -109,6 +130,7 @@ const Database = () => {
             leftSection={<IconSearch size={16} />}
             radius="xl"
             w={rem(300)}
+            onChange={(event) => searchItems(event.currentTarget.value)}
           />
           <Sort />
           <AddButton selectedRows={selectedRows} />
@@ -138,6 +160,7 @@ const Database = () => {
 
             <Tabs.Panel value="books">
               <TableBody
+                data={data}
                 pageSize={6}
                 disablePageButton={false}
                 selectedRows={selectedRows}
