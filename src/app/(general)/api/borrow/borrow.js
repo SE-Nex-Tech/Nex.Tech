@@ -13,22 +13,43 @@ export async function borrow(req) {
   console.log("Book to borrow: ----------------");
   console.log(books);
 
-  const borrow_material_record = await prisma.request.create({
+  const borrow_material_record = await prisma.requests.create({
     data: borrow_book(req)
   })
 
-  console.log(borrow_material_record);
-  console.log(new Date().toLocaleString());
-  return 'end of borrow';
+  // console.log('book requests');
+  // console.log(await prisma.bookrequest.findMany());
+
+  // console.log(new Date().toLocaleString());
+  return borrow_material_record;
 }
 
 function borrow_book(params) {
   return {
-    request_datetime: params['requestDate'],
-    request_user_type: params['userType'],
-    request_type: params['requestType'],
-    borrow_datetime: new Date().toLocaleString(),
-    return_datetime: null,
-    request_status: "borrow",
+    date: params['date'],
+    borrow_date: new Date().toISOString(),
+    return_date: null,
+    status: 'borrow',
+    type: params['type'],
+    user_type: params['user_type'],
+    bookRequests: {
+      create: {
+        book: {
+          connect: {
+            id: params['materialID']
+          }
+        }
+      }
+    },
+    user_student: {
+      create: {
+        student_num: params['studentID'],
+        name: params['name'],
+        email: params['email'],
+        department: params['department'],
+        year_level: params['year_level'],
+        section: params['section']
+      }
+    }
   }
 }
