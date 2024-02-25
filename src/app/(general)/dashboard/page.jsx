@@ -30,17 +30,17 @@ const Dashboard = () => {
 
   const headerMapping = {
     id: "ID",
-    book_barcode: "Barcode",
-    book_call_num: "Call Number",
-    book_title: "Title",
-    book_accession_num: "Accession Number",
-    book_author: "Author",
-    book_edition: "Edition",
-    book_publication_place: "Publication Place",
-    book_publisher: "Publisher",
+    barcode: "Barcode",
+    call_num: "Call Number",
+    title: "Title",
+    accession_num: "Accession Number",
+    author: "Author",
+    edition: "Edition",
+    publication_place: "Publication Place",
+    publisher: "Publisher",
   };
 
-  const visibleColumns = ["id", "book_author", "book_title", "book_publisher"];
+  const visibleColumns = ["id", "author", "title", "publisher"];
 
   const columns = columnNames.map((columnName) => ({
     header: headerMapping[columnName] || columnName,

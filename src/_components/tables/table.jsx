@@ -23,26 +23,26 @@ const TableBody = ({
 
   const headerMapping = {
     id: "ID",
-    book_barcode: "Barcode",
-    book_call_num: "Call Number",
-    book_title: "Title",
-    book_accession_num: "Accession Number",
-    book_author: "Author",
-    book_edition: "Edition",
-    book_publication_place: "Publication Place",
-    book_publisher: "Publisher",
+    barcode: "Barcode",
+    call_num: "Call Number",
+    title: "Title",
+    accession_num: "Accession Number",
+    author: "Author",
+    edition: "Edition",
+    publication_place: "Publication Place",
+    publisher: "Publisher",
   };
 
   const visibleColumns = [
     "id",
-    "book_author",
-    "book_title",
-    "book_publisher",
-    "book_publication_place",
-    "book_edition",
-    "book_accession_num",
-    "book_call_num",
-    "book_barcode",
+    "author",
+    "title",
+    "publisher",
+    "publication_place",
+    "edition",
+    "accession_num",
+    "call_num",
+    "barcode",
   ];
 
   const columns = columnNames.map((columnName) => ({
@@ -82,14 +82,14 @@ const TableBody = ({
           ...prevRows,
           {
             id: row.id,
-            book_barcode: row.original.book_barcode,
-            book_call_num: row.original.book_call_num,
-            book_title: row.original.book_title,
-            book_accession_num: row.original.book_accession_num,
-            book_author: row.original.book_author,
-            book_edition: row.original.book_edition,
-            book_publication_place: row.original.book_publication_place,
-            book_publisher: row.original.book_publisher,
+            barcode: row.original.barcode,
+            call_num: row.original.call_num,
+            title: row.original.title,
+            accession_num: row.original.accession_num,
+            author: row.original.author,
+            edition: row.original.edition,
+            publication_place: row.original.publication_place,
+            publisher: row.original.publisher,
           },
         ];
       }

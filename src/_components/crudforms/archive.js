@@ -10,13 +10,13 @@ const ArchiveForm = ({ selectedRows }) => {
       </h2>
       {selectedRows.map((row) => (
         <p key={row.id}>
-          <span style={{ fontWeight: "bold" }}>Book ID: </span>
-          {row.id},<br />
-          <span style={{ fontWeight: "bold" }}>Barcode: </span>
-          {row.book_barcode}, <br />
-          <span style={{ fontWeight: "bold" }}>Accession No: </span>
-          {row.book_call_num}
+          <span style={{ fontWeight: "bold" }}>Title: </span>
+          {row.title}
+          <br />
+          <span style={{ fontWeight: "bold" }}>Author: </span>
+          {row.author} <br />
           <hr />
+          <br />
         </p>
       ))}
 

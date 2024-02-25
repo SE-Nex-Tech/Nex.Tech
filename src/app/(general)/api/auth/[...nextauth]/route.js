@@ -29,7 +29,7 @@ export const authOptions = {
           //Null returns an invalid dataset, not an error, but the credentials weren't correct
           return null;
         }
-        const user = await prisma.user.findUnique({
+        const user = await prisma.admin.findUnique({
           where: {
             email: credentials.email,
           },
