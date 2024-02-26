@@ -16,6 +16,8 @@ const getPageTitle = (pathname) => {
       return "Home";
     case "/qrscanner":
       return "QR Scanner";
+    case "/reports":
+      return "Reports";
     default:
       return "Default Title"; // Replace with your default title
   }

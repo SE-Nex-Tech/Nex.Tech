@@ -8,6 +8,7 @@ import styles from "./bookpage.module.scss";
 import Link from "next/link";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { format } from "date-fns";
+import Navigator from "@/_components/navigator/navigator";
 
 const BookPage = () => {
   const { id } = useParams();
@@ -29,8 +30,6 @@ const BookPage = () => {
     };
 
     fetchBook();
-
-
   }, [id]);
 
   if (!book) {
@@ -47,10 +46,7 @@ const BookPage = () => {
         <Header currentRoute={"/books"} />
       </div>
       <Center className={styles.center} maw="100%" m={25} h="81.5%">
-        <Link href={"/books"} className={styles.navigator}>
-          <IconChevronLeft size={32} />
-          Go Back{" "}
-        </Link>
+        <Navigator buttonText={"Go Back"} showIcon disableLink={false} />
         <div className={styles.main_container}>
           <div className={styles.row_one}>
             <div className={styles.main_information}>
@@ -81,10 +77,9 @@ const BookPage = () => {
                   <p>{book.status}</p>
                 </div>
               </div>
-              <Link href={`/borrowform/${book.id}`} >
+              <Link href={`/borrowform/${book.id}`}>
                 <button className={styles.btn}>Borrow</button>
               </Link>
-
             </div>
           </div>
 

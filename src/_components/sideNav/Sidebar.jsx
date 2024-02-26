@@ -53,7 +53,7 @@ const sideBarItems = [
   },
   {
     name: "Reports",
-    href: "/adreport",
+    href: "/reports",
     icon: IconReport,
   },
   {
@@ -200,7 +200,7 @@ function Sidebar() {
           {sideBarItems
             .filter(
               ({ href }) =>
-                !["/dashboard", "/qrscanner", "/adreport", "/dbpage"].includes(
+                !["/dashboard", "/qrscanner", "/reports", "/dbpage"].includes(
                   href
                 )
             )
