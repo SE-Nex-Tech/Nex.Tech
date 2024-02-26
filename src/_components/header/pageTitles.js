@@ -5,11 +5,13 @@ const getPageTitle = (pathname) => {
     case "/books":
       return "Books Catalog";
     case "/borrowform":
-        return "Borrow Request Form";
+      return "Borrow Request Form";
     case "/games":
       return "Games Catalog";
     case "/dashboard":
       return "Dashboard";
+    case "/dbpage":
+      return "Database";
     case "/landing":
       return "Home";
     case "/qrscanner":
