@@ -11,6 +11,29 @@
   position: sticky;
   top: 0; // Adjust this value as needed
   z-index: 10;
+
+  .left_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 50%;
+
+    .date_selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+      gap: 1em;
+      background-color: white;
+      min-height: 20%;
+      padding: 1em 0.5em 1em 2.3em;
+      border-radius: 15px;
+    }
+  }
+  .summary {
+    overflow-y: auto;
+    max-height: 70%;
+  }
 }
 
 .loading {

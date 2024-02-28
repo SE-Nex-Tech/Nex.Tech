@@ -23,6 +23,7 @@ const Reports = () => {
         maw="100%"
         mih="85%"
         style={{ display: "flex", flexDirection: "column", gap: "1.5em" }}
+        className={styles.center}
       >
         <div className={styles.left_container}>
           <div className={styles.navigator}>
@@ -35,14 +36,12 @@ const Reports = () => {
           <div className={styles.date_selector}>
             <h3>Date Range:</h3>
             <DatePickerInput
-              label="Start"
               placeholder="Pick dates"
               value={value}
               onChange={setValue}
               radius={"xl"} // BEGIN: Set default date to current date
             />
             <DatePickerInput
-              label="End"
               placeholder="Pick dates"
               value={value2}
               onChange={setValue2}
@@ -52,9 +51,14 @@ const Reports = () => {
               Update
             </Button>
           </div>
+          <h3>Request Summary</h3>
           <div className={styles.summary}>
-            <h3>Request Summary</h3>
-            <Table striped highlightOnHover withTableBorder>
+            <Table
+              striped
+              highlightOnHover
+              withTableBorder
+              className={styles.table}
+            >
               <Table.Thead>
                 <Table.Tr>
                   <Table.Th>Date</Table.Th>
@@ -64,7 +68,42 @@ const Reports = () => {
                   <Table.Th>Type</Table.Th>
                 </Table.Tr>
               </Table.Thead>
-              <Table.Tbody>
+              <Table.Tbody className={styles.table_body}>
+                <Table.Tr>
+                  <Table.Td>11/03/2023</Table.Td>
+                  <Table.Td>16315523511</Table.Td>
+                  <Table.Td>student</Table.Td>
+                  <Table.Td>Sample Name</Table.Td>
+                  <Table.Td>Book</Table.Td>
+                </Table.Tr>
+                <Table.Tr>
+                  <Table.Td>11/03/2023</Table.Td>
+                  <Table.Td>16315523511</Table.Td>
+                  <Table.Td>student</Table.Td>
+                  <Table.Td>Sample Name</Table.Td>
+                  <Table.Td>Book</Table.Td>
+                </Table.Tr>
+                <Table.Tr>
+                  <Table.Td>11/03/2023</Table.Td>
+                  <Table.Td>16315523511</Table.Td>
+                  <Table.Td>student</Table.Td>
+                  <Table.Td>Sample Name</Table.Td>
+                  <Table.Td>Book</Table.Td>
+                </Table.Tr>
+                <Table.Tr>
+                  <Table.Td>11/03/2023</Table.Td>
+                  <Table.Td>16315523511</Table.Td>
+                  <Table.Td>student</Table.Td>
+                  <Table.Td>Sample Name</Table.Td>
+                  <Table.Td>Book</Table.Td>
+                </Table.Tr>
+                <Table.Tr>
+                  <Table.Td>11/03/2023</Table.Td>
+                  <Table.Td>16315523511</Table.Td>
+                  <Table.Td>student</Table.Td>
+                  <Table.Td>Sample Name</Table.Td>
+                  <Table.Td>Book</Table.Td>
+                </Table.Tr>
                 <Table.Tr>
                   <Table.Td>11/03/2023</Table.Td>
                   <Table.Td>16315523511</Table.Td>
