@@ -8,10 +8,14 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import ReactDOM from 'react-dom';
-import { QRCodeSVG } from 'qrcode.react';
+import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
+
+
+
+
 
 const BorrowForm = () => {
   const current = usePathname();
@@ -80,6 +84,21 @@ const BorrowForm = () => {
     fetchBook();
 
   }, [id]);
+
+  // download QR code
+  const downloadQRCode = () => {
+    const qrCodeURL = document.getElementById('qrCode')
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    console.log(qrCodeURL)
+    let aEl = document.createElement("a");
+    aEl.href = qrCodeURL;
+    aEl.download = "QR_Code.png";
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+  }
+
 
   if (!book) {
     return <div>Book not found</div>;
@@ -272,9 +291,10 @@ const BorrowForm = () => {
                     <div className={styles.infoContainer}>
                       <div className={styles.receiptInfo}>
                         <div className={styles.qrContainer}>
-                          <QRCodeSVG
+                          <QRCodeCanvas
+                            id="qrCode"
                             bgColor="#ebebeb"
-                            fgColor="#E8B031"
+                            fgColor="#000000"
                             value={JSON.stringify(
                               {
                                 id: reservation
@@ -336,7 +356,7 @@ const BorrowForm = () => {
                       Kindly show the receipt before and after borrowing the book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
-                      <button className={styles.downloadBtn}> Download </button>
+                      <button className={styles.downloadBtn} onClick={downloadQRCode}> Download </button>
                       <button className={styles.backBtn} onClick={close}> Go Back </button>
                     </div>
                   </div>
