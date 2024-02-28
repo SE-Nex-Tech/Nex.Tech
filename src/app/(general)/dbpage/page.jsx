@@ -30,47 +30,6 @@ const Database = () => {
   const [loading, setLoading] = useState(true);
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
-  const headerMapping = {
-    id: "ID",
-    book_barcode: "Barcode",
-    book_call_num: "Call Number",
-    book_title: "Title",
-    book_accession_num: "Accession Number",
-    book_author: "Author",
-    book_edition: "Edition",
-    book_publication_place: "Publication Place",
-    book_publisher: "Publisher",
-  };
-
-  const visibleColumns = [
-    "id",
-    "book_author",
-    "book_title",
-    "book_publisher",
-    "book_publication_place",
-    "book_edition",
-    "book_accession_num",
-    "book_call_num",
-    "book_barcode",
-  ];
-
-  const columns = columnNames.map((columnName) => ({
-    header: headerMapping[columnName] || columnName,
-    accessorKey: columnName,
-  }));
-
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: 8,
-      },
-    },
-  });
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/books");
