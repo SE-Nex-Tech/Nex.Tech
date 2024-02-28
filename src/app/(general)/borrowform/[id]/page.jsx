@@ -85,18 +85,17 @@ const BorrowForm = () => {
 
   }, [id]);
 
-  // download QR code
+
   const downloadQRCode = () => {
     const qrCodeURL = document.getElementById('qrCode')
       .toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
-    console.log(qrCodeURL)
-    let aEl = document.createElement("a");
-    aEl.href = qrCodeURL;
-    aEl.download = "QR_Code.png";
-    document.body.appendChild(aEl);
-    aEl.click();
-    document.body.removeChild(aEl);
+    let qr = document.createElement("a");
+    qr.href = qrCodeURL;
+    qr.download = "RequestQR.png";
+    document.body.appendChild(qr);
+    qr.click();
+    document.body.removeChild(qr);
   }
 
 
