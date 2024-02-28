@@ -10,6 +10,7 @@ import {
 import styles from "./table.module.scss";
 
 const TableBody = ({
+  data,
   pageSize,
   disablePageButton,
   disableCheckbox,
@@ -17,7 +18,6 @@ const TableBody = ({
   setSelectedRows,
 }) => {
   // Update prop name to disablePageButton
-  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
@@ -61,17 +61,6 @@ const TableBody = ({
       },
     },
   });
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const response = await fetch("/api/books");
-      const data = await response.json();
-      setData(data);
-      setLoading(false);
-    };
-
-    fetchData();
-  }, []);
 
   const handleCheckboxChange = (row) => {
     setSelectedRows((prevRows) => {

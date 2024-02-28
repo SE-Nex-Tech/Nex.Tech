@@ -15,14 +15,50 @@ export async function POST(request) {
   });
 
   if (params['search'] != undefined) {
-    const condition = {}
-    condition[params['attribute']] = {
-      contains: params['contains'],
-      mode: "insensitive"
+
+    let re = /[^0-9]+/
+
+    if (re.test(params['contains'])) {
+      console.log('has letters')
+      const stringAttributes = ['title', 'author', 'edition', 'publication_place', 'publisher']
+      const ors = []
+      for (let i = 0; i < stringAttributes.length; i++) {
+        const clause = {}
+        clause[stringAttributes[i]] = {
+          contains: params['contains'],
+          mode: 'insensitive'
+        }
+        ors.push(clause)
+      }
+
+      result = await entity.findMany({
+        where: {
+          OR: ors
+        }
+      })
+
+      return NextResponse.json(result)
     }
-    result = await entity.findMany({
-      where: condition
-    });
+    else {
+      console.log('has numbers')
+      const numAttributes = ['id', 'barcode', 'accession_num']
+      const ors = []
+      for (let i = 0; i < numAttributes.length; i++) {
+        const clause = {}
+        clause[numAttributes[i]] = parseInt(params['contains'])
+        ors.push(clause)
+      }
+
+      result = await entity.findMany({
+        where: {
+          OR: ors
+        }
+      })
+
+      return NextResponse.json(result)
+    }
+
+
   }
 
   if (params['create'] != undefined) {
