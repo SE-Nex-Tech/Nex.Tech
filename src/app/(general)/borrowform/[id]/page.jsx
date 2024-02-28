@@ -21,7 +21,7 @@ const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedButton, setSelectedButton] = useState("Student");
+  const [selectedUserType, setSelectedUserType] = useState("Student");
 
   const { id } = useParams();
   const [book, setBook] = useState([]);
@@ -127,6 +127,82 @@ const BorrowForm = () => {
     callNum = book.call_num;
   }
 
+  const renderInputFields = (selectedUserType) => {
+    // Define the input fields based on the selectedUserType
+    switch (selectedUserType) {
+      case 'Student':
+        return (
+          <div>
+            <div className={styles.input}>
+              <label>Student No.:</label>
+              <NumberInput name="studentNumber" placeholder="Enter Student Number" hideControls
+                onChange={(value) => (studentNumber.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Name:</label>
+              <TextInput name="userName" placeholder="Enter Name"
+                onChange={(e) => (userName.current = e.target.value)}
+              />
+
+            </div>
+
+            <div className={styles.input}>
+              <label>Email:</label>
+              <TextInput name="userEmail" placeholder="Enter Email Address"
+                onChange={(e) => (userEmail.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Department:</label>
+              <Select
+                name="userDepartment"
+                placeholder="Select Department"
+                data={['Information Technology', 'Information Systems', 'Computer Science']}
+                onChange={(value) => (userDepartment.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Year Level:</label>
+              <Select
+                name="yearLevel"
+                placeholder="Select Year Level"
+                data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
+                onChange={(value) => (yearLevel.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Section:</label>
+              <TextInput name="section" placeholder="Enter Section"
+                onChange={(e) => (section.current = e.target.value)}
+              />
+            </div>
+          </div>
+        );
+      case 'Faculty':
+        return (
+          <div>
+            {/* Your faculty input fields */}
+          </div>
+        );
+      case 'Staff':
+        return (
+          <div>
+            {/* Your staff input fields */}
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
+  const inputFields = renderInputFields(selectedUserType);
+
+
   return (
 
     <div>
@@ -136,7 +212,7 @@ const BorrowForm = () => {
           <div className={styles.formContents}>
             <div className={styles.fieldContainer}>
               <h2 className={styles.formTitle}>Request Details</h2>
-              <div className={styles.formFields}>
+              <div className={styles.formFields} id="formFields">
 
                 <div className={styles.input}>
                   <label>Request Type:</label>
@@ -152,69 +228,23 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>User Type:</label>
                   <Button.Group value={null}>
-                    <Button name="studentBtn" variant={selectedButton === "Student" ? "primary" : "default"} onClick={() => {
+                    <Button name="studentBtn" variant={selectedUserType === "Student" ? "primary" : "default"} onClick={() => {
                       userType.current = "Student";
-                      setSelectedButton("Student");
+                      setSelectedUserType("Student");
                     }} >Student</Button>
-                    <Button name="facultyBtn" variant={selectedButton === "Faculty" ? "primary" : "default"} onClick={() => {
+                    <Button name="facultyBtn" variant={selectedUserType === "Faculty" ? "primary" : "default"} onClick={() => {
                       userType.current = "Faculty";
-                      setSelectedButton("Faculty");
+                      setSelectedUserType("Faculty");
                     }}>Faculty</Button>
-                    <Button name="staffBtn" variant={selectedButton === "Staff" ? "primary" : "default"} onClick={() => {
+                    <Button name="staffBtn" variant={selectedUserType === "Staff" ? "primary" : "default"} onClick={() => {
                       userType.current = "Staff";
-                      setSelectedButton("Staff");
+                      setSelectedUserType("Staff");
                     }}>Staff</Button>
                   </Button.Group>
                 </div>
 
-                <div className={styles.input}>
-                  <label>Student No.:</label>
-                  <NumberInput name="studentNumber" placeholder="Enter Student Number" hideControls
-                    onChange={(value) => (studentNumber.current = value)}
-                  />
-                </div>
+                {inputFields}
 
-                <div className={styles.input}>
-                  <label>Name:</label>
-                  <TextInput name="userName" placeholder="Enter Name"
-                    onChange={(e) => (userName.current = e.target.value)}
-                  />
-
-                </div>
-
-                <div className={styles.input}>
-                  <label>Email:</label>
-                  <TextInput name="userEmail" placeholder="Enter Email Address"
-                    onChange={(e) => (userEmail.current = e.target.value)}
-                  />
-                </div>
-
-                <div className={styles.input}>
-                  <label>Department:</label>
-                  <Select
-                    name="userDepartment"
-                    placeholder="Select Department"
-                    data={['Information Technology', 'Information Systems', 'Computer Science']}
-                    onChange={(value) => (userDepartment.current = value)}
-                  />
-                </div>
-
-                <div className={styles.input}>
-                  <label>Year Level:</label>
-                  <Select
-                    name="yearLevel"
-                    placeholder="Select Year Level"
-                    data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
-                    onChange={(value) => (yearLevel.current = value)}
-                  />
-                </div>
-
-                <div className={styles.input}>
-                  <label>Section:</label>
-                  <TextInput name="section" placeholder="Enter Section"
-                    onChange={(e) => (section.current = e.target.value)}
-                  />
-                </div>
 
               </div>
 
