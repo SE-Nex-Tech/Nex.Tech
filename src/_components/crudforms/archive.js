@@ -2,7 +2,7 @@ import { Button, Group, Stack, Select, Input, Table } from "@mantine/core";
 import React, { useState } from "react";
 import TableBody from "../tables/table";
 
-const ArchiveForm = ({ selectedRows }) => {
+const ArchiveForm = ({ selectedRows, closeModal }) => {
 
   const archiveRecords = async () => {
     console.log(selectedRows.length)
@@ -29,9 +29,7 @@ const ArchiveForm = ({ selectedRows }) => {
       })
     })
 
-    const result = await response.json()
-    console.log('result')
-    console.log(result);
+    closeModal()
   }
 
   return (

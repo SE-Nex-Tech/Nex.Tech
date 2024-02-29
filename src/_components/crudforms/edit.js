@@ -2,7 +2,7 @@ import { Button, Group, Select, Input, Table, Stack } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/table";
 
-const EditForm = ({ selectedRows }) => {
+const EditForm = ({ selectedRows, closeModal }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
   const handleSelectChange = (value) => {
@@ -49,6 +49,8 @@ const EditForm = ({ selectedRows }) => {
         data: atts
       })
     })
+
+    closeModal()
   }
 
   return (

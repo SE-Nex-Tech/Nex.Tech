@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Group, Stack, Input } from "@mantine/core";
 
-const AddForm = ({ selectedRows }) => {
+const AddForm = ({ selectedRows, closeModal }) => {
 
   const title = useRef('')
   const author = useRef('')
@@ -55,6 +55,8 @@ const AddForm = ({ selectedRows }) => {
           data: atts
         })
       })
+
+      closeModal();
     }
   }
 

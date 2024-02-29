@@ -19,7 +19,7 @@ const EditButton = ({ selectedRows }) => {
         withCloseButton={false}
         style={{ overflowY: "auto" }}
       >
-        <EditForm selectedRows={selectedRows} />
+        <EditForm selectedRows={selectedRows} closeModal={close} />
       </Modal>
 
       <Button

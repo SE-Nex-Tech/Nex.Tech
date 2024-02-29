@@ -18,7 +18,7 @@ const AddButton = () => {
         }}
         withCloseButton={false}
       >
-        <AddForm />
+        <AddForm closeModal={close}/>
       </Modal>
 
       <Button
