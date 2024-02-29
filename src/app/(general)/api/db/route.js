@@ -8,7 +8,7 @@ export async function POST(request) {
   const params = await request.json();
   console.log(params);
 
-  let entity = (params['entity'] == 'books') ? prisma.books : prisma.games;
+  let entity = (params['entity'] == 'books') ? prisma.books : prisma.boardgames;
 
   let result = await entity.findMany({
     where: params['where']
@@ -91,7 +91,7 @@ export async function POST(request) {
       let filter = params['where']
       let info = params['data']
       info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
-      const result = await entity.update({
+      result = await entity.update({
         where: filter,
         data: info
       })
@@ -101,7 +101,7 @@ export async function POST(request) {
       let filter = params['where']
       let info = params['data']
       info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
-      const result = await entity.update({
+      result = await entity.update({
         where: filter,
         data: info
       })
@@ -112,9 +112,46 @@ export async function POST(request) {
 
     let conditions = params['where']
 
-    const result = await entity.deleteMany({
+    result = await entity.deleteMany({
       where: conditions
     })
+  }
+
+  else if (params['scanqr'] != undefined ) {
+    const id = params['id']
+
+    console.log('ACCESSING QR')
+    console.log(id)
+
+    const borrowTicket = await prisma.requests.findUnique({
+      where: {
+        id: id
+      }
+    })
+
+    const bookReq = await prisma.BookRequest.findUnique({
+      where: {
+        request_id: borrowTicket.id
+      }
+    })
+
+    const client = await prisma.student.findUnique({
+      where: {
+        request_id: borrowTicket.id
+      }
+    })
+
+    const book = await prisma.books.findUnique({
+      where: {
+        id: bookReq.book_id
+      }
+    })
+
+    result = {
+      book,
+      client,
+      borrowTicket
+    }
   }
 
   prisma.$disconnect();
