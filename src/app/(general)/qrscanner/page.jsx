@@ -19,7 +19,12 @@ const QRScanner = () => {
 
   const fetchBook = async (transaction) => {
     setBook(transaction.book);
-    openModal(transaction);
+    if (transaction.borrowTicket.status=='borrow'){
+      openBorrowRequestModal(transaction);
+    }else if (transaction.borrowTicket.status=='Borrow Approved'){
+      openBorrowReturnModal(transaction);
+    }
+    
   };
 
   const [data, setData] = useState("No result");
@@ -27,7 +32,7 @@ const QRScanner = () => {
 
 
 
-  const openModal = (transaction) => {
+  const openBorrowRequestModal = (transaction) => {
 
     console.log('MY TRANSACTIONNNNN ==========================')
     console.log(transaction)
@@ -42,7 +47,7 @@ const QRScanner = () => {
         id: ticket.id
       }
       const atts = {
-        status: 'Borrow Aproved',
+        status: 'Borrow Approved',
       }
 
 
@@ -66,7 +71,6 @@ const QRScanner = () => {
       radius: "md",
       withCloseButton: false,
       centered: true,
-      opened: opened,
       onCancel: () => console.log('Cancel'),
       onConfirm: () => authorizeRequest(),
       children: (
@@ -101,6 +105,89 @@ const QRScanner = () => {
         </>
       ),
       labels: { confirm: "Authorize", cancel: "Cancel" },
+      confirmProps: {
+        radius: "xl", bg: "rgb(141, 16, 56)",
+      },
+
+      cancelProps: {
+        radius: "xl", bg: "#989898", color: "white",
+      },
+    });
+  };
+
+  const openBorrowReturnModal = (transaction) => {
+
+    console.log('MY TRANSACTIONNNNN ==========================')
+    console.log(transaction)
+    const selectedBook = transaction.book
+    const ticket = transaction.borrowTicket
+    const client = transaction.client
+
+
+    const authorizeRequest = async () => {
+      console.log(ticket.id)
+      const filter = {
+        id: ticket.id
+      }
+      const atts = {
+        status: 'Returned',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'requests',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+
+    modals.openConfirmModal({
+      title: <h1>Request Receipt</h1>,
+      size: "sm",
+      radius: "md",
+      withCloseButton: false,
+      centered: true,
+      onCancel: () => console.log('Cancel'),
+      onConfirm: () => authorizeRequest(),
+      children: (
+        <>
+          <p>
+            <strong>Receipt No.:</strong> {ticket.id}
+          </p>
+          <p>
+            <strong>Call No.:</strong> {selectedBook.call_num}
+          </p>
+          <p>
+            <strong>Accession No.:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Request Date:</strong> {ticket.borrow_date}
+          </p>
+          <p>
+            <strong>Student No.:</strong> {client.student_num}
+          </p>
+          <p>
+            <strong>Name:</strong> {client.name}
+          </p>
+          <p>
+            <strong>Department:</strong> {client.department}
+          </p>
+          <p>
+            <strong>Year Level:</strong> {client.year_level}
+          </p>
+          <p>
+            <strong>Section:</strong> {client.section}
+          </p>
+        </>
+      ),
+      labels: { confirm: "Confirm Return", cancel: "Cancel" },
       confirmProps: {
         radius: "xl", bg: "rgb(141, 16, 56)",
       },
