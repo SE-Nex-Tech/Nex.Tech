@@ -503,7 +503,7 @@ const BorrowForm = () => {
 
                         <div className={styles.receiptLabel}>
                           <h4>Receipt No.:</h4>
-                          <h4>{requestCode.current}</h4>
+                          <h4>{reservation}</h4>
                         </div>
 
                       </div>
