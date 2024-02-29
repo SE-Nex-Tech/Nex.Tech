@@ -5,7 +5,7 @@ const AddForm = ({ selectedRows }) => {
 
   const title = useRef('')
   const author = useRef('')
-  const callnum = useRef(0)
+  const callnum = useRef('')
   const accnum = useRef(0)
   const edition = useRef('')
   const pubplace = useRef('')
