@@ -111,6 +111,7 @@ const BorrowForm = () => {
   const requestType = useRef("Book");
   const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
+  const employeeNumber = useRef("");
   const userType = useRef("Student");
   const userName = useRef("");
   const userEmail = useRef("");
@@ -145,7 +146,6 @@ const BorrowForm = () => {
               <TextInput name="userName" placeholder="Enter Name"
                 onChange={(e) => (userName.current = e.target.value)}
               />
-
             </div>
 
             <div className={styles.input}>
@@ -186,13 +186,61 @@ const BorrowForm = () => {
       case 'Faculty':
         return (
           <div>
-            {/* Your faculty input fields */}
+            <div className={styles.input}>
+              <label>Employee No.:</label>
+              <NumberInput name="employeeNumber" placeholder="Enter Employee Number" hideControls
+                onChange={(value) => (studentNumber.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Name:</label>
+              <TextInput name="userName" placeholder="Enter Name"
+                onChange={(e) => (userName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Email:</label>
+              <TextInput name="userEmail" placeholder="Enter Email Address"
+                onChange={(e) => (userEmail.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Department:</label>
+              <Select
+                name="userDepartment"
+                placeholder="Select Department"
+                data={['Information Technology', 'Information Systems', 'Computer Science']}
+                onChange={(value) => (userDepartment.current = value)}
+              />
+            </div>
           </div>
         );
       case 'Staff':
         return (
           <div>
-            {/* Your staff input fields */}
+            <div className={styles.input}>
+              <label>Employee No.:</label>
+              <NumberInput name="employeeNumber" placeholder="Enter Employee Number" hideControls
+                onChange={(value) => (studentNumber.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Name:</label>
+              <TextInput name="userName" placeholder="Enter Name"
+                onChange={(e) => (userName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Email:</label>
+              <TextInput name="userEmail" placeholder="Enter Email Address"
+                onChange={(e) => (userEmail.current = e.target.value)}
+              />
+            </div>
           </div>
         );
       default:
