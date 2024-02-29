@@ -40,8 +40,7 @@ const QRScanner = () => {
     const ticket = transaction.borrowTicket
     const client = transaction.client
 
-
-    const authorizeRequest = async () => {
+    const updateRequestStatus = async () => {
       console.log(ticket.id)
       const filter = {
         id: ticket.id
@@ -62,6 +61,35 @@ const QRScanner = () => {
       })
 
       console.log("close")
+    }
+
+    const updateBookStatus = async () => {
+      console.log(selectedBook.id)
+      const filter = {
+        id: selectedBook.id
+      }
+      const atts = {
+        status: 'Unavailable',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'books',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+
+    const authorizeRequest = async () => {
+      updateRequestStatus();
+      updateBookStatus();
     }
 
 
@@ -124,7 +152,7 @@ const QRScanner = () => {
     const client = transaction.client
 
 
-    const authorizeRequest = async () => {
+    const updateRequestStatus = async () => {
       console.log(ticket.id)
       const filter = {
         id: ticket.id
@@ -145,6 +173,35 @@ const QRScanner = () => {
       })
 
       console.log("close")
+    }
+
+    const updateBookStatus = async () => {
+      console.log(selectedBook.id)
+      const filter = {
+        id: selectedBook.id
+      }
+      const atts = {
+        status: 'Available',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'books',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+
+    const authorizeRequest = async () => {
+      updateRequestStatus();
+      updateBookStatus();
     }
 
 
