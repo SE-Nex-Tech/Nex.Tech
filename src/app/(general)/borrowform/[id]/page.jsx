@@ -29,9 +29,10 @@ const BorrowForm = () => {
   var copyright_date = "";
 
   const [reservation, setReservation] = useState(0);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const makeReservation = async () => {
-
+    setShowConfirmation(false);
     open();
 
     const borrow = await fetch('/api/borrow', {
@@ -139,21 +140,21 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Student No.:</label>
-              <NumberInput name="studentNumber" placeholder="Enter Student Number" hideControls
+              <NumberInput className={styles.inputField} name="studentNumber" placeholder="Enter Student Number" hideControls
                 onChange={(value) => (studentNumber.current = value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Name:</label>
-              <TextInput name="userName" placeholder="Enter Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
                 onChange={(e) => (userName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput name="userEmail" placeholder="Enter Email Address"
+              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
                 onChange={(e) => (userEmail.current = e.target.value)}
               />
             </div>
@@ -161,6 +162,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Department:</label>
               <Select
+                className={styles.inputField}
                 name="userDepartment"
                 placeholder="Select Department"
                 data={['Information Technology', 'Information Systems', 'Computer Science']}
@@ -171,6 +173,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Year Level:</label>
               <Select
+                className={styles.inputField}
                 name="yearLevel"
                 placeholder="Select Year Level"
                 data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
@@ -180,7 +183,7 @@ const BorrowForm = () => {
 
             <div className={styles.input}>
               <label>Section:</label>
-              <TextInput name="section" placeholder="Enter Section"
+              <TextInput className={styles.inputField} name="section" placeholder="Enter Section"
                 onChange={(e) => (section.current = e.target.value)}
               />
             </div>
@@ -191,21 +194,21 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput name="employeeNumber" placeholder="Enter Employee Number" hideControls
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
                 onChange={(value) => (employeeNumber.current = value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Name:</label>
-              <TextInput name="userName" placeholder="Enter Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
                 onChange={(e) => (userName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput name="userEmail" placeholder="Enter Email Address"
+              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
                 onChange={(e) => (userEmail.current = e.target.value)}
               />
             </div>
@@ -213,6 +216,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Department:</label>
               <Select
+                className={styles.inputField}
                 name="userDepartment"
                 placeholder="Select Department"
                 data={['Information Technology', 'Information Systems', 'Computer Science']}
@@ -226,21 +230,21 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput name="employeeNumber" placeholder="Enter Employee Number" hideControls
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
                 onChange={(value) => (employeeNumber.current = value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Name:</label>
-              <TextInput name="userName" placeholder="Enter Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
                 onChange={(e) => (userName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput name="userEmail" placeholder="Enter Email Address"
+              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
                 onChange={(e) => (userEmail.current = e.target.value)}
               />
             </div>
@@ -251,6 +255,106 @@ const BorrowForm = () => {
     }
   };
   const inputFields = renderInputFields(selectedUserType);
+
+
+
+  const renderLabelFields = (selectedUserType) => {
+    switch (selectedUserType) {
+      case 'Student':
+        return (
+          <div>
+            <div className={styles.reqInfo}>
+              <h4>Student No.:</h4>
+              <h4>{studentNumber.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Name:</h4>
+              <h4>{userName.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Email:</h4>
+              <h4>{userEmail.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Department:</h4>
+              <h4>{userDepartment.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Year Level:</h4>
+              <h4>{yearLevel.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Section:</h4>
+              <h4>{section.current}</h4>
+            </div>
+          </div>
+        );
+      case 'Faculty':
+        return (
+          <div>
+            <div className={styles.reqInfo}>
+              <h4>Employee No.:</h4>
+              <h4>{employeeNumber.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Name:</h4>
+              <h4>{userName.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Email:</h4>
+              <h4>{userEmail.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Department:</h4>
+              <h4>{userDepartment.current}</h4>
+            </div>
+          </div>
+        );
+      case 'Staff':
+        return (
+          <div>
+            <div className={styles.reqInfo}>
+              <h4>Employee No.:</h4>
+              <h4>{employeeNumber.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Name:</h4>
+              <h4>{userName.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Email:</h4>
+              <h4>{userEmail.current}</h4>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+  const labelFields = renderLabelFields(selectedUserType);
+
+
+
+  const openConfirmation = () => {
+    setShowConfirmation(true);
+  };
+
+
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
+  };
+
+
 
 
   return (
@@ -266,18 +370,18 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>Request Type:</label>
-                  <TextInput name="requestType" value="Book" readOnly={true} />
+                  <TextInput className={styles.inputField} name="requestType" value="Book" readOnly={true} />
                 </div>
 
                 <div className={styles.input}>
                   <label>Request Date:</label>
-                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
+                  <DateInput className={styles.inputField} name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>User Type:</label>
-                  <Button.Group value={null}>
+                  <Button.Group value={null} className={styles.inputField}>
                     <Button name="studentBtn" variant={selectedUserType === "Student" ? "primary" : "default"} onClick={() => {
                       userType.current = "Student";
                       setSelectedUserType("Student");
@@ -351,12 +455,28 @@ const BorrowForm = () => {
               </div>
               <div className={styles.buttonContainer}>
 
-                <button className={styles.submitBtn} onClick={makeReservation}> Submit Form </button>
+                <button className={styles.submitBtn} onClick={openConfirmation}> Submit Form </button>
                 <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>
 
-                ``
+
+
+                <Modal
+                  opened={showConfirmation}
+                  onClose={closeConfirmation}
+                  centered
+                  withCloseButton={false}
+                  size="30%"
+                  closeOnClickOutside={false}>
+                  <div className={styles.confirmation}>
+                    <h2>Confirm Request</h2>
+                    <p>Are you sure you want to make this request?</p>
+                    <button className={styles.confirmBtn} onClick={makeReservation}>Confirm</button>
+                    <button className={styles.cancelBtn} onClick={closeConfirmation}>Cancel</button>
+                  </div>
+                </Modal>
+
 
                 <Modal
                   opened={opened}
@@ -399,35 +519,7 @@ const BorrowForm = () => {
                           <h4>{requestDate}</h4>
                         </div>
 
-                        <div className={styles.reqInfo}>
-                          <h4>Student No.:</h4>
-                          <h4>{studentNumber.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Name:</h4>
-                          <h4>{userName.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Email:</h4>
-                          <h4>{userEmail.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Department:</h4>
-                          <h4>{userDepartment.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Year Level:</h4>
-                          <h4>{yearLevel.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Section:</h4>
-                          <h4>{section.current}</h4>
-                        </div>
+                        {labelFields}
 
                       </div>
                     </div>
