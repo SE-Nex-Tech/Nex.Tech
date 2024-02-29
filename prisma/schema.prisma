@@ -47,18 +47,13 @@ model Requests {
   borrow_date       DateTime? @db.Date
   return_date       DateTime? @db.Date
   status            String @db.Text
-  type              RequestType
+  type              String @db.Text
   bookRequests      BookRequest?
   boardgameRequests BoardgameRequest?
   user_type         String @db.Text
   user_student      Student?
   user_faculty      Faculty?
   user_staff        Staff?
-}
-
-enum RequestType {
-  Book
-  Boardgame
 }
 
 model BookRequest {
@@ -74,13 +69,6 @@ model BoardgameRequest {
   boardgame_id      Int
   boardgame         Boardgames   @relation(fields: [boardgame_id], references: [id])
 }
-
-enum UserType {
-  Student
-  Faculty
-  Staff
-}
-
 
 model Student {
   request_id        Int         @id 

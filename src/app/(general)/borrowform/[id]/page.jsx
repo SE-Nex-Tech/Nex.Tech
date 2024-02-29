@@ -8,16 +8,20 @@ import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
 import ReactDOM from 'react-dom';
-import { QRCodeSVG } from 'qrcode.react';
+import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
+
+
+
+
 
 const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedButton, setSelectedButton] = useState("Student");
+  const [selectedUserType, setSelectedUserType] = useState("Student");
 
   const { id } = useParams();
   const [book, setBook] = useState([]);
@@ -25,9 +29,10 @@ const BorrowForm = () => {
   var copyright_date = "";
 
   const [reservation, setReservation] = useState(0);
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const makeReservation = async () => {
-
+    setShowConfirmation(false);
     open();
 
     const borrow = await fetch('/api/borrow', {
@@ -39,6 +44,7 @@ const BorrowForm = () => {
         type: requestType.current,
         user_type: userType.current,
         studentID: studentNumber.current.toString(),
+        employeeID: employeeNumber.current.toString(),
         name: userName.current,
         email: userEmail.current,
         department: userDepartment.current,
@@ -46,13 +52,16 @@ const BorrowForm = () => {
         section: section.current
       })
     })
-
     const result = await borrow.json()
 
     console.log('Reservation entry: ============')
     console.log(result)
 
     setReservation(result['id'])
+
+
+
+
   }
 
   useEffect(() => {
@@ -81,6 +90,20 @@ const BorrowForm = () => {
 
   }, [id]);
 
+
+  const downloadQRCode = () => {
+    const qrCodeURL = document.getElementById('qrCode')
+      .toDataURL("image/png")
+      .replace("image/png", "image/octet-stream");
+    let qr = document.createElement("a");
+    qr.href = qrCodeURL;
+    qr.download = "RequestQR.png";
+    document.body.appendChild(qr);
+    qr.click();
+    document.body.removeChild(qr);
+  }
+
+
   if (!book) {
     return <div>Book not found</div>;
   }
@@ -93,6 +116,7 @@ const BorrowForm = () => {
   const requestType = useRef("Book");
   const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
+  const employeeNumber = useRef("");
   const userType = useRef("Student");
   const userName = useRef("");
   const userEmail = useRef("");
@@ -109,6 +133,230 @@ const BorrowForm = () => {
     callNum = book.call_num;
   }
 
+  const renderInputFields = (selectedUserType) => {
+    switch (selectedUserType) {
+      case 'Student':
+        return (
+          <div>
+            <div className={styles.input}>
+              <label>Student No.:</label>
+              <NumberInput className={styles.inputField} name="studentNumber" placeholder="Enter Student Number" hideControls
+                onChange={(value) => (studentNumber.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
+                onChange={(e) => (userName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Email:</label>
+              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
+                onChange={(e) => (userEmail.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Department:</label>
+              <Select
+                className={styles.inputField}
+                name="userDepartment"
+                placeholder="Select Department"
+                data={['Information Technology', 'Information Systems', 'Computer Science']}
+                onChange={(value) => (userDepartment.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Year Level:</label>
+              <Select
+                className={styles.inputField}
+                name="yearLevel"
+                placeholder="Select Year Level"
+                data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
+                onChange={(value) => (yearLevel.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Section:</label>
+              <TextInput className={styles.inputField} name="section" placeholder="Enter Section"
+                onChange={(e) => (section.current = e.target.value)}
+              />
+            </div>
+          </div>
+        );
+      case 'Faculty':
+        return (
+          <div>
+            <div className={styles.input}>
+              <label>Employee No.:</label>
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
+                onChange={(value) => (employeeNumber.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
+                onChange={(e) => (userName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Email:</label>
+              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
+                onChange={(e) => (userEmail.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Department:</label>
+              <Select
+                className={styles.inputField}
+                name="userDepartment"
+                placeholder="Select Department"
+                data={['Information Technology', 'Information Systems', 'Computer Science']}
+                onChange={(value) => (userDepartment.current = value)}
+              />
+            </div>
+          </div>
+        );
+      case 'Staff':
+        return (
+          <div>
+            <div className={styles.input}>
+              <label>Employee No.:</label>
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
+                onChange={(value) => (employeeNumber.current = value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
+                onChange={(e) => (userName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Email:</label>
+              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
+                onChange={(e) => (userEmail.current = e.target.value)}
+              />
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+  const inputFields = renderInputFields(selectedUserType);
+
+
+
+  const renderLabelFields = (selectedUserType) => {
+    switch (selectedUserType) {
+      case 'Student':
+        return (
+          <div>
+            <div className={styles.reqInfo}>
+              <h4>Student No.:</h4>
+              <h4>{studentNumber.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Name:</h4>
+              <h4>{userName.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Email:</h4>
+              <h4>{userEmail.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Department:</h4>
+              <h4>{userDepartment.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Year Level:</h4>
+              <h4>{yearLevel.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Section:</h4>
+              <h4>{section.current}</h4>
+            </div>
+          </div>
+        );
+      case 'Faculty':
+        return (
+          <div>
+            <div className={styles.reqInfo}>
+              <h4>Employee No.:</h4>
+              <h4>{employeeNumber.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Name:</h4>
+              <h4>{userName.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Email:</h4>
+              <h4>{userEmail.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Department:</h4>
+              <h4>{userDepartment.current}</h4>
+            </div>
+          </div>
+        );
+      case 'Staff':
+        return (
+          <div>
+            <div className={styles.reqInfo}>
+              <h4>Employee No.:</h4>
+              <h4>{employeeNumber.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Name:</h4>
+              <h4>{userName.current}</h4>
+            </div>
+
+            <div className={styles.reqInfo}>
+              <h4>Email:</h4>
+              <h4>{userEmail.current}</h4>
+            </div>
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+  const labelFields = renderLabelFields(selectedUserType);
+
+
+
+  const openConfirmation = () => {
+    setShowConfirmation(true);
+  };
+
+
+  const closeConfirmation = () => {
+    setShowConfirmation(false);
+  };
+
+
+
+
   return (
 
     <div>
@@ -118,85 +366,39 @@ const BorrowForm = () => {
           <div className={styles.formContents}>
             <div className={styles.fieldContainer}>
               <h2 className={styles.formTitle}>Request Details</h2>
-              <div className={styles.formFields}>
+              <div className={styles.formFields} id="formFields">
 
                 <div className={styles.input}>
                   <label>Request Type:</label>
-                  <TextInput name="requestType" value="Book" readOnly={true} />
+                  <TextInput className={styles.inputField} name="requestType" value="Book" readOnly={true} />
                 </div>
 
                 <div className={styles.input}>
                   <label>Request Date:</label>
-                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
+                  <DateInput className={styles.inputField} name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>User Type:</label>
-                  <Button.Group value={null}>
-                    <Button name="studentBtn" variant={selectedButton === "Student" ? "primary" : "default"} onClick={() => {
+                  <Button.Group value={null} className={styles.inputField}>
+                    <Button name="studentBtn" variant={selectedUserType === "Student" ? "primary" : "default"} onClick={() => {
                       userType.current = "Student";
-                      setSelectedButton("Student");
+                      setSelectedUserType("Student");
                     }} >Student</Button>
-                    <Button name="facultyBtn" variant={selectedButton === "Faculty" ? "primary" : "default"} onClick={() => {
+                    <Button name="facultyBtn" variant={selectedUserType === "Faculty" ? "primary" : "default"} onClick={() => {
                       userType.current = "Faculty";
-                      setSelectedButton("Faculty");
+                      setSelectedUserType("Faculty");
                     }}>Faculty</Button>
-                    <Button name="staffBtn" variant={selectedButton === "Staff" ? "primary" : "default"} onClick={() => {
+                    <Button name="staffBtn" variant={selectedUserType === "Staff" ? "primary" : "default"} onClick={() => {
                       userType.current = "Staff";
-                      setSelectedButton("Staff");
+                      setSelectedUserType("Staff");
                     }}>Staff</Button>
                   </Button.Group>
                 </div>
 
-                <div className={styles.input}>
-                  <label>Student No.:</label>
-                  <NumberInput name="studentNumber" placeholder="Enter Student Number" hideControls
-                    onChange={(value) => (studentNumber.current = value)}
-                  />
-                </div>
+                {inputFields}
 
-                <div className={styles.input}>
-                  <label>Name:</label>
-                  <TextInput name="userName" placeholder="Enter Name"
-                    onChange={(e) => (userName.current = e.target.value)}
-                  />
-
-                </div>
-
-                <div className={styles.input}>
-                  <label>Email:</label>
-                  <TextInput name="userEmail" placeholder="Enter Email Address"
-                    onChange={(e) => (userEmail.current = e.target.value)}
-                  />
-                </div>
-
-                <div className={styles.input}>
-                  <label>Department:</label>
-                  <Select
-                    name="userDepartment"
-                    placeholder="Select Department"
-                    data={['Information Technology', 'Information Systems', 'Computer Science']}
-                    onChange={(value) => (userDepartment.current = value)}
-                  />
-                </div>
-
-                <div className={styles.input}>
-                  <label>Year Level:</label>
-                  <Select
-                    name="yearLevel"
-                    placeholder="Select Year Level"
-                    data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
-                    onChange={(value) => (yearLevel.current = value)}
-                  />
-                </div>
-
-                <div className={styles.input}>
-                  <label>Section:</label>
-                  <TextInput name="section" placeholder="Enter Section"
-                    onChange={(e) => (section.current = e.target.value)}
-                  />
-                </div>
 
               </div>
 
@@ -253,12 +455,28 @@ const BorrowForm = () => {
               </div>
               <div className={styles.buttonContainer}>
 
-                <button className={styles.submitBtn} onClick={makeReservation}> Submit Form </button>
+                <button className={styles.submitBtn} onClick={openConfirmation}> Submit Form </button>
                 <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>
 
-                ``
+
+
+                <Modal
+                  opened={showConfirmation}
+                  onClose={closeConfirmation}
+                  centered
+                  withCloseButton={false}
+                  size="30%"
+                  closeOnClickOutside={false}>
+                  <div className={styles.confirmation}>
+                    <h2>Confirm Request</h2>
+                    <p>Are you sure you want to make this request?</p>
+                    <button className={styles.confirmBtn} onClick={makeReservation}>Confirm</button>
+                    <button className={styles.cancelBtn} onClick={closeConfirmation}>Cancel</button>
+                  </div>
+                </Modal>
+
 
                 <Modal
                   opened={opened}
@@ -272,9 +490,10 @@ const BorrowForm = () => {
                     <div className={styles.infoContainer}>
                       <div className={styles.receiptInfo}>
                         <div className={styles.qrContainer}>
-                          <QRCodeSVG
+                          <QRCodeCanvas
+                            id="qrCode"
                             bgColor="#ebebeb"
-                            fgColor="#E8B031"
+                            fgColor="#000000"
                             value={JSON.stringify(
                               {
                                 id: reservation
@@ -284,7 +503,7 @@ const BorrowForm = () => {
 
                         <div className={styles.receiptLabel}>
                           <h4>Receipt No.:</h4>
-                          <h4>{requestCode.current}</h4>
+                          <h4>{reservation}</h4>
                         </div>
 
                       </div>
@@ -300,35 +519,7 @@ const BorrowForm = () => {
                           <h4>{requestDate}</h4>
                         </div>
 
-                        <div className={styles.reqInfo}>
-                          <h4>Student No.:</h4>
-                          <h4>{studentNumber.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Name:</h4>
-                          <h4>{userName.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Email:</h4>
-                          <h4>{userEmail.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Department:</h4>
-                          <h4>{userDepartment.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Year Level:</h4>
-                          <h4>{yearLevel.current}</h4>
-                        </div>
-
-                        <div className={styles.reqInfo}>
-                          <h4>Section:</h4>
-                          <h4>{section.current}</h4>
-                        </div>
+                        {labelFields}
 
                       </div>
                     </div>
@@ -336,7 +527,7 @@ const BorrowForm = () => {
                       Kindly show the receipt before and after borrowing the book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
-                      <button className={styles.downloadBtn}> Download </button>
+                      <button className={styles.downloadBtn} onClick={downloadQRCode}> Download </button>
                       <button className={styles.backBtn} onClick={close}> Go Back </button>
                     </div>
                   </div>

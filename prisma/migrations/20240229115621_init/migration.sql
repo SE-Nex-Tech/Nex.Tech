@@ -1,9 +1,3 @@
--- CreateEnum
-CREATE TYPE "RequestType" AS ENUM ('Book', 'Boardgame');
-
--- CreateEnum
-CREATE TYPE "UserType" AS ENUM ('Student', 'Faculty', 'Staff');
-
 -- CreateTable
 CREATE TABLE "Admin" (
     "id" SERIAL NOT NULL,
@@ -51,8 +45,8 @@ CREATE TABLE "Requests" (
     "borrow_date" DATE,
     "return_date" DATE,
     "status" TEXT NOT NULL,
-    "type" "RequestType" NOT NULL,
-    "user_type" "UserType" NOT NULL,
+    "type" TEXT NOT NULL,
+    "user_type" TEXT NOT NULL,
 
     CONSTRAINT "Requests_pkey" PRIMARY KEY ("id")
 );
