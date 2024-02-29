@@ -21,12 +21,7 @@ const Reports = () => {
       <div>
         <Header currentRoute={current} />
       </div>
-      <Center
-        maw="100%"
-        mih="85%"
-        style={{ display: "flex", flexDirection: "row", gap: "1em" }}
-        className={styles.center}
-      >
+      <Center maw="100%" mih="85%" className={styles.center}>
         <div className={styles.left_container}>
           <div className={styles.navigator}>
             <Navigator
@@ -51,6 +46,9 @@ const Reports = () => {
             />
             <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
               Update
+            </Button>
+            <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
+              Download
             </Button>
           </div>
           <h3>Request Summary</h3>
