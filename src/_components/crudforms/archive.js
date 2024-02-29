@@ -53,7 +53,7 @@ const ArchiveForm = ({ selectedRows, closeModal }) => {
         <Button variant="filled" color="rgb(141, 16, 56)" radius="xl" onClick={archiveRecords}>
           Archive
         </Button>
-        <Button variant="outline" color="rgb(141, 16, 56)" radius="xl">
+        <Button variant="outline" color="rgb(141, 16, 56)" radius="xl" onClick={closeModal}>
           Cancel
         </Button>
       </Stack>

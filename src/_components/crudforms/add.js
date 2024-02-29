@@ -93,7 +93,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
         <Button variant="filled" color="rgb(141, 16, 56)" radius="xl" onClick={create}>
           Save
         </Button>
-        <Button variant="outline" color="rgb(141, 16, 56)" radius="xl">
+        <Button variant="outline" color="rgb(141, 16, 56)" radius="xl" onClick={closeModal}>
           Discard
         </Button>
       </Stack>
