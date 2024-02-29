@@ -16,30 +16,21 @@ import { IconInfoCircle } from "@tabler/icons-react";
 const QRScanner = () => {
   const [book, setBook] = useState([]);
 
-  const fetchBook = async (id) => {
-    try {
-      const response = await fetch("/api/db", {
-        method: "POST",
-        body: JSON.stringify({
-          entity: "books",
-          where: {
-            id: parseInt(id),
-          },
-        }),
-      });
-
-      const selectedBook = await response.json();
-      setBook(selectedBook[0]);
-      openModal(selectedBook[0]);
-      console.log(selectedBook[0]);
-    } catch (error) {
-      console.error("Error fetching book:", error);
-    }
+  const fetchBook = async (transaction) => {
+    setBook(transaction.book);
+    openModal(transaction);
   };
 
   const [data, setData] = useState("No result");
 
-  const openModal = (selectedBook) => {
+  const openModal = (transaction) => {
+
+    console.log('MY TRANSACTIONNNNN ==========================')
+    console.log(transaction)
+    const selectedBook = transaction.book
+    const ticket = transaction.borrowTicket
+    const client = transaction.client
+
     modals.openConfirmModal({
       title: <h1>Request Receipt</h1>,
       size: "sm",
@@ -49,7 +40,7 @@ const QRScanner = () => {
       children: (
         <>
           <p>
-            <strong>Receipt No.:</strong> {selectedBook.call_num}
+            <strong>Receipt No.:</strong> {ticket.id}
           </p>
           <p>
             <strong>Call No.:</strong> {selectedBook.call_num}
@@ -58,22 +49,22 @@ const QRScanner = () => {
             <strong>Accession No.:</strong> {selectedBook.accession_num}
           </p>
           <p>
-            <strong>Request Date:</strong> {selectedBook.accession_num}
+            <strong>Request Date:</strong> {ticket.borrow_date}
           </p>
           <p>
-            <strong>Student No.:</strong> {selectedBook.accession_num}
+            <strong>Student No.:</strong> {client.student_num}
           </p>
           <p>
-            <strong>Name:</strong> {selectedBook.accession_num}
+            <strong>Name:</strong> {client.name}
           </p>
           <p>
-            <strong>Department:</strong> {selectedBook.accession_num}
+            <strong>Department:</strong> {client.department}
           </p>
           <p>
-            <strong>Year Level:</strong> {selectedBook.accession_num}
+            <strong>Year Level:</strong> {client.year_level}
           </p>
           <p>
-            <strong>Section:</strong> {selectedBook.accession_num}
+            <strong>Section:</strong> {client.section}
           </p>
         </>
       ),
@@ -83,20 +74,21 @@ const QRScanner = () => {
     });
   };
 
-  function handleScanSuccess(result) {
-    try {
-      const parsedData = JSON.parse(result?.text);
+  const handleScanSuccess = async (result) => {
+    const parsedData = JSON.parse(result.text)
 
-      // Ensure "type" exists and has a value
-      if (!parsedData?.hasOwnProperty("id")) {
-        throw new Error('Invalid QR code data: Missing "type" field.');
-      } else {
-        fetchBook(parsedData.id);
-      }
-    } catch (error) {
-      console.error("Error parsing QR code data:", error);
-      // Display user-friendly error message
-    }
+    const response = await fetch('/api/db', {
+      method: 'POST',
+      body: JSON.stringify({
+        scanqr: 1,
+        id: parseInt(parsedData.id)
+      })
+    })
+
+    const borrowed = await response.json()
+
+    fetchBook(borrowed)
+    // console.log(resresult[0].id)
   }
 
   const current = usePathname();
