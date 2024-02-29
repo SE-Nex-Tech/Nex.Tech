@@ -1,15 +1,20 @@
 .label {
   position: absolute;
   z-index: 1;
+  top: 80%;
   pointer-events: none;
-  color: var(--mantine-color-placeholder);
   font-weight: 400;
   font-size: var(--mantine-font-size-sm);
   transition: color 100ms ease, transform 100ms ease, font-size 100ms ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  color: gray;
 }
 
 .qr_reader {
-  width: 50%;
+  position: relative;
+  width: 30%;
 }
 
 .loading {

@@ -11,22 +11,43 @@ import "react-toastify/dist/ReactToastify.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { modals, openConfirmModal } from "@mantine/modals";
+import { IconInfoCircle } from "@tabler/icons-react";
 
 const QRScanner = () => {
+  const [book, setBook] = useState([]);
+
+  const fetchBook = async (id) => {
+    try {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "books",
+          where: {
+            id: parseInt(id),
+          },
+        }),
+      });
+
+      const selectedBook = await response.json();
+      setBook(selectedBook[0]);
+      openModal(selectedBook[0]);
+      console.log(selectedBook[0]);
+    } catch (error) {
+      console.error("Error fetching book:", error);
+    }
+  };
+
   const [data, setData] = useState("No result");
 
-  const openModalBorrow = (result) => {
-    const parsedData = JSON.parse(result?.text);
+  const openModal = (selectedBook) => {
     modals.openConfirmModal({
-      title: "Borrow Book Information",
+      title: <h1>Request Receipt</h1>,
       size: "sm",
       radius: "md",
       withCloseButton: false,
       centered: true,
-      children: <Text size="sm">{parsedData.book}</Text>,
+      children: <Text size="sm">{selectedBook.publisher}</Text>,
       labels: { confirm: "Confirm", cancel: "Cancel" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
     });
   };
 
@@ -35,26 +56,10 @@ const QRScanner = () => {
       const parsedData = JSON.parse(result?.text);
 
       // Ensure "type" exists and has a value
-      if (!parsedData?.hasOwnProperty("type")) {
+      if (!parsedData?.hasOwnProperty("id")) {
         throw new Error('Invalid QR code data: Missing "type" field.');
-      }
-
-      switch (parsedData.type) {
-        case "Borrow":
-          openModalBorrow(result);
-          break;
-        case "Reserve":
-          console.log("Reserving", parsedData.book); // Or perform reserve actions
-          break;
-        case "Request":
-          console.log("Requesting", parsedData.book); // Or perform request actions
-          break;
-        default:
-          console.error(
-            "Invalid or unsupported operation type:",
-            parsedData.type
-          );
-        // Handle unexpected or unsupported types appropriately
+      } else {
+        fetchBook(parsedData.id);
       }
     } catch (error) {
       console.error("Error parsing QR code data:", error);
@@ -68,7 +73,11 @@ const QRScanner = () => {
       <div>
         <Header currentRoute={current} />
       </div>
-      <Center className={styles.center} maw="100%" m={25} h="81.5%">
+      <Center
+        maw="100%"
+        mih="85%"
+        style={{ display: "flex", flexDirection: "column", gap: "1.5em" }}
+      >
         <QrReader
           className={styles.qr_reader}
           onResult={(result, error) => {
@@ -81,10 +90,13 @@ const QRScanner = () => {
               console.info(error);
             }
           }}
-          style={{ width: "10px", height: "10px" }}
+          style={{ width: "100px", height: "100px" }}
         />
-        <p>{data}</p>
-        <Button onClick={() => openModalBorrow()}>Open Modal</Button>
+        <p className={styles.label}>
+          <IconInfoCircle width={26} height={26} />
+          For borrowing, reserving, or returning, point the camera at the
+          receipt.
+        </p>
       </Center>
     </>
   );

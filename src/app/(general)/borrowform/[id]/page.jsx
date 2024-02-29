@@ -3,12 +3,20 @@
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import { TextInput, Select, Button, NumberInput, Radio, Modal, camelToKebabCase } from '@mantine/core';
+import {
+  TextInput,
+  Select,
+  Button,
+  NumberInput,
+  Radio,
+  Modal,
+  camelToKebabCase,
+} from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
-import ReactDOM from 'react-dom';
-import { QRCodeSVG } from 'qrcode.react';
+import ReactDOM from "react-dom";
+import { QRCodeSVG } from "qrcode.react";
 import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
@@ -27,13 +35,12 @@ const BorrowForm = () => {
   const [reservation, setReservation] = useState(0);
 
   const makeReservation = async () => {
-
     open();
 
-    const borrow = await fetch('/api/borrow', {
-      method: 'POST',
+    const borrow = await fetch("/api/borrow", {
+      method: "POST",
       body: JSON.stringify({
-        entity: 'books',
+        entity: "books",
         date: new Date().toISOString(),
         materialID: parseInt(id),
         type: requestType.current,
@@ -43,33 +50,32 @@ const BorrowForm = () => {
         email: userEmail.current,
         department: userDepartment.current,
         year_level: yearLevel.current,
-        section: section.current
-      })
-    })
+        section: section.current,
+      }),
+    });
 
-    const result = await borrow.json()
+    const result = await borrow.json();
 
-    console.log('Reservation entry: ============')
-    console.log(result)
+    console.log("Reservation entry: ============");
+    console.log({ id });
 
-    setReservation(result['id'])
-  }
+    setReservation({ id });
+  };
 
   useEffect(() => {
-
     const fetchBook = async () => {
       try {
-        const response = await fetch('/api/db', {
+        const response = await fetch("/api/db", {
           method: "POST",
           body: JSON.stringify({
-            entity: 'books',
+            entity: "books",
             where: {
-              id: parseInt(id)
-            }
-          })
+              id: parseInt(id),
+            },
+          }),
         });
 
-        const selectedBook = await response.json()
+        const selectedBook = await response.json();
         setBook(selectedBook[0]);
         setLoading(false);
       } catch (error) {
@@ -78,7 +84,6 @@ const BorrowForm = () => {
     };
 
     fetchBook();
-
   }, [id]);
 
   if (!book) {
@@ -110,7 +115,6 @@ const BorrowForm = () => {
   }
 
   return (
-
     <div>
       <Header currentRoute={current} />
       <div className={styles.mainBody}>
@@ -119,7 +123,6 @@ const BorrowForm = () => {
             <div className={styles.fieldContainer}>
               <h2 className={styles.formTitle}>Request Details</h2>
               <div className={styles.formFields}>
-
                 <div className={styles.input}>
                   <label>Request Type:</label>
                   <TextInput name="requestType" value="Book" readOnly={true} />
@@ -127,46 +130,80 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>Request Date:</label>
-                  <DateInput name="requestDate" valueFormat="DD/MM/YYYY" value={currentDate} readOnly={true}
+                  <DateInput
+                    name="requestDate"
+                    valueFormat="DD/MM/YYYY"
+                    value={currentDate}
+                    readOnly={true}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>User Type:</label>
                   <Button.Group value={null}>
-                    <Button name="studentBtn" variant={selectedButton === "Student" ? "primary" : "default"} onClick={() => {
-                      userType.current = "Student";
-                      setSelectedButton("Student");
-                    }} >Student</Button>
-                    <Button name="facultyBtn" variant={selectedButton === "Faculty" ? "primary" : "default"} onClick={() => {
-                      userType.current = "Faculty";
-                      setSelectedButton("Faculty");
-                    }}>Faculty</Button>
-                    <Button name="staffBtn" variant={selectedButton === "Staff" ? "primary" : "default"} onClick={() => {
-                      userType.current = "Staff";
-                      setSelectedButton("Staff");
-                    }}>Staff</Button>
+                    <Button
+                      name="studentBtn"
+                      variant={
+                        selectedButton === "Student" ? "primary" : "default"
+                      }
+                      onClick={() => {
+                        userType.current = "Student";
+                        setSelectedButton("Student");
+                      }}
+                    >
+                      Student
+                    </Button>
+                    <Button
+                      name="facultyBtn"
+                      variant={
+                        selectedButton === "Faculty" ? "primary" : "default"
+                      }
+                      onClick={() => {
+                        userType.current = "Faculty";
+                        setSelectedButton("Faculty");
+                      }}
+                    >
+                      Faculty
+                    </Button>
+                    <Button
+                      name="staffBtn"
+                      variant={
+                        selectedButton === "Staff" ? "primary" : "default"
+                      }
+                      onClick={() => {
+                        userType.current = "Staff";
+                        setSelectedButton("Staff");
+                      }}
+                    >
+                      Staff
+                    </Button>
                   </Button.Group>
                 </div>
 
                 <div className={styles.input}>
                   <label>Student No.:</label>
-                  <NumberInput name="studentNumber" placeholder="Enter Student Number" hideControls
+                  <NumberInput
+                    name="studentNumber"
+                    placeholder="Enter Student Number"
+                    hideControls
                     onChange={(value) => (studentNumber.current = value)}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>Name:</label>
-                  <TextInput name="userName" placeholder="Enter Name"
+                  <TextInput
+                    name="userName"
+                    placeholder="Enter Name"
                     onChange={(e) => (userName.current = e.target.value)}
                   />
-
                 </div>
 
                 <div className={styles.input}>
                   <label>Email:</label>
-                  <TextInput name="userEmail" placeholder="Enter Email Address"
+                  <TextInput
+                    name="userEmail"
+                    placeholder="Enter Email Address"
                     onChange={(e) => (userEmail.current = e.target.value)}
                   />
                 </div>
@@ -176,7 +213,11 @@ const BorrowForm = () => {
                   <Select
                     name="userDepartment"
                     placeholder="Select Department"
-                    data={['Information Technology', 'Information Systems', 'Computer Science']}
+                    data={[
+                      "Information Technology",
+                      "Information Systems",
+                      "Computer Science",
+                    ]}
                     onChange={(value) => (userDepartment.current = value)}
                   />
                 </div>
@@ -186,27 +227,25 @@ const BorrowForm = () => {
                   <Select
                     name="yearLevel"
                     placeholder="Select Year Level"
-                    data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
+                    data={["1st Year", "2nd Year", "3rd Year", "4th Year"]}
                     onChange={(value) => (yearLevel.current = value)}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>Section:</label>
-                  <TextInput name="section" placeholder="Enter Section"
+                  <TextInput
+                    name="section"
+                    placeholder="Enter Section"
                     onChange={(e) => (section.current = e.target.value)}
                   />
                 </div>
-
               </div>
-
-
             </div>
             <div className={styles.itemContainer}>
               <div className={styles.itemInfo}>
                 <div className={styles.imageContainer}></div>
                 <div className={styles.itemDetails}>
-
                   <TextInput name="itemId" value="" type="hidden" />
 
                   <div className={styles.info}>
@@ -248,25 +287,28 @@ const BorrowForm = () => {
                     <h4>Copyright Date:</h4>
                     <h4>{copyright_date}</h4>
                   </div>
-
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-
-                <button className={styles.submitBtn} onClick={makeReservation}> Submit Form </button>
-                <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
+                <button className={styles.submitBtn} onClick={makeReservation}>
+                  {" "}
+                  Submit Form{" "}
+                </button>
+                <Link
+                  href={`/books/${book.id}`}
+                  className={styles.backBtnContainer}
+                >
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>
-
                 ``
-
                 <Modal
                   opened={opened}
                   onClose={close}
                   centered
                   withCloseButton={false}
                   size="50%"
-                  closeOnClickOutside={false}>
+                  closeOnClickOutside={false}
+                >
                   <div className={styles.receiptContainer}>
                     <h2>Request Receipt</h2>
                     <div className={styles.infoContainer}>
@@ -274,22 +316,19 @@ const BorrowForm = () => {
                         <div className={styles.qrContainer}>
                           <QRCodeSVG
                             bgColor="#ebebeb"
-                            fgColor="#E8B031"
-                            value={JSON.stringify(
-                              {
-                                id: reservation
-                              }
-                            )} />
+                            fgColor="#000"
+                            value={JSON.stringify({
+                              id: id,
+                            })}
+                          />
                         </div>
 
                         <div className={styles.receiptLabel}>
                           <h4>Receipt No.:</h4>
                           <h4>{requestCode.current}</h4>
                         </div>
-
                       </div>
                       <div className={styles.requestDetails}>
-
                         <div className={styles.reqInfo}>
                           <h4>Call No.:</h4>
                           <h4>{callNum}</h4>
@@ -329,15 +368,18 @@ const BorrowForm = () => {
                           <h4>Section:</h4>
                           <h4>{section.current}</h4>
                         </div>
-
                       </div>
                     </div>
                     <div className={styles.reminder}>
-                      Kindly show the receipt before and after borrowing the book.
+                      Kindly show the receipt before and after borrowing the
+                      book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
                       <button className={styles.downloadBtn}> Download </button>
-                      <button className={styles.backBtn} onClick={close}> Go Back </button>
+                      <button className={styles.backBtn} onClick={close}>
+                        {" "}
+                        Go Back{" "}
+                      </button>
                     </div>
                   </div>
                 </Modal>
@@ -348,9 +390,6 @@ const BorrowForm = () => {
       </div>
     </div>
   );
+};
 
-
-}
-
-export default BorrowForm
-
+export default BorrowForm;
