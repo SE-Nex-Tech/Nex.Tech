@@ -1,0 +1,75 @@
+.center {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  transition: all 0.3s linear;
+  padding: 1em;
+  gap: 1em;
+
+  .left_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 60%;
+    max-height: 700px;
+
+    .date_selector {
+      display: flex;
+      flex-direction: row;
+      justify-content: left;
+      align-items: center;
+      gap: 1em;
+      background-color: white;
+      min-height: 20%;
+      padding: 1em 0.5em 1em 2.3em;
+      border-radius: 15px;
+    }
+  }
+  .summary {
+    overflow-y: auto;
+    height: 300px;
+  }
+
+  .right_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 40%;
+    max-height: 550px;
+    .charts {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      height: 220px;
+
+      .chart1,
+      .chart2 {
+        background-color: white;
+        width: 260px;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 15px;
+      }
+    }
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
+}
+
+.loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
