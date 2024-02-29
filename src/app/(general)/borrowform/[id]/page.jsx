@@ -43,6 +43,7 @@ const BorrowForm = () => {
         type: requestType.current,
         user_type: userType.current,
         studentID: studentNumber.current.toString(),
+        employeeID: employeeNumber.current.toString(),
         name: userName.current,
         email: userEmail.current,
         department: userDepartment.current,
@@ -50,13 +51,16 @@ const BorrowForm = () => {
         section: section.current
       })
     })
-
     const result = await borrow.json()
 
     console.log('Reservation entry: ============')
     console.log(result)
 
     setReservation(result['id'])
+
+
+
+
   }
 
   useEffect(() => {
@@ -129,7 +133,6 @@ const BorrowForm = () => {
   }
 
   const renderInputFields = (selectedUserType) => {
-    // Define the input fields based on the selectedUserType
     switch (selectedUserType) {
       case 'Student':
         return (
@@ -189,7 +192,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Employee No.:</label>
               <NumberInput name="employeeNumber" placeholder="Enter Employee Number" hideControls
-                onChange={(value) => (studentNumber.current = value)}
+                onChange={(value) => (employeeNumber.current = value)}
               />
             </div>
 
@@ -224,7 +227,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Employee No.:</label>
               <NumberInput name="employeeNumber" placeholder="Enter Employee Number" hideControls
-                onChange={(value) => (studentNumber.current = value)}
+                onChange={(value) => (employeeNumber.current = value)}
               />
             </div>
 
@@ -247,7 +250,6 @@ const BorrowForm = () => {
         return null;
     }
   };
-
   const inputFields = renderInputFields(selectedUserType);
 
 
