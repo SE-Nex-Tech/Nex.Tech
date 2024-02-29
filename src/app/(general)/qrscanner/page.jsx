@@ -10,8 +10,9 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
-import { modals, openConfirmModal } from "@mantine/modals";
+import { closeModal, modals, openConfirmModal } from "@mantine/modals";
 import { IconInfoCircle } from "@tabler/icons-react";
+
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
@@ -23,6 +24,9 @@ const QRScanner = () => {
 
   const [data, setData] = useState("No result");
 
+
+
+
   const openModal = (transaction) => {
 
     console.log('MY TRANSACTIONNNNN ==========================')
@@ -31,12 +35,40 @@ const QRScanner = () => {
     const ticket = transaction.borrowTicket
     const client = transaction.client
 
+
+    const authorizeRequest = async () => {
+      console.log(ticket.id)
+      const filter = {
+        id: ticket.id
+      }
+      const atts = {
+        status: 'Borrow Aproved',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'requests',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+
     modals.openConfirmModal({
       title: <h1>Request Receipt</h1>,
       size: "sm",
       radius: "md",
       withCloseButton: false,
       centered: true,
+      opened: opened,
+      onCancel: () => console.log('Cancel'),
+      onConfirm: () => authorizeRequest(),
       children: (
         <>
           <p>
@@ -69,8 +101,13 @@ const QRScanner = () => {
         </>
       ),
       labels: { confirm: "Authorize", cancel: "Cancel" },
-      confirmProps: { radius: "xl", bg: "rgb(141, 16, 56)" },
-      cancelProps: { radius: "xl", bg: "#989898", color: "white" },
+      confirmProps: {
+        radius: "xl", bg: "rgb(141, 16, 56)",
+      },
+
+      cancelProps: {
+        radius: "xl", bg: "#989898", color: "white",
+      },
     });
   };
 

@@ -97,6 +97,17 @@ export async function POST(request) {
       })
     }
 
+    else if (params['entity'] == 'requests') {
+      entity = prisma.requests
+      console.log('update request')
+      let filter = params['where']
+      let info = params['data']
+      result = await entity.update({
+        where: filter,
+        data: info
+      })
+    }
+
     else {
       let filter = params['where']
       let info = params['data']

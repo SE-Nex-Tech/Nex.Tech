@@ -52,7 +52,7 @@ CREATE TABLE "Requests" (
     "return_date" DATE,
     "status" TEXT NOT NULL,
     "type" "RequestType" NOT NULL,
-    "user_type" "UserType" NOT NULL,
+    "user_type" TEXT NOT NULL,
 
     CONSTRAINT "Requests_pkey" PRIMARY KEY ("id")
 );
