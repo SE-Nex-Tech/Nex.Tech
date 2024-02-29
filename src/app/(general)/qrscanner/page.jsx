@@ -46,8 +46,40 @@ const QRScanner = () => {
       radius: "md",
       withCloseButton: false,
       centered: true,
-      children: <Text size="sm">{selectedBook.publisher}</Text>,
-      labels: { confirm: "Confirm", cancel: "Cancel" },
+      children: (
+        <>
+          <p>
+            <strong>Receipt No.:</strong> {selectedBook.call_num}
+          </p>
+          <p>
+            <strong>Call No.:</strong> {selectedBook.call_num}
+          </p>
+          <p>
+            <strong>Accession No.:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Request Date:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Student No.:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Name:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Department:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Year Level:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Section:</strong> {selectedBook.accession_num}
+          </p>
+        </>
+      ),
+      labels: { confirm: "Authorize", cancel: "Cancel" },
+      confirmProps: { radius: "xl", bg: "rgb(141, 16, 56)" },
+      cancelProps: { radius: "xl", bg: "#989898", color: "white" },
     });
   };
 
