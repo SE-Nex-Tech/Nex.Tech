@@ -10,7 +10,7 @@ const ArchiveForm = ({ selectedRows }) => {
 
     const ids = []
     for (let i = 0; i < selectedRows.length; i++) {
-      ids.push(parseInt(selectedRows[i].id))
+      ids.push(selectedRows[i].actual_id);
     }
 
     console.log('IDs identified')

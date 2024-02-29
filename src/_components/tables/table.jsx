@@ -70,7 +70,7 @@ const TableBody = ({
         return [
           ...prevRows,
           {
-            id: row.original.id,
+            id: row.id,
             barcode: row.original.barcode,
             call_num: row.original.call_num,
             title: row.original.title,
@@ -79,6 +79,7 @@ const TableBody = ({
             edition: row.original.edition,
             publication_place: row.original.publication_place,
             publisher: row.original.publisher,
+            actual_id: row.original.id
           },
         ];
       }
