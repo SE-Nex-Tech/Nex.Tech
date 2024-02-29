@@ -19,7 +19,7 @@ const DeleteButton = ({ selectedRows }) => {
         withCloseButton={false}
         style={{ overflowY: "auto" }}
       >
-        <ArchiveForm selectedRows={selectedRows} />
+        <ArchiveForm selectedRows={selectedRows} closeModal={close} />
       </Modal>
 
       <Button

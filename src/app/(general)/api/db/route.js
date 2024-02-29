@@ -112,7 +112,7 @@ export async function POST(request) {
 
     let conditions = params['where']
 
-    const result = await entity.delete({
+    const result = await entity.deleteMany({
       where: conditions
     })
   }

@@ -79,6 +79,7 @@ const TableBody = ({
             edition: row.original.edition,
             publication_place: row.original.publication_place,
             publisher: row.original.publisher,
+            actual_id: row.original.id
           },
         ];
       }
