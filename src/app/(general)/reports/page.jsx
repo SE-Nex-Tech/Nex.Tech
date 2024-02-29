@@ -4,10 +4,12 @@ import React, { useState } from "react";
 import Header from "@/_components/header/Header";
 import { usePathname } from "next/navigation";
 import styles from "./reports.module.scss";
-import { Button, Center } from "@mantine/core";
+import { Button, Center, NativeSelect } from "@mantine/core";
 import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
-import { Table } from "@mantine/core";
+import { Table, rem } from "@mantine/core";
+import PieChart from "@/_components/charts/PieChart";
+import { data } from "@/data/pie";
 
 const Reports = () => {
   const current = usePathname();
@@ -22,7 +24,7 @@ const Reports = () => {
       <Center
         maw="100%"
         mih="85%"
-        style={{ display: "flex", flexDirection: "column", gap: "1.5em" }}
+        style={{ display: "flex", flexDirection: "row", gap: "1em" }}
         className={styles.center}
       >
         <div className={styles.left_container}>
@@ -131,12 +133,77 @@ const Reports = () => {
         </div>
 
         <div className={styles.right_container}>
-          <div className={styles.charts}></div>
-          <div className={styles.statistics}></div>
+          <div className={styles.charts}>
+            <div className={styles.chart1}>
+              <div className={styles.header}>
+                <h3>Books</h3>
+                <NativeSelect
+                  radius="xl"
+                  data={["User Type", "Year Level", "Department"]}
+                />
+              </div>
+              <PieChart />
+            </div>
+            <div className={styles.chart2}>
+              <div className={styles.header}>
+                <h3>Games</h3>
+                <NativeSelect
+                  radius="xl"
+                  data={["User Type", "Year Level", "Department"]}
+                />
+              </div>
+              <PieChart />
+            </div>
+          </div>
+          <div className={styles.statistics}>
+            <h3>Usage Statistics</h3>
+            <div className={styles.summary}>
+              <Table
+                striped
+                highlightOnHover
+                withTableBorder
+                className={styles.table}
+              >
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>Book Title</Table.Th>
+                    <Table.Th>Total Requests</Table.Th>
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody className={styles.table_body}>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                  <Table.Tr>
+                    <Table.Td>Sample Name</Table.Td>
+                    <Table.Td>2</Table.Td>
+                  </Table.Tr>
+                </Table.Tbody>
+              </Table>
+            </div>
+          </div>
         </div>
-        <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
-          Generate Report
-        </Button>
       </Center>
     </>
   );

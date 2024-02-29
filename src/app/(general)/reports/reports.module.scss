@@ -1,22 +1,17 @@
 .center {
   font-family: "Plus Jakarta Sans", sans-serif;
   display: flex;
-  flex-direction: column;
-  gap: 2em;
+  flex-direction: row;
   position: relative;
   transition: all 0.3s linear;
-
-  transition: all 0.3s linear;
   padding: 1em;
-  position: sticky;
-  top: 0; // Adjust this value as needed
-  z-index: 10;
 
   .left_container {
     display: flex;
     flex-direction: column;
     gap: 1em;
-    width: 50%;
+    width: 60%;
+    max-height: 700px;
 
     .date_selector {
       display: flex;
@@ -32,8 +27,43 @@
   }
   .summary {
     overflow-y: auto;
-    max-height: 70%;
+    height: 300px;
   }
+
+  .right_container {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    width: 40%;
+    max-height: 550px;
+    .charts {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      height: 220px;
+
+      .chart1,
+      .chart2 {
+        background-color: white;
+        width: 260px;
+        padding: 1em;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        border: 1px solid black;
+        border-radius: 15px;
+      }
+    }
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  align-items: center;
 }
 
 .loading {

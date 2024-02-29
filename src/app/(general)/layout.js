@@ -8,6 +8,7 @@ import Header from "@/_components/header/Header";
 import { usePathname, useRouter } from "next/navigation";
 import { ModalsProvider } from "@mantine/modals";
 import "@mantine/dates/styles.css";
+import "@mantine/charts/styles.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
