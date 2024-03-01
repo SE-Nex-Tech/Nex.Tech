@@ -57,9 +57,10 @@ const BorrowForm = () => {
     const result = await borrow.json();
 
     console.log("Reservation entry: ============");
+    console.log(result.id)
     console.log({ id });
 
-    setReservation({ id });
+    setReservation(result.id);
   };
 
   useEffect(() => {
@@ -318,7 +319,7 @@ const BorrowForm = () => {
                             bgColor="#ebebeb"
                             fgColor="#000"
                             value={JSON.stringify({
-                              id: id,
+                              id: reservation,
                             })}
                           />
                         </div>
