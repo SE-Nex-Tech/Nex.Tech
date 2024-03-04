@@ -10,56 +10,266 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
-import { modals, openConfirmModal } from "@mantine/modals";
+import { closeModal, modals, openConfirmModal } from "@mantine/modals";
+import { IconInfoCircle } from "@tabler/icons-react";
+
 
 const QRScanner = () => {
+  const [book, setBook] = useState([]);
+
+  const fetchBook = async (transaction) => {
+    setBook(transaction.book);
+    if (transaction.borrowTicket.status=='borrow'){
+      openBorrowRequestModal(transaction);
+    }else if (transaction.borrowTicket.status=='Borrow Approved'){
+      openBorrowReturnModal(transaction);
+    }
+    
+  };
+
   const [data, setData] = useState("No result");
 
-  const openModalBorrow = (result) => {
-    const parsedData = JSON.parse(result?.text);
+
+
+
+  const openBorrowRequestModal = (transaction) => {
+
+    console.log('MY TRANSACTIONNNNN ==========================')
+    console.log(transaction)
+    const selectedBook = transaction.book
+    const ticket = transaction.borrowTicket
+    const client = transaction.client
+
+    const updateRequestStatus = async () => {
+      console.log(ticket.id)
+      const filter = {
+        id: ticket.id
+      }
+      const atts = {
+        status: 'Borrow Approved',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'requests',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+    const updateBookStatus = async () => {
+      console.log(selectedBook.id)
+      const filter = {
+        id: selectedBook.id
+      }
+      const atts = {
+        status: 'Unavailable',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'books',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+
+    const authorizeRequest = async () => {
+      updateRequestStatus();
+      updateBookStatus();
+    }
+
+
     modals.openConfirmModal({
-      title: "Borrow Book Information",
+      title: <h1>Request Receipt</h1>,
       size: "sm",
       radius: "md",
       withCloseButton: false,
       centered: true,
-      children: <Text size="sm">{parsedData.book}</Text>,
-      labels: { confirm: "Confirm", cancel: "Cancel" },
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
+      onCancel: () => console.log('Cancel'),
+      onConfirm: () => authorizeRequest(),
+      children: (
+        <>
+          <p>
+            <strong>Receipt No.:</strong> {ticket.id}
+          </p>
+          <p>
+            <strong>Call No.:</strong> {selectedBook.call_num}
+          </p>
+          <p>
+            <strong>Accession No.:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Request Date:</strong> {ticket.borrow_date}
+          </p>
+          <p>
+            <strong>Student No.:</strong> {client.student_num}
+          </p>
+          <p>
+            <strong>Name:</strong> {client.name}
+          </p>
+          <p>
+            <strong>Department:</strong> {client.department}
+          </p>
+          <p>
+            <strong>Year Level:</strong> {client.year_level}
+          </p>
+          <p>
+            <strong>Section:</strong> {client.section}
+          </p>
+        </>
+      ),
+      labels: { confirm: "Authorize", cancel: "Cancel" },
+      confirmProps: {
+        radius: "xl", bg: "rgb(141, 16, 56)",
+      },
+
+      cancelProps: {
+        radius: "xl", bg: "#989898", color: "white",
+      },
     });
   };
 
-  function handleScanSuccess(result) {
-    try {
-      const parsedData = JSON.parse(result?.text);
+  const openBorrowReturnModal = (transaction) => {
 
-      // Ensure "type" exists and has a value
-      if (!parsedData?.hasOwnProperty("type")) {
-        throw new Error('Invalid QR code data: Missing "type" field.');
+    console.log('MY TRANSACTIONNNNN ==========================')
+    console.log(transaction)
+    const selectedBook = transaction.book
+    const ticket = transaction.borrowTicket
+    const client = transaction.client
+
+
+    const updateRequestStatus = async () => {
+      console.log(ticket.id)
+      const filter = {
+        id: ticket.id
+      }
+      const atts = {
+        status: 'Returned',
       }
 
-      switch (parsedData.type) {
-        case "Borrow":
-          openModalBorrow(result);
-          break;
-        case "Reserve":
-          console.log("Reserving", parsedData.book); // Or perform reserve actions
-          break;
-        case "Request":
-          console.log("Requesting", parsedData.book); // Or perform request actions
-          break;
-        default:
-          console.error(
-            "Invalid or unsupported operation type:",
-            parsedData.type
-          );
-        // Handle unexpected or unsupported types appropriately
-      }
-    } catch (error) {
-      console.error("Error parsing QR code data:", error);
-      // Display user-friendly error message
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'requests',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
     }
+
+    const updateBookStatus = async () => {
+      console.log(selectedBook.id)
+      const filter = {
+        id: selectedBook.id
+      }
+      const atts = {
+        status: 'Available',
+      }
+
+
+      const response = await fetch('/api/db', {
+        method: 'POST',
+        body: JSON.stringify({
+          entity: 'books',
+          update: 1,
+          where: filter,
+          data: atts
+        })
+      })
+
+      console.log("close")
+    }
+
+
+    const authorizeRequest = async () => {
+      updateRequestStatus();
+      updateBookStatus();
+    }
+
+
+    modals.openConfirmModal({
+      title: <h1>Request Receipt</h1>,
+      size: "sm",
+      radius: "md",
+      withCloseButton: false,
+      centered: true,
+      onCancel: () => console.log('Cancel'),
+      onConfirm: () => authorizeRequest(),
+      children: (
+        <>
+          <p>
+            <strong>Receipt No.:</strong> {ticket.id}
+          </p>
+          <p>
+            <strong>Call No.:</strong> {selectedBook.call_num}
+          </p>
+          <p>
+            <strong>Accession No.:</strong> {selectedBook.accession_num}
+          </p>
+          <p>
+            <strong>Request Date:</strong> {ticket.borrow_date}
+          </p>
+          <p>
+            <strong>Student No.:</strong> {client.student_num}
+          </p>
+          <p>
+            <strong>Name:</strong> {client.name}
+          </p>
+          <p>
+            <strong>Department:</strong> {client.department}
+          </p>
+          <p>
+            <strong>Year Level:</strong> {client.year_level}
+          </p>
+          <p>
+            <strong>Section:</strong> {client.section}
+          </p>
+        </>
+      ),
+      labels: { confirm: "Confirm Return", cancel: "Cancel" },
+      confirmProps: {
+        radius: "xl", bg: "rgb(141, 16, 56)",
+      },
+
+      cancelProps: {
+        radius: "xl", bg: "#989898", color: "white",
+      },
+    });
+  };
+
+  const handleScanSuccess = async (result) => {
+    const parsedData = JSON.parse(result.text)
+
+    const response = await fetch('/api/db', {
+      method: 'POST',
+      body: JSON.stringify({
+        scanqr: 1,
+        id: parseInt(parsedData.id)
+      })
+    })
+
+    const borrowed = await response.json()
+
+    fetchBook(borrowed)
+    // console.log(resresult[0].id)
   }
 
   const current = usePathname();
@@ -68,7 +278,11 @@ const QRScanner = () => {
       <div>
         <Header currentRoute={current} />
       </div>
-      <Center className={styles.center} maw="100%" m={25} h="81.5%">
+      <Center
+        maw="100%"
+        mih="85%"
+        style={{ display: "flex", flexDirection: "column", gap: "1.5em" }}
+      >
         <QrReader
           className={styles.qr_reader}
           onResult={(result, error) => {
@@ -81,10 +295,13 @@ const QRScanner = () => {
               console.info(error);
             }
           }}
-          style={{ width: "10px", height: "10px" }}
+          style={{ width: "100px", height: "100px" }}
         />
-        <p>{data}</p>
-        <Button onClick={() => openModalBorrow()}>Open Modal</Button>
+        <p className={styles.label}>
+          <IconInfoCircle width={26} height={26} />
+          For borrowing, reserving, or returning, point the camera at the
+          receipt.
+        </p>
       </Center>
     </>
   );

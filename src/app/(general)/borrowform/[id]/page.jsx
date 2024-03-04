@@ -3,7 +3,15 @@
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import { TextInput, Select, Button, NumberInput, Radio, Modal, camelToKebabCase } from '@mantine/core';
+import {
+  TextInput,
+  Select,
+  Button,
+  NumberInput,
+  Radio,
+  Modal,
+  camelToKebabCase,
+} from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
@@ -35,10 +43,10 @@ const BorrowForm = () => {
     setShowConfirmation(false);
     open();
 
-    const borrow = await fetch('/api/borrow', {
-      method: 'POST',
+    const borrow = await fetch("/api/borrow", {
+      method: "POST",
       body: JSON.stringify({
-        entity: 'books',
+        entity: "books",
         date: new Date().toISOString(),
         materialID: parseInt(id),
         type: requestType.current,
@@ -54,8 +62,9 @@ const BorrowForm = () => {
     })
     const result = await borrow.json()
 
-    console.log('Reservation entry: ============')
-    console.log(result)
+    console.log("Reservation entry: ============");
+    console.log(result.id)
+    console.log({ id });
 
     setReservation(result['id'])
 
@@ -65,20 +74,19 @@ const BorrowForm = () => {
   }
 
   useEffect(() => {
-
     const fetchBook = async () => {
       try {
-        const response = await fetch('/api/db', {
+        const response = await fetch("/api/db", {
           method: "POST",
           body: JSON.stringify({
-            entity: 'books',
+            entity: "books",
             where: {
-              id: parseInt(id)
-            }
-          })
+              id: parseInt(id),
+            },
+          }),
         });
 
-        const selectedBook = await response.json()
+        const selectedBook = await response.json();
         setBook(selectedBook[0]);
         setLoading(false);
       } catch (error) {
@@ -87,7 +95,6 @@ const BorrowForm = () => {
     };
 
     fetchBook();
-
   }, [id]);
 
 
@@ -358,7 +365,6 @@ const BorrowForm = () => {
 
 
   return (
-
     <div>
       <Header currentRoute={current} />
       <div className={styles.mainBody}>
@@ -401,14 +407,11 @@ const BorrowForm = () => {
 
 
               </div>
-
-
             </div>
             <div className={styles.itemContainer}>
               <div className={styles.itemInfo}>
                 <div className={styles.imageContainer}></div>
                 <div className={styles.itemDetails}>
-
                   <TextInput name="itemId" value="" type="hidden" />
 
                   <div className={styles.info}>
@@ -450,7 +453,6 @@ const BorrowForm = () => {
                     <h4>Copyright Date:</h4>
                     <h4>{copyright_date}</h4>
                   </div>
-
                 </div>
               </div>
               <div className={styles.buttonContainer}>
@@ -484,7 +486,8 @@ const BorrowForm = () => {
                   centered
                   withCloseButton={false}
                   size="50%"
-                  closeOnClickOutside={false}>
+                  closeOnClickOutside={false}
+                >
                   <div className={styles.receiptContainer}>
                     <h2>Request Receipt</h2>
                     <div className={styles.infoContainer}>
@@ -505,10 +508,8 @@ const BorrowForm = () => {
                           <h4>Receipt No.:</h4>
                           <h4>{reservation}</h4>
                         </div>
-
                       </div>
                       <div className={styles.requestDetails}>
-
                         <div className={styles.reqInfo}>
                           <h4>Call No.:</h4>
                           <h4>{callNum}</h4>
@@ -524,7 +525,8 @@ const BorrowForm = () => {
                       </div>
                     </div>
                     <div className={styles.reminder}>
-                      Kindly show the receipt before and after borrowing the book.
+                      Kindly show the receipt before and after borrowing the
+                      book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
                       <button className={styles.downloadBtn} onClick={downloadQRCode}> Download </button>
@@ -539,9 +541,6 @@ const BorrowForm = () => {
       </div>
     </div>
   );
+};
 
-
-}
-
-export default BorrowForm
-
+export default BorrowForm;
