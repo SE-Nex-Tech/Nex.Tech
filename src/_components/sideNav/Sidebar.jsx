@@ -97,6 +97,11 @@ function Sidebar() {
 
   const notify = () => toast("Successfully signed out!");
 
+  const handleSignOut = async () => {
+    await signOut({ redirect: false, callbackUrl: "/" });
+    notify();
+  };
+
   const { data: session } = useSession();
 
   if (session) {
@@ -161,13 +166,13 @@ function Sidebar() {
                 <IconLogout
                   size="28px"
                   onClick={() => {
-                    notify();
+                    handleSignOut();
                     signOut({ redirect: false, callbackUrl: "/" });
                   }}
                 />
-                <ToastContainer toastStyle={{ backgroundColor: "white" }} />
               </Link>
             </div>
+            <ToastContainer toastStyle={{ backgroundColor: "white" }} />
           </>
         )}
       </aside>
