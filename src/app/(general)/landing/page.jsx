@@ -17,7 +17,9 @@ import { useDisclosure } from "@mantine/hooks";
 const page = () => {
   const current = usePathname();
 
-  const autoplay = useRef(Autoplay({ delay: 2000 }));
+  const autoplay1 = useRef(Autoplay({ delay: 2000 }));
+  const autoplay2 = useRef(Autoplay({ delay: 2000 }));
+
   const [showHeader, setShowHeader] = useState(true);
 
   useEffect(() => {
@@ -65,9 +67,9 @@ const page = () => {
               withControls={false}
               height={250}
               width="80%"
-              plugins={[autoplay.current]}
-              onMouseEnter={autoplay.current.stop}
-              onMouseLeave={autoplay.current.reset}
+              plugins={[autoplay1.current]}
+              onMouseEnter={autoplay1.current.stop}
+              onMouseLeave={autoplay1.current.reset}
               classNames={styles}
             >
               <Carousel.Slide
@@ -145,9 +147,9 @@ const page = () => {
               withControls={false}
               height={250}
               width="80%"
-              plugins={[autoplay.current]}
-              onMouseEnter={autoplay.current.stop}
-              onMouseLeave={autoplay.current.reset}
+              plugins={[autoplay2.current]}
+              onMouseEnter={autoplay2.current.stop}
+              onMouseLeave={autoplay2.current.reset}
               classNames={styles}
             >
               <Carousel.Slide
