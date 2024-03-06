@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "@/_components/header/Header";
 import { usePathname } from "next/navigation";
 import styles from "./reports.module.scss";
@@ -10,11 +10,59 @@ import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
 import PieChart from "@/_components/charts/PieChart";
 import { data } from "@/data/pie";
+import { ToastContainer, toast } from 'react-toastify'
+
+const findUser = (user_type, req_id, users) => {
+  if (user_type === 'Student') {
+    return users.students.find((r) => r.request_id === req_id).name;
+  } else if (user_type === 'Faculty') {
+    return users.faculty.find((r) => r.request_id === req_id).name;
+  } else if (user_type === 'Staff') {
+    return users.staff.find((r) => r.request_id === req_id).name;
+  }
+}
 
 const Reports = () => {
   const current = usePathname();
-  const [value, setValue] = useState([]);
-  const [value2, setValue2] = useState([]);
+  const [value, setValue] = useState();
+  const [value2, setValue2] = useState();
+
+  const [borrows, setBorrows] = useState([]);
+  const [bookR, setBookR] = useState([]);
+  const [gameR, setGameR] = useState([]);
+  const [bookRCounts, setBookRCounts] = useState([]);
+  const [gameRCounts, setGameRCounts] = useState([]);
+  const [users, setUsers] = useState({});
+  const [inval, setInval] = useState();
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch('/api/reports', {
+        method: 'POST',
+        body: JSON.stringify({
+          value,
+          value2
+        })
+      });
+      const { invalid_dates, result, bookReqs, gameReqs, book_requests_count, game_requests_count, users } = await response.json();
+
+      setBorrows(result);
+      setBookR(bookReqs);
+      setGameR(gameReqs);
+      setBookRCounts(book_requests_count);
+      setGameRCounts(game_requests_count)
+      setUsers(users);
+
+      if (invalid_dates != undefined && inval != undefined) {
+        toast.warning('Invalid date range')
+        toast.warning('Fetching records starting from 4 weeks ago')
+      } else {
+        setInval(invalid_dates);
+      }
+    }
+
+    getData();
+  }, [value, value2])
 
   return (
     <>
@@ -69,62 +117,17 @@ const Reports = () => {
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody className={styles.table_body}>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
-                <Table.Tr>
-                  <Table.Td>11/03/2023</Table.Td>
-                  <Table.Td>16315523511</Table.Td>
-                  <Table.Td>student</Table.Td>
-                  <Table.Td>Sample Name</Table.Td>
-                  <Table.Td>Book</Table.Td>
-                </Table.Tr>
+                {
+                  borrows.map((r) => (
+                    <Table.Tr>
+                      <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
+                      <Table.Th>{r.id}</Table.Th>
+                      <Table.Th>{r.user_type}</Table.Th>
+                      <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
+                      <Table.Th>{r.type}</Table.Th>
+                    </Table.Tr>
+                  ))
+                }
               </Table.Tbody>
             </Table>
           </div>
@@ -203,6 +206,7 @@ const Reports = () => {
           </div>
         </div>
       </Center>
+      <ToastContainer />
     </>
   );
 };
