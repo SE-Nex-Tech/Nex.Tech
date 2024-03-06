@@ -15,6 +15,9 @@ const StudentFields = (transaction) => {
             <strong>Call No.:</strong> {selectedBook.call_num}
         </p>
         <p>
+            <strong>Book Title:</strong> {selectedBook.title}
+        </p>
+        <p>
             <strong>Request Date:</strong> {ticket.borrow_date}
         </p>
         <p>

@@ -18,75 +18,38 @@ import { IconInfoCircle } from "@tabler/icons-react";
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
+  const [data, setData] = useState("No result");
+  const current = usePathname();
+
+  var newRequestStatus;
+  var newBookStatus;
+  var confirmLabel;
 
   const fetchBook = async (transaction) => {
     setBook(transaction.book);
-    if (transaction.borrowTicket.status == 'Pending Borrow'){
-      openBorrowRequestModal(transaction);
-    }else if (transaction.borrowTicket.status == 'Borrow Approved'){
-      openBorrowReturnModal(transaction);
+
+    if (transaction.borrowTicket.status == 'Pending Borrow') {
+      newRequestStatus = "Borrow Approved";
+      newBookStatus = "Unavailable";
+      confirmLabel = "Authorize Borrow";
+      openModal(transaction)
+    } else if (transaction.borrowTicket.status == 'Borrow Approved') {
+      newRequestStatus = "Returned";
+      newBookStatus = "Available";
+      confirmLabel = "Confirm Return";
+      openModal(transaction)
     }
+
   };
 
-  const [data, setData] = useState("No result");
+  const openModal = (transaction) => {
 
-
-  const openBorrowRequestModal = (transaction) => {
     console.log('MY TRANSACTIONNNNN ==========================')
     console.log(transaction)
+
     const selectedBook = transaction.book
     const ticket = transaction.borrowTicket
     const client = transaction.client
-
-    const updateRequestStatus = async () => {
-      console.log(ticket.id)
-      const filter = {
-        id: ticket.id
-      }
-      const atts = {
-        status: 'Borrow Approved',
-      }
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
-        body: JSON.stringify({
-          entity: 'requests',
-          update: 1,
-          where: filter,
-          data: atts
-        })
-      })
-
-      console.log("close")
-    }
-
-    const updateBookStatus = async () => {
-      console.log(selectedBook.id)
-      const filter = {
-        id: selectedBook.id
-      }
-      const atts = {
-        status: 'Unavailable',
-      }
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
-        body: JSON.stringify({
-          entity: 'books',
-          update: 1,
-          where: filter,
-          data: atts
-        })
-      })
-
-      console.log("close")
-    }
-
-    const authorizeRequest = async () => {
-      updateRequestStatus();
-      updateBookStatus();
-    }
-
 
     var requestFields;
     switch (ticket.user_type) {
@@ -112,7 +75,7 @@ const QRScanner = () => {
       onCancel: () => console.log('Cancel'),
       onConfirm: () => authorizeRequest(),
       children: (requestFields),
-      labels: { confirm: "Authorize", cancel: "Cancel" },
+      labels: { confirm: confirmLabel, cancel: "Cancel" },
       confirmProps: {
         radius: "xl", bg: "rgb(141, 16, 56)",
       },
@@ -121,15 +84,6 @@ const QRScanner = () => {
         radius: "xl", bg: "#989898", color: "white",
       },
     });
-  };
-
-  const openBorrowReturnModal = (transaction) => {
-
-    console.log('MY TRANSACTIONNNNN ==========================')
-    console.log(transaction)
-    const selectedBook = transaction.book
-    const ticket = transaction.borrowTicket
-    const client = transaction.client
 
 
     const updateRequestStatus = async () => {
@@ -138,9 +92,8 @@ const QRScanner = () => {
         id: ticket.id
       }
       const atts = {
-        status: 'Returned',
+        status: newRequestStatus,
       }
-
 
       const response = await fetch('/api/db', {
         method: 'POST',
@@ -161,9 +114,8 @@ const QRScanner = () => {
         id: selectedBook.id
       }
       const atts = {
-        status: 'Available',
+        status: newBookStatus,
       }
-
 
       const response = await fetch('/api/db', {
         method: 'POST',
@@ -178,61 +130,10 @@ const QRScanner = () => {
       console.log("close")
     }
 
-
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
     }
-
-
-    modals.openConfirmModal({
-      title: <h1>Request Receipt</h1>,
-      size: "sm",
-      radius: "md",
-      withCloseButton: false,
-      centered: true,
-      onCancel: () => console.log('Cancel'),
-      onConfirm: () => authorizeRequest(),
-      children: (
-        <>
-          <p>
-            <strong>Receipt No.:</strong> {ticket.id}
-          </p>
-          <p>
-            <strong>Call No.:</strong> {selectedBook.call_num}
-          </p>
-          <p>
-            <strong>Accession No.:</strong> {selectedBook.accession_num}
-          </p>
-          <p>
-            <strong>Request Date:</strong> {ticket.borrow_date}
-          </p>
-          <p>
-            <strong>Student No.:</strong> {client.student_num}
-          </p>
-          <p>
-            <strong>Name:</strong> {client.name}
-          </p>
-          <p>
-            <strong>Department:</strong> {client.department}
-          </p>
-          <p>
-            <strong>Year Level:</strong> {client.year_level}
-          </p>
-          <p>
-            <strong>Section:</strong> {client.section}
-          </p>
-        </>
-      ),
-      labels: { confirm: "Confirm Return", cancel: "Cancel" },
-      confirmProps: {
-        radius: "xl", bg: "rgb(141, 16, 56)",
-      },
-
-      cancelProps: {
-        radius: "xl", bg: "#989898", color: "white",
-      },
-    });
   };
 
   const handleScanSuccess = async (result) => {
@@ -252,9 +153,6 @@ const QRScanner = () => {
     // console.log(resresult[0].id)
   }
 
-
-
-  const current = usePathname();
   return (
     <>
       <div>
@@ -281,8 +179,7 @@ const QRScanner = () => {
         />
         <p className={styles.label}>
           <IconInfoCircle width={26} height={26} />
-          For borrowing, reserving, or returning, point the camera at the
-          receipt.
+          For borrowing, reserving, or returning, point the camera at the receipt.
         </p>
       </Center>
     </>
