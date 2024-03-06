@@ -20,8 +20,8 @@ const requests_interval = async (a, b, prisma) => {
       ],
     },
     orderBy: {
-      date: 'desc'
-    }
+      date: "desc",
+    },
   });
 };
 
@@ -75,6 +75,34 @@ const bookStatistics = async (ls, prisma) => {
   return book_requests_count;
 };
 
+const mapStatToBook = async (ls, prisma) => {
+  let stats = await bookStatistics(ls, prisma);
+  const books = await prisma.books.findMany({
+    where: {
+      id: { in: stats.map((r) => r.book_id) },
+    },
+  });
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: books.find((e) => e.id === r.book_id).title,
+    value: r._count.book_id,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
 const gameStatistics = async (ls, prisma) => {
   const game_requests_count = await prisma.BoardgameRequest.groupBy({
     by: "boardgame_id",
@@ -94,31 +122,59 @@ const gameStatistics = async (ls, prisma) => {
   return game_requests_count;
 };
 
+const mapStatToGame = async (ls, prisma) => {
+  let stats = await gameStatistics(ls, prisma);
+  const books = await prisma.boardgames.findMany({
+    where: {
+      id: { in: stats.map((r) => r.boardgame_id) },
+    },
+  });
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: books.find((e) => e.id === r.boardgame_id).title,
+    value: r._count.boardgame_id,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
 const fetchUsers = async (ls, prisma) => {
   const students = await prisma.Student.findMany({
     where: {
-      request_id: { in: ls }
+      request_id: { in: ls },
     },
-  })
+  });
 
   const faculty = await prisma.Faculty.findMany({
     where: {
-      request_id: { in: ls }
-    }
-  })
+      request_id: { in: ls },
+    },
+  });
 
   const staff = await prisma.Staff.findMany({
     where: {
-      request_id: { in: ls }
-    }
-  })
+      request_id: { in: ls },
+    },
+  });
 
   return {
     students,
     faculty,
-    staff
-  }
-}
+    staff,
+  };
+};
 
 export async function POST(request) {
   const prisma = new PrismaClient();
@@ -142,6 +198,9 @@ export async function POST(request) {
 
     const users = await fetchUsers(requestIDs, prisma);
 
+    const bookRC = await mapStatToBook(requestIDs, prisma);
+    const gameRC = await mapStatToGame(requestIDs, prisma);
+
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -149,7 +208,9 @@ export async function POST(request) {
       gameReqs,
       book_requests_count,
       game_requests_count,
-      users
+      users,
+      bookRC,
+      gameRC,
     });
   }
 
@@ -163,6 +224,9 @@ export async function POST(request) {
 
   const users = await fetchUsers(requestIDs, prisma);
 
+  const bookRC = await mapStatToBook(requestIDs, prisma);
+  const gameRC = await mapStatToGame(requestIDs, prisma);
+
   prisma.$disconnect();
 
   return NextResponse.json({
@@ -171,6 +235,8 @@ export async function POST(request) {
     gameReqs,
     book_requests_count,
     game_requests_count,
-    users
+    users,
+    bookRC,
+    gameRC,
   });
 }
