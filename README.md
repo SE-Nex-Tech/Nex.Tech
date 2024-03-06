@@ -1,16 +1,11 @@
-# WIP README.md
+# README.md
 
 # Running the Next.js App - Quick Start Manual
 
 ## Prerequisites
 
-1. [Node.js](https://nodejs.org/) installed on your machine.
+1. [Node.js](https://nodejs.org/) and [PostgreSQL](https://www.postgresql.org/) installed on your machine.
 2. A code editor (e.g., Visual Studio Code, Sublime Text).
-3. Check whether you have installed all these packages:
-   - sass (https://www.npmjs.com/package/sass)
-   - sass-loader (https://www.npmjs.com/package/sass-loader)
-   - css-loader (https://www.npmjs.com/package/css-loader)
-   - style-loader(https://www.npmjs.com/package/style-loader)
 
 ## Steps
 
@@ -30,13 +25,26 @@ npm:
 ```bash
 npm install
 ```
-
+OR
 yarn:
 ```bash
 yarn
 ```
 
-### 3.1 Run the server in development mode
+### 3. PostgreSQL Setup
+
+In the .env file, change DATABASE_URL based on your personal setup.
+
+### 4. Populate using Prisma
+
+Delete prisma/migrations folder.
+Run the following commands:
+```bash
+npx prisma migrate dev
+npx prisma db seed
+```
+
+### 5.1 Run the server in development mode
 
 Start the development server with the following command:
 
@@ -52,7 +60,7 @@ yarn dev
 
 > Note: development mode is not the optimized version of the app; waiting times will be slow. Build the app instead if you don't need to debug the source code.
 
-### 3.2 Build the app and run the server
+### 5.2 Build the app and run the server
 
 Enter the commands for
 
@@ -68,12 +76,14 @@ yarn build
 yarn start
 ```
 
-### 4. Access the App
+### 6. Access the App
 
 Open a web browser and navigate to http://localhost:3000. You should see the Next.js app running locally.
 
 Any changes you make to the code will automatically trigger hot reloading, so you can see updates without restarting the server.
 
-### 6. Stop the server
-
-To stop the development server, go back to the terminal where it's running and press Ctrl + C.
+### 7. Access Prisma Studio
+Run this command:
+```bash
+npx prisma studio
+```
