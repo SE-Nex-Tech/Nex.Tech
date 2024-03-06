@@ -172,34 +172,14 @@ const Reports = () => {
                   </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody className={styles.table_body}>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
-                  <Table.Tr>
-                    <Table.Td>Sample Name</Table.Td>
-                    <Table.Td>2</Table.Td>
-                  </Table.Tr>
+                  {
+                    bookRCounts.map((r) => (
+                      <Table.Tr>
+                        <Table.Td>{bookR.find((e) => e.book_id === r.book_id).book.title}</Table.Td>
+                        <Table.Td>{r._count.book_id}</Table.Td>
+                      </Table.Tr>
+                    ))
+                  }
                 </Table.Tbody>
               </Table>
             </div>
