@@ -2,53 +2,55 @@ import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 
 const requests_interval = async (a, b, prisma) => {
+  // TODO: query complete transactions only
+  // can't be done until the transaction process for borrowing fills out the return date column
   return await prisma.requests.findMany({
     where: {
       AND: [
         {
           date: {
-            lte: a
-          }
+            lte: a,
+          },
         },
         {
           date: {
-            gte: b
-          }
-        }
-      ]
-    }
-  })
-}
+            gte: b,
+          },
+        },
+      ],
+    },
+  });
+};
 
-const bookStatistics = async(ls, prisma) => {
+const bookRequests = async (ls, prisma) => {
   const bookReqs = await prisma.BookRequest.findMany({
     where: {
-      request_id: { in: ls }
+      request_id: { in: ls },
     },
     select: {
       request_id: true,
       book_id: true,
-      book: true
-    }
+      book: true,
+    },
   });
 
   return bookReqs;
-}
+};
 
-const gameStatistics = async(ls, prisma) => {
+const gameRequests = async (ls, prisma) => {
   const gameReqs = await prisma.BoardgameRequest.findMany({
     where: {
-      request_id: { in: ls }
+      request_id: { in: ls },
     },
     select: {
       request_id: true,
       boardgame_id: true,
-      boardgame: true
-    }
+      boardgame: true,
+    },
   });
 
   return gameReqs;
-}
+};
 
 export async function POST(request) {
   const prisma = new PrismaClient();
@@ -59,24 +61,33 @@ export async function POST(request) {
   let b = params.value2 != undefined ? new Date(params.value2) : undefined;
 
   if (!(a < b)) {
-    // todo: set analytics
     let currentDate = new Date();
     let lastMonth = new Date();
     lastMonth.setMonth(lastMonth.getMonth() - 1);
 
     const result = await requests_interval(currentDate, lastMonth, prisma);
     const requestIDs = result.map((r) => r.id);
-    const bookStats = await bookStatistics(requestIDs, prisma);
-    const gameStats = await gameStatistics(requestIDs, prisma);
+    const bookReqs = await bookRequests(requestIDs, prisma);
+    const gameReqs = await gameRequests(requestIDs, prisma);
 
     return NextResponse.json({
       invalid_dates: 1,
-      result
+      result,
+      bookReqs,
+      gameReqs,
     });
   }
 
-  prisma.$disconnect()
+  let reqs = await requests_interval(a, b, prisma);
+  let requestsIDs = reqs.map((r) => r.id);
+  const bookReqs = await bookRequests(requestIDs, prisma);
+  const gameReqs = await gameRequests(requestIDs, prisma);
 
-  return NextResponse.json({});
+  prisma.$disconnect();
+
+  return NextResponse.json({
+    result,
+    bookReqs,
+    gameReqs,
+  });
 }
-
