@@ -6,7 +6,7 @@ import cover from "@/images/bookcover.jpg";
 import Link from "next/link";
 import Header from "@/_components/header/Header";
 import { usePathname, useRouter } from "next/navigation";
-import { Center, Tabs, rem, Select, Loader } from "@mantine/core";
+import { Center, Tabs, rem, Select, Loader, Button } from "@mantine/core";
 import styles from "./dashboard.module.scss";
 import { IconBooks, IconDice, IconUsers } from "@tabler/icons-react";
 import { Prisma, PrismaClient } from "@prisma/client";
@@ -196,7 +196,15 @@ const Dashboard = () => {
           <div className={styles.database}>
             <div className={styles.header_database}>
               <h1>Database</h1>
-              <button className={styles.button}>Edit</button>
+              <Button
+                component={Link}
+                href="/dbpage"
+                variant="filled"
+                color="rgb(141, 16, 56)"
+                radius="xl"
+              >
+                View
+              </Button>
             </div>
             <Tabs
               color="#e8b031"
@@ -262,24 +270,40 @@ const Dashboard = () => {
                   </tbody>
                 </table>
                 <div className={styles.page_btn}>
-                  <button onClick={() => table.setPageIndex(0)}>First</button>
-                  <button
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
+                    onClick={() => table.setPageIndex(0)}
+                  >
+                    First
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                   >
                     Previous
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
                     Next
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
                     onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                   >
                     Last
-                  </button>
+                  </Button>
                 </div>
               </Tabs.Panel>
 
