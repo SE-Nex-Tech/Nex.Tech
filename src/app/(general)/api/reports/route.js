@@ -55,7 +55,6 @@ const gameRequests = async (ls, prisma) => {
   return gameReqs;
 };
 
-// TODO: analytics of book and games
 const bookStatistics = async (ls, prisma) => {
   const book_requests_count = await prisma.BookRequest.groupBy({
     by: "book_id",
