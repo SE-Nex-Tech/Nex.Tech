@@ -94,6 +94,32 @@ const gameStatistics = async (ls, prisma) => {
   return game_requests_count;
 };
 
+const fetchUsers = async (ls, prisma) => {
+  const students = await prisma.Student.findMany({
+    where: {
+      request_id: { in: ls }
+    },
+  })
+
+  const faculty = await prisma.Faculty.findMany({
+    where: {
+      request_id: { in: ls }
+    }
+  })
+
+  const staff = await prisma.Staff.findMany({
+    where: {
+      request_id: { in: ls }
+    }
+  })
+
+  return {
+    students,
+    faculty,
+    staff
+  }
+}
+
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
@@ -114,6 +140,8 @@ export async function POST(request) {
     const book_requests_count = await bookStatistics(requestIDs, prisma);
     const game_requests_count = await gameStatistics(requestIDs, prisma);
 
+    const users = await fetchUsers(requestIDs, prisma);
+
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -121,6 +149,7 @@ export async function POST(request) {
       gameReqs,
       book_requests_count,
       game_requests_count,
+      users
     });
   }
 
@@ -132,6 +161,8 @@ export async function POST(request) {
   const book_requests_count = await bookStatistics(requestIDs, prisma);
   const game_requests_count = await gameStatistics(requestIDs, prisma);
 
+  const users = await fetchUsers(requestIDs, prisma);
+
   prisma.$disconnect();
 
   return NextResponse.json({
@@ -140,5 +171,6 @@ export async function POST(request) {
     gameReqs,
     book_requests_count,
     game_requests_count,
+    users
   });
 }
