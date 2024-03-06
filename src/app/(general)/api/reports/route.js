@@ -52,6 +52,45 @@ const gameRequests = async (ls, prisma) => {
   return gameReqs;
 };
 
+// TODO: analytics of book and games
+const bookStatistics = async(ls, prisma) => {
+  const book_requests_count = await prisma.BookRequest.groupBy({
+    by: 'book_id',
+    where: {
+      request_id: { in: ls },
+    },
+    _count: {
+      book_id: true
+    },
+    orderBy: {
+      _count: {
+        book_id: 'desc'
+      }
+    }
+  });
+
+  return book_requests_count;
+}
+
+const gameStatistics = async(ls, prisma) => {
+  const game_requests_count = await prisma.BoardgameRequest.groupBy({
+    by: 'boardgame_id',
+    where: {
+      request_id: { in: ls },
+    },
+    _count: {
+      boardgame_id: true
+    },
+    orderBy: {
+      _count: {
+        boardgame_id: 'desc'
+      }
+    }
+  });
+
+  return game_requests_count;
+}
+
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
@@ -69,6 +108,9 @@ export async function POST(request) {
     const requestIDs = result.map((r) => r.id);
     const bookReqs = await bookRequests(requestIDs, prisma);
     const gameReqs = await gameRequests(requestIDs, prisma);
+
+    const book_requests_count = await bookStatistics(requestIDs, prisma);
+    const game_requests_count = await gameStatistics(requestIDs, prisma);
 
     return NextResponse.json({
       invalid_dates: 1,
