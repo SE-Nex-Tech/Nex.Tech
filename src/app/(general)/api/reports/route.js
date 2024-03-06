@@ -19,6 +19,9 @@ const requests_interval = async (a, b, prisma) => {
         },
       ],
     },
+    orderBy: {
+      date: 'desc'
+    }
   });
 };
 
@@ -94,7 +97,6 @@ const gameStatistics = async (ls, prisma) => {
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
-  console.log(params);
 
   let a = params.value != undefined ? new Date(params.value) : undefined;
   let b = params.value2 != undefined ? new Date(params.value2) : undefined;
@@ -122,8 +124,8 @@ export async function POST(request) {
     });
   }
 
-  let result = await requests_interval(a, b, prisma);
-  let requestIDs = result.map((r) => r.id);
+  const result = await requests_interval(b, a, prisma);
+  const requestIDs = result.map((r) => r.id);
   const bookReqs = await bookRequests(requestIDs, prisma);
   const gameReqs = await gameRequests(requestIDs, prisma);
 
