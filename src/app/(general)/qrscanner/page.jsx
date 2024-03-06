@@ -5,6 +5,8 @@ import React, { useState, useCallback, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./qrscanner.module.scss";
 import StudentFields from "./studentFields";
+import FacultyFields from "./facultyFields";
+import StaffFields from "./staffFields";
 import { QrReader } from "react-qr-reader";
 import { Center, Text } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
@@ -13,7 +15,6 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
 import { IconInfoCircle } from "@tabler/icons-react";
-
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
@@ -25,14 +26,12 @@ const QRScanner = () => {
     }else if (transaction.borrowTicket.status == 'Borrow Approved'){
       openBorrowReturnModal(transaction);
     }
-    
   };
 
   const [data, setData] = useState("No result");
 
 
   const openBorrowRequestModal = (transaction) => {
-
     console.log('MY TRANSACTIONNNNN ==========================')
     console.log(transaction)
     const selectedBook = transaction.book
@@ -47,7 +46,6 @@ const QRScanner = () => {
       const atts = {
         status: 'Borrow Approved',
       }
-
 
       const response = await fetch('/api/db', {
         method: 'POST',
@@ -71,7 +69,6 @@ const QRScanner = () => {
         status: 'Unavailable',
       }
 
-
       const response = await fetch('/api/db', {
         method: 'POST',
         body: JSON.stringify({
@@ -85,10 +82,24 @@ const QRScanner = () => {
       console.log("close")
     }
 
-
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
+    }
+
+
+    var requestFields;
+    switch (ticket.user_type) {
+      case 'Student':
+        requestFields = StudentFields(transaction);
+        break;
+      case 'Faculty':
+        requestFields = FacultyFields(transaction);
+        break;
+      case 'Staff':
+        requestFields = StaffFields(transaction);
+        break;
+      default:
     }
 
 
@@ -100,7 +111,7 @@ const QRScanner = () => {
       centered: true,
       onCancel: () => console.log('Cancel'),
       onConfirm: () => authorizeRequest(),
-      children: (StudentFields(transaction)),
+      children: (requestFields),
       labels: { confirm: "Authorize", cancel: "Cancel" },
       confirmProps: {
         radius: "xl", bg: "rgb(141, 16, 56)",

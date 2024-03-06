@@ -3,7 +3,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
-const FacultyFields = (transaction) => {
+const StaffFields = (transaction) => {
     const selectedBook = transaction.book
     const ticket = transaction.borrowTicket
     const client = transaction.client
@@ -26,10 +26,7 @@ const FacultyFields = (transaction) => {
         <p>
             <strong>Email:</strong> {client.email}
         </p>
-        <p>
-            <strong>Department:</strong> {client.department}
-        </p>
     </>)
 }
 
-export default FacultyFields
+export default StaffFields

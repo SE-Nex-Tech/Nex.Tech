@@ -146,7 +146,7 @@ export async function POST(request) {
       }
     })
 
-    let client;
+    var client;
     switch (borrowTicket.user_type) {
       case 'Student':
         client = await prisma.student.findUnique({
