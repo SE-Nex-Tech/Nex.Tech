@@ -10,17 +10,17 @@ import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
 import PieChart from "@/_components/charts/PieChart";
 import { data } from "@/data/pie";
-import { ToastContainer, toast } from 'react-toastify'
+import { ToastContainer, toast } from "react-toastify";
 
 const findUser = (user_type, req_id, users) => {
-  if (user_type === 'Student') {
+  if (user_type === "Student") {
     return users.students.find((r) => r.request_id === req_id).name;
-  } else if (user_type === 'Faculty') {
+  } else if (user_type === "Faculty") {
     return users.faculty.find((r) => r.request_id === req_id).name;
-  } else if (user_type === 'Staff') {
+  } else if (user_type === "Staff") {
     return users.staff.find((r) => r.request_id === req_id).name;
   }
-}
+};
 
 const Reports = () => {
   const current = usePathname();
@@ -34,35 +34,52 @@ const Reports = () => {
   const [gameRCounts, setGameRCounts] = useState([]);
   const [users, setUsers] = useState({});
   const [inval, setInval] = useState();
+  const [bookPie, setBookPie] = useState([]);
+  const [gamePie, setGamePie] = useState([]);
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetch('/api/reports', {
-        method: 'POST',
+      const response = await fetch("/api/reports", {
+        method: "POST",
         body: JSON.stringify({
           value,
-          value2
-        })
+          value2,
+        }),
       });
-      const { invalid_dates, result, bookReqs, gameReqs, book_requests_count, game_requests_count, users } = await response.json();
+      const {
+        invalid_dates,
+        result,
+        bookReqs,
+        gameReqs,
+        book_requests_count,
+        game_requests_count,
+        users,
+        bookRC,
+        gameRC,
+      } = await response.json();
 
       setBorrows(result);
       setBookR(bookReqs);
       setGameR(gameReqs);
       setBookRCounts(book_requests_count);
-      setGameRCounts(game_requests_count)
+      setGameRCounts(game_requests_count);
       setUsers(users);
+      setBookPie(bookRC);
+      setGamePie(gameRC);
+
+      console.log(bookRC);
+      console.log(gameRC);
 
       if (invalid_dates != undefined && inval != undefined) {
-        toast.warning('Invalid date range')
-        toast.warning('Fetching records starting from 4 weeks ago')
+        toast.warning("Invalid date range");
+        toast.warning("Fetching records starting from 4 weeks ago");
       } else {
         setInval(invalid_dates);
       }
-    }
+    };
 
     getData();
-  }, [value, value2])
+  }, [value, value2]);
 
   return (
     <>
@@ -93,9 +110,6 @@ const Reports = () => {
               radius={"xl"} // END: Set default date to current date
             />
             <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
-              Update
-            </Button>
-            <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
               Download
             </Button>
           </div>
@@ -117,17 +131,15 @@ const Reports = () => {
                 </Table.Tr>
               </Table.Thead>
               <Table.Tbody className={styles.table_body}>
-                {
-                  borrows.map((r) => (
-                    <Table.Tr>
-                      <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
-                      <Table.Th>{r.id}</Table.Th>
-                      <Table.Th>{r.user_type}</Table.Th>
-                      <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
-                      <Table.Th>{r.type}</Table.Th>
-                    </Table.Tr>
-                  ))
-                }
+                {borrows.map((r) => (
+                  <Table.Tr>
+                    <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
+                    <Table.Th>{r.id}</Table.Th>
+                    <Table.Th>{r.user_type}</Table.Th>
+                    <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
+                    <Table.Th>{r.type}</Table.Th>
+                  </Table.Tr>
+                ))}
               </Table.Tbody>
             </Table>
           </div>
@@ -143,7 +155,7 @@ const Reports = () => {
                   data={["User Type", "Year Level", "Department"]}
                 />
               </div>
-              <PieChart />
+              <PieChart data={bookPie} />
             </div>
             <div className={styles.chart2}>
               <div className={styles.header}>
@@ -153,7 +165,7 @@ const Reports = () => {
                   data={["User Type", "Year Level", "Department"]}
                 />
               </div>
-              <PieChart />
+              <PieChart data={gamePie} />
             </div>
           </div>
           <div className={styles.statistics}>
@@ -172,14 +184,14 @@ const Reports = () => {
                   </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody className={styles.table_body}>
-                  {
-                    bookRCounts.map((r) => (
-                      <Table.Tr>
-                        <Table.Td>{bookR.find((e) => e.book_id === r.book_id).book.title}</Table.Td>
-                        <Table.Td>{r._count.book_id}</Table.Td>
-                      </Table.Tr>
-                    ))
-                  }
+                  {bookRCounts.map((r) => (
+                    <Table.Tr>
+                      <Table.Td>
+                        {bookR.find((e) => e.book_id === r.book_id).book.title}
+                      </Table.Td>
+                      <Table.Td>{r._count.book_id}</Table.Td>
+                    </Table.Tr>
+                  ))}
                 </Table.Tbody>
               </Table>
             </div>
