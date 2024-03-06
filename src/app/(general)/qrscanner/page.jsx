@@ -19,9 +19,9 @@ const QRScanner = () => {
 
   const fetchBook = async (transaction) => {
     setBook(transaction.book);
-    if (transaction.borrowTicket.status=='borrow'){
+    if (transaction.borrowTicket.status == 'Pending Borrow'){
       openBorrowRequestModal(transaction);
-    }else if (transaction.borrowTicket.status=='Borrow Approved'){
+    }else if (transaction.borrowTicket.status == 'Borrow Approved'){
       openBorrowReturnModal(transaction);
     }
     
@@ -271,6 +271,8 @@ const QRScanner = () => {
     fetchBook(borrowed)
     // console.log(resresult[0].id)
   }
+
+
 
   const current = usePathname();
   return (
