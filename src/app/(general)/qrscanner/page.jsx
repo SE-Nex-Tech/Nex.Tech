@@ -13,85 +13,75 @@ import { Modal, Button } from "@mantine/core";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
 import { IconInfoCircle } from "@tabler/icons-react";
 
-
 const QRScanner = () => {
   const [book, setBook] = useState([]);
 
   const fetchBook = async (transaction) => {
     setBook(transaction.book);
-    if (transaction.borrowTicket.status=='borrow'){
+    if (transaction.borrowTicket.status == "borrow") {
       openBorrowRequestModal(transaction);
-    }else if (transaction.borrowTicket.status=='Borrow Approved'){
+    } else if (transaction.borrowTicket.status == "Borrow Approved") {
       openBorrowReturnModal(transaction);
     }
-    
   };
 
   const [data, setData] = useState("No result");
 
-
-
-
   const openBorrowRequestModal = (transaction) => {
-
-    console.log('MY TRANSACTIONNNNN ==========================')
-    console.log(transaction)
-    const selectedBook = transaction.book
-    const ticket = transaction.borrowTicket
-    const client = transaction.client
+    console.log("MY TRANSACTIONNNNN ==========================");
+    console.log(transaction);
+    const selectedBook = transaction.book;
+    const ticket = transaction.borrowTicket;
+    const client = transaction.client;
 
     const updateRequestStatus = async () => {
-      console.log(ticket.id)
+      console.log(ticket.id);
       const filter = {
-        id: ticket.id
-      }
+        id: ticket.id,
+      };
       const atts = {
-        status: 'Borrow Approved',
-      }
+        status: "Borrow Approved",
+      };
 
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
+      const response = await fetch("/api/db", {
+        method: "POST",
         body: JSON.stringify({
-          entity: 'requests',
+          entity: "requests",
           update: 1,
           where: filter,
-          data: atts
-        })
-      })
+          data: atts,
+        }),
+      });
 
-      console.log("close")
-    }
+      console.log("close");
+    };
 
     const updateBookStatus = async () => {
-      console.log(selectedBook.id)
+      console.log(selectedBook.id);
       const filter = {
-        id: selectedBook.id
-      }
+        id: selectedBook.id,
+      };
       const atts = {
-        status: 'Unavailable',
-      }
+        status: "Unavailable",
+      };
 
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
+      const response = await fetch("/api/db", {
+        method: "POST",
         body: JSON.stringify({
-          entity: 'books',
+          entity: "books",
           update: 1,
           where: filter,
-          data: atts
-        })
-      })
+          data: atts,
+        }),
+      });
 
-      console.log("close")
-    }
-
+      console.log("close");
+    };
 
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
-    }
-
+    };
 
     modals.openConfirmModal({
       title: <h1>Request Receipt</h1>,
@@ -99,7 +89,7 @@ const QRScanner = () => {
       radius: "md",
       withCloseButton: false,
       centered: true,
-      onCancel: () => console.log('Cancel'),
+      onCancel: () => console.log("Cancel"),
       onConfirm: () => authorizeRequest(),
       children: (
         <>
@@ -134,76 +124,73 @@ const QRScanner = () => {
       ),
       labels: { confirm: "Authorize", cancel: "Cancel" },
       confirmProps: {
-        radius: "xl", bg: "rgb(141, 16, 56)",
+        radius: "xl",
+        bg: "rgb(141, 16, 56)",
       },
 
       cancelProps: {
-        radius: "xl", bg: "#989898", color: "white",
+        radius: "xl",
+        bg: "#989898",
+        color: "white",
       },
     });
   };
 
   const openBorrowReturnModal = (transaction) => {
-
-    console.log('MY TRANSACTIONNNNN ==========================')
-    console.log(transaction)
-    const selectedBook = transaction.book
-    const ticket = transaction.borrowTicket
-    const client = transaction.client
-
+    console.log("MY TRANSACTIONNNNN ==========================");
+    console.log(transaction);
+    const selectedBook = transaction.book;
+    const ticket = transaction.borrowTicket;
+    const client = transaction.client;
 
     const updateRequestStatus = async () => {
-      console.log(ticket.id)
+      console.log(ticket.id);
       const filter = {
-        id: ticket.id
-      }
+        id: ticket.id,
+      };
       const atts = {
-        status: 'Returned',
-      }
+        status: "Returned",
+      };
 
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
+      const response = await fetch("/api/db", {
+        method: "POST",
         body: JSON.stringify({
-          entity: 'requests',
+          entity: "requests",
           update: 1,
           where: filter,
-          data: atts
-        })
-      })
+          data: atts,
+        }),
+      });
 
-      console.log("close")
-    }
+      console.log("close");
+    };
 
     const updateBookStatus = async () => {
-      console.log(selectedBook.id)
+      console.log(selectedBook.id);
       const filter = {
-        id: selectedBook.id
-      }
+        id: selectedBook.id,
+      };
       const atts = {
-        status: 'Available',
-      }
+        status: "Available",
+      };
 
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
+      const response = await fetch("/api/db", {
+        method: "POST",
         body: JSON.stringify({
-          entity: 'books',
+          entity: "books",
           update: 1,
           where: filter,
-          data: atts
-        })
-      })
+          data: atts,
+        }),
+      });
 
-      console.log("close")
-    }
-
+      console.log("close");
+    };
 
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
-    }
-
+    };
 
     modals.openConfirmModal({
       title: <h1>Request Receipt</h1>,
@@ -211,7 +198,7 @@ const QRScanner = () => {
       radius: "md",
       withCloseButton: false,
       centered: true,
-      onCancel: () => console.log('Cancel'),
+      onCancel: () => console.log("Cancel"),
       onConfirm: () => authorizeRequest(),
       children: (
         <>
@@ -246,31 +233,34 @@ const QRScanner = () => {
       ),
       labels: { confirm: "Confirm Return", cancel: "Cancel" },
       confirmProps: {
-        radius: "xl", bg: "rgb(141, 16, 56)",
+        radius: "xl",
+        bg: "rgb(141, 16, 56)",
       },
 
       cancelProps: {
-        radius: "xl", bg: "#989898", color: "white",
+        radius: "xl",
+        bg: "#989898",
+        color: "white",
       },
     });
   };
 
   const handleScanSuccess = async (result) => {
-    const parsedData = JSON.parse(result.text)
+    const parsedData = JSON.parse(result.text);
 
-    const response = await fetch('/api/db', {
-      method: 'POST',
+    const response = await fetch("/api/db", {
+      method: "POST",
       body: JSON.stringify({
         scanqr: 1,
-        id: parseInt(parsedData.id)
-      })
-    })
+        id: parseInt(parsedData.id),
+      }),
+    });
 
-    const borrowed = await response.json()
+    const borrowed = await response.json();
 
-    fetchBook(borrowed)
+    fetchBook(borrowed);
     // console.log(resresult[0].id)
-  }
+  };
 
   const current = usePathname();
   return (
@@ -287,12 +277,14 @@ const QRScanner = () => {
           className={styles.qr_reader}
           onResult={(result, error) => {
             if (!!result) {
+              toast.success("Scanned successfully!", { autoClose: 2000 });
               setData(result?.text);
               handleScanSuccess(result);
             }
 
             if (!!error) {
               console.info(error);
+              toast.error("Error scanning!");
             }
           }}
           style={{ width: "100px", height: "100px" }}
@@ -303,6 +295,7 @@ const QRScanner = () => {
           receipt.
         </p>
       </Center>
+      <ToastContainer />
     </>
   );
 };

@@ -1,12 +1,11 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import cover from "@/images/bookcover.jpg";
+
 import Link from "next/link";
 import Header from "@/_components/header/Header";
 import { usePathname, useRouter } from "next/navigation";
-import { Center, Tabs, rem, Select, Loader } from "@mantine/core";
+import { Center, Tabs, rem, Select, Loader, Button } from "@mantine/core";
 import styles from "./dashboard.module.scss";
 import { IconBooks, IconDice, IconUsers } from "@tabler/icons-react";
 import { Prisma, PrismaClient } from "@prisma/client";
@@ -18,6 +17,7 @@ import {
   flexRender,
   getPaginationRowModel,
 } from "@tanstack/react-table";
+import Status from "@/_components/dashboard/status";
 
 const Dashboard = () => {
   const current = usePathname();
@@ -125,63 +125,12 @@ const Dashboard = () => {
                   </Tabs.List>
 
                   <Tabs.Panel value="books">
-                    <table className={styles.main_table}>
-                      <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Genre</th>
-                        <th>Status</th>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className={styles.cover_holder}>
-                            <Image src={cover} className={styles.cover} />
-                          </div>
-                        </td>
-                        <td>Introduction to Object Oriented Programming</td>
-                        <td>Santos, Jose A.</td>
-                        <td>Programming</td>
-                        <td>
-                          <select>
-                            <option value="available">Available</option>
-                            <option value="unavailable">Unavailable</option>
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className={styles.cover_holder}>
-                            <Image src={cover} className={styles.cover} />
-                          </div>{" "}
-                        </td>
-                        <td>Introduction to Object Oriented Programming</td>
-                        <td>Santos, Jose A.</td>
-                        <td>Programming</td>
-                        <td>
-                          <select>
-                            <option value="available">Available</option>
-                            <option value="unavailable">Unavailable</option>
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className={styles.cover_holder}>
-                            <Image src={cover} className={styles.cover} />
-                          </div>{" "}
-                        </td>
-                        <td>Introduction to Object Oriented Programming</td>
-                        <td>Santos, Jose A.</td>
-                        <td>Programming</td>
-                        <td>
-                          <select>
-                            <option value="available">Available</option>
-                            <option value="unavailable">Unavailable</option>
-                          </select>
-                        </td>
-                      </tr>
-                    </table>
+                    <Status
+                      title={"Introduction to Object Oriented Programming"}
+                      author={"Santos, Jose A."}
+                      genre={"Programming"}
+                      status={"Available"}
+                    />
                   </Tabs.Panel>
 
                   <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
@@ -196,7 +145,15 @@ const Dashboard = () => {
           <div className={styles.database}>
             <div className={styles.header_database}>
               <h1>Database</h1>
-              <button className={styles.button}>Edit</button>
+              <Button
+                component={Link}
+                href="/dbpage"
+                variant="filled"
+                color="rgb(141, 16, 56)"
+                radius="xl"
+              >
+                View
+              </Button>
             </div>
             <Tabs
               color="#e8b031"
@@ -262,24 +219,40 @@ const Dashboard = () => {
                   </tbody>
                 </table>
                 <div className={styles.page_btn}>
-                  <button onClick={() => table.setPageIndex(0)}>First</button>
-                  <button
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
+                    onClick={() => table.setPageIndex(0)}
+                  >
+                    First
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
                     onClick={() => table.previousPage()}
                     disabled={!table.getCanPreviousPage()}
                   >
                     Previous
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
                     onClick={() => table.nextPage()}
                     disabled={!table.getCanNextPage()}
                   >
                     Next
-                  </button>
-                  <button
+                  </Button>
+                  <Button
+                    variant="filled"
+                    color="rgb(141, 16, 56)"
+                    radius="xl"
                     onClick={() => table.setPageIndex(table.getPageCount() - 1)}
                   >
                     Last
-                  </button>
+                  </Button>
                 </div>
               </Tabs.Panel>
 

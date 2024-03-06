@@ -37,6 +37,12 @@ const Login = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.keyCode === 13) {
+      onSubmit();
+    }
+  };
+
   return (
     <div className={styles.parent}>
       <div className={styles.container}>
@@ -54,6 +60,7 @@ const Login = () => {
               leftSection={<IconAt size={16} />}
               classNames={styles}
               onChange={(e) => (email.current = e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             <PasswordInput
               placeholder="Password"
@@ -61,15 +68,29 @@ const Login = () => {
               leftSection={<IconLock size={16} />}
               classNames={styles}
               onChange={(e) => (password.current = e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className={styles.leftLower}>
-            <Button classNames={{ root: styles.btn }} onClick={onSubmit}>
+            <Button
+              variant="filled"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              classNames={{ root: styles.btn }}
+              onClick={onSubmit}
+            >
               Login
             </Button>
 
             <Link href="/signup">
-              <Button classNames={{ root: styles.btn2 }}>Sign Up</Button>
+              <Button
+                variant="filled"
+                color="rgb(141, 16, 56)"
+                radius="xl"
+                classNames={{ root: styles.btn2 }}
+              >
+                Sign Up
+              </Button>
             </Link>
           </div>
           <h2 className={styles.forgot}>
