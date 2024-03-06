@@ -4,6 +4,7 @@ import Header from "@/_components/header/Header";
 import React, { useState, useCallback, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./qrscanner.module.scss";
+import StudentFields from "./studentFields";
 import { QrReader } from "react-qr-reader";
 import { Center, Text } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
@@ -28,8 +29,6 @@ const QRScanner = () => {
   };
 
   const [data, setData] = useState("No result");
-
-
 
 
   const openBorrowRequestModal = (transaction) => {
@@ -101,37 +100,7 @@ const QRScanner = () => {
       centered: true,
       onCancel: () => console.log('Cancel'),
       onConfirm: () => authorizeRequest(),
-      children: (
-        <>
-          <p>
-            <strong>Receipt No.:</strong> {ticket.id}
-          </p>
-          <p>
-            <strong>Call No.:</strong> {selectedBook.call_num}
-          </p>
-          <p>
-            <strong>Accession No.:</strong> {selectedBook.accession_num}
-          </p>
-          <p>
-            <strong>Request Date:</strong> {ticket.borrow_date}
-          </p>
-          <p>
-            <strong>Student No.:</strong> {client.student_num}
-          </p>
-          <p>
-            <strong>Name:</strong> {client.name}
-          </p>
-          <p>
-            <strong>Department:</strong> {client.department}
-          </p>
-          <p>
-            <strong>Year Level:</strong> {client.year_level}
-          </p>
-          <p>
-            <strong>Section:</strong> {client.section}
-          </p>
-        </>
-      ),
+      children: (StudentFields(transaction)),
       labels: { confirm: "Authorize", cancel: "Cancel" },
       confirmProps: {
         radius: "xl", bg: "rgb(141, 16, 56)",

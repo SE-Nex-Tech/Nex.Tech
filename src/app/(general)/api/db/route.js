@@ -86,7 +86,7 @@ export async function POST(request) {
   }
 
   else if (params['update'] != undefined) {
-    
+
     if (params['entity'] == 'books') {
       let filter = params['where']
       let info = params['data']
@@ -128,7 +128,7 @@ export async function POST(request) {
     })
   }
 
-  else if (params['scanqr'] != undefined ) {
+  else if (params['scanqr'] != undefined) {
     const id = params['id']
 
     console.log('ACCESSING QR')
@@ -146,11 +146,39 @@ export async function POST(request) {
       }
     })
 
-    const client = await prisma.student.findUnique({
-      where: {
-        request_id: borrowTicket.id
-      }
-    })
+    let client;
+    switch (borrowTicket.user_type) {
+      case 'Student':
+        client = await prisma.student.findUnique({
+          where: {
+            request_id: borrowTicket.id
+          }
+
+        });
+        break;
+      case 'Faculty':
+        client = await prisma.faculty.findUnique({
+          where: {
+            request_id: borrowTicket.id
+          }
+        });
+        break;
+      case 'Staff':
+        client = await prisma.staff.findUnique({
+          where: {
+            request_id: borrowTicket.id
+          }
+        });
+        break;
+      default:
+    }
+
+
+    // const client = await prisma.student.findUnique({
+    //   where: {
+    //     request_id: borrowTicket.id
+    //   }
+    // })
 
     const book = await prisma.books.findUnique({
       where: {
