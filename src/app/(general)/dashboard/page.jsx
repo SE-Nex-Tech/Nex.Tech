@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import Image from "next/image";
-import cover from "@/images/bookcover.jpg";
+
 import Link from "next/link";
 import Header from "@/_components/header/Header";
 import { usePathname, useRouter } from "next/navigation";
@@ -18,6 +17,7 @@ import {
   flexRender,
   getPaginationRowModel,
 } from "@tanstack/react-table";
+import Status from "@/_components/dashboard/status";
 
 const Dashboard = () => {
   const current = usePathname();
@@ -125,63 +125,12 @@ const Dashboard = () => {
                   </Tabs.List>
 
                   <Tabs.Panel value="books">
-                    <table className={styles.main_table}>
-                      <tr>
-                        <th>Image</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Genre</th>
-                        <th>Status</th>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className={styles.cover_holder}>
-                            <Image src={cover} className={styles.cover} />
-                          </div>
-                        </td>
-                        <td>Introduction to Object Oriented Programming</td>
-                        <td>Santos, Jose A.</td>
-                        <td>Programming</td>
-                        <td>
-                          <select>
-                            <option value="available">Available</option>
-                            <option value="unavailable">Unavailable</option>
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className={styles.cover_holder}>
-                            <Image src={cover} className={styles.cover} />
-                          </div>{" "}
-                        </td>
-                        <td>Introduction to Object Oriented Programming</td>
-                        <td>Santos, Jose A.</td>
-                        <td>Programming</td>
-                        <td>
-                          <select>
-                            <option value="available">Available</option>
-                            <option value="unavailable">Unavailable</option>
-                          </select>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <div className={styles.cover_holder}>
-                            <Image src={cover} className={styles.cover} />
-                          </div>{" "}
-                        </td>
-                        <td>Introduction to Object Oriented Programming</td>
-                        <td>Santos, Jose A.</td>
-                        <td>Programming</td>
-                        <td>
-                          <select>
-                            <option value="available">Available</option>
-                            <option value="unavailable">Unavailable</option>
-                          </select>
-                        </td>
-                      </tr>
-                    </table>
+                    <Status
+                      title={"Introduction to Object Oriented Programming"}
+                      author={"Santos, Jose A."}
+                      genre={"Programming"}
+                      status={"Available"}
+                    />
                   </Tabs.Panel>
 
                   <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
