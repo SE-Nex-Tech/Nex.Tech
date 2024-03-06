@@ -64,9 +64,7 @@ const Reports = () => {
               onChange={setValue2}
               radius={"xl"} // END: Set default date to current date
             />
-            <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
-              Update
-            </Button>
+
             <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
               Download
             </Button>
