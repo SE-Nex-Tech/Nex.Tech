@@ -5,13 +5,16 @@ import React, { useState, useCallback, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./qrscanner.module.scss";
 import { QrReader } from "react-qr-reader";
-import { Center, Text } from "@mantine/core";
+import { Center, Text, Loader } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
 import { IconInfoCircle } from "@tabler/icons-react";
+
+import { useSession, getSession } from "next-auth/react";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
@@ -26,6 +29,23 @@ const QRScanner = () => {
   };
 
   const [data, setData] = useState("No result");
+
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <Loader
+        color="yellow"
+        size="xl"
+        cl
+        classNames={{ root: styles.loading }}
+      />
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return <Unauthenticated />;
+  }
 
   const openBorrowRequestModal = (transaction) => {
     console.log("MY TRANSACTIONNNNN ==========================");
