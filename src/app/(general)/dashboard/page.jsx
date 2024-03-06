@@ -3,14 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import cover from "@/images/bookcover.jpg";
-import Link from "next/link";
 import Header from "@/_components/header/Header";
-import { usePathname, useRouter } from "next/navigation";
-import { Center, Tabs, rem, Select, Loader } from "@mantine/core";
+import { usePathname } from "next/navigation";
+import { Center, Tabs, rem, Loader } from "@mantine/core";
 import styles from "./dashboard.module.scss";
 import { IconBooks, IconDice, IconUsers } from "@tabler/icons-react";
 import { Prisma, PrismaClient } from "@prisma/client";
-import { useMemo, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSession, getSession } from "next-auth/react";
 import {
   useReactTable,
@@ -18,11 +17,9 @@ import {
   flexRender,
   getPaginationRowModel,
 } from "@tanstack/react-table";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
 
 const Dashboard = () => {
-  const current = usePathname();
-  const iconStyle = { width: rem(20), height: rem(20) };
-  const prisma = new PrismaClient();
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -46,7 +43,6 @@ const Dashboard = () => {
     header: headerMapping[columnName] || columnName,
     accessorKey: columnName,
   }));
-
   const table = useReactTable({
     data,
     columns,
@@ -69,6 +65,25 @@ const Dashboard = () => {
 
     fetchData();
   }, []);
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <Loader
+        color="yellow"
+        size="xl"
+        cl
+        classNames={{ root: styles.loading }}
+      />
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return <Unauthenticated />;
+  }
+  const current = usePathname();
+  const iconStyle = { width: rem(20), height: rem(20) };
+  const prisma = new PrismaClient();
 
   if (loading) {
     return (
@@ -196,7 +211,7 @@ const Dashboard = () => {
           <div className={styles.database}>
             <div className={styles.header_database}>
               <h1>Database</h1>
-              <button className={styles.button}>Edit</button>
+              <button className={styles.button}>View</button>
             </div>
             <Tabs
               color="#e8b031"
