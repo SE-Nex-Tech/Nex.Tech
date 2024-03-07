@@ -20,23 +20,32 @@ const QRScanner = () => {
   const [book, setBook] = useState([]);
   const [data, setData] = useState("No result");
   const current = usePathname();
+  const timeZoneOffset = 480;
 
   var newRequestStatus;
   var newBookStatus;
   var confirmLabel;
+  var borrowDate;
+  var returnDate;
 
   const fetchBook = async (transaction) => {
+    const currentDateTime = new Date();
+    
     setBook(transaction.book);
 
     if (transaction.borrowTicket.status == 'Pending Borrow') {
       newRequestStatus = "Borrow Approved";
       newBookStatus = "Unavailable";
       confirmLabel = "Authorize Borrow";
+      borrowDate = new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString();
+      returnDate = null;
       openModal(transaction)
     } else if (transaction.borrowTicket.status == 'Borrow Approved') {
       newRequestStatus = "Returned";
       newBookStatus = "Available";
       confirmLabel = "Confirm Return";
+      borrowDate = transaction.borrowTicket.borrow_date
+      returnDate = new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString();
       openModal(transaction)
     }
 
@@ -93,6 +102,8 @@ const QRScanner = () => {
       }
       const atts = {
         status: newRequestStatus,
+        borrow_date: borrowDate,
+        return_date: returnDate,
       }
 
       const response = await fetch('/api/db', {

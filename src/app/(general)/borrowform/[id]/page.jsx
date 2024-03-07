@@ -19,6 +19,7 @@ const BorrowForm = () => {
   const currentDate = new Date();
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedUserType, setSelectedUserType] = useState("Student");
+  const timeZoneOffset = 480;
 
   const { id } = useParams();
   const [book, setBook] = useState([]);
@@ -32,13 +33,15 @@ const BorrowForm = () => {
     setShowConfirmation(false);
     open();
 
+    const currentDateTime = new Date();
+
     userName.current = lastName.current+", "+firstName.current+" "+middleName.current;
 
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({
         entity: "books",
-        date: new Date().toISOString(),
+        date: new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString(),
         materialID: parseInt(id),
         type: requestType.current,
         user_type: userType.current,

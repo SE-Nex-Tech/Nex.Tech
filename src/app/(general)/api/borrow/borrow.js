@@ -30,9 +30,6 @@ export async function borrow(req) {
       default:
         return null;
   }
-  
-
-
   // console.log('book requests');
   // console.log(await prisma.bookrequest.findMany());
 
@@ -43,7 +40,7 @@ export async function borrow(req) {
 function borrow_bookStudent(params) {
   return {
     date: params['date'],
-    borrow_date: new Date().toISOString(),
+    borrow_date: null,
     return_date: null,
     status: 'Pending Borrow',
     type: params['type'],
@@ -75,7 +72,7 @@ function borrow_bookStudent(params) {
 function borrow_bookFaculty(params) {
   return {
     date: params['date'],
-    borrow_date: new Date().toISOString(),
+    borrow_date: null,
     return_date: null,
     status: 'Pending Borrow',
     type: params['type'],
@@ -105,7 +102,7 @@ function borrow_bookFaculty(params) {
 function borrow_bookStaff(params) {
   return {
     date: params['date'],
-    borrow_date: new Date().toISOString(),
+    borrow_date: null,
     return_date: null,
     status: 'Pending Borrow',
     type: params['type'],
