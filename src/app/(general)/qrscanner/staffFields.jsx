@@ -7,6 +7,19 @@ const StaffFields = (transaction) => {
     const selectedBook = transaction.book
     const ticket = transaction.borrowTicket
     const client = transaction.client
+
+    const date = new Date(ticket.date);
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const month = monthNames[date.getUTCMonth()];
+    const day = date.getUTCDate();
+    const year = date.getUTCFullYear();
+    let hours = date.getUTCHours();
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+    const ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    const formattedDateTime = `${month} ${day}, ${year} ${hours}:${minutes} ${ampm}`;
+
     return (<>
         <p>
             <strong>Receipt No.:</strong> {ticket.id}
@@ -18,7 +31,7 @@ const StaffFields = (transaction) => {
             <strong>Book Title:</strong> {selectedBook.title}
         </p>
         <p>
-            <strong>Request Date:</strong> {ticket.borrow_date}
+            <strong>Request Date:</strong> {formattedDateTime}
         </p>
         <p>
             <strong>Employee No.:</strong> {client.employee_num}
