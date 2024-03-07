@@ -3,24 +3,19 @@ import React from "react";
 import { usePathname } from "next/navigation";
 import Header from "@/_components/header/Header";
 import styles from "./database.module.scss";
-import { Center, Tabs, rem, Select, Loader } from "@mantine/core";
+import { Center, Tabs, rem, Loader } from "@mantine/core";
 import { useState, useEffect } from "react";
-import { Prisma, PrismaClient } from "@prisma/client";
-import { Input, Button } from "@mantine/core";
-import { IconAt, IconSearch } from "@tabler/icons-react";
+import { Input } from "@mantine/core";
+import { IconSearch } from "@tabler/icons-react";
 
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-} from "@tanstack/react-table";
 import Sort from "@/_components/sort/sort";
-import Link from "next/link";
 import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
 import TableBody from "@/_components/tables/table";
+
+import { useSession, getSession } from "next-auth/react";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
 
 const Database = () => {
   const current = usePathname();
@@ -28,7 +23,6 @@ const Database = () => {
   const [data, setData] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
-  const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -40,6 +34,23 @@ const Database = () => {
 
     fetchData();
   }, []);
+
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <Loader
+        color="yellow"
+        size="xl"
+        cl
+        classNames={{ root: styles.loading }}
+      />
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return <Unauthenticated />;
+  }
 
   if (loading) {
     return (
@@ -54,24 +65,24 @@ const Database = () => {
 
   const searchItems = async (key) => {
     if (key.length == 0) {
-      const reset = await fetch('/api/books')
+      const reset = await fetch("/api/books");
 
-      const result = await reset.json()
+      const result = await reset.json();
       setData(result);
-      return
+      return;
     }
-    const response = await fetch('/api/db', {
-      method: 'POST',
+    const response = await fetch("/api/db", {
+      method: "POST",
       body: JSON.stringify({
-        entity: 'books',
+        entity: "books",
         search: 1,
-        contains: key
-      })
-    })
+        contains: key,
+      }),
+    });
 
     const result = await response.json();
-    setData(result)
-  }
+    setData(result);
+  };
 
   return (
     <>

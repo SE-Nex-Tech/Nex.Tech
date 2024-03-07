@@ -4,17 +4,37 @@ import React, { useState } from "react";
 import Header from "@/_components/header/Header";
 import { usePathname } from "next/navigation";
 import styles from "./reports.module.scss";
-import { Button, Center, NativeSelect } from "@mantine/core";
+import { Button, Center, NativeSelect, Loader } from "@mantine/core";
 import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
 import PieChart from "@/_components/charts/PieChart";
 import { data } from "@/data/pie";
 
+import { useSession, getSession } from "next-auth/react";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
+
 const Reports = () => {
   const current = usePathname();
   const [value, setValue] = useState([]);
   const [value2, setValue2] = useState([]);
+
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <Loader
+        color="yellow"
+        size="xl"
+        cl
+        classNames={{ root: styles.loading }}
+      />
+    );
+  }
+
+  if (status === "unauthenticated") {
+    return <Unauthenticated />;
+  }
 
   return (
     <>
@@ -44,9 +64,7 @@ const Reports = () => {
               onChange={setValue2}
               radius={"xl"} // END: Set default date to current date
             />
-            <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
-              Update
-            </Button>
+
             <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
               Download
             </Button>

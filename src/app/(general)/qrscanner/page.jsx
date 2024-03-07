@@ -8,13 +8,16 @@ import StudentFields from "./studentFields";
 import FacultyFields from "./facultyFields";
 import StaffFields from "./staffFields";
 import { QrReader } from "react-qr-reader";
-import { Center, Text } from "@mantine/core";
+import { Center, Text, Loader } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
 import { IconInfoCircle } from "@tabler/icons-react";
+
+import { useSession, getSession } from "next-auth/react";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
@@ -81,25 +84,28 @@ const QRScanner = () => {
       radius: "md",
       withCloseButton: false,
       centered: true,
-      onCancel: () => console.log('Cancel'),
+      onCancel: () => console.log("Cancel"),
       onConfirm: () => authorizeRequest(),
       children: (requestFields),
       labels: { confirm: confirmLabel, cancel: "Cancel" },
       confirmProps: {
-        radius: "xl", bg: "rgb(141, 16, 56)",
+        radius: "xl",
+        bg: "rgb(141, 16, 56)",
       },
 
       cancelProps: {
-        radius: "xl", bg: "#989898", color: "white",
+        radius: "xl",
+        bg: "#989898",
+        color: "white",
       },
     });
 
 
     const updateRequestStatus = async () => {
-      console.log(ticket.id)
+      console.log(ticket.id);
       const filter = {
-        id: ticket.id
-      }
+        id: ticket.id,
+      };
       const atts = {
         status: newRequestStatus,
         borrow_date: borrowDate,
@@ -109,21 +115,21 @@ const QRScanner = () => {
       const response = await fetch('/api/db', {
         method: 'POST',
         body: JSON.stringify({
-          entity: 'requests',
+          entity: "requests",
           update: 1,
           where: filter,
-          data: atts
-        })
-      })
+          data: atts,
+        }),
+      });
 
-      console.log("close")
-    }
+      console.log("close");
+    };
 
     const updateBookStatus = async () => {
-      console.log(selectedBook.id)
+      console.log(selectedBook.id);
       const filter = {
-        id: selectedBook.id
-      }
+        id: selectedBook.id,
+      };
       const atts = {
         status: newBookStatus,
       }
@@ -131,12 +137,12 @@ const QRScanner = () => {
       const response = await fetch('/api/db', {
         method: 'POST',
         body: JSON.stringify({
-          entity: 'books',
+          entity: "books",
           update: 1,
           where: filter,
-          data: atts
-        })
-      })
+          data: atts,
+        }),
+      });
 
       console.log("close")
     }
@@ -148,21 +154,21 @@ const QRScanner = () => {
   };
 
   const handleScanSuccess = async (result) => {
-    const parsedData = JSON.parse(result.text)
+    const parsedData = JSON.parse(result.text);
 
-    const response = await fetch('/api/db', {
-      method: 'POST',
+    const response = await fetch("/api/db", {
+      method: "POST",
       body: JSON.stringify({
         scanqr: 1,
-        id: parseInt(parsedData.id)
-      })
-    })
+        id: parseInt(parsedData.id),
+      }),
+    });
 
-    const borrowed = await response.json()
+    const borrowed = await response.json();
 
-    fetchBook(borrowed)
+    fetchBook(borrowed);
     // console.log(resresult[0].id)
-  }
+  };
 
   return (
     <>
@@ -178,12 +184,14 @@ const QRScanner = () => {
           className={styles.qr_reader}
           onResult={(result, error) => {
             if (!!result) {
+              toast.success("Scanned successfully!", { autoClose: 2000 });
               setData(result?.text);
               handleScanSuccess(result);
             }
 
             if (!!error) {
               console.info(error);
+              toast.error("Error scanning!");
             }
           }}
           style={{ width: "100px", height: "100px" }}
@@ -193,6 +201,7 @@ const QRScanner = () => {
           For borrowing, reserving, or returning, point the camera at the receipt.
         </p>
       </Center>
+      <ToastContainer />
     </>
   );
 };
