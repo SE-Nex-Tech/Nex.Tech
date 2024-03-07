@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./pagination.module.scss";
+import { Button } from "@mantine/core";
 
 const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
   const pageNumbers = [];
@@ -24,16 +25,22 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
 
   return (
     <nav>
-      <ul className={styles.pagination}>
+      <div className={styles.pagination}>
         <li
           onClick={() => paginate(1)}
           className={`${styles.page_item} ${
             currentPage === 1 ? styles.current_page : ""
           }`}
         >
-          <a onClick={() => paginate(1)} href="#" className="page-link">
+          <Button
+            variant="filled"
+            color="rgb(141, 16, 56)"
+            radius="xl"
+            onClick={() => paginate(1)}
+            className="page-link"
+          >
             First
-          </a>
+          </Button>
         </li>
         {pageNumbers.map((number) => (
           <li
@@ -43,9 +50,15 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
               currentPage === number ? styles.current_page : ""
             }`}
           >
-            <a onClick={() => paginate(number)} href="#" className="page-link">
+            <Button
+              variant="filled"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              onClick={() => paginate(number)}
+              className="page-link"
+            >
               {number}
-            </a>
+            </Button>
           </li>
         ))}
         <li
@@ -54,15 +67,17 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
             currentPage === totalPages ? styles.current_page : ""
           }`}
         >
-          <a
+          <Button
+            variant="filled"
+            color="rgb(141, 16, 56)"
+            radius="xl"
             onClick={() => paginate(totalPages)}
-            href="#"
             className="page-link"
           >
             Last
-          </a>
+          </Button>
         </li>
-      </ul>
+      </div>
     </nav>
   );
 };

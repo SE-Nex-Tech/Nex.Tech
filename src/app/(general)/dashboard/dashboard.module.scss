@@ -209,10 +209,14 @@
 .page_btn {
   margin-top: 1rem;
   display: flex;
-  justify-content: right;
+  justify-content: center;
   gap: 1rem;
   outline: none;
   border: none;
+  background-color: white;
+  padding: 0.5em 1em 0.5em 1em;
+  border: 2px solid rgb(219, 219, 219);
+  border-radius: 10px;
 }
 
 .page_btn button:hover {
