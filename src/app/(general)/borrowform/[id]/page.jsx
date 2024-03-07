@@ -3,15 +3,7 @@
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  TextInput,
-  Select,
-  Button,
-  NumberInput,
-  Radio,
-  Modal,
-  camelToKebabCase,
-} from "@mantine/core";
+import {TextInput,Select,Button,NumberInput,Modal} from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
@@ -21,15 +13,13 @@ import { useParams } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
 
-
-
-
-
 const BorrowForm = () => {
+  
   const current = usePathname();
   const currentDate = new Date();
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedUserType, setSelectedUserType] = useState("Student");
+  const timeZoneOffset = 480;
 
   const { id } = useParams();
   const [book, setBook] = useState([]);
@@ -43,11 +33,15 @@ const BorrowForm = () => {
     setShowConfirmation(false);
     open();
 
+    const currentDateTime = new Date();
+
+    userName.current = lastName.current+", "+firstName.current+" "+middleName.current;
+
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({
         entity: "books",
-        date: new Date().toISOString(),
+        date: new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString(),
         materialID: parseInt(id),
         type: requestType.current,
         user_type: userType.current,
@@ -125,6 +119,9 @@ const BorrowForm = () => {
   const studentNumber = useRef("");
   const employeeNumber = useRef("");
   const userType = useRef("Student");
+  const firstName = useRef("");
+  const lastName = useRef("");
+  const middleName = useRef("");
   const userName = useRef("");
   const userEmail = useRef("");
   const userDepartment = useRef("None");
@@ -153,11 +150,26 @@ const BorrowForm = () => {
             </div>
 
             <div className={styles.input}>
-              <label>Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
-                onChange={(e) => (userName.current = e.target.value)}
+              <label>First Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter First Name"
+                onChange={(e) => (firstName.current = e.target.value)}
               />
             </div>
+
+            <div className={styles.input}>
+              <label>Middle Initial:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Middle Initial"
+                onChange={(e) => (middleName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Last Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Last Name"
+                onChange={(e) => (lastName.current = e.target.value)}
+              />
+            </div>
+
 
             <div className={styles.input}>
               <label>Email:</label>
@@ -207,9 +219,23 @@ const BorrowForm = () => {
             </div>
 
             <div className={styles.input}>
-              <label>Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
-                onChange={(e) => (userName.current = e.target.value)}
+              <label>First Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter First Name"
+                onChange={(e) => (firstName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Middle Initial:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Middle Initial"
+                onChange={(e) => (middleName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Last Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Last Name"
+                onChange={(e) => (lastName.current = e.target.value)}
               />
             </div>
 
@@ -243,9 +269,23 @@ const BorrowForm = () => {
             </div>
 
             <div className={styles.input}>
-              <label>Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
-                onChange={(e) => (userName.current = e.target.value)}
+              <label>First Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter First Name"
+                onChange={(e) => (firstName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Middle Initial:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Middle Initial"
+                onChange={(e) => (middleName.current = e.target.value)}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Last Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="Enter Last Name"
+                onChange={(e) => (lastName.current = e.target.value)}
               />
             </div>
 
@@ -362,11 +402,9 @@ const BorrowForm = () => {
   };
 
 
-
-
   return (
     <div>
-      <Header currentRoute={current} />
+      <Header currentRoute={"/borrowform"} />
       <div className={styles.mainBody}>
         <div className={styles.formContainer}>
           <div className={styles.formContents}>

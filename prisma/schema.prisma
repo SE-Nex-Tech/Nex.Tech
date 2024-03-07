@@ -43,9 +43,9 @@ model Boardgames {
 
 model Requests {
   id                Int    @id @default(autoincrement())
-  date              DateTime? @db.Date
-  borrow_date       DateTime? @db.Date
-  return_date       DateTime? @db.Date
+  date              DateTime? 
+  borrow_date       DateTime? 
+  return_date       DateTime? 
   status            String @db.Text
   type              String @db.Text
   bookRequests      BookRequest?

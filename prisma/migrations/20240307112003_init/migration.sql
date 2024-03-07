@@ -41,9 +41,9 @@ CREATE TABLE "Boardgames" (
 -- CreateTable
 CREATE TABLE "Requests" (
     "id" SERIAL NOT NULL,
-    "date" DATE,
-    "borrow_date" DATE,
-    "return_date" DATE,
+    "date" TIMESTAMP(3),
+    "borrow_date" TIMESTAMP(3),
+    "return_date" TIMESTAMP(3),
     "status" TEXT NOT NULL,
     "type" TEXT NOT NULL,
     "user_type" TEXT NOT NULL,
