@@ -1,10 +1,10 @@
 import React from "react";
 import { DonutChart } from "@mantine/charts";
 import { NativeSelect } from "@mantine/core";
-import { data } from "@/data/pie";
+// import { data } from "@/data/pie";
 import styles from "./piechart.module.scss";
 
-const PieChart = () => {
+const PieChart = ({ data }) => {
   return (
     <>
       <div classname={styles.container}>
@@ -13,7 +13,7 @@ const PieChart = () => {
           thickness={30}
           data={data}
           tooltipDataSource="segment"
-          chartLabel="Out of 75"
+          chartLabel={"Out of " + data.length}
         />
       </div>
     </>
