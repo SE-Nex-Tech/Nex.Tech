@@ -137,18 +137,21 @@ const BorrowForm = () => {
     callNum = book.call_num;
   }
 
-
   const [studentNumberError, setStudentNumberError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
   const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [sectionError, setSectionError] = useState(false);
+  const [departmentError, setDepartmentError] = useState(false);
+  const [yearLevelError, setYearLevelError] = useState(false);
+
 
 
   const validateInputChange = (value, refValue, setErrorState) => {
-    if (value == "" || value == 0 || value == null) {
+    if (value == "" || value == null || value.current == 'None') {
       // If the value is empty or contains only whitespace  
       setErrorState(true); // Set state to true
+      refValue.current = value;
     } else {
       setErrorState(false); // Set state to false
       refValue.current = value; // Update the value
@@ -161,56 +164,50 @@ const BorrowForm = () => {
   const lastNameText = lastNameError ? 'This field is required' : 'Smith';
   const emailText = emailError ? 'This field is required' : 'johndoe.smith@ust.edu.ph';
   const sectionText = sectionError ? 'This field is required' : '1CSA';
-
-
-  const [validInput, setValidInput] = useState(false);
+  const departmentText = departmentError ? 'This field is required' : 'Select Department';
+  const yearLevelText = yearLevelError ? 'This field is required' : 'Select Year Level';
 
 
   const validateFormSubmit = () => {
 
+    console.log(userDepartment)
+
     const checkEmptyField = (value, setErrorState) => {
-      if (value.current == "" || value.current == 0 || value.current == null) {
-        // If the value is empty or contains only whitespace  
-        setErrorState(true); // Set state to true
+      if (value.current == "" || value.current == null || value.current == 'None') {
+        setErrorState(true);
+        return false;
       } else {
-        setErrorState(false); // Set state to false
+        setErrorState(false);
+        return true;
       }
-    } 
+    }
+
+    var isValid = true;
 
     switch (selectedUserType) {
       case 'Student':
-        console.log("test")
-        checkEmptyField(studentNumber, setStudentNumberError);
-        checkEmptyField(firstName, setFirstNameError);
-        checkEmptyField(lastName, setLastNameError);
-        checkEmptyField(userEmail, setEmailError);
-        checkEmptyField(section, setSectionError);
+        isValid = checkEmptyField(studentNumber, setStudentNumberError) && isValid;
+        isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
+        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
+        isValid = checkEmptyField(userEmail, setEmailError) && isValid;
+        isValid = checkEmptyField(section, setSectionError) && isValid;
+        isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
+        isValid = checkEmptyField(yearLevel, setYearLevelError) && isValid;
 
-        
-        if (studentNumberError || firstNameError || lastNameError
-          || emailError || sectionError){
-            setValidInput(false)
-          }else{
-            setValidInput(true)
-          }
-    
-          console.log(validInput)
-        if (validInput) {
-          openConfirmation()
-        } else {
-          console.log("Missing fields")
-        }
         break;
       case 'Faculty':
         break;
       case 'Staff':
         break;
       default:
-  
-  
+
     }
 
-
+    if (isValid) {
+      openConfirmation()
+    } else {
+      console.log("Missing fields")
+    }
 
   }
 
@@ -269,9 +266,10 @@ const BorrowForm = () => {
               <Select
                 className={styles.inputField}
                 name="userDepartment"
-                placeholder="Select Department"
+                placeholder={departmentText}
                 data={['Information Technology', 'Information Systems', 'Computer Science']}
-                onChange={(value) => (userDepartment.current = value)}
+                onChange={(value) => (validateInputChange(value, userDepartment, setDepartmentError))}
+                error={departmentError}
               />
             </div>
 
@@ -280,9 +278,10 @@ const BorrowForm = () => {
               <Select
                 className={styles.inputField}
                 name="yearLevel"
-                placeholder="Select Year Level"
+                placeholder={yearLevelText}
                 data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
-                onChange={(value) => (yearLevel.current = value)}
+                onChange={(value) => (validateInputChange(value, yearLevel, setYearLevelError))}
+                error={yearLevelError}
               />
             </div>
 
