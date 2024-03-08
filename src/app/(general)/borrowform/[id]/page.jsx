@@ -3,7 +3,7 @@
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import {TextInput,Select,Button,NumberInput,Modal} from "@mantine/core";
+import { TextInput, Select, Button, NumberInput, Modal, Input } from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 
 const BorrowForm = () => {
-  
+
   const current = usePathname();
   const currentDate = new Date();
   const [opened, { open, close }] = useDisclosure(false);
@@ -35,7 +35,7 @@ const BorrowForm = () => {
 
     const currentDateTime = new Date();
 
-    userName.current = lastName.current+", "+firstName.current+" "+middleName.current;
+    userName.current = lastName.current + ", " + firstName.current + " " + middleName.current;
 
     const borrow = await fetch("/api/borrow", {
       method: "POST",
@@ -137,35 +137,60 @@ const BorrowForm = () => {
     callNum = book.call_num;
   }
 
+
+  const [validStudentNumber, setValidStudentNumber] = useState(false);
+  const [validFirstName, setValidFirstName] = useState(false);
+
+  const validateInput = (value, refValue, setErrorState) => {
+    if (value == " " || value == 0 || value == null) {
+      // If the value is empty or contains only whitespace  
+      setErrorState(true); // Set state to true
+    } else {
+      setErrorState(false); // Set state to false
+      refValue.current = value; // Update the value
+    }
+  }
+
+  // Placeholder text based on error state
+  const studentNumText = validStudentNumber ? 'This field is required' : '2021523418';
+  const firstNameText = validFirstName ? 'This field is required' : 'John Doe';
+
+
   const renderInputFields = (selectedUserType) => {
+
+
+
     switch (selectedUserType) {
       case 'Student':
         return (
           <div>
             <div className={styles.input}>
               <label>Student No.:</label>
-              <NumberInput className={styles.inputField} name="studentNumber" placeholder="Enter Student Number" hideControls
-                onChange={(value) => (studentNumber.current = value)}
+              <NumberInput className={styles.inputField} name="studentNumber" placeholder={studentNumText} hideControls
+                onChange={(value) => (validateInput(value, studentNumber, setValidStudentNumber))}
+                error={validStudentNumber}
               />
+
             </div>
 
             <div className={styles.input}>
               <label>First Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter First Name"
-                onChange={(e) => (firstName.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
+                onChange={(e) => (validateInput(e.target.value, firstName, setValidFirstName))}
+                error={validFirstName}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Middle Initial"
+              <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
                 onChange={(e) => (middleName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Last Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Last Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="Smith"
                 onChange={(e) => (lastName.current = e.target.value)}
               />
             </div>
@@ -173,7 +198,7 @@ const BorrowForm = () => {
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
+              <TextInput className={styles.inputField} name="userEmail" placeholder="johndoe.smith@ust.edu.ph"
                 onChange={(e) => (userEmail.current = e.target.value)}
               />
             </div>
@@ -202,7 +227,7 @@ const BorrowForm = () => {
 
             <div className={styles.input}>
               <label>Section:</label>
-              <TextInput className={styles.inputField} name="section" placeholder="Enter Section"
+              <TextInput className={styles.inputField} name="section" placeholder="1CSA"
                 onChange={(e) => (section.current = e.target.value)}
               />
             </div>
@@ -213,35 +238,35 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="2021523418" hideControls
                 onChange={(value) => (employeeNumber.current = value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>First Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter First Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="John Doe"
                 onChange={(e) => (firstName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Middle Initial"
+              <TextInput className={styles.inputField} name="userName" placeholder="R."
                 onChange={(e) => (middleName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Last Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Last Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="Smith"
                 onChange={(e) => (lastName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
+              <TextInput className={styles.inputField} name="userEmail" placeholder="johndoe.smith@ust.edu.ph"
                 onChange={(e) => (userEmail.current = e.target.value)}
               />
             </div>
@@ -263,35 +288,35 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="2021523418" hideControls
                 onChange={(value) => (employeeNumber.current = value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>First Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter First Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="John Doe"
                 onChange={(e) => (firstName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Middle Initial"
+              <TextInput className={styles.inputField} name="userName" placeholder="R."
                 onChange={(e) => (middleName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Last Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Last Name"
+              <TextInput className={styles.inputField} name="userName" placeholder="Smith"
                 onChange={(e) => (lastName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
+              <TextInput className={styles.inputField} name="userEmail" placeholder="johndoe.smith@ust.edu.ph"
                 onChange={(e) => (userEmail.current = e.target.value)}
               />
             </div>
