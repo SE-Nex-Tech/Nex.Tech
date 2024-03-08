@@ -230,7 +230,8 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Student No.:</label>
-              <NumberInput className={styles.inputField} name="studentNumber" placeholder={studentNumText} hideControls
+              <NumberInput className={styles.inputField} name="studentNumber" placeholder={studentNumText} hideControls allowNegative={false} allowDecimal={false}
+                max={9999999999} clampBehavior="strict"
                 onChange={(value) => (validateInputChange(value, studentNumber, setStudentNumberError))}
                 error={studentNumberError}
               />
@@ -240,7 +241,12 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
-                onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue; 
+                  validateInputChange(validValue, firstName, setFirstNameError);
+                }}
                 error={firstNameError}
               />
             </div>
@@ -248,15 +254,26 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Middle Initial:</label>
               <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
-                onChange={(e) => (middleName.current = e.target.value)}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, ''); 
+                  e.target.value = validValue; 
+                  middleName.current = validValue;
+                }}
               />
             </div>
 
             <div className={styles.input}>
               <label>Last Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
-                onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, ''); 
+                  e.target.value = validValue;
+                  validateInputChange(validValue, lastName, setLastNameError);
+                }}
                 error={lastNameError}
+                
               />
             </div>
 
@@ -307,7 +324,8 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls allowNegative={false} allowDecimal={false}
+                max={9999999999} clampBehavior="strict"
                 onChange={(value) => (validateInputChange(value, employeeNumber, setEmployeeNumberError))}
                 error={employeeNumberError}
               />
@@ -318,6 +336,12 @@ const BorrowForm = () => {
               <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
                 onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
                 error={firstNameError}
+                onKeyDown={(e) => {
+                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
+                  if (!isAlphabetic) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
 
@@ -325,6 +349,16 @@ const BorrowForm = () => {
               <label>Middle Initial:</label>
               <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
                 onChange={(e) => (middleName.current = e.target.value)}
+                onKeyDown={(e) => {
+                  const charCode = e.key;
+                  if (
+                    !/^[A-Za-z\s.\b]*$/.test(charCode) && // Check if input is alphabetic, whitespace, or period
+                    !e.ctrlKey && !e.metaKey && // Allow Ctrl and Meta keys
+                    charCode !== 'Backspace' && charCode !== 'Tab' // Allow Backspace and Tab keys
+                  ) {
+                    e.preventDefault(); // Prevent the input of non-alphabetic characters, non-whitespace, and non-period characters
+                  }
+                }}
               />
             </div>
 
@@ -333,9 +367,14 @@ const BorrowForm = () => {
               <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
                 onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
                 error={lastNameError}
+                onKeyDown={(e) => {
+                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
+                  if (!isAlphabetic) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
-
 
             <div className={styles.input}>
               <label>Email:</label>
@@ -363,7 +402,8 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls allowNegative={false} allowDecimal={false}
+                max={9999999999} clampBehavior="strict"
                 onChange={(value) => (validateInputChange(value, employeeNumber, setEmployeeNumberError))}
                 error={employeeNumberError}
               />
@@ -374,6 +414,12 @@ const BorrowForm = () => {
               <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
                 onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
                 error={firstNameError}
+                onKeyDown={(e) => {
+                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
+                  if (!isAlphabetic) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
 
@@ -381,6 +427,16 @@ const BorrowForm = () => {
               <label>Middle Initial:</label>
               <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
                 onChange={(e) => (middleName.current = e.target.value)}
+                onKeyDown={(e) => {
+                  const charCode = e.key;
+                  if (
+                    !/^[A-Za-z\s.\b]*$/.test(charCode) && // Check if input is alphabetic, whitespace, or period
+                    !e.ctrlKey && !e.metaKey && // Allow Ctrl and Meta keys
+                    charCode !== 'Backspace' && charCode !== 'Tab' // Allow Backspace and Tab keys
+                  ) {
+                    e.preventDefault(); // Prevent the input of non-alphabetic characters, non-whitespace, and non-period characters
+                  }
+                }}
               />
             </div>
 
@@ -389,9 +445,14 @@ const BorrowForm = () => {
               <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
                 onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
                 error={lastNameError}
+                onKeyDown={(e) => {
+                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
+                  if (!isAlphabetic) {
+                    e.preventDefault();
+                  }
+                }}
               />
             </div>
-
 
             <div className={styles.input}>
               <label>Email:</label>
