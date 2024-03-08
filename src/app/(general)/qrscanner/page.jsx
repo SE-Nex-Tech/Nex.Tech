@@ -280,6 +280,7 @@ const QRScanner = () => {
 
     fetchBook(borrowed);
     // console.log(resresult[0].id)
+    toast.success("Scanned successfully!", { autoClose: 2000 });
   };
 
   const current = usePathname();
@@ -297,14 +298,12 @@ const QRScanner = () => {
           className={styles.qr_reader}
           onResult={(result, error) => {
             if (!!result) {
-              toast.success("Scanned successfully!", { autoClose: 2000 });
               setData(result?.text);
               handleScanSuccess(result);
             }
 
             if (!!error) {
               console.info(error);
-              toast.error("Error scanning!");
             }
           }}
           style={{ width: "100px", height: "100px" }}

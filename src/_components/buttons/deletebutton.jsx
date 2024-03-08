@@ -10,7 +10,7 @@ const DeleteButton = ({ selectedRows }) => {
       <Modal
         opened={opened}
         onClose={close}
-        size={500}
+        size={550}
         centered
         overlayProps={{
           backgroundOpacity: 0.55,
