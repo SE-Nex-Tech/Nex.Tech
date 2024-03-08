@@ -10,7 +10,7 @@ import { useDisclosure } from "@mantine/hooks";
 import ReactDOM from 'react-dom';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useParams } from "next/navigation";
-import { format } from "date-fns";
+import { format, setSeconds } from "date-fns";
 import Link from "next/link";
 
 const BorrowForm = () => {
@@ -138,11 +138,15 @@ const BorrowForm = () => {
   }
 
 
-  const [validStudentNumber, setValidStudentNumber] = useState(false);
-  const [validFirstName, setValidFirstName] = useState(false);
+  const [studentNumberError, setStudentNumberError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [sectionError, setSectionError] = useState(false);
 
-  const validateInput = (value, refValue, setErrorState) => {
-    if (value == " " || value == 0 || value == null) {
+
+  const validateInputChange = (value, refValue, setErrorState) => {
+    if (value == "" || value == 0 || value == null) {
       // If the value is empty or contains only whitespace  
       setErrorState(true); // Set state to true
     } else {
@@ -152,11 +156,66 @@ const BorrowForm = () => {
   }
 
   // Placeholder text based on error state
-  const studentNumText = validStudentNumber ? 'This field is required' : '2021523418';
-  const firstNameText = validFirstName ? 'This field is required' : 'John Doe';
+  const studentNumText = studentNumberError ? 'This field is required' : '2021523418';
+  const firstNameText = firstNameError ? 'This field is required' : 'John Doe';
+  const lastNameText = lastNameError ? 'This field is required' : 'Smith';
+  const emailText = emailError ? 'This field is required' : 'johndoe.smith@ust.edu.ph';
+  const sectionText = sectionError ? 'This field is required' : '1CSA';
 
+
+  const [validInput, setValidInput] = useState(false);
+
+
+  const validateFormSubmit = () => {
+
+    const checkEmptyField = (value, setErrorState) => {
+      if (value.current == "" || value.current == 0 || value.current == null) {
+        // If the value is empty or contains only whitespace  
+        setErrorState(true); // Set state to true
+      } else {
+        setErrorState(false); // Set state to false
+      }
+    } 
+
+    switch (selectedUserType) {
+      case 'Student':
+        console.log("test")
+        checkEmptyField(studentNumber, setStudentNumberError);
+        checkEmptyField(firstName, setFirstNameError);
+        checkEmptyField(lastName, setLastNameError);
+        checkEmptyField(userEmail, setEmailError);
+        checkEmptyField(section, setSectionError);
+
+        
+        if (studentNumberError || firstNameError || lastNameError
+          || emailError || sectionError){
+            setValidInput(false)
+          }else{
+            setValidInput(true)
+          }
+    
+          console.log(validInput)
+        if (validInput) {
+          openConfirmation()
+        } else {
+          console.log("Missing fields")
+        }
+        break;
+      case 'Faculty':
+        break;
+      case 'Staff':
+        break;
+      default:
+  
+  
+    }
+
+
+
+  }
 
   const renderInputFields = (selectedUserType) => {
+
 
 
 
@@ -167,8 +226,8 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Student No.:</label>
               <NumberInput className={styles.inputField} name="studentNumber" placeholder={studentNumText} hideControls
-                onChange={(value) => (validateInput(value, studentNumber, setValidStudentNumber))}
-                error={validStudentNumber}
+                onChange={(value) => (validateInputChange(value, studentNumber, setStudentNumberError))}
+                error={studentNumberError}
               />
 
             </div>
@@ -176,8 +235,8 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
-                onChange={(e) => (validateInput(e.target.value, firstName, setValidFirstName))}
-                error={validFirstName}
+                onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
+                error={firstNameError}
               />
             </div>
 
@@ -190,16 +249,18 @@ const BorrowForm = () => {
 
             <div className={styles.input}>
               <label>Last Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Smith"
-                onChange={(e) => (lastName.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
+                onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
+                error={lastNameError}
               />
             </div>
 
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="johndoe.smith@ust.edu.ph"
-                onChange={(e) => (userEmail.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
+                onChange={(e) => (validateInputChange(e.target.value, userEmail, setEmailError))}
+                error={emailError}
               />
             </div>
 
@@ -227,8 +288,9 @@ const BorrowForm = () => {
 
             <div className={styles.input}>
               <label>Section:</label>
-              <TextInput className={styles.inputField} name="section" placeholder="1CSA"
-                onChange={(e) => (section.current = e.target.value)}
+              <TextInput className={styles.inputField} name="section" placeholder={sectionText}
+                onChange={(e) => (validateInputChange(e.target.value, section, setSectionError))}
+                error={sectionError}
               />
             </div>
           </div>
@@ -520,7 +582,7 @@ const BorrowForm = () => {
               </div>
               <div className={styles.buttonContainer}>
 
-                <button className={styles.submitBtn} onClick={openConfirmation}> Submit Form </button>
+                <button className={styles.submitBtn} onClick={validateFormSubmit}> Submit Form </button>
                 <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>
