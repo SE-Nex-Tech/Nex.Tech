@@ -169,51 +169,72 @@ const BorrowForm = () => {
   const yearLevelText = yearLevelError ? 'This field is required' : 'Select Year Level';
   const employeeNumText = employeeNumberError ? 'This field is required' : '2021523418';
 
-    // Regular expression for validating the section format
-    const sectionRegex = /^(CS|IT|IS)[A-Z]$|^IRG$/;
 
-    // Handle section change with strict validation
-    const handleSectionChange = (value) => {
+  // Regular expression for validating 10-digit student numbers
+  const numRegex = /^\d{10}$/;
+
+  // Handle student number change with strict validation
+  const handleNumberChange = (value, refValue, setErrorState) => {
+    // Apply regex pattern to validate the input
+    const isValid = numRegex.test(value);
+
+    // Set the error state based on validation result
+    setErrorState(!isValid);
+
+    if (isValid) {
+      // Update the input value if it's valid
+      refValue.current = value;
+
+      // Validate the input change
+      validateInputChange(value, refValue, setErrorState);
+    }
+  };
+
+  // Regular expression for validating the section format
+  const sectionRegex = /^(CS|IT|IS)[A-Z]$|^IRG$/;
+
+  // Handle section change with strict validation
+  const handleSectionChange = (value) => {
 
 
-      // Apply regex pattern to validate the input
-      if (!sectionRegex.test(value.toUpperCase()) && value !== '') {
-        // If the input doesn't match the pattern, but it's not empty, set the error state
-        setSectionError(true); // Set error state to true
-        return;
-      } else {
-        // If the input matches the pattern or it's empty, clear the error state
-        setSectionError(false); // Set error state to false
-        // Update the input value
-        section.current = value; // Keep the value unchanged if it matches the pattern
+    // Apply regex pattern to validate the input
+    if (!sectionRegex.test(value.toUpperCase()) && value !== '') {
+      // If the input doesn't match the pattern, but it's not empty, set the error state
+      setSectionError(true); // Set error state to true
+      return;
+    } else {
+      // If the input matches the pattern or it's empty, clear the error state
+      setSectionError(false); // Set error state to false
+      // Update the input value
+      section.current = value; // Keep the value unchanged if it matches the pattern
 
-        // Validate the input change
-        validateInputChange(value, section, setSectionError);
-        return;
-      }
+      // Validate the input change
+      validateInputChange(value, section, setSectionError);
+      return;
+    }
 
 
-    };
+  };
 
-    // Regular expression for validating email with "@ust.edu.ph" domain
-    const emailRegex = /^[a-zA-Z0-9._%+-]+@ust\.edu\.ph$/;
+  // Regular expression for validating email with "@ust.edu.ph" domain
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@ust\.edu\.ph$/;
 
-    // Handle email change with strict validation
-    const handleEmailChange = (value) => {
-      // Apply regex pattern to validate the input
-      const isValid = emailRegex.test(value);
+  // Handle email change with strict validation
+  const handleEmailChange = (value) => {
+    // Apply regex pattern to validate the input
+    const isValid = emailRegex.test(value);
 
-      // Set the error state based on validation result
-      setEmailError(!isValid);
+    // Set the error state based on validation result
+    setEmailError(!isValid);
 
-      if (isValid) {
-        // Update the input value if it's valid
-        userEmail.current = value;
+    if (isValid) {
+      // Update the input value if it's valid
+      userEmail.current = value;
 
-        // Validate the input change
-        validateInputChange(value, userEmail, setEmailError);
-      }
-    };
+      // Validate the input change
+      validateInputChange(value, userEmail, setEmailError);
+    }
+  };
 
 
 
@@ -221,7 +242,7 @@ const BorrowForm = () => {
 
     console.log(userDepartment)
 
-    console.log("section: "+sectionError)
+    console.log("section: " + sectionError)
     const checkEmptyField = (value, setErrorState) => {
       if (value.current == "" || value.current == null || value.current == 'None') {
         setErrorState(true);
@@ -236,26 +257,26 @@ const BorrowForm = () => {
 
     switch (selectedUserType) {
       case 'Student':
-        isValid = checkEmptyField(studentNumber, setStudentNumberError) && isValid;
+        isValid = !studentNumberError ? checkEmptyField(studentNumber, setStudentNumberError) && isValid : !studentNumberError
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
         isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
         isValid = checkEmptyField(yearLevel, setYearLevelError) && isValid;
-        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError 
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError
         isValid = !sectionError ? checkEmptyField(section, setSectionError) && isValid : !sectionError
         break;
       case 'Faculty':
-        isValid = checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid;
+        isValid = !employeeNumberError ? checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid : !employeeNumberError
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
-        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError 
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError
         isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
         break;
       case 'Staff':
-        isValid = checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid;
+        isValid = !employeeNumberError ? checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid : !employeeNumberError
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
-        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError 
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError
         break;
       default:
 
@@ -281,7 +302,7 @@ const BorrowForm = () => {
               <label>Student No.:</label>
               <NumberInput className={styles.inputField} name="studentNumber" placeholder={studentNumText} hideControls allowNegative={false} allowDecimal={false}
                 max={9999999999} clampBehavior="strict"
-                onChange={(value) => (validateInputChange(value, studentNumber, setStudentNumberError))}
+                onChange={(value) => (handleNumberChange(value, studentNumber, setStudentNumberError))}
                 error={studentNumberError}
               />
 
@@ -375,7 +396,7 @@ const BorrowForm = () => {
               <label>Employee No.:</label>
               <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls allowNegative={false} allowDecimal={false}
                 max={9999999999} clampBehavior="strict"
-                onChange={(value) => (validateInputChange(value, employeeNumber, setEmployeeNumberError))}
+                onChange={(value) => (handleNumberChange(value, employeeNumber, setEmployeeNumberError))}
                 error={employeeNumberError}
               />
             </div>
@@ -447,7 +468,7 @@ const BorrowForm = () => {
               <label>Employee No.:</label>
               <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls allowNegative={false} allowDecimal={false}
                 max={9999999999} clampBehavior="strict"
-                onChange={(value) => (validateInputChange(value, employeeNumber, setEmployeeNumberError))}
+                onChange={(value) => (handleNumberChange(value, employeeNumber, setEmployeeNumberError))}
                 error={employeeNumberError}
               />
             </div>
