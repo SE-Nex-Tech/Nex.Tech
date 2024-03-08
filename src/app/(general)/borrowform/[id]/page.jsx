@@ -144,7 +144,7 @@ const BorrowForm = () => {
   const [sectionError, setSectionError] = useState(false);
   const [departmentError, setDepartmentError] = useState(false);
   const [yearLevelError, setYearLevelError] = useState(false);
-
+  const [employeeNumberError, setEmployeeNumberError] = useState(false);
 
 
   const validateInputChange = (value, refValue, setErrorState) => {
@@ -166,7 +166,7 @@ const BorrowForm = () => {
   const sectionText = sectionError ? 'This field is required' : '1CSA';
   const departmentText = departmentError ? 'This field is required' : 'Select Department';
   const yearLevelText = yearLevelError ? 'This field is required' : 'Select Year Level';
-
+  const employeeNumText = employeeNumberError ? 'This field is required' : '2021523418';
 
   const validateFormSubmit = () => {
 
@@ -190,14 +190,22 @@ const BorrowForm = () => {
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
         isValid = checkEmptyField(userEmail, setEmailError) && isValid;
-        isValid = checkEmptyField(section, setSectionError) && isValid;
         isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
         isValid = checkEmptyField(yearLevel, setYearLevelError) && isValid;
-
+        isValid = checkEmptyField(section, setSectionError) && isValid;
         break;
       case 'Faculty':
+        isValid = checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid;
+        isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
+        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
+        isValid = checkEmptyField(userEmail, setEmailError) && isValid;
+        isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
         break;
       case 'Staff':
+        isValid = checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid;
+        isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
+        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
+        isValid = checkEmptyField(userEmail, setEmailError) && isValid;
         break;
       default:
 
@@ -299,36 +307,41 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="2021523418" hideControls
-                onChange={(value) => (employeeNumber.current = value)}
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls
+                onChange={(value) => (validateInputChange(value, employeeNumber, setEmployeeNumberError))}
+                error={employeeNumberError}
               />
             </div>
 
             <div className={styles.input}>
               <label>First Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="John Doe"
-                onChange={(e) => (firstName.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
+                onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
+                error={firstNameError}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="R."
+              <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
                 onChange={(e) => (middleName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Last Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Smith"
-                onChange={(e) => (lastName.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
+                onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
+                error={lastNameError}
               />
             </div>
 
+
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="johndoe.smith@ust.edu.ph"
-                onChange={(e) => (userEmail.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
+                onChange={(e) => (validateInputChange(e.target.value, userEmail, setEmailError))}
+                error={emailError}
               />
             </div>
 
@@ -337,9 +350,10 @@ const BorrowForm = () => {
               <Select
                 className={styles.inputField}
                 name="userDepartment"
-                placeholder="Select Department"
+                placeholder={departmentText}
                 data={['Information Technology', 'Information Systems', 'Computer Science']}
-                onChange={(value) => (userDepartment.current = value)}
+                onChange={(value) => (validateInputChange(value, userDepartment, setDepartmentError))}
+                error={departmentError}
               />
             </div>
           </div>
@@ -349,36 +363,41 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="2021523418" hideControls
-                onChange={(value) => (employeeNumber.current = value)}
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls
+                onChange={(value) => (validateInputChange(value, employeeNumber, setEmployeeNumberError))}
+                error={employeeNumberError}
               />
             </div>
 
             <div className={styles.input}>
               <label>First Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="John Doe"
-                onChange={(e) => (firstName.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
+                onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
+                error={firstNameError}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="R."
+              <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
                 onChange={(e) => (middleName.current = e.target.value)}
               />
             </div>
 
             <div className={styles.input}>
               <label>Last Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Smith"
-                onChange={(e) => (lastName.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
+                onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
+                error={lastNameError}
               />
             </div>
 
+
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="johndoe.smith@ust.edu.ph"
-                onChange={(e) => (userEmail.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
+                onChange={(e) => (validateInputChange(e.target.value, userEmail, setEmailError))}
+                error={emailError}
               />
             </div>
           </div>
