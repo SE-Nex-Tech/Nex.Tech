@@ -7,6 +7,7 @@ import { TextInput, Select, Button, NumberInput, Modal, Input } from "@mantine/c
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
+import { IMaskInput } from 'react-imask';
 import ReactDOM from 'react-dom';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useParams } from "next/navigation";
@@ -163,15 +164,64 @@ const BorrowForm = () => {
   const firstNameText = firstNameError ? 'This field is required' : 'John Doe';
   const lastNameText = lastNameError ? 'This field is required' : 'Smith';
   const emailText = emailError ? 'This field is required' : 'johndoe.smith@ust.edu.ph';
-  const sectionText = sectionError ? 'This field is required' : '1CSA';
+  const sectionText = sectionError ? 'This field is required' : 'CSA (IRG if irregular)';
   const departmentText = departmentError ? 'This field is required' : 'Select Department';
   const yearLevelText = yearLevelError ? 'This field is required' : 'Select Year Level';
   const employeeNumText = employeeNumberError ? 'This field is required' : '2021523418';
+
+    // Regular expression for validating the section format
+    const sectionRegex = /^(CS|IT|IS)[A-Z]$|^IRG$/;
+
+    // Handle section change with strict validation
+    const handleSectionChange = (value) => {
+
+
+      // Apply regex pattern to validate the input
+      if (!sectionRegex.test(value.toUpperCase()) && value !== '') {
+        // If the input doesn't match the pattern, but it's not empty, set the error state
+        setSectionError(true); // Set error state to true
+        return;
+      } else {
+        // If the input matches the pattern or it's empty, clear the error state
+        setSectionError(false); // Set error state to false
+        // Update the input value
+        section.current = value; // Keep the value unchanged if it matches the pattern
+
+        // Validate the input change
+        validateInputChange(value, section, setSectionError);
+        return;
+      }
+
+
+    };
+
+    // Regular expression for validating email with "@ust.edu.ph" domain
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@ust\.edu\.ph$/;
+
+    // Handle email change with strict validation
+    const handleEmailChange = (value) => {
+      // Apply regex pattern to validate the input
+      const isValid = emailRegex.test(value);
+
+      // Set the error state based on validation result
+      setEmailError(!isValid);
+
+      if (isValid) {
+        // Update the input value if it's valid
+        userEmail.current = value;
+
+        // Validate the input change
+        validateInputChange(value, userEmail, setEmailError);
+      }
+    };
+
+
 
   const validateFormSubmit = () => {
 
     console.log(userDepartment)
 
+    console.log("section: "+sectionError)
     const checkEmptyField = (value, setErrorState) => {
       if (value.current == "" || value.current == null || value.current == 'None') {
         setErrorState(true);
@@ -189,23 +239,23 @@ const BorrowForm = () => {
         isValid = checkEmptyField(studentNumber, setStudentNumberError) && isValid;
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
-        isValid = checkEmptyField(userEmail, setEmailError) && isValid;
         isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
         isValid = checkEmptyField(yearLevel, setYearLevelError) && isValid;
-        isValid = checkEmptyField(section, setSectionError) && isValid;
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError 
+        isValid = !sectionError ? checkEmptyField(section, setSectionError) && isValid : !sectionError
         break;
       case 'Faculty':
         isValid = checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid;
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
-        isValid = checkEmptyField(userEmail, setEmailError) && isValid;
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError 
         isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
         break;
       case 'Staff':
         isValid = checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid;
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
         isValid = checkEmptyField(lastName, setLastNameError) && isValid;
-        isValid = checkEmptyField(userEmail, setEmailError) && isValid;
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError 
         break;
       default:
 
@@ -214,13 +264,12 @@ const BorrowForm = () => {
     if (isValid) {
       openConfirmation()
     } else {
-      console.log("Missing fields")
+      console.log("Missing/Incorrect fields")
     }
 
   }
 
   const renderInputFields = (selectedUserType) => {
-
 
 
 
@@ -244,7 +293,7 @@ const BorrowForm = () => {
                 onChange={(e) => {
                   const value = e.target.value;
                   const validValue = value.replace(/[^a-zA-Z\s]/g, '');
-                  e.target.value = validValue; 
+                  e.target.value = validValue;
                   validateInputChange(validValue, firstName, setFirstNameError);
                 }}
                 error={firstNameError}
@@ -256,8 +305,8 @@ const BorrowForm = () => {
               <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
                 onChange={(e) => {
                   const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s.]/g, ''); 
-                  e.target.value = validValue; 
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, '');
+                  e.target.value = validValue;
                   middleName.current = validValue;
                 }}
               />
@@ -268,12 +317,12 @@ const BorrowForm = () => {
               <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
                 onChange={(e) => {
                   const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s]/g, ''); 
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
                   e.target.value = validValue;
                   validateInputChange(validValue, lastName, setLastNameError);
                 }}
                 error={lastNameError}
-                
+
               />
             </div>
 
@@ -281,7 +330,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Email:</label>
               <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
-                onChange={(e) => (validateInputChange(e.target.value, userEmail, setEmailError))}
+                onChange={(e) => (handleEmailChange(e.target.value))}
                 error={emailError}
               />
             </div>
@@ -313,7 +362,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Section:</label>
               <TextInput className={styles.inputField} name="section" placeholder={sectionText}
-                onChange={(e) => (validateInputChange(e.target.value, section, setSectionError))}
+                onChange={(e) => (handleSectionChange(e.target.value))}
                 error={sectionError}
               />
             </div>
@@ -334,30 +383,24 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
-                onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
-                error={firstNameError}
-                onKeyDown={(e) => {
-                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
-                  if (!isAlphabetic) {
-                    e.preventDefault();
-                  }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, firstName, setFirstNameError);
                 }}
+                error={firstNameError}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
               <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
-                onChange={(e) => (middleName.current = e.target.value)}
-                onKeyDown={(e) => {
-                  const charCode = e.key;
-                  if (
-                    !/^[A-Za-z\s.\b]*$/.test(charCode) && // Check if input is alphabetic, whitespace, or period
-                    !e.ctrlKey && !e.metaKey && // Allow Ctrl and Meta keys
-                    charCode !== 'Backspace' && charCode !== 'Tab' // Allow Backspace and Tab keys
-                  ) {
-                    e.preventDefault(); // Prevent the input of non-alphabetic characters, non-whitespace, and non-period characters
-                  }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, '');
+                  e.target.value = validValue;
+                  middleName.current = validValue;
                 }}
               />
             </div>
@@ -365,21 +408,21 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Last Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
-                onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
-                error={lastNameError}
-                onKeyDown={(e) => {
-                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
-                  if (!isAlphabetic) {
-                    e.preventDefault();
-                  }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, lastName, setLastNameError);
                 }}
+                error={lastNameError}
+
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
               <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
-                onChange={(e) => (validateInputChange(e.target.value, userEmail, setEmailError))}
+                onChange={(e) => (handleEmailChange(e.target.value))}
                 error={emailError}
               />
             </div>
@@ -412,30 +455,24 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
-                onChange={(e) => (validateInputChange(e.target.value, firstName, setFirstNameError))}
-                error={firstNameError}
-                onKeyDown={(e) => {
-                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
-                  if (!isAlphabetic) {
-                    e.preventDefault();
-                  }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, firstName, setFirstNameError);
                 }}
+                error={firstNameError}
               />
             </div>
 
             <div className={styles.input}>
               <label>Middle Initial:</label>
               <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
-                onChange={(e) => (middleName.current = e.target.value)}
-                onKeyDown={(e) => {
-                  const charCode = e.key;
-                  if (
-                    !/^[A-Za-z\s.\b]*$/.test(charCode) && // Check if input is alphabetic, whitespace, or period
-                    !e.ctrlKey && !e.metaKey && // Allow Ctrl and Meta keys
-                    charCode !== 'Backspace' && charCode !== 'Tab' // Allow Backspace and Tab keys
-                  ) {
-                    e.preventDefault(); // Prevent the input of non-alphabetic characters, non-whitespace, and non-period characters
-                  }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, '');
+                  e.target.value = validValue;
+                  middleName.current = validValue;
                 }}
               />
             </div>
@@ -443,21 +480,21 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Last Name:</label>
               <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
-                onChange={(e) => (validateInputChange(e.target.value, lastName, setLastNameError))}
-                error={lastNameError}
-                onKeyDown={(e) => {
-                  const isAlphabetic = /^[a-zA-Z\s]*$/.test(e.key);
-                  if (!isAlphabetic) {
-                    e.preventDefault();
-                  }
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, lastName, setLastNameError);
                 }}
+                error={lastNameError}
+
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
               <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
-                onChange={(e) => (validateInputChange(e.target.value, userEmail, setEmailError))}
+                onChange={(e) => (handleEmailChange(e.target.value))}
                 error={emailError}
               />
             </div>
