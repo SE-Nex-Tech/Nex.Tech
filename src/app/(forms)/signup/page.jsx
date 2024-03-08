@@ -37,6 +37,37 @@ const Signup = () => {
   //     }
   //   };
 
+  const router = useRouter()
+
+  const email = useRef('')
+  const password = useRef('')
+  const fname = useRef('')
+  const lname = useRef('')
+  const num = useRef('')
+
+  const onSubmit = async () => {
+    const response = await fetch('/api/signup', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email.current,
+        password: password.current,
+        fname: fname.current,
+        lname: lname.current,
+        num: num.current
+      })
+    })
+
+    const result = await response.json()
+
+    router.push('/login')
+  }
+
+  const handleKeyDown = (e) => {
+    if (e.keycode === 13) {
+      onSubmit();
+    }
+  }
+
   return (
     <div className={styles.parent}>
       <div className={styles.container}>
@@ -50,24 +81,28 @@ const Signup = () => {
         <div className={styles.left}>
           <div className={styles.leftUpper}>
             <div className={styles.name}>
-              <Input placeholder="First Name" classNames={styles} />
-              <Input placeholder="Last Name" classNames={styles} />
+              <Input placeholder="First Name" classNames={styles} onChange={(e) => (fname.current = e.target.value)} onKeyDown={handleKeyDown} />
+              <Input placeholder="Last Name" classNames={styles} onChange={(e) => (lname.current = e.target.value)} onKeyDown={handleKeyDown}/>
             </div>
-            <Input placeholder="Email" classNames={styles} />
+            <Input placeholder="Email" classNames={styles} onChange={(e) => (email.current = e.target.value)} onKeyDown={handleKeyDown}/>
             <Input
               placeholder="Employee / Student Number"
               classNames={styles}
+              onChange={(e) => (num.current = e.target.value)}
+              onKeyDown={handleKeyDown}
             />
             <PasswordInput
               placeholder="Password"
               withAsterisk
               classNames={styles}
+              onChange={(e) => (password.current = e.target.value)}
+              onKeyDown={handleKeyDown}
             />
           </div>
           <div className={styles.leftLower}>
             {/* must remove link and replace it with onClick function */}
             <Link href="/login">
-              <Button classNames={{ root: styles.btn }}>
+              <Button classNames={{ root: styles.btn }} onClick={onSubmit}>
                 Create an account
               </Button>
             </Link>
