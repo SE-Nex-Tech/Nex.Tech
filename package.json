@@ -44,6 +44,7 @@
     "qrcode.react": "^3.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "react-imask": "^7.5.0",
     "react-qr-reader": "^3.0.0-beta-1",
     "react-toastify": "^10.0.4",
     "recharts": "2",
