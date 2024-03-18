@@ -73,7 +73,7 @@ const booksIU = async (pc) => {
     }
   })
 
-  const iu = data.map((r) => (r.bookRequests.book.id))
+  const iu = data.map((r) => (r.bookRequests.book))
 
   return iu;
 }

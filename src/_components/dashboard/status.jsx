@@ -3,14 +3,14 @@ import styles from "./status.module.scss";
 import Image from "next/image";
 import cover from "@/images/bookcover.jpg";
 
-const Status = ({ title, author, genre, status, imagepath }) => {
+const Status = ({ title, author, barcode, status, imagepath }) => {
   return (
     <table className={styles.main_table}>
       <tr>
         <th>Image</th>
         <th>Title</th>
         <th>Author</th>
-        <th>Genre</th>
+        <th>Barcode</th>
         <th>Status</th>
       </tr>
       <tr>
@@ -21,7 +21,7 @@ const Status = ({ title, author, genre, status, imagepath }) => {
         </td>
         <td>{title}</td>
         <td>{author}</td>
-        <td>{genre}</td>
+        <td>{barcode}</td>
         <td>{status}</td>
       </tr>
     </table>
