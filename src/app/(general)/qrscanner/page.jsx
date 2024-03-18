@@ -36,10 +36,28 @@ const QRScanner = () => {
     
     setBook(transaction.book);
 
+    const selectedBook = transaction.book
+    const ticket = transaction.borrowTicket
+    const client = transaction.client
+
+    const res = await fetch('/api/queue', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: selectedBook.id
+      })
+    })
+    const bq = (await res.json()).bq
+    console.log('Book queue ==================================================')
+    console.log(bq)
+
+    if (bq[0].id !== transaction.borrowTicket.id) {
+      toast.warning('This borrow ticket is behind person/s in the queue')
+    }
+
     if (transaction.borrowTicket.status == 'Pending Borrow') {
       newRequestStatus = "Borrow Approved";
       newBookStatus = "Unavailable";
-      confirmLabel = "Authorize Borrow";
+      confirmLabel = (bq[0].id === transaction.borrowTicket.id) ? 'Authorize Borrow' : 'Override Queue';
       borrowDate = new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString();
       returnDate = null;
       openModal(transaction)
@@ -189,10 +207,6 @@ const QRScanner = () => {
               handleScanSuccess(result);
             }
 
-            if (!!error) {
-              console.info(error);
-              toast.error("Error scanning!");
-            }
           }}
           style={{ width: "100px", height: "100px" }}
         />
