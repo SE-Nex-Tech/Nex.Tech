@@ -24,28 +24,28 @@ import Queuer from "@/_components/dashboard/qStatus";
 
 const getUserCreds = (element) => {
   switch (element.user_type) {
-    case 'Student':
+    case "Student":
       return {
         name: element.user_student.name,
         email: element.user_student.email,
-      }
-    case 'Faculty':
+      };
+    case "Faculty":
       return {
         name: element.user_faculty.name,
         email: element.user_faculty.email,
-      }
-    case 'Staff':
+      };
+    case "Staff":
       return {
         name: element.user_staff.name,
         email: element.user_staff.email,
-      }
+      };
     default:
       return {
         name: undefined,
         email: undefined,
-      }
+      };
   }
-}
+};
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
@@ -92,13 +92,13 @@ const Dashboard = () => {
       setData(data);
       setLoading(false);
 
-      let res = await fetch('/api/queue', {
-        method: 'POST',
-        body: JSON.stringify({})
-      })
-      let dat = await res.json()
-      setQueue(dat.allq)
-      setBiu(dat.biu)
+      let res = await fetch("/api/queue", {
+        method: "POST",
+        body: JSON.stringify({}),
+      });
+      let dat = await res.json();
+      setQueue(dat.allq);
+      setBiu(dat.biu);
     };
 
     fetchData();
@@ -219,7 +219,6 @@ const Dashboard = () => {
               >
                 View
               </Button>
-
             </div>
             <Tabs
               color="#e8b031"
@@ -249,13 +248,13 @@ const Dashboard = () => {
                             "book_author",
                             "book_title",
                             "book_publisher",
-                          ].includes(header.id)
+                          ].includes(header.id),
                         )
                         .map((header) => (
                           <th key={header.id}>
                             {flexRender(
                               header.column.columnDef.header,
-                              header.getContext()
+                              header.getContext(),
                             )}
                           </th>
                         ))}
@@ -269,14 +268,14 @@ const Dashboard = () => {
                           .getVisibleCells()
                           .filter((cell) =>
                             visibleColumns.includes(
-                              cell.column.columnDef.accessorKey
-                            )
+                              cell.column.columnDef.accessorKey,
+                            ),
                           )
                           .map((cell) => (
                             <td>
                               {flexRender(
                                 cell.column.columnDef.cell,
-                                cell.getContext()
+                                cell.getContext(),
                               )}
                             </td>
                           ))}

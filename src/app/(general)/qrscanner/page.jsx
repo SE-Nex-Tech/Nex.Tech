@@ -33,68 +33,74 @@ const QRScanner = () => {
 
   const fetchBook = async (transaction) => {
     const currentDateTime = new Date();
-    
+
     setBook(transaction.book);
 
-    const selectedBook = transaction.book
-    const ticket = transaction.borrowTicket
-    const client = transaction.client
+    const selectedBook = transaction.book;
+    const ticket = transaction.borrowTicket;
+    const client = transaction.client;
 
-    const res = await fetch('/api/queue', {
-      method: 'POST',
+    const res = await fetch("/api/queue", {
+      method: "POST",
       body: JSON.stringify({
-        id: selectedBook.id
-      })
-    })
-    const bq = (await res.json()).bq
-    console.log('Book queue ==================================================')
-    console.log(bq)
+        id: selectedBook.id,
+      }),
+    });
+    const bq = (await res.json()).bq;
+    console.log(
+      "Book queue ==================================================",
+    );
+    console.log(bq);
 
     if (bq[0].id !== transaction.borrowTicket.id) {
-      toast.warning('This borrow ticket is behind person/s in the queue')
+      toast.warning("This borrow ticket is behind person/s in the queue");
     }
 
-    if (transaction.borrowTicket.status == 'Pending Borrow') {
+    if (transaction.borrowTicket.status == "Pending Borrow") {
       newRequestStatus = "Borrow Approved";
       newBookStatus = "Unavailable";
-      confirmLabel = (bq[0].id === transaction.borrowTicket.id) ? 'Authorize Borrow' : 'Override Queue';
-      borrowDate = new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString();
+      confirmLabel =
+        bq[0].id === transaction.borrowTicket.id
+          ? "Authorize Borrow"
+          : "Override Queue";
+      borrowDate = new Date(
+        currentDateTime.getTime() + timeZoneOffset * 60000,
+      ).toISOString();
       returnDate = null;
-      openModal(transaction)
-    } else if (transaction.borrowTicket.status == 'Borrow Approved') {
+      openModal(transaction);
+    } else if (transaction.borrowTicket.status == "Borrow Approved") {
       newRequestStatus = "Returned";
       newBookStatus = "Available";
       confirmLabel = "Confirm Return";
-      borrowDate = transaction.borrowTicket.borrow_date
-      returnDate = new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString();
-      openModal(transaction)
+      borrowDate = transaction.borrowTicket.borrow_date;
+      returnDate = new Date(
+        currentDateTime.getTime() + timeZoneOffset * 60000,
+      ).toISOString();
+      openModal(transaction);
     }
-
   };
 
   const openModal = (transaction) => {
+    console.log("MY TRANSACTIONNNNN ==========================");
+    console.log(transaction);
 
-    console.log('MY TRANSACTIONNNNN ==========================')
-    console.log(transaction)
-
-    const selectedBook = transaction.book
-    const ticket = transaction.borrowTicket
-    const client = transaction.client
+    const selectedBook = transaction.book;
+    const ticket = transaction.borrowTicket;
+    const client = transaction.client;
 
     var requestFields;
     switch (ticket.user_type) {
-      case 'Student':
+      case "Student":
         requestFields = StudentFields(transaction);
         break;
-      case 'Faculty':
+      case "Faculty":
         requestFields = FacultyFields(transaction);
         break;
-      case 'Staff':
+      case "Staff":
         requestFields = StaffFields(transaction);
         break;
       default:
     }
-
 
     modals.openConfirmModal({
       title: <h1>Request Receipt</h1>,
@@ -104,7 +110,7 @@ const QRScanner = () => {
       centered: true,
       onCancel: () => console.log("Cancel"),
       onConfirm: () => authorizeRequest(),
-      children: (requestFields),
+      children: requestFields,
       labels: { confirm: confirmLabel, cancel: "Cancel" },
       confirmProps: {
         radius: "xl",
@@ -118,7 +124,6 @@ const QRScanner = () => {
       },
     });
 
-
     const updateRequestStatus = async () => {
       console.log(ticket.id);
       const filter = {
@@ -128,10 +133,10 @@ const QRScanner = () => {
         status: newRequestStatus,
         borrow_date: borrowDate,
         return_date: returnDate,
-      }
+      };
 
-      const response = await fetch('/api/db', {
-        method: 'POST',
+      const response = await fetch("/api/db", {
+        method: "POST",
         body: JSON.stringify({
           entity: "requests",
           update: 1,
@@ -150,10 +155,10 @@ const QRScanner = () => {
       };
       const atts = {
         status: newBookStatus,
-      }
+      };
 
-      const response = await fetch('/api/db', {
-        method: 'POST',
+      const response = await fetch("/api/db", {
+        method: "POST",
         body: JSON.stringify({
           entity: "books",
           update: 1,
@@ -162,13 +167,13 @@ const QRScanner = () => {
         }),
       });
 
-      console.log("close")
-    }
+      console.log("close");
+    };
 
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
-    }
+    };
   };
 
   const handleScanSuccess = async (result) => {
@@ -206,13 +211,13 @@ const QRScanner = () => {
               setData(result?.text);
               handleScanSuccess(result);
             }
-
           }}
           style={{ width: "100px", height: "100px" }}
         />
         <p className={styles.label}>
           <IconInfoCircle width={26} height={26} />
-          For borrowing, reserving, or returning, point the camera at the receipt.
+          For borrowing, reserving, or returning, point the camera at the
+          receipt.
         </p>
       </Center>
       <ToastContainer />
