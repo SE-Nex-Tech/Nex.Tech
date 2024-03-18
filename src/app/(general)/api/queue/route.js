@@ -19,6 +19,9 @@ const bookQ = async (pc, id) => {
       user_student: true,
       user_faculty: true,
       user_staff: true,
+    },
+    orderBy: {
+      date: 'asc'
     }
   })
 }
