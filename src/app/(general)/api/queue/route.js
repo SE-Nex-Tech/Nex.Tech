@@ -7,6 +7,7 @@ const bookQ = async (pc, id) => {
   // sort by date
   return await pc.requests.findMany({
     where: {
+      borrow_date: null,
       return_date: null,
       type: 'Book',
       bookRequests: {
@@ -34,6 +35,7 @@ const gameQ = async (pc) => {
 const allQ = async (pc) => {
   return await pc.requests.findMany({
     where: {
+      borrow_date: null,
       return_date: null,
     },
     include: {
@@ -53,6 +55,34 @@ const allQ = async (pc) => {
   })
 }
 
+const booksIU = async (pc) => {
+  const data = await pc.requests.findMany({
+    where: {
+      return_date: null,
+      borrow_date: {
+        not: null
+      },
+      type: 'Book'
+    },
+    include: {
+      bookRequests: {
+        include: {
+          book: true
+        }
+      },
+    }
+  })
+
+  const iu = data.map((r) => (r.bookRequests.book.id))
+
+  return iu;
+}
+
+const giu = async (pc) => {
+  // TODO: implement query for Games-In-Use
+  // after working boardgame seed
+}
+
 export async function POST(request) {
   const prisma = new PrismaClient()
   const params = await request.json()
@@ -62,9 +92,11 @@ export async function POST(request) {
   const bq = await bookQ(prisma, id)
   const gq = await gameQ(prisma)
   const allq = await allQ(prisma)
+  const biu = await booksIU(prisma)
 
   return NextResponse.json({
     bq,
-    allq
+    allq,
+    biu
   })
 }
