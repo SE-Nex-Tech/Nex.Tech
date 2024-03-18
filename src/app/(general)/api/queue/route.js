@@ -37,7 +37,11 @@ const allQ = async (pc) => {
       return_date: null,
     },
     include: {
-      bookRequests: true,
+      bookRequests: {
+        include: {
+          book: true
+        }
+      },
       boardgameRequests: true,
       user_student: true,
       user_faculty: true,

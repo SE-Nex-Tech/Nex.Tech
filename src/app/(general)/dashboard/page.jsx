@@ -20,10 +20,37 @@ import {
 
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import Status from "@/_components/dashboard/status";
+import Queuer from "@/_components/dashboard/qStatus";
+
+const getUserCreds = (element) => {
+  switch (element.user_type) {
+    case 'Student':
+      return {
+        name: element.user_student.name,
+        email: element.user_student.email,
+      }
+    case 'Faculty':
+      return {
+        name: element.user_faculty.name,
+        email: element.user_faculty.email,
+      }
+    case 'Staff':
+      return {
+        name: element.user_staff.name,
+        email: element.user_staff.email,
+      }
+    default:
+      return {
+        name: undefined,
+        email: undefined,
+      }
+  }
+}
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [queue, setQueue] = useState([]);
 
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
@@ -63,6 +90,13 @@ const Dashboard = () => {
       const data = await response.json();
       setData(data);
       setLoading(false);
+
+      let res = await fetch('/api/queue', {
+        method: 'POST',
+        body: JSON.stringify({})
+      })
+      let dat = await res.json()
+      setQueue(dat.allq)
     };
 
     fetchData();
@@ -152,7 +186,16 @@ const Dashboard = () => {
 
                   <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
 
-                  <Tabs.Panel value="queue">Settings tab content</Tabs.Panel>
+                  <Tabs.Panel value="queue">
+                    {queue.map((r) => (
+                      <Queuer
+                        title={r.bookRequests.book.title}
+                        borrower={getUserCreds(r).name}
+                        email={getUserCreds(r).email}
+                        user_type={r.user_type}
+                      />
+                    ))}
+                  </Tabs.Panel>
                 </Tabs>
               </div>
             </div>
