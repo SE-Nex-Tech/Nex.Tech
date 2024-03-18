@@ -31,6 +31,24 @@ const gameQ = async (pc) => {
   // implement after working boardgame seed
 }
 
+const allQ = async (pc) => {
+  return await pc.requests.findMany({
+    where: {
+      return_date: null,
+    },
+    include: {
+      bookRequests: true,
+      boardgameRequests: true,
+      user_student: true,
+      user_faculty: true,
+      user_staff: true
+    },
+    orderBy: {
+      date: 'asc'
+    }
+  })
+}
+
 export async function POST(request) {
   const prisma = new PrismaClient()
   const params = await request.json()
@@ -39,8 +57,10 @@ export async function POST(request) {
 
   const bq = await bookQ(prisma, id)
   const gq = await gameQ(prisma)
+  const allq = await allQ(prisma)
 
   return NextResponse.json({
     bq,
+    allq
   })
 }
