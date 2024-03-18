@@ -46,17 +46,25 @@ const QRScanner = () => {
         id: selectedBook.id,
       }),
     });
-    const bq = (await res.json()).bq;
+    const data = await res.json();
+    const bq = data.bq;
+    const biu = data.biu;
     console.log(
       "Book queue ==================================================",
     );
     console.log(bq);
 
-    if (bq[0].id !== transaction.borrowTicket.id) {
+    if (
+      bq[0].id !== transaction.borrowTicket.id &&
+      transaction.borrowTicket.status === "Pending Borrow"
+    ) {
       toast.warning("This borrow ticket is behind person/s in the queue");
     }
 
-    if (transaction.borrowTicket.status == "Pending Borrow") {
+    if (
+      transaction.borrowTicket.status == "Pending Borrow" &&
+      biu.find((e) => e.id === transaction.book.id) == undefined
+    ) {
       newRequestStatus = "Borrow Approved";
       newBookStatus = "Unavailable";
       confirmLabel =
@@ -77,6 +85,10 @@ const QRScanner = () => {
         currentDateTime.getTime() + timeZoneOffset * 60000,
       ).toISOString();
       openModal(transaction);
+    } else if (biu.find((e) => e.id === transaction.book.id) != undefined) {
+      toast.warning("Book is still in use by another person");
+    } else {
+      toast.warning("This borrow ticket has expired");
     }
   };
 
