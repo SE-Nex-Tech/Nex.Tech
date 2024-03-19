@@ -3,15 +3,15 @@ import styles from "./status.module.scss";
 import Image from "next/image";
 import cover from "@/images/bookcover.jpg";
 
-const Status = ({ title, author, barcode, status, imagepath }) => {
+const Queuer = ({ title, borrower, email, user_type, imagepath }) => {
   return (
     <table className={styles.main_table}>
       <tr>
         <th>Image</th>
         <th>Title</th>
-        <th>Author</th>
-        <th>Barcode</th>
-        <th>Status</th>
+        <th>Borrower Name</th>
+        <th>Email</th>
+        <th>User Type</th>
       </tr>
       <tr>
         <td>
@@ -20,12 +20,12 @@ const Status = ({ title, author, barcode, status, imagepath }) => {
           </div>
         </td>
         <td>{title}</td>
-        <td>{author}</td>
-        <td>{barcode}</td>
-        <td>{status}</td>
+        <td>{borrower}</td>
+        <td>{email}</td>
+        <td>{user_type}</td>
       </tr>
     </table>
   );
 };
 
-export default Status;
+export default Queuer;
