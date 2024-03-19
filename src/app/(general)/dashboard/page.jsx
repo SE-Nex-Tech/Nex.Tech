@@ -20,38 +20,10 @@ import {
 
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import Status from "@/_components/dashboard/status";
-import Queuer from "@/_components/dashboard/qStatus";
-
-const getUserCreds = (element) => {
-  switch (element.user_type) {
-    case "Student":
-      return {
-        name: element.user_student.name,
-        email: element.user_student.email,
-      };
-    case "Faculty":
-      return {
-        name: element.user_faculty.name,
-        email: element.user_faculty.email,
-      };
-    case "Staff":
-      return {
-        name: element.user_staff.name,
-        email: element.user_staff.email,
-      };
-    default:
-      return {
-        name: undefined,
-        email: undefined,
-      };
-  }
-};
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [queue, setQueue] = useState([]);
-  const [biu, setBiu] = useState([]);
 
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
 
@@ -91,14 +63,6 @@ const Dashboard = () => {
       const data = await response.json();
       setData(data);
       setLoading(false);
-
-      let res = await fetch("/api/queue", {
-        method: "POST",
-        body: JSON.stringify({}),
-      });
-      let dat = await res.json();
-      setQueue(dat.allq);
-      setBiu(dat.biu);
     };
 
     fetchData();
@@ -178,28 +142,17 @@ const Dashboard = () => {
                   </Tabs.List>
 
                   <Tabs.Panel value="books">
-                    {biu.map((r) => (
-                      <Status
-                        title={r.title}
-                        author={r.author}
-                        barcode={r.barcode}
-                        status={r.status}
-                      />
-                    ))}
+                    <Status
+                      title={"Introduction to Object Oriented Programming"}
+                      author={"Santos, Jose A."}
+                      genre={"Programming"}
+                      status={"Available"}
+                    />
                   </Tabs.Panel>
 
                   <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
 
-                  <Tabs.Panel value="queue">
-                    {queue.map((r) => (
-                      <Queuer
-                        title={r.bookRequests.book.title}
-                        borrower={getUserCreds(r).name}
-                        email={getUserCreds(r).email}
-                        user_type={r.user_type}
-                      />
-                    ))}
-                  </Tabs.Panel>
+                  <Tabs.Panel value="queue">Settings tab content</Tabs.Panel>
                 </Tabs>
               </div>
             </div>
@@ -219,6 +172,7 @@ const Dashboard = () => {
               >
                 View
               </Button>
+
             </div>
             <Tabs
               color="#e8b031"
@@ -248,13 +202,13 @@ const Dashboard = () => {
                             "book_author",
                             "book_title",
                             "book_publisher",
-                          ].includes(header.id),
+                          ].includes(header.id)
                         )
                         .map((header) => (
                           <th key={header.id}>
                             {flexRender(
                               header.column.columnDef.header,
-                              header.getContext(),
+                              header.getContext()
                             )}
                           </th>
                         ))}
@@ -268,14 +222,14 @@ const Dashboard = () => {
                           .getVisibleCells()
                           .filter((cell) =>
                             visibleColumns.includes(
-                              cell.column.columnDef.accessorKey,
-                            ),
+                              cell.column.columnDef.accessorKey
+                            )
                           )
                           .map((cell) => (
                             <td>
                               {flexRender(
                                 cell.column.columnDef.cell,
-                                cell.getContext(),
+                                cell.getContext()
                               )}
                             </td>
                           ))}
