@@ -10,7 +10,7 @@ const Books = () => {
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 12;
+  const [booksPerPage, setBooksPerPage] = useState(10);
   const totalBooks = 1000;
 
   useEffect(() => {
@@ -22,6 +22,23 @@ const Books = () => {
     };
 
     fetchBooks();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setBooksPerPage(5); // Set booksPerPage to 5 for Mobile
+      } else if (window.innerWidth <= 1024) {
+        setBooksPerPage(8); // Set booksPerPage to 8 for Tablet
+      } else {
+        setBooksPerPage(10); // Set booksPerPage to 10 for Desktop
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   if (loading) {
