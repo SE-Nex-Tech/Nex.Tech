@@ -11,6 +11,7 @@ model Admin {
   id       Int     @id @default(autoincrement())
   name     String  @db.Text
   email    String  @db.Text @unique
+  type     String  @db.Text
   password String  @db.Text
 
 }
