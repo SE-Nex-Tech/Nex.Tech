@@ -14,7 +14,7 @@ import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
 import TableBody from "@/_components/tables/table";
-import sortby from './sortby'
+import sortby from "./sortby";
 
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
@@ -87,9 +87,9 @@ const Database = () => {
   };
 
   const sorter = async (by, data) => {
-    let new_data = structuredClone(sortby(by, data))
-    setData(new_data)
-  }
+    let new_data = structuredClone(sortby(by, data));
+    setData(new_data);
+  };
 
   return (
     <>
@@ -109,7 +109,11 @@ const Database = () => {
             w={rem(300)}
             onChange={(event) => searchItems(event.currentTarget.value)}
           />
-          <NativeSelect radius="xl" w={rem(200)} onChange={(e) => (sorter(e.target.value, data))}>
+          <NativeSelect
+            radius="xl"
+            w={rem(200)}
+            onChange={(e) => sorter(e.target.value, data)}
+          >
             <option>Sort by:</option>
 
             <hr />

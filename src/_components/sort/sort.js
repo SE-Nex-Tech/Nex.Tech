@@ -2,7 +2,11 @@ import { NativeSelect, rem } from "@mantine/core";
 
 function Sort() {
   return (
-    <NativeSelect radius="xl" w={rem(200)} onChange={(e) => (console.log(e.target.value))}>
+    <NativeSelect
+      radius="xl"
+      w={rem(200)}
+      onChange={(e) => console.log(e.target.value)}
+    >
       <option>Sort by:</option>
 
       <hr />
