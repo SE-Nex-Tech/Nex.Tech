@@ -7,12 +7,14 @@ import { Center, Tabs, rem, Loader } from "@mantine/core";
 import { useState, useEffect } from "react";
 import { Input } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
+import { NativeSelect } from "@mantine/core";
 
 import Sort from "@/_components/sort/sort";
 import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
 import TableBody from "@/_components/tables/table";
+import sortby from './sortby'
 
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
@@ -84,6 +86,11 @@ const Database = () => {
     setData(result);
   };
 
+  const sorter = async (by, data) => {
+    let new_data = structuredClone(sortby(by, data))
+    setData(new_data)
+  }
+
   return (
     <>
       <div>
@@ -102,7 +109,29 @@ const Database = () => {
             w={rem(300)}
             onChange={(event) => searchItems(event.currentTarget.value)}
           />
-          <Sort />
+          <NativeSelect radius="xl" w={rem(200)} onChange={(e) => (sorter(e.target.value, data))}>
+            <option>Sort by:</option>
+
+            <hr />
+
+            <optgroup label="ID">
+              <option value="id_ascending">Ascending</option>
+              <option value="id_descending">Descending</option>
+            </optgroup>
+
+            <hr />
+            <optgroup label="Title">
+              <option value="title_ascending">Ascending</option>
+              <option value="title_descending">Descending</option>
+            </optgroup>
+
+            <hr />
+
+            <optgroup label="Author">
+              <option value="author_ascending">Ascending</option>
+              <option value="author_descending">Descending</option>
+            </optgroup>
+          </NativeSelect>
           <AddButton selectedRows={selectedRows} />
 
           <EditButton selectedRows={selectedRows} />
