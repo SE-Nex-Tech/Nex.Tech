@@ -4,7 +4,8 @@ import MenuActions from "./menu";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import MenuCrud from "./menucrud";
 
-const TableAdmin = () => {
+const TableAdmin = ({ data }) => {
+
   const [accessGranted, setAccessGranted] = useState(true);
 
   return (
@@ -22,63 +23,24 @@ const TableAdmin = () => {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          <Table.Tr>
-            <Table.Td>
-              <Avatar color="red" radius="xl">
-                CP
-              </Avatar>
-            </Table.Td>
-            <Table.Td>1</Table.Td>
-            <Table.Td>Carl Mitzchel</Table.Td>
-            <Table.Td></Table.Td>
-            <Table.Td>Padua</Table.Td>
-            <Table.Td>carlmitzchel.padua.cics@ust.edu.ph</Table.Td>
+          {data.map((r) => (
+            <Table.Tr>
+              <Table.Td>
+                <Avatar color="red" radius="xl">
+                  {r.initials}
+                </Avatar>
+              </Table.Td>
+              <Table.Td>{r.id}</Table.Td>
+              <Table.Td>{r.fn}</Table.Td>
+              <Table.Td>{r.mn}</Table.Td>
+              <Table.Td>{r.ln}</Table.Td>
+              <Table.Td>{r.email}</Table.Td>
 
-            <Table.Td>
-              <MenuCrud
-                setAccessGranted={setAccessGranted}
-                accessGranted={accessGranted}
-              />
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <Avatar color="red" radius="xl">
-                AA
-              </Avatar>
-            </Table.Td>
-            <Table.Td>2</Table.Td>
-            <Table.Td>Alessandro</Table.Td>
-            <Table.Td>Z</Table.Td>
-            <Table.Td>Araza</Table.Td>
-            <Table.Td>alessandro.araza.cics@ust.edu.ph</Table.Td>
-
-            <Table.Td>
-              <MenuCrud
-                setAccessGranted={setAccessGranted}
-                accessGranted={accessGranted}
-              />
-            </Table.Td>
-          </Table.Tr>
-          <Table.Tr>
-            <Table.Td>
-              <Avatar color="red" radius="xl">
-                EP
-              </Avatar>
-            </Table.Td>
-            <Table.Td>3</Table.Td>
-            <Table.Td>Edjin Jerney</Table.Td>
-            <Table.Td>Z</Table.Td>
-            <Table.Td>Payumo</Table.Td>
-            <Table.Td>edjinjerney.payumo.cics@ust.edu.ph</Table.Td>
-
-            <Table.Td>
-              <MenuCrud
-                setAccessGranted={setAccessGranted}
-                accessGranted={accessGranted}
-              />
-            </Table.Td>
-          </Table.Tr>
+              <Table.Td>
+                <MenuCrud />
+              </Table.Td>
+            </Table.Tr>
+          ))}
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>
