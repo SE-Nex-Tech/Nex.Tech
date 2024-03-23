@@ -21,14 +21,15 @@ async function main() {
       name: "Test Admin",
       type: 'superadmin',
       password,
+      access: true
     },
   });
   const createAdmins = await prisma.admin.createMany({
     data: [
-      { email: "edjin@edjin.com", name: "edjin", type: 'admin', password },
-      { email: "carl@carl.com", name: "carl", type: 'admin', password },
-      { email: "chy@chy.com", name: "chy", type: 'admin', password },
-      { email: "kyle@kyle.com", name: "Kyle", type: 'admin', password },
+      { email: "edjin@edjin.com", name: "edjin", type: 'admin', password, access: true },
+      { email: "carl@carl.com", name: "carl", type: 'admin', password, access: true },
+      { email: "chy@chy.com", name: "chy", type: 'admin', password, access: true },
+      { email: "kyle@kyle.com", name: "Kyle", type: 'admin', password, access: true },
     ],
     skipDuplicates: true,
   });

@@ -13,6 +13,7 @@ model Admin {
   email    String  @db.Text @unique
   type     String  @db.Text
   password String  @db.Text
+  access   Boolean @default(false)
 
 }
 
