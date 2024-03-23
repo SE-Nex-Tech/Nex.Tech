@@ -3,33 +3,24 @@
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
 import { usePathname, useRouter } from "next/navigation";
-import {
-  TextInput,
-  Select,
-  Button,
-  NumberInput,
-  Radio,
-  Modal,
-  camelToKebabCase,
-} from "@mantine/core";
+import { TextInput, Select, Button, NumberInput, Modal, Input } from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
 import { useDisclosure } from "@mantine/hooks";
+import { IMaskInput } from 'react-imask';
 import ReactDOM from 'react-dom';
 import { QRCodeSVG, QRCodeCanvas } from 'qrcode.react';
 import { useParams } from "next/navigation";
-import { format } from "date-fns";
+import { format, setSeconds } from "date-fns";
 import Link from "next/link";
 
-
-
-
-
 const BorrowForm = () => {
+
   const current = usePathname();
   const currentDate = new Date();
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedUserType, setSelectedUserType] = useState("Student");
+  const timeZoneOffset = 480;
 
   const { id } = useParams();
   const [book, setBook] = useState([]);
@@ -43,11 +34,15 @@ const BorrowForm = () => {
     setShowConfirmation(false);
     open();
 
+    const currentDateTime = new Date();
+
+    userName.current = lastName.current + ", " + firstName.current + " " + middleName.current;
+
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({
         entity: "books",
-        date: new Date().toISOString(),
+        date: new Date(currentDateTime.getTime() + (timeZoneOffset * 60000)).toISOString(),
         materialID: parseInt(id),
         type: requestType.current,
         user_type: userType.current,
@@ -125,6 +120,9 @@ const BorrowForm = () => {
   const studentNumber = useRef("");
   const employeeNumber = useRef("");
   const userType = useRef("Student");
+  const firstName = useRef("");
+  const lastName = useRef("");
+  const middleName = useRef("");
   const userName = useRef("");
   const userEmail = useRef("");
   const userDepartment = useRef("None");
@@ -140,29 +138,221 @@ const BorrowForm = () => {
     callNum = book.call_num;
   }
 
+  const [studentNumberError, setStudentNumberError] = useState(false);
+  const [firstNameError, setFirstNameError] = useState(false);
+  const [lastNameError, setLastNameError] = useState(false);
+  const [emailError, setEmailError] = useState(false);
+  const [sectionError, setSectionError] = useState(false);
+  const [departmentError, setDepartmentError] = useState(false);
+  const [yearLevelError, setYearLevelError] = useState(false);
+  const [employeeNumberError, setEmployeeNumberError] = useState(false);
+
+
+  const validateInputChange = (value, refValue, setErrorState) => {
+    if (value == "" || value == null || value.current == 'None') {
+      // If the value is empty or contains only whitespace  
+      setErrorState(true); // Set state to true
+      refValue.current = value;
+    } else {
+      setErrorState(false); // Set state to false
+      refValue.current = value; // Update the value
+    }
+  }
+
+  // Placeholder text based on error state
+  const studentNumText = studentNumberError ? 'This field is required' : '2021523418';
+  const firstNameText = firstNameError ? 'This field is required' : 'John Doe';
+  const lastNameText = lastNameError ? 'This field is required' : 'Smith';
+  const emailText = emailError ? 'This field is required' : 'johndoe.smith@ust.edu.ph';
+  const sectionText = sectionError ? 'This field is required' : 'CSA (IRG if irregular)';
+  const departmentText = departmentError ? 'This field is required' : 'Select Department';
+  const yearLevelText = yearLevelError ? 'This field is required' : 'Select Year Level';
+  const employeeNumText = employeeNumberError ? 'This field is required' : '2021523418';
+
+
+  // Regular expression for validating 10-digit student numbers
+  const numRegex = /^\d{10}$/;
+
+  // Handle student number change with strict validation
+  const handleNumberChange = (value, refValue, setErrorState) => {
+    // Apply regex pattern to validate the input
+    const isValid = numRegex.test(value);
+
+    // Set the error state based on validation result
+    setErrorState(!isValid);
+
+    if (isValid) {
+      // Update the input value if it's valid
+      refValue.current = value;
+
+      // Validate the input change
+      validateInputChange(value, refValue, setErrorState);
+    }
+  };
+
+  // Regular expression for validating the section format
+  const sectionRegex = /^(CS|IT|IS)[A-Z]$|^IRG$/;
+
+  // Handle section change with strict validation
+  const handleSectionChange = (value) => {
+
+
+    // Apply regex pattern to validate the input
+    if (!sectionRegex.test(value.toUpperCase()) && value !== '') {
+      // If the input doesn't match the pattern, but it's not empty, set the error state
+      setSectionError(true); // Set error state to true
+      return;
+    } else {
+      // If the input matches the pattern or it's empty, clear the error state
+      setSectionError(false); // Set error state to false
+      // Update the input value
+      section.current = value; // Keep the value unchanged if it matches the pattern
+
+      // Validate the input change
+      validateInputChange(value, section, setSectionError);
+      return;
+    }
+
+
+  };
+
+  // Regular expression for validating email with "@ust.edu.ph" domain
+  const emailRegex = /^[a-zA-Z0-9._%+-]+@ust\.edu\.ph$/;
+
+  // Handle email change with strict validation
+  const handleEmailChange = (value) => {
+    // Apply regex pattern to validate the input
+    const isValid = emailRegex.test(value);
+
+    // Set the error state based on validation result
+    setEmailError(!isValid);
+
+    if (isValid) {
+      // Update the input value if it's valid
+      userEmail.current = value;
+
+      // Validate the input change
+      validateInputChange(value, userEmail, setEmailError);
+    }
+  };
+
+
+
+  const validateFormSubmit = () => {
+
+    console.log(userDepartment)
+
+    console.log("section: " + sectionError)
+    const checkEmptyField = (value, setErrorState) => {
+      if (value.current == "" || value.current == null || value.current == 'None') {
+        setErrorState(true);
+        return false;
+      } else {
+        setErrorState(false);
+        return true;
+      }
+    }
+
+    var isValid = true;
+
+    switch (selectedUserType) {
+      case 'Student':
+        isValid = !studentNumberError ? checkEmptyField(studentNumber, setStudentNumberError) && isValid : !studentNumberError
+        isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
+        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
+        isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
+        isValid = checkEmptyField(yearLevel, setYearLevelError) && isValid;
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError
+        isValid = !sectionError ? checkEmptyField(section, setSectionError) && isValid : !sectionError
+        break;
+      case 'Faculty':
+        isValid = !employeeNumberError ? checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid : !employeeNumberError
+        isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
+        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError
+        isValid = checkEmptyField(userDepartment, setDepartmentError) && isValid;
+        break;
+      case 'Staff':
+        isValid = !employeeNumberError ? checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid : !employeeNumberError
+        isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
+        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
+        isValid = !emailError ? checkEmptyField(userEmail, setEmailError) && isValid : !emailError
+        break;
+      default:
+
+    }
+
+    if (isValid) {
+      openConfirmation()
+    } else {
+      console.log("Missing/Incorrect fields")
+    }
+
+  }
+
   const renderInputFields = (selectedUserType) => {
+
+
+
     switch (selectedUserType) {
       case 'Student':
         return (
           <div>
             <div className={styles.input}>
               <label>Student No.:</label>
-              <NumberInput className={styles.inputField} name="studentNumber" placeholder="Enter Student Number" hideControls
-                onChange={(value) => (studentNumber.current = value)}
+              <NumberInput className={styles.inputField} name="studentNumber" placeholder={studentNumText} hideControls allowNegative={false} allowDecimal={false}
+                max={9999999999} clampBehavior="strict"
+                onChange={(value) => (handleNumberChange(value, studentNumber, setStudentNumberError))}
+                error={studentNumberError}
+              />
+
+            </div>
+
+            <div className={styles.input}>
+              <label>First Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, firstName, setFirstNameError);
+                }}
+                error={firstNameError}
               />
             </div>
 
             <div className={styles.input}>
-              <label>Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
-                onChange={(e) => (userName.current = e.target.value)}
+              <label>Middle Initial:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, '');
+                  e.target.value = validValue;
+                  middleName.current = validValue;
+                }}
               />
             </div>
+
+            <div className={styles.input}>
+              <label>Last Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, lastName, setLastNameError);
+                }}
+                error={lastNameError}
+
+              />
+            </div>
+
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
-                onChange={(e) => (userEmail.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
+                onChange={(e) => (handleEmailChange(e.target.value))}
+                error={emailError}
               />
             </div>
 
@@ -171,9 +361,10 @@ const BorrowForm = () => {
               <Select
                 className={styles.inputField}
                 name="userDepartment"
-                placeholder="Select Department"
+                placeholder={departmentText}
                 data={['Information Technology', 'Information Systems', 'Computer Science']}
-                onChange={(value) => (userDepartment.current = value)}
+                onChange={(value) => (validateInputChange(value, userDepartment, setDepartmentError))}
+                error={departmentError}
               />
             </div>
 
@@ -182,16 +373,18 @@ const BorrowForm = () => {
               <Select
                 className={styles.inputField}
                 name="yearLevel"
-                placeholder="Select Year Level"
+                placeholder={yearLevelText}
                 data={['1st Year', '2nd Year', '3rd Year', '4th Year']}
-                onChange={(value) => (yearLevel.current = value)}
+                onChange={(value) => (validateInputChange(value, yearLevel, setYearLevelError))}
+                error={yearLevelError}
               />
             </div>
 
             <div className={styles.input}>
               <label>Section:</label>
-              <TextInput className={styles.inputField} name="section" placeholder="Enter Section"
-                onChange={(e) => (section.current = e.target.value)}
+              <TextInput className={styles.inputField} name="section" placeholder={sectionText}
+                onChange={(e) => (handleSectionChange(e.target.value))}
+                error={sectionError}
               />
             </div>
           </div>
@@ -201,22 +394,57 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
-                onChange={(value) => (employeeNumber.current = value)}
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls allowNegative={false} allowDecimal={false}
+                max={9999999999} clampBehavior="strict"
+                onChange={(value) => (handleNumberChange(value, employeeNumber, setEmployeeNumberError))}
+                error={employeeNumberError}
               />
             </div>
 
             <div className={styles.input}>
-              <label>Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
-                onChange={(e) => (userName.current = e.target.value)}
+              <label>First Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, firstName, setFirstNameError);
+                }}
+                error={firstNameError}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Middle Initial:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, '');
+                  e.target.value = validValue;
+                  middleName.current = validValue;
+                }}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Last Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, lastName, setLastNameError);
+                }}
+                error={lastNameError}
+
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
-                onChange={(e) => (userEmail.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
+                onChange={(e) => (handleEmailChange(e.target.value))}
+                error={emailError}
               />
             </div>
 
@@ -225,9 +453,10 @@ const BorrowForm = () => {
               <Select
                 className={styles.inputField}
                 name="userDepartment"
-                placeholder="Select Department"
+                placeholder={departmentText}
                 data={['Information Technology', 'Information Systems', 'Computer Science']}
-                onChange={(value) => (userDepartment.current = value)}
+                onChange={(value) => (validateInputChange(value, userDepartment, setDepartmentError))}
+                error={departmentError}
               />
             </div>
           </div>
@@ -237,22 +466,57 @@ const BorrowForm = () => {
           <div>
             <div className={styles.input}>
               <label>Employee No.:</label>
-              <NumberInput className={styles.inputField} name="employeeNumber" placeholder="Enter Employee Number" hideControls
-                onChange={(value) => (employeeNumber.current = value)}
+              <NumberInput className={styles.inputField} name="employeeNumber" placeholder={employeeNumText} hideControls allowNegative={false} allowDecimal={false}
+                max={9999999999} clampBehavior="strict"
+                onChange={(value) => (handleNumberChange(value, employeeNumber, setEmployeeNumberError))}
+                error={employeeNumberError}
               />
             </div>
 
             <div className={styles.input}>
-              <label>Name:</label>
-              <TextInput className={styles.inputField} name="userName" placeholder="Enter Name"
-                onChange={(e) => (userName.current = e.target.value)}
+              <label>First Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder={firstNameText}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, firstName, setFirstNameError);
+                }}
+                error={firstNameError}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Middle Initial:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder="R. (Optional)"
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s.]/g, '');
+                  e.target.value = validValue;
+                  middleName.current = validValue;
+                }}
+              />
+            </div>
+
+            <div className={styles.input}>
+              <label>Last Name:</label>
+              <TextInput className={styles.inputField} name="userName" placeholder={lastNameText}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  const validValue = value.replace(/[^a-zA-Z\s]/g, '');
+                  e.target.value = validValue;
+                  validateInputChange(validValue, lastName, setLastNameError);
+                }}
+                error={lastNameError}
+
               />
             </div>
 
             <div className={styles.input}>
               <label>Email:</label>
-              <TextInput className={styles.inputField} name="userEmail" placeholder="Enter Email Address"
-                onChange={(e) => (userEmail.current = e.target.value)}
+              <TextInput className={styles.inputField} name="userEmail" placeholder={emailText}
+                onChange={(e) => (handleEmailChange(e.target.value))}
+                error={emailError}
               />
             </div>
           </div>
@@ -362,11 +626,9 @@ const BorrowForm = () => {
   };
 
 
-
-
   return (
     <div>
-      <Header currentRoute={current} />
+      <Header currentRoute={"/borrowform"} />
       <div className={styles.mainBody}>
         <div className={styles.formContainer}>
           <div className={styles.formContents}>
@@ -457,7 +719,7 @@ const BorrowForm = () => {
               </div>
               <div className={styles.buttonContainer}>
 
-                <button className={styles.submitBtn} onClick={openConfirmation}> Submit Form </button>
+                <button className={styles.submitBtn} onClick={validateFormSubmit}> Submit Form </button>
                 <Link href={`/books/${book.id}`} className={styles.backBtnContainer}>
                   <button className={styles.backBtn}> Go Back </button>
                 </Link>

@@ -1,12 +1,10 @@
 import { Inter } from "next/font/google";
 import "./globals.scss";
-import Sidebar from "@/_components/sideNav/Sidebar";
 import { Providers } from "./providers/providers";
 import "@mantine/core/styles.css";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import { ModalsProvider } from "@mantine/modals";
-import "@mantine/dates/styles.css";
-import "@mantine/charts/styles.css";
+import Header from "@/_components/superadmin/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,8 +24,8 @@ export default function RootLayout({ children }) {
           <MantineProvider>
             <ModalsProvider>
               <Providers>
-                {<Sidebar />}
                 <div className="body">
+                  <Header />
                   <div className="container">{children}</div>
                 </div>
               </Providers>

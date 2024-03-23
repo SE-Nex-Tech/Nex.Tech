@@ -30,9 +30,6 @@ export async function borrow(req) {
       default:
         return null;
   }
-  
-
-
   // console.log('book requests');
   // console.log(await prisma.bookrequest.findMany());
 
@@ -43,9 +40,9 @@ export async function borrow(req) {
 function borrow_bookStudent(params) {
   return {
     date: params['date'],
-    borrow_date: new Date().toISOString(),
+    borrow_date: null,
     return_date: null,
-    status: 'borrow',
+    status: 'Pending Borrow',
     type: params['type'],
     user_type: params['user_type'],
     bookRequests: {
@@ -75,9 +72,9 @@ function borrow_bookStudent(params) {
 function borrow_bookFaculty(params) {
   return {
     date: params['date'],
-    borrow_date: new Date().toISOString(),
+    borrow_date: null,
     return_date: null,
-    status: 'borrow',
+    status: 'Pending Borrow',
     type: params['type'],
     user_type: params['user_type'],
     bookRequests: {
@@ -105,9 +102,9 @@ function borrow_bookFaculty(params) {
 function borrow_bookStaff(params) {
   return {
     date: params['date'],
-    borrow_date: new Date().toISOString(),
+    borrow_date: null,
     return_date: null,
-    status: 'borrow',
+    status: 'Pending Borrow',
     type: params['type'],
     user_type: params['user_type'],
     bookRequests: {
@@ -131,105 +128,3 @@ function borrow_bookStaff(params) {
 
 }
 
- //   switch (params['user_type']) {
-  //     case 'Student':
-  //       user_student = {
-  //             create: {
-  //                 student_num: params['studentID'],
-  //                 name: params['name'],
-  //                 email: params['email'],
-  //                 department: params['department'],
-  //                 year_level: params['year_level'],
-  //                 section: params['section']
-  //             }
-  //         };
-        
-  //     case 'Faculty':
-  //       user_faculty = {
-  //             create: {
-  //                 employee_num: params['employeeID'],
-  //                 name: params['name'],
-  //                 email: params['email'],
-  //                 department: params['department']
-  //             }
-  //         };
-
-  //     case 'Staff':
-  //       user_staff = {
-  //             create: {
-  //               employee_num: params['employeeID'],
-  //               name: params['name'],
-  //               email: params['email'],
-             
-  //             }
-  //         };
-        
-  //     default:
-  // }
-
-
-   
-
-// function borrow_book(params) {
-//   let user_student = null;
-//   let user_faculty = null;
-//   let user_staff = null;
-
-//   switch (params['user_type']) {
-//       case 'Student':
-//         user_student = {
-//               create: {
-//                   student_num: params['studentID'],
-//                   name: params['name'],
-//                   email: params['email'],
-//                   department: params['department'],
-//                   year_level: params['year_level'],
-//                   section: params['section']
-//               }
-//           };
-        
-//       case 'Faculty':
-//         user_faculty = {
-//               create: {
-//                   employee_num: params['employeeID'],
-//                   name: params['name'],
-//                   email: params['email'],
-//                   department: params['department']
-//               }
-//           };
-
-//       case 'Staff':
-//         user_staff = {
-//               create: {
-//                 employee_num: params['employeeID'],
-//                 name: params['name'],
-//                 email: params['email'],
-             
-//               }
-//           };
-        
-//       default:
-//           throw new Error('Invalid user type');
-//   }
-
-//   return {
-//       date: params['date'],
-//       borrow_date: new Date().toISOString(),
-//       return_date: null,
-//       status: 'borrow',
-//       type: params['type'],
-//       user_type: params['user_type'],
-//       bookRequests: {
-//           create: {
-//               book: {
-//                   connect: {
-//                       id: params['materialID']
-//                   }
-//               }
-//           }
-//       },
-//       user_student: user_student,
-//       user_faculty: user_faculty,
-//       user_staff: user_staff,
-//   };
-// }

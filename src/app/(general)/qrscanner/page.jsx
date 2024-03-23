@@ -4,6 +4,9 @@ import Header from "@/_components/header/Header";
 import React, { useState, useCallback, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./qrscanner.module.scss";
+import StudentFields from "./studentFields";
+import FacultyFields from "./facultyFields";
+import StaffFields from "./staffFields";
 import { QrReader } from "react-qr-reader";
 import { Center, Text, Loader } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
@@ -18,41 +21,120 @@ import Unauthenticated from "@/_components/authentication/unauthenticated";
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
+  const [data, setData] = useState("No result");
+  const current = usePathname();
+  const timeZoneOffset = 480;
+
+  var newRequestStatus;
+  var newBookStatus;
+  var confirmLabel;
+  var borrowDate;
+  var returnDate;
 
   const fetchBook = async (transaction) => {
+    const currentDateTime = new Date();
+
     setBook(transaction.book);
-    if (transaction.borrowTicket.status == "borrow") {
-      openBorrowRequestModal(transaction);
+
+    const selectedBook = transaction.book;
+    const ticket = transaction.borrowTicket;
+    const client = transaction.client;
+
+    const res = await fetch("/api/queue", {
+      method: "POST",
+      body: JSON.stringify({
+        id: selectedBook.id,
+      }),
+    });
+    const data = await res.json();
+    const bq = data.bq;
+    const biu = data.biu;
+    console.log(
+      "Book queue ==================================================",
+    );
+    console.log(bq);
+
+    if (
+      bq[0].id !== transaction.borrowTicket.id &&
+      transaction.borrowTicket.status === "Pending Borrow"
+    ) {
+      toast.warning("This borrow ticket is behind person/s in the queue");
+    }
+
+    if (
+      transaction.borrowTicket.status == "Pending Borrow" &&
+      biu.find((e) => e.id === transaction.book.id) == undefined
+    ) {
+      newRequestStatus = "Borrow Approved";
+      newBookStatus = "Unavailable";
+      confirmLabel =
+        bq[0].id === transaction.borrowTicket.id
+          ? "Authorize Borrow"
+          : "Override Queue";
+      borrowDate = new Date(
+        currentDateTime.getTime() + timeZoneOffset * 60000,
+      ).toISOString();
+      returnDate = null;
+      openModal(transaction);
     } else if (transaction.borrowTicket.status == "Borrow Approved") {
-      openBorrowReturnModal(transaction);
+      newRequestStatus = "Returned";
+      newBookStatus = "Available";
+      confirmLabel = "Confirm Return";
+      borrowDate = transaction.borrowTicket.borrow_date;
+      returnDate = new Date(
+        currentDateTime.getTime() + timeZoneOffset * 60000,
+      ).toISOString();
+      openModal(transaction);
+    } else if (biu.find((e) => e.id === transaction.book.id) != undefined) {
+      toast.warning("Book is still in use by another person");
+    } else {
+      toast.warning("This borrow ticket has expired");
     }
   };
 
-  const [data, setData] = useState("No result");
-
-  const { data: session, status } = useSession();
-
-  if (status === "loading") {
-    return (
-      <Loader
-        color="yellow"
-        size="xl"
-        cl
-        classNames={{ root: styles.loading }}
-      />
-    );
-  }
-
-  if (status === "unauthenticated") {
-    return <Unauthenticated />;
-  }
-
-  const openBorrowRequestModal = (transaction) => {
+  const openModal = (transaction) => {
     console.log("MY TRANSACTIONNNNN ==========================");
     console.log(transaction);
+
     const selectedBook = transaction.book;
     const ticket = transaction.borrowTicket;
     const client = transaction.client;
+
+    var requestFields;
+    switch (ticket.user_type) {
+      case "Student":
+        requestFields = StudentFields(transaction);
+        break;
+      case "Faculty":
+        requestFields = FacultyFields(transaction);
+        break;
+      case "Staff":
+        requestFields = StaffFields(transaction);
+        break;
+      default:
+    }
+
+    modals.openConfirmModal({
+      title: <h1>Request Receipt</h1>,
+      size: "sm",
+      radius: "md",
+      withCloseButton: false,
+      centered: true,
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => authorizeRequest(),
+      children: requestFields,
+      labels: { confirm: confirmLabel, cancel: "Cancel" },
+      confirmProps: {
+        radius: "xl",
+        bg: "rgb(141, 16, 56)",
+      },
+
+      cancelProps: {
+        radius: "xl",
+        bg: "#989898",
+        color: "white",
+      },
+    });
 
     const updateRequestStatus = async () => {
       console.log(ticket.id);
@@ -60,7 +142,9 @@ const QRScanner = () => {
         id: ticket.id,
       };
       const atts = {
-        status: "Borrow Approved",
+        status: newRequestStatus,
+        borrow_date: borrowDate,
+        return_date: returnDate,
       };
 
       const response = await fetch("/api/db", {
@@ -82,7 +166,7 @@ const QRScanner = () => {
         id: selectedBook.id,
       };
       const atts = {
-        status: "Unavailable",
+        status: newBookStatus,
       };
 
       const response = await fetch("/api/db", {
@@ -102,167 +186,6 @@ const QRScanner = () => {
       updateRequestStatus();
       updateBookStatus();
     };
-
-    modals.openConfirmModal({
-      title: <h1>Request Receipt</h1>,
-      size: "sm",
-      radius: "md",
-      withCloseButton: false,
-      centered: true,
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => authorizeRequest(),
-      children: (
-        <>
-          <p>
-            <strong>Receipt No.:</strong> {ticket.id}
-          </p>
-          <p>
-            <strong>Call No.:</strong> {selectedBook.call_num}
-          </p>
-          <p>
-            <strong>Accession No.:</strong> {selectedBook.accession_num}
-          </p>
-          <p>
-            <strong>Request Date:</strong> {ticket.borrow_date}
-          </p>
-          <p>
-            <strong>Student No.:</strong> {client.student_num}
-          </p>
-          <p>
-            <strong>Name:</strong> {client.name}
-          </p>
-          <p>
-            <strong>Department:</strong> {client.department}
-          </p>
-          <p>
-            <strong>Year Level:</strong> {client.year_level}
-          </p>
-          <p>
-            <strong>Section:</strong> {client.section}
-          </p>
-        </>
-      ),
-      labels: { confirm: "Authorize", cancel: "Cancel" },
-      confirmProps: {
-        radius: "xl",
-        bg: "rgb(141, 16, 56)",
-      },
-
-      cancelProps: {
-        radius: "xl",
-        bg: "#989898",
-        color: "white",
-      },
-    });
-  };
-
-  const openBorrowReturnModal = (transaction) => {
-    console.log("MY TRANSACTIONNNNN ==========================");
-    console.log(transaction);
-    const selectedBook = transaction.book;
-    const ticket = transaction.borrowTicket;
-    const client = transaction.client;
-
-    const updateRequestStatus = async () => {
-      console.log(ticket.id);
-      const filter = {
-        id: ticket.id,
-      };
-      const atts = {
-        status: "Returned",
-      };
-
-      const response = await fetch("/api/db", {
-        method: "POST",
-        body: JSON.stringify({
-          entity: "requests",
-          update: 1,
-          where: filter,
-          data: atts,
-        }),
-      });
-
-      console.log("close");
-    };
-
-    const updateBookStatus = async () => {
-      console.log(selectedBook.id);
-      const filter = {
-        id: selectedBook.id,
-      };
-      const atts = {
-        status: "Available",
-      };
-
-      const response = await fetch("/api/db", {
-        method: "POST",
-        body: JSON.stringify({
-          entity: "books",
-          update: 1,
-          where: filter,
-          data: atts,
-        }),
-      });
-
-      console.log("close");
-    };
-
-    const authorizeRequest = async () => {
-      updateRequestStatus();
-      updateBookStatus();
-    };
-
-    modals.openConfirmModal({
-      title: <h1>Request Receipt</h1>,
-      size: "sm",
-      radius: "md",
-      withCloseButton: false,
-      centered: true,
-      onCancel: () => console.log("Cancel"),
-      onConfirm: () => authorizeRequest(),
-      children: (
-        <>
-          <p>
-            <strong>Receipt No.:</strong> {ticket.id}
-          </p>
-          <p>
-            <strong>Call No.:</strong> {selectedBook.call_num}
-          </p>
-          <p>
-            <strong>Accession No.:</strong> {selectedBook.accession_num}
-          </p>
-          <p>
-            <strong>Request Date:</strong> {ticket.borrow_date}
-          </p>
-          <p>
-            <strong>Student No.:</strong> {client.student_num}
-          </p>
-          <p>
-            <strong>Name:</strong> {client.name}
-          </p>
-          <p>
-            <strong>Department:</strong> {client.department}
-          </p>
-          <p>
-            <strong>Year Level:</strong> {client.year_level}
-          </p>
-          <p>
-            <strong>Section:</strong> {client.section}
-          </p>
-        </>
-      ),
-      labels: { confirm: "Confirm Return", cancel: "Cancel" },
-      confirmProps: {
-        radius: "xl",
-        bg: "rgb(141, 16, 56)",
-      },
-
-      cancelProps: {
-        radius: "xl",
-        bg: "#989898",
-        color: "white",
-      },
-    });
   };
 
   const handleScanSuccess = async (result) => {
@@ -282,7 +205,6 @@ const QRScanner = () => {
     // console.log(resresult[0].id)
   };
 
-  const current = usePathname();
   return (
     <>
       <div>
@@ -300,11 +222,6 @@ const QRScanner = () => {
               toast.success("Scanned successfully!", { autoClose: 2000 });
               setData(result?.text);
               handleScanSuccess(result);
-            }
-
-            if (!!error) {
-              console.info(error);
-              toast.error("Error scanning!");
             }
           }}
           style={{ width: "100px", height: "100px" }}

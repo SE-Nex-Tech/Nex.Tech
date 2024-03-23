@@ -11,6 +11,7 @@ model Admin {
   id       Int     @id @default(autoincrement())
   name     String  @db.Text
   email    String  @db.Text @unique
+  type     String  @db.Text
   password String  @db.Text
 
 }
@@ -43,9 +44,9 @@ model Boardgames {
 
 model Requests {
   id                Int    @id @default(autoincrement())
-  date              DateTime? @db.Date
-  borrow_date       DateTime? @db.Date
-  return_date       DateTime? @db.Date
+  date              DateTime? 
+  borrow_date       DateTime? 
+  return_date       DateTime? 
   status            String @db.Text
   type              String @db.Text
   bookRequests      BookRequest?
