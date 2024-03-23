@@ -20,6 +20,8 @@ const EditAdmin = ({ closeModal, admin }) => {
         email: email.current
       })
     })
+
+    closeModal()
   }
 
   return (

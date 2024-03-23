@@ -9,7 +9,9 @@ datasource db {
 
 model Admin {
   id       Int     @id @default(autoincrement())
-  name     String  @db.Text
+  fn       String  @db.Text
+  mn       String?  @db.Text
+  ln       String?  @db.Text
   email    String  @db.Text @unique
   type     String  @db.Text
   password String  @db.Text

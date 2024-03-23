@@ -5,12 +5,12 @@ export async function POST(request) {
   const prisma = new PrismaClient()
   const params = await request.json()
 
-  const name = params['fn'] + ' ' + params['mn'] + ' ' + params['ln']
-
   const result = await prisma.admin.update({
     where: { id: params['id'] },
     data: {
-      name: name,
+      fn: params['fn'],
+      mn: params['mn'],
+      ln: params['ln'],
       email: params['email']
     }
   })

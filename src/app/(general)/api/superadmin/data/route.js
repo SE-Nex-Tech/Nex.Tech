@@ -4,25 +4,14 @@ import { NextResponse } from 'next/server'
 const adminData = (admin) => {
 
   const admin_data = admin.map((r) => {
-    let re = /(?<fn>[\w\s]+)\s*(?<mn>\w{1}\.)?\s+(?<ln>\w+)/
-    // console.log('parsing ' + r.name)
-    let match = re.exec(r.name)
-    if (match == null) {
-      match = {
-        groups: {
-          fn: r.name,
-        }
-      }
-    }
 
-    const initials = match.groups.fn[0] + (match.groups.ln != undefined ? match.groups.ln[0] : '')
+    const initials = r.fn[0] + (r.ln != null ? r.ln[0] : '')
 
     return {
       id: r.id,
-      name: r.name,
-      fn: match.groups.fn,
-      mn: match.groups.mn,
-      ln: match.groups.ln,
+      fn: r.fn,
+      mn: r.mn,
+      ln: r.ln,
       initials,
       access: r.access,
       email: r.email
@@ -39,7 +28,9 @@ export async function POST(request) {
   const admin = await prisma.admin.findMany({
     select: {
       id: true,
-      name: true,
+      fn: true,
+      mn: true,
+      ln: true,
       email: true,
       access: true
     }
