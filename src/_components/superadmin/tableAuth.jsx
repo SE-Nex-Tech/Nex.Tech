@@ -30,7 +30,7 @@ const TableAuth = ({ data }) => {
 
   const admin_list = data.map((r) => {
     let x = r;
-    const [accessGrantedd, setAccessGrantedd] = useState(true);
+    const [accessGrantedd, setAccessGrantedd] = useState(r.access);
     x["access"] = [accessGrantedd, setAccessGrantedd];
     return x;
   });
@@ -85,7 +85,7 @@ const TableAuth = ({ data }) => {
               <Table.Td>
                 <MenuActions
                   setAccessGranted={r.access[1]}
-                  accessGrated={r.access[0]}
+                  accessGranted={r.access[0]}
                 />
               </Table.Td>
             </Table.Tr>

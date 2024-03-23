@@ -19,10 +19,12 @@ const adminData = (admin) => {
 
     return {
       id: r.id,
+      name: r.name,
       fn: match.groups.fn,
       mn: match.groups.mn,
       ln: match.groups.ln,
       initials,
+      access: r.access,
       email: r.email
     }
   })
@@ -38,7 +40,8 @@ export async function POST(request) {
     select: {
       id: true,
       name: true,
-      email: true
+      email: true,
+      access: true
     }
   })
 
