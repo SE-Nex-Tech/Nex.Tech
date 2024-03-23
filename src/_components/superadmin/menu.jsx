@@ -4,9 +4,18 @@ import { modals } from "@mantine/modals";
 import { IconCheck, IconTrash, IconX } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 
-const MenuActions = ({ accessGranted, setAccessGranted }) => {
-  const handleApproveClick = () => {
+const MenuActions = ({ accessGranted, setAccessGranted, setrc, id }) => {
+  const handleApproveClick = async () => {
     setAccessGranted((prevAccessGranted) => !prevAccessGranted);
+    setrc((prev) => prev + 1)
+
+    const response = await fetch('/api/superadmin/authorization', {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        access: !accessGranted
+      })
+    })
   };
 
   const openDeleteModal = () =>

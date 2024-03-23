@@ -16,7 +16,7 @@ import { useState, useEffect } from 'react';
 const Admin = () => {
 
   const [admin, setAdmin] = useState([])
-  let refreshContents = 0;
+  const [rc, setRC] = useState(0)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,11 +26,17 @@ const Admin = () => {
       })
       const data = await response.json()
 
+      console.log('REFRESING CONTENT ==================================================')
+
       setAdmin(data);
     }
 
     fetchData()
-  }, [refreshContents])
+  }, [rc])
+
+  const test = () => {
+    setRC((prev) => prev + 1)
+  }
 
   const iconStyle = { width: rem(12), height: rem(12) };
   return (
@@ -40,6 +46,9 @@ const Admin = () => {
       px={64}
       style={{ borderRadius: "15px", border: "1px solid #dadada" }}
     >
+      /* <button onClick={test}>
+        clickme
+      </button> */
       <div className={styles.main_container}>
         <Tabs
           color="yellow"
@@ -83,7 +92,7 @@ const Admin = () => {
             value="auth"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TableAuth data={admin} />
+            <TableAuth data={admin} setrc={setRC} />
           </Tabs.Panel>
 
           <Tabs.Panel

@@ -3,7 +3,7 @@ import { Table, Avatar, rem } from "@mantine/core";
 import MenuActions from "./menu";
 import { IconCheck, IconX } from "@tabler/icons-react";
 
-const TableAuth = ({ data }) => {
+const TableAuth = ({ data, setrc }) => {
   /* data = [
     {
       id: 1,
@@ -86,6 +86,8 @@ const TableAuth = ({ data }) => {
                 <MenuActions
                   setAccessGranted={r.access[1]}
                   accessGranted={r.access[0]}
+                  setrc={setrc}
+                  id={r.id}
                 />
               </Table.Td>
             </Table.Tr>
