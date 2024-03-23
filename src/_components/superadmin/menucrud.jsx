@@ -5,8 +5,19 @@ import { IconTrash, IconPencil } from "@tabler/icons-react";
 import EditAdmin from "./editmodal";
 import { useDisclosure } from "@mantine/hooks";
 
-const MenuCrud = () => {
+const MenuCrud = ({ setrc, id }) => {
   const [opened, { open, close }] = useDisclosure(false);
+
+  const deleteAdmin = async () => {
+    const response = await fetch('/api/superadmin/deleteadmin', {
+      method: 'POST',
+      body: JSON.stringify({
+        id
+      })
+    })
+
+    // TODO: also apply toast here
+  }
 
   const openDeleteModal = () =>
     modals.openConfirmModal({
@@ -22,7 +33,7 @@ const MenuCrud = () => {
       labels: { confirm: "Delete", cancel: "No don't delete it" },
       confirmProps: { color: "red" },
       onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
+      onConfirm: () => deleteAdmin()
     });
 
   return (
