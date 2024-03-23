@@ -34,10 +34,6 @@ const Admin = () => {
     fetchData()
   }, [rc])
 
-  const test = () => {
-    setRC((prev) => prev + 1)
-  }
-
   const iconStyle = { width: rem(12), height: rem(12) };
   return (
     <Center
@@ -46,9 +42,6 @@ const Admin = () => {
       px={64}
       style={{ borderRadius: "15px", border: "1px solid #dadada" }}
     >
-      /* <button onClick={test}>
-        clickme
-      </button> */
       <div className={styles.main_container}>
         <Tabs
           color="yellow"

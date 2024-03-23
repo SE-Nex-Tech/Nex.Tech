@@ -50,7 +50,9 @@ export const authOptions = {
         return {
           id: user.id + "",
           email: user.email,
-          name: user.name,
+          fn: user.fn,
+          mn: user.mn,
+          ln: user.ln
         };
       },
     }),
