@@ -5,7 +5,7 @@ import { IconTrash, IconPencil } from "@tabler/icons-react";
 import EditAdmin from "./editmodal";
 import { useDisclosure } from "@mantine/hooks";
 
-const MenuCrud = ({ setrc, id }) => {
+const MenuCrud = ({ admin, id }) => {
   const [opened, { open, close }] = useDisclosure(false);
 
   const deleteAdmin = async () => {
@@ -50,7 +50,7 @@ const MenuCrud = ({ setrc, id }) => {
         withCloseButton={false}
         style={{ overflowY: "auto" }}
       >
-        <EditAdmin closeModal={close} />
+        <EditAdmin closeModal={close} admin={admin} />
       </Modal>
       <Menu shadow="md" width={200}>
         <Menu.Target>

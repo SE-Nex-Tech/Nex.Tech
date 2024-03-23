@@ -4,7 +4,7 @@ import MenuActions from "./menu";
 import { IconCheck, IconX } from "@tabler/icons-react";
 import MenuCrud from "./menucrud";
 
-const TableAdmin = ({ data }) => {
+const TableAdmin = ({ data, setrc }) => {
 
   const [accessGranted, setAccessGranted] = useState(true);
 
@@ -37,7 +37,7 @@ const TableAdmin = ({ data }) => {
               <Table.Td>{r.email}</Table.Td>
 
               <Table.Td>
-                <MenuCrud />
+                <MenuCrud admin={r} id={r.id} />
               </Table.Td>
             </Table.Tr>
           ))}

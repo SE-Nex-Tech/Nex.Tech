@@ -85,7 +85,7 @@ const Admin = () => {
             value="admins"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TableAdmin data={admin} />
+            <TableAdmin data={admin} setrc={setRC} />
           </Tabs.Panel>
 
           <Tabs.Panel
