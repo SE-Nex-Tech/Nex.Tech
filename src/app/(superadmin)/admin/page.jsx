@@ -20,7 +20,7 @@ const Admin = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/api/superadmin', {
+      const response = await fetch('/api/superadmin/data', {
         method: 'POST',
         body: JSON.stringify({})
       })
