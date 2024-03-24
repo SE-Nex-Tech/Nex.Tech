@@ -6,23 +6,30 @@ export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
 
-  console.log(params)
   const pass = await hash(params['password'], 12);
-  console.log(pass)
 
-  const result = await prisma.admin.upsert({
-    where: { email: params['email'] },
-    update: {
-      email: params['email'],
-      name: params['fname'] + ' ' + params['lname'],
-      password: pass
-    },
-    create: {
-      email: params['email'],
-      name: params['fname'] + ' ' + params['lname'],
-      password: pass
+  const find = await prisma.admin.findUnique({
+    where: {
+      email: params['email']
     }
   })
 
+  if (find != null) {
+    return NextResponse.json({
+      invalid: 1
+    })
+  }
+
+  const result = await prisma.admin.create({
+    data: {
+      email: params['email'],
+      fn: params['fname'],
+      ln: params['lname'],
+      password: pass,
+      type: 'admin',
+    }
+  })
+
+  await prisma.$disconnect()
   return NextResponse.json(result)
 }
