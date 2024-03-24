@@ -18,7 +18,19 @@ const adminData = (admin) => {
     }
   })
 
-  return admin_data
+  let admins = []
+  let authorize = admin_data
+
+  for (let i = 0; i < admin_data.length; i++) {
+    if (admin_data[i].access == true) {
+      admins.push(admin_data[i])
+    }
+  }
+
+  return {
+    admins,
+    authorize
+  }
 }
 
 export async function POST(request) {

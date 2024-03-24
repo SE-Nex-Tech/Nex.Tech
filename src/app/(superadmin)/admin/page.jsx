@@ -16,6 +16,8 @@ import { useState, useEffect } from 'react';
 const Admin = () => {
 
   const [admin, setAdmin] = useState([])
+  const [admins, setAdmins] = useState([])
+  const [authorize, setAuthorize] = useState([])
   const [rc, setRC] = useState(0)
 
   useEffect(() => {
@@ -28,7 +30,10 @@ const Admin = () => {
 
       console.log('REFRESING CONTENT ==================================================')
 
+      console.log(data)
       setAdmin(data);
+      setAdmins(data.admins)
+      setAuthorize(data.authorize)
     }
 
     fetchData()
@@ -78,14 +83,14 @@ const Admin = () => {
             value="admins"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TableAdmin data={admin} setrc={setRC} />
+            <TableAdmin data={admins} setrc={setRC} />
           </Tabs.Panel>
 
           <Tabs.Panel
             value="auth"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TableAuth data={admin} setrc={setRC} />
+            <TableAuth data={authorize} setrc={setRC} />
           </Tabs.Panel>
 
           <Tabs.Panel
