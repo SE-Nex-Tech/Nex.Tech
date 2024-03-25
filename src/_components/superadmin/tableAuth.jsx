@@ -3,8 +3,8 @@ import { Table, Avatar, rem } from "@mantine/core";
 import MenuActions from "./menu";
 import { IconCheck, IconX } from "@tabler/icons-react";
 
-const TableAuth = (data) => {
-  data = [
+const TableAuth = ({ data, setrc }) => {
+  /* data = [
     {
       id: 1,
       fn: "Carl Mitzchel",
@@ -26,12 +26,11 @@ const TableAuth = (data) => {
       ln: "Payumo",
       email: "edjinjerney.payumo.cics@ust.edu.ph",
     },
-  ];
+  ]; */
 
   const admin_list = data.map((r) => {
     let x = r;
-    const [accessGrantedd, setAccessGrantedd] = useState(true);
-    x["initials"] = x["fn"][0] + x["ln"][0];
+    const [accessGrantedd, setAccessGrantedd] = useState(r.access);
     x["access"] = [accessGrantedd, setAccessGrantedd];
     return x;
   });
@@ -86,7 +85,9 @@ const TableAuth = (data) => {
               <Table.Td>
                 <MenuActions
                   setAccessGranted={r.access[1]}
-                  accessGrated={r.access[0]}
+                  accessGranted={r.access[0]}
+                  setrc={setrc}
+                  id={r.id}
                 />
               </Table.Td>
             </Table.Tr>

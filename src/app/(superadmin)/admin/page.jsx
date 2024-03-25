@@ -11,8 +11,34 @@ import {
 import TableAuth from "@/_components/superadmin/tableAuth";
 import TableAdmin from "@/_components/superadmin/tableAdmin";
 import TablePassword from "@/_components/superadmin/tablePassword";
+import { useState, useEffect } from 'react';
 
 const Admin = () => {
+
+  const [admin, setAdmin] = useState([])
+  const [admins, setAdmins] = useState([])
+  const [authorize, setAuthorize] = useState([])
+  const [rc, setRC] = useState(0)
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const response = await fetch('/api/superadmin/data', {
+        method: 'POST',
+        body: JSON.stringify({})
+      })
+      const data = await response.json()
+
+      console.log('REFRESING CONTENT ==================================================')
+
+      console.log(data)
+      setAdmin(data);
+      setAdmins(data.admins)
+      setAuthorize(data.authorize)
+    }
+
+    fetchData()
+  }, [rc])
+
   const iconStyle = { width: rem(12), height: rem(12) };
   return (
     <Center
@@ -57,14 +83,14 @@ const Admin = () => {
             value="admins"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TableAdmin />
+            <TableAdmin data={admins} setrc={setRC} />
           </Tabs.Panel>
 
           <Tabs.Panel
             value="auth"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TableAuth />
+            <TableAuth data={authorize} setrc={setRC} />
           </Tabs.Panel>
 
           <Tabs.Panel

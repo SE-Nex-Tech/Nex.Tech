@@ -1,18 +1,45 @@
 import React from "react";
 import { Group, Stack, Input, Button } from "@mantine/core";
+import { useRef } from 'react'
 
-const EditAdmin = ({ closeModal }) => {
+const EditAdmin = ({ closeModal, admin }) => {
+
+  const fn = useRef(admin.fn)
+  const mn = useRef(admin.mn)
+  const ln = useRef(admin.ln)
+  const email = useRef(admin.email)
+
+  const editRecord = async () => {
+    const response = await fetch('/api/superadmin/editadmin', {
+      method: 'POST',
+      body: JSON.stringify({
+        id: admin.id,
+        fn: fn.current,
+        mn: mn.current,
+        ln: ln.current,
+        email: email.current
+      })
+    })
+
+    closeModal()
+  }
+
   return (
     <>
       <>
         <Group grow mb={20}>
           <Input.Wrapper label={<strong>First Name</strong>}>
-            <Input placeholder="First Name" defaultValue="Carl Mitzchel" />
+            <Input
+              placeholder="First Name"
+              defaultValue={fn.current}
+              onChange={(e) => (fn.current = e.target.value)}
+            />
           </Input.Wrapper>
           <Input.Wrapper label={<strong>Middle Name</strong>}>
             <Input
               placeholder="Middle Name"
-              defaultValue=""
+              defaultValue={mn.current}
+              onChange={(e) => (mn.current = e.target.value)}
               //   onChange={(e) => (author.current = e.target.value)}
             />
           </Input.Wrapper>
@@ -21,7 +48,8 @@ const EditAdmin = ({ closeModal }) => {
           <Input.Wrapper label={<strong>Last Name</strong>}>
             <Input
               placeholder="Last Name"
-              defaultValue="Padua"
+              defaultValue={ln.current}
+              onChange={(e) => (ln.current = e.target.value)}
               //   onChange={(e) => (callnum.current = e.target.value)}
             />
           </Input.Wrapper>
@@ -30,7 +58,8 @@ const EditAdmin = ({ closeModal }) => {
           <Input.Wrapper label={<strong>Email</strong>}>
             <Input
               placeholder="Email"
-              defaultValue="carlmitzchel.padua.cics@ust.edu.ph"
+              defaultValue={email.current}
+              onChange={(e) => (email.current = e.target.value)}
               //   onChange={(e) => (callnum.current = e.target.value)}
             />
           </Input.Wrapper>
@@ -41,7 +70,7 @@ const EditAdmin = ({ closeModal }) => {
             variant="filled"
             color="rgb(141, 16, 56)"
             radius="xl"
-            // onClick={editRecord}
+            onClick={editRecord}
           >
             Save
           </Button>

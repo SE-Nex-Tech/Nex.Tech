@@ -3,11 +3,33 @@ import { Menu, Button, Text, rem } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { IconCheck, IconTrash, IconX } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
+import { ToastContainer, toast } from "react-toastify";
 
-const MenuActions = ({ accessGranted, setAccessGranted }) => {
-  const handleApproveClick = () => {
+const MenuActions = ({ accessGranted, setAccessGranted, setrc, id }) => {
+  const handleApproveClick = async () => {
     setAccessGranted((prevAccessGranted) => !prevAccessGranted);
+    setrc((prev) => prev + 1)
+
+    const response = await fetch('/api/superadmin/authorization', {
+      method: 'POST',
+      body: JSON.stringify({
+        id,
+        access: !accessGranted
+      })
+    })
   };
+
+  const deleteAdmin = async () => {
+    const response = await fetch('/api/superadmin/deleteadmin', {
+      method: 'POST',
+      body: JSON.stringify({
+        id
+      })
+    })
+
+    // TODO: fix toast
+    // toast.success('Successfully deleted admin!, refresh page to reflect changes')
+  }
 
   const openDeleteModal = () =>
     modals.openConfirmModal({
@@ -22,7 +44,7 @@ const MenuActions = ({ accessGranted, setAccessGranted }) => {
       labels: { confirm: "Delete", cancel: "No don't delete it" },
       confirmProps: { color: "red" },
       onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
+      onConfirm: () => deleteAdmin()
     });
 
   return (

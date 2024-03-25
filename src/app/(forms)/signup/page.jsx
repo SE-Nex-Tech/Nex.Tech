@@ -59,7 +59,11 @@ const Signup = () => {
 
     const result = await response.json()
 
-    router.push('/login')
+    if (result.invalid == undefined) {
+      router.push('/login')
+    } else {
+      toast.warning('Invalid email')
+    }
   }
 
   const handleKeyDown = (e) => {
@@ -101,11 +105,9 @@ const Signup = () => {
           </div>
           <div className={styles.leftLower}>
             {/* must remove link and replace it with onClick function */}
-            <Link href="/login">
-              <Button classNames={{ root: styles.btn }} onClick={onSubmit}>
-                Create an account
-              </Button>
-            </Link>
+            <Button classNames={{ root: styles.btn }} onClick={onSubmit}>
+              Create an account
+            </Button>
           </div>
         </div>
         <div className={styles.right}>
