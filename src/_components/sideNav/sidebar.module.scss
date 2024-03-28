@@ -2,7 +2,7 @@
 
 .sidebar {
   min-width: 20rem;
-  height: 100dvh;
+  height: 100vh;
   background-color: $redMain;
   transition: all 0.5s;
   -webkit-transition: all 0.25s;
@@ -15,7 +15,7 @@
   position: sticky; // BEGIN: Added sticky position
   top: 0; // BEGIN: Added top position
   z-index: 2;
-  overflow-y: hidden;
+  overflow-y: auto;
   overflow-x: hidden;
 }
 

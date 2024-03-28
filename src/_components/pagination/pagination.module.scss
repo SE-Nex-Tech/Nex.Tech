@@ -5,21 +5,4 @@
   padding: 0.5em 1em 0.5em 1em;
   border: 2px solid rgb(219, 219, 219);
   border-radius: 10px;
-
-  .page_item {
-    display: flex;
-    width: 30px;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-  }
-  .current_page {
-    background-color: #e8b031;
-    border-radius: 5px;
-    padding: 0.5em;
-    text-align: center;
-    justify-content: center;
-    align-items: center;
-  }
 }
