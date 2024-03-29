@@ -38,7 +38,6 @@ const Reset = () => {
   //   };
 
   let email = ''
-  let oldpass = ''
   let newpass = ''
   let confirmnew = ''
 
@@ -57,17 +56,12 @@ const Reset = () => {
       toast.warning('New password confirmation does not match')
       flag = true
     }
-    if (oldpass === newpass) {
-      toast.warning('New password is the same as old password')
-      flag = true
-    }
     if (flag) {
       return
     }
 
     const fetch = await fetchData({
       email,
-      oldpass,
       newpass,
       confirmnew
     })
@@ -93,12 +87,6 @@ const Reset = () => {
         <div className={styles.left}>
           <div className={styles.leftUpper}>
             <Input placeholder="Email" classNames={styles} required="true" onChange={(e) => (email = e.target.value)}/>
-            <PasswordInput
-              placeholder="Old Password"
-              withAsterisk
-              classNames={styles}
-              onChange={(e) => (oldpass = e.target.value)}
-            />
             <PasswordInput
               placeholder="New Password"
               withAsterisk

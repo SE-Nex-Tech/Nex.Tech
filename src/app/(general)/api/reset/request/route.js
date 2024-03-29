@@ -18,13 +18,6 @@ export async function POST(request) {
       msg: 'Invalid email'
     })
   }
-  const match = await compare(params['oldpass'], admin.password)
-  if (!match) {
-    return NextResponse.json({
-      invalid: 1,
-      msg: 'Incorrect password'
-    })
-  }
 
   const newPass = await prisma.changepassword.create({
     data: {
