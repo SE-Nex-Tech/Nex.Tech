@@ -31,7 +31,7 @@ const TablePassword = ({ data }) => {
                 <Table.Td>{r.email}</Table.Td>
                 <Table.Td>{r.new_pass}</Table.Td>
                 <Table.Td>
-                  <MenuPassword />
+                  <MenuPassword id={r.id} />
                 </Table.Td>
               </Table.Tr>
             )
