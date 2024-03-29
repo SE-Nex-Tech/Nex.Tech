@@ -102,3 +102,11 @@ model Staff {
   name              String @db.Text
   email             String @db.Text
 }
+
+model Changepassword {
+  id                Int @id @default(autoincrement())
+  email             String @db.Text
+  new_pass          String @db.Text
+  date_requested    DateTime
+  date_approved     DateTime?
+}
