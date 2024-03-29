@@ -109,4 +109,5 @@ model Changepassword {
   new_pass          String @db.Text
   date_requested    DateTime
   date_approved     DateTime?
+  date_rejected     DateTime?
 }

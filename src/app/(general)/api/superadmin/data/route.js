@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
 
-const adminData = (admin) => {
+const adminData = (admin, newpass) => {
 
   const admin_data = admin.map((r) => {
 
@@ -29,7 +29,8 @@ const adminData = (admin) => {
 
   return {
     admins,
-    authorize
+    authorize,
+    newpass
   }
 }
 
@@ -48,7 +49,20 @@ export async function POST(request) {
     }
   })
 
-  const admin_data = adminData(admin)
+  const newpass = await prisma.changepassword.findMany({
+    where: {
+      date_approved: null,
+      date_rejected: null
+    },
+    select: {
+      id: true,
+      email: true,
+      new_pass: true,
+      date_requested: true
+    }
+  })
+
+  const admin_data = adminData(admin, newpass)
 
   /* let s = params['test']
   let re = /(?<fn>[\w\s]+)\s*(?<mn>\w{1}\.)?\s+(?<ln>\w+)/
