@@ -1,16 +1,19 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef  } from "react";
 import Header from "@/_components/header/Header";
 import { usePathname } from "next/navigation";
 import styles from "./reports.module.scss";
-import { Button, Center, NativeSelect, Loader } from "@mantine/core";
+import { Button, Center, NativeSelect, Loader, Switch, Group } from "@mantine/core";
 import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
 import PieChart from "@/_components/charts/PieChart";
 import { data } from "@/data/pie";
 import { ToastContainer, toast } from "react-toastify";
+import { closeModal, modals, openConfirmModal } from "@mantine/modals";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 
 const findUser = (user_type, req_id, users) => {
   if (user_type === "Student") {
@@ -39,6 +42,32 @@ const Reports = () => {
   const [inval, setInval] = useState();
   const [bookPie, setBookPie] = useState([]);
   const [gamePie, setGamePie] = useState([]);
+
+  const pdfRef = useRef(null);
+
+  const generatePDF = async () => {
+    const inputData = pdfRef.current;
+    try {
+      const canvas = await html2canvas(inputData);
+      const imgData = canvas.toDataURL("image/png");
+
+      const pdf = new jsPDF({
+        orientation: "landscape",
+        unit: "px",
+        format: "a4",
+      });
+
+      const width = pdf.internal.pageSize.getWidth();
+      const height = (canvas.height * width)/canvas.width;
+
+      pdf.addImage(imgData, "PNG", 0, 0, width, height);
+      pdf.save("test.pdf");
+    }catch (error){
+      console.log(error);
+    }
+
+  }
+
 
   useEffect(() => {
     const getData = async () => {
@@ -101,6 +130,75 @@ const Reports = () => {
     return <Unauthenticated />;
   }
 
+
+
+
+
+
+
+  const reportsModal = (transaction) => {
+    console.log("Generate Report");
+
+
+    modals.openConfirmModal({
+      title: <h1>Report Generation</h1>,
+      size: "sm",
+      radius: "md",
+      withCloseButton: false,
+      closeOnClickOutside: false,
+      centered: true,
+      onCancel: () => console.log("Cancel"),
+      onConfirm: () => generatePDF(),
+      children: customReport(),
+      labels: { confirm: "Generate", cancel: "Cancel" },
+      confirmProps: {
+        radius: "xl",
+        bg: "rgb(141, 16, 56)",
+      },
+
+      cancelProps: {
+        radius: "xl",
+        bg: "#989898",
+        color: "white",
+      },
+    });
+
+
+
+  };
+
+  const customReport = () => {
+
+    return (
+      <>
+        <Switch
+          defaultChecked
+          label="Books Summary"
+        />
+        <Switch
+          defaultChecked
+          label="Board Games Summary"
+        />
+        <h4>Show Usage per:</h4>
+        <Switch
+          defaultChecked
+          label="Year Level"
+        />
+        <Switch
+          defaultChecked
+          label="Department"
+        />
+        <Switch
+          defaultChecked
+          label="User Type"
+        />
+
+      </>
+    )
+  }
+
+
+
   return (
     <>
       <div>
@@ -129,12 +227,17 @@ const Reports = () => {
               onChange={setValue2}
               radius={"xl"} // END: Set default date to current date
             />
-            <Button variant="filled" color="rgb(141, 16, 56)" radius="xl">
+            <Button
+              variant="filled"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              onClick={reportsModal}
+            >
               Download
             </Button>
           </div>
           <h3>Request Summary</h3>
-          <div className={styles.summary}>
+          <div className={styles.summary}  ref={pdfRef}>
             <Table
               striped
               highlightOnHover
