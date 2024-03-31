@@ -3,10 +3,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
+import styles from "./page.module.scss";
 
 const GeneratePDF = () => {
-
-
 
     const pdfRef = useRef(null);
 
@@ -27,11 +26,16 @@ const GeneratePDF = () => {
 
     }
 
-
     return (
         <>
-            <div ref={pdfRef}>
+            <div ref={pdfRef} className={styles.mainContainer}>
+                <div>
+                    <h3>2efa</h3>
+                </div>
                 <h1>hello!</h1>
+                <h1>world!</h1>
+
+
             </div>
             <button onClick={generatePDF}>test</button>
         </>)

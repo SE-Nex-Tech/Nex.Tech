@@ -1,0 +1,12 @@
+@import "src/styles/variables.scss";
+
+.mainContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 80vh;
+    padding: 5vh 18vw 5vh 18vw;
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+  
