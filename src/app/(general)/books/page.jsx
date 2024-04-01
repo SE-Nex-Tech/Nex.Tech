@@ -8,17 +8,44 @@ import styles from "./books.module.scss";
 import { usePathname, useRouter } from "next/navigation";
 import Books from "@/_components/catalogs/books";
 import { useSession, getSession } from "next-auth/react";
+import BooksMobile from "@/_components/catalogs/booksMobile";
 
 const BooksCatalog = () => {
   const current = usePathname();
+  const [showHeader, setShowHeader] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1105) {
+        setIsMobile(true);
+        setShowHeader(false);
+      } else {
+        setIsMobile(false);
+        setShowHeader(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   return (
     <>
       <div>
-        <Header currentRoute={current} />
+        {showHeader && (
+          <div>
+            <Header currentRoute={current} />
+          </div>
+        )}
       </div>
-      <Center className={styles.center} maw="100%" m={25} h="81.5%">
-        <Books />
+      <Center className={styles.center} maw="100%" mih="80%">
+        {isMobile ? <BooksMobile /> : <Books />}
       </Center>
     </>
   );
