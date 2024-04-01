@@ -94,8 +94,7 @@ const Login = () => {
             </Link>
           </div>
           <h2 className={styles.forgot}>
-            <Link href="/verify" className={styles.forgot}>
-              {" "}
+            <Link href="/reset" className={styles.forgot}>
               Forgot Password?
             </Link>
           </h2>

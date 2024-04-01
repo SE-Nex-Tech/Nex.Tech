@@ -3,7 +3,26 @@ import { Menu, rem, Modal } from "@mantine/core";
 import { modals } from "@mantine/modals";
 import { IconX, IconCheck } from "@tabler/icons-react";
 
-const MenuPassword = () => {
+const MenuPassword = ({ id }) => {
+
+  const approve = async () => {
+    const response = await fetch('/api/reset/approve', {
+      method: 'POST',
+      body: JSON.stringify({
+        id
+      })
+    })
+  }
+
+  const reject = async () => {
+    const response = await fetch('/api/reset/reject', {
+      method: 'POST',
+      body: JSON.stringify({
+        id
+      })
+    })
+  }
+
   const openDisallowModal = () =>
     modals.openConfirmModal({
       title: <h2>Reject Request</h2>,
@@ -18,7 +37,7 @@ const MenuPassword = () => {
       labels: { confirm: "Disallow", cancel: "Cancel" },
       confirmProps: { color: "red" },
       onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
+      onConfirm: () => reject(),
     });
 
   const openAllowModal = () =>
@@ -35,7 +54,7 @@ const MenuPassword = () => {
       labels: { confirm: "Grant", cancel: "Cancel" },
       confirmProps: { color: "yellow" },
       onCancel: () => console.log("Cancel"),
-      onConfirm: () => console.log("Confirmed"),
+      onConfirm: () => approve()
     });
 
   return (

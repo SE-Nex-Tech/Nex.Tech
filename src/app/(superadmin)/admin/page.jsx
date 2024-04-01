@@ -18,6 +18,7 @@ const Admin = () => {
   const [admin, setAdmin] = useState([])
   const [admins, setAdmins] = useState([])
   const [authorize, setAuthorize] = useState([])
+  const [newpass, setNewpass] = useState([])
   const [rc, setRC] = useState(0)
 
   useEffect(() => {
@@ -34,6 +35,7 @@ const Admin = () => {
       setAdmin(data);
       setAdmins(data.admins)
       setAuthorize(data.authorize)
+      setNewpass(data.newpass)
     }
 
     fetchData()
@@ -97,7 +99,7 @@ const Admin = () => {
             value="password"
             style={{ maxHeight: "1000px", maxWidth: "1000px" }}
           >
-            <TablePassword />
+            <TablePassword data={newpass} />
           </Tabs.Panel>
         </Tabs>
       </div>
