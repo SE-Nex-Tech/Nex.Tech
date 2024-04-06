@@ -21,6 +21,7 @@ import {
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import Status from "@/_components/dashboard/status";
 import Queuer from "@/_components/dashboard/qStatus";
+import Reports from "../reports/page";
 
 const getUserCreds = (element) => {
   switch (element.user_type) {
@@ -248,13 +249,13 @@ const Dashboard = () => {
                             "book_author",
                             "book_title",
                             "book_publisher",
-                          ].includes(header.id),
+                          ].includes(header.id)
                         )
                         .map((header) => (
                           <th key={header.id}>
                             {flexRender(
                               header.column.columnDef.header,
-                              header.getContext(),
+                              header.getContext()
                             )}
                           </th>
                         ))}
@@ -268,14 +269,14 @@ const Dashboard = () => {
                           .getVisibleCells()
                           .filter((cell) =>
                             visibleColumns.includes(
-                              cell.column.columnDef.accessorKey,
-                            ),
+                              cell.column.columnDef.accessorKey
+                            )
                           )
                           .map((cell) => (
                             <td>
                               {flexRender(
                                 cell.column.columnDef.cell,
-                                cell.getContext(),
+                                cell.getContext()
                               )}
                             </td>
                           ))}
@@ -325,7 +326,10 @@ const Dashboard = () => {
             </Tabs>
           </div>
           <div className={styles.reports}>
-            <div className={styles.header_reports}>Reports</div>
+            <div className={styles.header_reports}>
+              <h1>Reports</h1>
+            </div>
+            <Reports hideHeader />
           </div>
         </div>
       </Center>

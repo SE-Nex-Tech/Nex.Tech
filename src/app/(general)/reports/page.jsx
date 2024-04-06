@@ -25,7 +25,7 @@ const findUser = (user_type, req_id, users) => {
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 
-const Reports = () => {
+const Reports = ({ hideHeader }) => {
   const current = usePathname();
   const [value, setValue] = useState();
   const [value2, setValue2] = useState();
@@ -104,16 +104,22 @@ const Reports = () => {
   return (
     <>
       <div>
-        <Header currentRoute={current} />
+        {!hideHeader && (
+          <div>
+            <Header currentRoute={current} />
+          </div>
+        )}
       </div>
       <Center maw="100%" mih="85%" className={styles.center}>
         <div className={styles.left_container}>
           <div className={styles.navigator}>
-            <Navigator
-              buttonText={"Analytics Overview"}
-              showIcon={false}
-              disableLink={true}
-            />
+            {!hideHeader && (
+              <Navigator
+                buttonText={"Analytics Overview"}
+                showIcon={false}
+                disableLink={true}
+              />
+            )}
           </div>
           <div className={styles.date_selector}>
             <h3>Date Range:</h3>

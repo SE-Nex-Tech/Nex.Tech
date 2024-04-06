@@ -6,6 +6,7 @@
   transition: all 0.3s linear;
   padding: 1em;
   gap: 1em;
+  overflow-y: hidden;
 
   .left_container {
     display: flex;
@@ -22,7 +23,8 @@
       gap: 1em;
       background-color: white;
       min-height: 20%;
-      padding: 1em 0.5em 1em 2.3em;
+      padding-top: 1em;
+      padding-bottom: 1em;
       border-radius: 15px;
     }
   }
