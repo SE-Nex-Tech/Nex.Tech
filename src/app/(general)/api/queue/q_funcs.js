@@ -17,7 +17,11 @@ const bookQ = async (pc, id) => {
       },
     },
     include: {
-      bookRequests: true,
+      bookRequests: {
+        include: {
+          book: true,
+        }
+      },
       boardgameRequests: true,
       user_student: true,
       user_faculty: true,

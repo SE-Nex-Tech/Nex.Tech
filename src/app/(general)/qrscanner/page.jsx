@@ -15,6 +15,7 @@ import { useDisclosure } from "@mantine/hooks";
 import { Modal, Button } from "@mantine/core";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
 import { IconInfoCircle } from "@tabler/icons-react";
+import { Input } from "@mantine/core";
 
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
@@ -30,6 +31,9 @@ const QRScanner = () => {
   var confirmLabel;
   var borrowDate;
   var returnDate;
+
+  let receipt_no;
+  let next_in_q;
 
   const fetchBook = async (transaction) => {
     const currentDateTime = new Date();
@@ -53,8 +57,10 @@ const QRScanner = () => {
       "Book queue ==================================================",
     );
     console.log(bq);
+    console.log(biu)
 
     if (
+      bq.length > 0 && 
       bq[0].id !== transaction.borrowTicket.id &&
       transaction.borrowTicket.status === "Pending Borrow"
     ) {
@@ -84,6 +90,7 @@ const QRScanner = () => {
       returnDate = new Date(
         currentDateTime.getTime() + timeZoneOffset * 60000,
       ).toISOString();
+      next_in_q = (bq != undefined && bq.length >= 1) ? bq[0] : undefined
       openModal(transaction);
     } else if (biu.find((e) => e.id === transaction.book.id) != undefined) {
       toast.warning("Book is still in use by another person");
@@ -185,7 +192,44 @@ const QRScanner = () => {
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
+      sendEmail(next_in_q)
     };
+
+    const sendEmail = async (next) => {
+      if (next == undefined) {
+        return
+      }
+
+      let email
+      let name
+      switch (next.user_type) {
+        case 'Student':
+          email = next.user_student.email
+          name = next.user_student.name
+          break
+        case 'Teacher':
+          email = next.user_faculty.email
+          name = next.user_faculty.name
+          break
+        case 'Staff':
+          email = next.user_staff.email
+          name = next.user_staff.name
+          break
+      }
+
+      const book = next.bookRequests.book.title
+      const text = 'Hello ' + name + ', We are glad to inform you that your reservation for ' + book + ' can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is ' + next.id
+
+      console.log('SENDING EMAIL TO: ' + email)
+
+      const response = await fetch('/api/mail', {
+        method: 'POST',
+        body: JSON.stringify({
+          to: email,
+          text: text
+        })
+      })
+    }
   };
 
   const handleScanSuccess = async (result) => {
@@ -204,6 +248,16 @@ const QRScanner = () => {
     fetchBook(borrowed);
     // console.log(resresult[0].id)
   };
+
+  const processReceipt = () => {
+    console.log('SCANNING ID ' + receipt_no)
+    let text = {
+      text: '{ "id": ' + receipt_no + ' }'
+    }
+    console.log(JSON.parse(text.text))
+
+    handleScanSuccess(text)
+  }
 
   return (
     <>
@@ -226,6 +280,14 @@ const QRScanner = () => {
           }}
           style={{ width: "100px", height: "100px" }}
         />
+        <Input
+          placeholder='Receipt Number'
+          classNames={styles}
+          onChange={(e) => (receipt_no = e.target.value)}
+        />
+        <Button classNames={{ root: styles.btn }} onClick={processReceipt}>
+          Process Receipt
+        </Button>
         <p className={styles.label}>
           <IconInfoCircle width={26} height={26} />
           For borrowing, reserving, or returning, point the camera at the
