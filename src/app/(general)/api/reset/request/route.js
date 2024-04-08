@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
-const { compare } = require('bcrypt')
+const { hash, compare } = require('bcrypt')
 
 export async function POST(request) {
   const prisma = new PrismaClient()
@@ -22,7 +22,7 @@ export async function POST(request) {
   const newPass = await prisma.changepassword.create({
     data: {
       email: admin.email,
-      new_pass: params['newpass'],
+      new_pass: await hash(params['newpass'], 12),
       date_requested: new Date().toISOString()
     }
   })

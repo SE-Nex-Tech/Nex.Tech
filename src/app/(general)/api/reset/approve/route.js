@@ -22,7 +22,7 @@ export async function POST(request) {
       email: pass.email
     },
     data: {
-      password: await hash(pass.new_pass, 12)
+      password: pass.new_pass
     }
   })
 
