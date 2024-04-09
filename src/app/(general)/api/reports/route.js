@@ -206,7 +206,7 @@ const countGameUserType = async (ls, prisma) => {
     },
     _count: {
       user_type: true,
-    }, 
+    },
     orderBy: {
       _count: {
         user_type: "desc",
@@ -217,12 +217,157 @@ const countGameUserType = async (ls, prisma) => {
   return gameUserTypeC;
 };
 
+const getStudentRequests = async (ls, prisma) => {
+  const studentReqs = await prisma.requests.findMany({
+    where: {
+      id: { in: ls },
+      user_type: "Student",
+    },
+  });
+
+  return studentReqs;
+};
+
+const countBookYearLevel = async (ls, prisma) => {
+  const studentReqs = await prisma.requests.findMany({
+    where: {
+      id: { in: ls },
+      user_type: "Student",
+      type: "Book",
+    },
+  });
+
+  const studentReqsIDs = studentReqs.map((r) => r.id);
+
+  const bookYearLevelC = await prisma.student.groupBy({
+    by: "year_level",
+    where: {
+      request_id: { in: studentReqsIDs },
+    },
+    _count: {
+      year_level: true,
+    },
+    orderBy: {
+      _count: {
+        year_level: "desc",
+      },
+    },
+  });
+
+  return bookYearLevelC;
+};
+
+const countGameYearLevel = async (ls, prisma) => {
+  const studentReqs = await prisma.requests.findMany({
+    where: {
+      id: { in: ls },
+      user_type: "Student",
+      type: "Boardgame",
+    },
+  });
+
+  const studentReqsIDs = studentReqs.map((r) => r.id);
+
+  const gameYearLevelC = await prisma.student.groupBy({
+    by: "year_level",
+    where: {
+      request_id: { in: studentReqsIDs },
+    },
+    _count: {
+      year_level: true,
+    },
+    orderBy: {
+      _count: {
+        year_level: "desc",
+      },
+    },
+  });
+
+  return gameYearLevelC;
+};
+
+const countBookDept = async (ls, prisma) => {
+  const studentReqs = await prisma.requests.findMany({
+    where: {
+      id: { in: ls },
+      user_type: "Student",
+      type: "Book",
+    },
+  });
+
+  const studentReqsIDs = studentReqs.map((r) => r.id);
+
+  const bookDeptC = await prisma.student.groupBy({
+    by: "department",
+    where: {
+      request_id: { in: studentReqsIDs },
+    },
+    _count: {
+      department: true,
+    },
+    orderBy: {
+      _count: {
+        department: "desc",
+      },
+    },
+  });
+
+  return bookDeptC;
+};
+
+const countGameDept = async (ls, prisma) => {
+  const studentReqs = await prisma.requests.findMany({
+    where: {
+      id: { in: ls },
+      user_type: "Student",
+      type: "Boardgame",
+    },
+  });
+
+  const studentReqsIDs = studentReqs.map((r) => r.id);
+
+  const gameDeptC = await prisma.student.groupBy({
+    by: "department",
+    where: {
+      request_id: { in: studentReqsIDs },
+    },
+    _count: {
+      department: true,
+    },
+    orderBy: {
+      _count: {
+        department: "desc",
+      },
+    },
+  });
+
+  return gameDeptC;
+};
+
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
 
-  let a = params.value != undefined ? new Date(params.value) : undefined;
-  let b = params.value2 != undefined ? new Date(params.value2) : undefined;
+  console.log(params.value);
+  console.log(params.value2);
+
+  const startDate = new Date(params.value);
+  const endDate = new Date(params.value2);
+
+  // Set end date time to 11:59 PM
+  endDate.setHours(23);
+  endDate.setMinutes(59);
+  endDate.setSeconds(59);
+
+  const startDatePH = startDate.toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+  const endDatePH = endDate.toLocaleString('en-US', { timeZone: 'Asia/Manila' });
+
+
+  console.log(startDatePH);
+  console.log(endDatePH);
+
+  let a = startDatePH != undefined ? new Date(startDatePH) : undefined;
+  let b = endDatePH != undefined ? new Date(endDatePH) : undefined;
 
   if (!(a < b)) {
     let currentDate = new Date();
@@ -231,6 +376,7 @@ export async function POST(request) {
 
     const result = await requests_interval(currentDate, lastMonth, prisma);
     const requestIDs = result.map((r) => r.id);
+
     const bookReqs = await bookRequests(requestIDs, prisma);
     const gameReqs = await gameRequests(requestIDs, prisma);
 
@@ -245,6 +391,13 @@ export async function POST(request) {
     const bookUserTypeC = await countBookUserType(requestIDs, prisma);
     const gameUserTypeC = await countGameUserType(requestIDs, prisma);
 
+    const studentReqs = await getStudentRequests(requestIDs, prisma);
+
+    const bookYearLevelC = await countBookYearLevel(requestIDs, prisma);
+    const gameYearLevelC = await countGameYearLevel(requestIDs, prisma);
+
+    const bookDeptC = await countBookDept(requestIDs, prisma);
+    const gameDeptC = await countGameDept(requestIDs, prisma);
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -257,6 +410,11 @@ export async function POST(request) {
       gameRC,
       bookUserTypeC,
       gameUserTypeC,
+      studentReqs,
+      bookYearLevelC,
+      gameYearLevelC,
+      bookDeptC,
+      gameDeptC,
     });
   }
 
@@ -276,6 +434,13 @@ export async function POST(request) {
   const bookUserTypeC = await countBookUserType(requestIDs, prisma);
   const gameUserTypeC = await countGameUserType(requestIDs, prisma);
 
+  const studentReqs = await getStudentRequests(requestIDs, prisma);
+
+  const bookYearLevelC = await countBookYearLevel(requestIDs, prisma);
+  const gameYearLevelC = await countGameYearLevel(requestIDs, prisma);
+
+  const bookDeptC = await countBookDept(requestIDs, prisma);
+  const gameDeptC = await countGameDept(requestIDs, prisma);
   prisma.$disconnect();
 
   return NextResponse.json({
@@ -289,5 +454,10 @@ export async function POST(request) {
     gameRC,
     bookUserTypeC,
     gameUserTypeC,
+    studentReqs,
+    bookYearLevelC,
+    gameYearLevelC,
+    bookDeptC,
+    gameDeptC,
   });
 }

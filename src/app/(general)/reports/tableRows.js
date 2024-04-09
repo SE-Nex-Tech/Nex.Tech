@@ -42,7 +42,7 @@ const TableRows = ({ data }) => {
 
 
 
-        return <Fragment>
+        return <>
             <View style={styles.row}>
                 <Text style={[styles.rowHeader, { width: "99.8%" }]}>Popular Books</Text>
             </View>
@@ -51,7 +51,7 @@ const TableRows = ({ data }) => {
                 <Text style={[styles.rowData, { width: "50%" }]}>Usage Count</Text>
             </View>
             {rows}
-        </Fragment>;
+        </>;
     } else if (data.type === "gameUsage") {
         const rows = data.gameRCounts.map((r) => (
             <View style={styles.row}>
@@ -64,7 +64,7 @@ const TableRows = ({ data }) => {
 
 
 
-        return <Fragment>
+        return <>
             <View style={styles.row}>
                 <Text style={[styles.rowHeader, { width: "99.8%" }]}>Popular Books</Text>
             </View>
@@ -73,15 +73,19 @@ const TableRows = ({ data }) => {
                 <Text style={[styles.rowData, { width: "50%" }]}>Usage Count</Text>
             </View>
             {rows}
-        </Fragment>;
+        </>;
     }
     else if (data.type === "bookUserType") {
 
 
 
         const getCountByUserType = (userType) => {
-            const userObject = data.bookUserTypeC.find(obj => obj.user_type === userType);
-            return userObject._count.user_type;
+            const r = data.bookUserTypeC.find(obj => obj.user_type === userType);
+            if (r) {
+                return r._count.user_type;
+            } else {
+                return 0;
+            }
         }
 
         return <>
@@ -103,8 +107,12 @@ const TableRows = ({ data }) => {
         </>;
     } else if (data.type === "gameUserType") {
         const getCountByUserType = (userType) => {
-            const userObject = data.gameUserTypeC.find(obj => obj.user_type === userType);
-            return userObject._count.user_type;
+            const r = data.gameUserTypeC.find(obj => obj.user_type === userType);
+            if (r) {
+                return r._count.user_type;
+            } else {
+                return 0;
+            }
         }
 
         return <>
@@ -125,8 +133,126 @@ const TableRows = ({ data }) => {
             </View>
         </>;
     }
+    else if (data.type === "bookYearLevel") {
+
+        const getCountByYearLevel = (yearLevel) => {
+            const r = data.bookYearLevelC.find(obj => obj.year_level === yearLevel);
+            if (r) {
+                return r._count.year_level;
+            } else {
+                return 0;
+            }
+        }
+
+        return <>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.2%" }]}>Student requests per year level</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "20%" }]}>1st Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>2nd Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>3rd Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>4th Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>Total</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("1st Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("2nd Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("3rd Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("4th Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{data.studentBookReqs}</Text>
+            </View>
+        </>;
+    } else if (data.type === "gameYearLevel") {
+
+        const getCountByYearLevel = (yearLevel) => {
+            const r = data.gameYearLevelC.find(obj => obj.year_level === yearLevel);
+
+            if (r) {
+                return r._count.year_level;
+            } else {
+                return 0;
+            }
+        }
+
+        return <>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.2%" }]}>Student requests per  year level</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "20%" }]}>1st Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>2nd Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>3rd Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>4th Year</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>Total</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("1st Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("2nd Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("3rd Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{getCountByYearLevel("4th Year")}</Text>
+                <Text style={[styles.rowData, { width: "20%" }]}>{data.studentGameReqs}</Text>
+            </View>
+        </>;
+    } else if (data.type === "bookDept") {
+        const getCountByDept = (department) => {
+            const r = data.bookDeptC.find(obj => obj.department === department);
+
+            if (r) {
+                return r._count.department;
+            } else {
+                return 0;
+            }
+        }
+
+        return <>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.4%" }]}>Student requests per department</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%", fontSize: 11.4 }]}>Information Technology</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Computer Science</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Information Systems</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Total</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByDept("Information Technology")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByDept("Computer Science")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByDept("Information Systems")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{data.studentBookReqs}</Text>
+            </View>
+        </>;
+    } else if (data.type === "gameDept") {
+        const getCountByDept = (department) => {
+            const r = data.gameDeptC.find(obj => obj.department === department);
+
+            if (r) {
+                return r._count.department;
+            } else {
+                return 0;
+            }
+        }
+
+        return <>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.4%" }]}>Student requests per department</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%", fontSize: 11.4 }]}>Information Technology</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Computer Science</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Information Systems</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Total</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByDept("Information Technology")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByDept("Computer Science")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByDept("Information Systems")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{data.studentGameReqs}</Text>
+            </View>
+        </>;
+    }
     else {
-        return <Fragment></Fragment>;
+        return <></>;
     }
 
 
