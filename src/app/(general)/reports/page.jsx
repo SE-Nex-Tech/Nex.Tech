@@ -131,9 +131,31 @@ const Reports = () => {
 
   const [opened, { open, close }] = useDisclosure(false);
 
+  const [bookSummary, SetBookSummary] = useState(true);
+  const [gameSummary, SetGameSummary] = useState(true);
+  const [usagePerYearLevel, setUsagePerYearLevel] = useState(true);
+  const [usagePerDepartment, SetUsagePerDepartment] = useState(true);
+  const [usagePerUserType, setUsagePerUserType] = useState(true);
 
+  const handleBookSummary = () => {
+    SetBookSummary(!bookSummary);
+  };
 
+  const handleGameSummary = () => {
+    SetGameSummary(!gameSummary);
+  };
 
+  const handleUsagePerYearLevel = () => {
+    setUsagePerYearLevel(!usagePerYearLevel);
+  };
+
+  const handleUsagePerDepartment = () => {
+    SetUsagePerDepartment(!usagePerDepartment);
+  };
+
+  const handleUsagePerUserType = () => {
+    setUsagePerUserType(!usagePerUserType);
+  };
 
 
 
@@ -259,6 +281,7 @@ const Reports = () => {
 
   const bookUsage = {
     type: "bookUsage",
+    display: bookSummary,
     bookRCounts: bookRCounts,
     bookR: bookR,
 
@@ -266,6 +289,7 @@ const Reports = () => {
 
   const gameUsage = {
     type: "gameUsage",
+    display: gameSummary,
     gameRCounts: gameRCounts,
     gameR: gameR,
 
@@ -273,36 +297,42 @@ const Reports = () => {
 
   const bookUserType = {
     type: "bookUserType",
+    display: bookSummary && usagePerUserType,
     bookReqCount: bookReqCount,
     bookUserTypeC: bookUserTypeC,
   }
 
   const gameUserType = {
     type: "gameUserType",
+    display: gameSummary && usagePerUserType,
     gameReqCount: gameReqCount,
     gameUserTypeC: gameUserTypeC,
   }
 
   const bookYearLevel = {
     type: "bookYearLevel",
+    display: bookSummary && usagePerYearLevel,
     studentBookReqs: studentBookReqs,
     bookYearLevelC: bookYearLevelC,
   }
 
   const gameYearLevel = {
     type: "gameYearLevel",
+    display: gameSummary && usagePerYearLevel,
     studentGameReqs: studentGameReqs,
     gameYearLevelC: gameYearLevelC,
   }
 
   const bookDept = {
     type: "bookDept",
+    display: bookSummary && usagePerDepartment,
     studentBookReqs: studentBookReqs,
     bookDeptC: bookDeptC,
   }
 
   const gameDept = {
     type: "gameDept",
+    display: gameSummary && usagePerDepartment,
     studentGameReqs: studentGameReqs,
     gameDeptC: gameDeptC,
   }
@@ -310,7 +340,6 @@ const Reports = () => {
 
   // Create Document Component
   const MyDocument = () => (
-    // format(Date.parse(value),"MMMM dd, yyyy")
     <Document>
       <Page size="LETTER" style={stylesPDF.page}>
         <View fixed style={stylesPDF.header}>
@@ -327,53 +356,58 @@ const Reports = () => {
           <Text>Report Creation Date: {new Date().toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}</Text>
         </View>
 
-        <View style={stylesPDF.user_demographics}>
-          <Text style={{ paddingLeft: 60 }}>User Demographics (Books):</Text>
-          <View style={stylesPDF.tableContainer}>
-            <View style={stylesPDF.table}>
-              <TableRows data={bookUserType} />
+        {(bookSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
+          <View style={stylesPDF.user_demographics}>
+            <Text style={{ paddingLeft: 60 }}>User Demographics (Books):</Text>
+            <View style={stylesPDF.tableContainer}>
+              <View style={stylesPDF.table}>
+                <TableRows data={bookUserType} />
+              </View>
+              <View style={stylesPDF.table}>
+                <TableRows data={bookYearLevel} />
+              </View>
+              <View style={stylesPDF.table}>
+                <TableRows data={bookDept} />
+              </View>
             </View>
-            <View style={stylesPDF.table}>
-              <TableRows data={bookYearLevel} />
-            </View>
-            <View style={stylesPDF.table}>
-              <TableRows data={bookDept} />
-            </View>
-          </View>
-        </View>
+          </View>)}
 
-        <View style={stylesPDF.usage_statistics}>
-          <Text style={{ paddingLeft: 60 }}>Usage Statistics (Books):</Text>
-          <View style={stylesPDF.tableContainer}>
-            <View style={stylesPDF.table}>
-              <TableRows data={bookUsage} />
-            </View>
-          </View>
-        </View>
 
-        <View style={stylesPDF.user_demographics}>
-          <Text style={{ paddingLeft: 60 }}>User Demographics (Board Games):</Text>
-          <View style={stylesPDF.tableContainer}>
-            <View style={stylesPDF.table}>
-              <TableRows data={gameUserType} />
+        {(bookSummary) && (
+          <View style={stylesPDF.usage_statistics}>
+            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Books):</Text>
+            <View style={stylesPDF.tableContainer}>
+              <View style={stylesPDF.table}>
+                <TableRows data={bookUsage} />
+              </View>
             </View>
-            <View style={stylesPDF.table}>
-              <TableRows data={gameYearLevel} />
-            </View>
-            <View style={stylesPDF.table}>
-              <TableRows data={gameDept} />
-            </View>
-          </View>
-        </View>
+          </View>)}
 
-        <View style={stylesPDF.usage_statistics}>
-          <Text style={{ paddingLeft: 60 }}>Usage Statistics (Board Games):</Text>
-          <View style={stylesPDF.tableContainer}>
-            <View style={stylesPDF.table}>
-              <TableRows data={gameUsage} />
+        {(gameSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
+          <View style={stylesPDF.user_demographics}>
+            <Text style={{ paddingLeft: 60 }}>User Demographics (Board Games):</Text>
+            <View style={stylesPDF.tableContainer}>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameUserType} />
+              </View>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameYearLevel} />
+              </View>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameDept} />
+              </View>
             </View>
-          </View>
-        </View>
+          </View>)}
+
+        {(gameSummary) && (
+          <View style={stylesPDF.usage_statistics}>
+            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Board Games):</Text>
+            <View style={stylesPDF.tableContainer}>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameUsage} />
+              </View>
+            </View>
+          </View>)}
 
 
         <Text style={stylesPDF.pageNumber} render={({ pageNumber, totalPages }) => (
@@ -435,26 +469,32 @@ const Reports = () => {
                 <div className={styles.customization_container}>
                   <h4>Generate Report:</h4>
                   <Switch
-                    defaultChecked
+                    defaultChecked={bookSummary}
                     label="Books Summary"
+                    onChange={handleBookSummary}
                   />
                   <Switch
-                    defaultChecked
+                    defaultChecked={gameSummary}
                     label="Board Games Summary"
+                    onChange={handleGameSummary}
                   />
                   <h4>Show Usage per:</h4>
                   <Switch
-                    defaultChecked
-                    label="Year Level"
-                  />
-                  <Switch
-                    defaultChecked
-                    label="Department"
-                  />
-                  <Switch
-                    defaultChecked
+                    defaultChecked={usagePerUserType}
                     label="User Type"
+                    onChange={handleUsagePerUserType}
                   />
+                  <Switch
+                    defaultChecked={usagePerYearLevel}
+                    label="Year Level"
+                    onChange={handleUsagePerYearLevel}
+                  />
+                  <Switch
+                    defaultChecked={usagePerDepartment}
+                    label="Department"
+                    onChange={handleUsagePerDepartment}
+                  />
+
                 </div>
 
 
