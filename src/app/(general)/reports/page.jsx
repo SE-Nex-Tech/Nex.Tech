@@ -418,6 +418,12 @@ const Reports = () => {
   );
 
 
+  const currentDate = new Date();
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Zero-padding the month
+  const day = String(currentDate.getDate()).padStart(2, '0'); // Zero-padding the day
+  const formattedDate = year+month+day;
+
   return (
     <>
       <div>
@@ -512,8 +518,12 @@ const Reports = () => {
               </div>
 
               <div className={styles.btn_container}>
-                <PDFDownloadLink document={MyDocument()} fileName={"reports.pdf"} >
-                  <button className={styles.confirmBtn}>Download PDF</button>
+                <PDFDownloadLink document={MyDocument()} fileName={"reports" + formattedDate + ".pdf"} >
+                  <button
+                    disabled={!bookSummary && !gameSummary}
+                    className={styles.confirmBtn}
+                  >
+                    Download PDF</button>
                 </PDFDownloadLink>
 
                 <button className={styles.cancelBtn} onClick={close}>Cancel</button>
