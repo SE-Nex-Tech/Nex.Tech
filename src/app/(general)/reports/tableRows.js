@@ -29,13 +29,35 @@ const styles = StyleSheet.create({
 
 
 const TableRows = ({ data }) => {
-    if (data.type === "usage") {
+    if (data.type === "bookUsage") {
 
         const rows = data.bookRCounts.map((r) => (
             <View style={styles.row}>
 
                 <Text style={[styles.rowData, { width: "50%" }]}>{data.bookR.find((e) => e.book_id === r.book_id).book.title}</Text>
                 <Text style={[styles.rowData, { width: "50%" }]}>{r._count.book_id}</Text>
+
+            </View>
+        ));
+
+
+
+        return <Fragment>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.8%" }]}>Popular Books</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "50%" }]}>Book Title</Text>
+                <Text style={[styles.rowData, { width: "50%" }]}>Usage Count</Text>
+            </View>
+            {rows}
+        </Fragment>;
+    } else if (data.type === "gameUsage") {
+        const rows = data.gameRCounts.map((r) => (
+            <View style={styles.row}>
+
+                <Text style={[styles.rowData, { width: "50%" }]}>{data.gameR.find((e) => e.boardgame_id === r.boardgame_id).boardgame.title}</Text>
+                <Text style={[styles.rowData, { width: "50%" }]}>{r._count.boardgame_id}</Text>
 
             </View>
         ));
