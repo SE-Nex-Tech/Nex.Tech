@@ -51,13 +51,14 @@ const QRScanner = () => {
       }),
     });
     const data = await res.json();
-    const bq = data.bq;
-    const biu = data.biu;
+    const bq = transaction.borrowTicket.type == 'Book' ? data.bq : data.gq;
+    const biu = transaction.borrowTicket.type == 'Book' ? data.biu : data.giu;
     console.log(
-      "Book queue ==================================================",
+      "Material queue ==================================================",
     );
     console.log(bq);
     console.log(biu)
+    console.log(transaction)
 
     if (
       bq.length > 0 && 
@@ -217,8 +218,8 @@ const QRScanner = () => {
           break
       }
 
-      const book = next.bookRequests.book.title
-      const text = 'Hello ' + name + ', We are glad to inform you that your reservation for ' + book + ' can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is ' + next.id
+      const mat = next.type === 'Book' ? next.bookRequests.book.title : next.boardgameRequests.boardgame.title
+      const text = 'Hello ' + name + ', We are glad to inform you that your reservation for ' + mat + ' can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is ' + next.id
 
       console.log('SENDING EMAIL TO: ' + email)
 

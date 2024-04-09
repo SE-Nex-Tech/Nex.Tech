@@ -191,14 +191,16 @@ const Dashboard = () => {
                   <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
 
                   <Tabs.Panel value="queue">
-                    {queue.map((r) => (
-                      <Queuer
-                        title={r.bookRequests.book.title}
+                    {queue.map((r) => {
+                      console.log(r)
+                      return (<Queuer
+                        title={r.type == "Book" ? r.bookRequests.book.title : r.boardgameRequests.boardgame.title}
                         borrower={getUserCreds(r).name}
                         email={getUserCreds(r).email}
                         user_type={r.user_type}
-                      />
-                    ))}
+                      />)
+                    }
+                    )}
                   </Tabs.Panel>
                 </Tabs>
               </div>

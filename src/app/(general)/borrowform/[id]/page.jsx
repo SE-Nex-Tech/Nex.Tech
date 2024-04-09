@@ -50,7 +50,7 @@ const BorrowForm = () => {
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({
-        entity: "books",
+        entity: typeParam === "book" ? "book" : "game",
         date: new Date(
           currentDateTime.getTime() + timeZoneOffset * 60000
         ).toISOString(),
@@ -121,7 +121,7 @@ const BorrowForm = () => {
   }
 
   const requestCode = useRef("201314214");
-  const requestType = useRef("Book");
+  const requestType = useRef(typeParam === 'book' ? "Book" : "Game");
   const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
   const employeeNumber = useRef("");
@@ -745,7 +745,7 @@ const BorrowForm = () => {
                   <TextInput
                     className={styles.inputField}
                     name="requestType"
-                    value={typeParam === "game" ? "Game" : "Book"}
+                    value={requestType.current}
                     readOnly={true}
                   />
                 </div>

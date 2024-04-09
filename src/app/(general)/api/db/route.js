@@ -150,7 +150,7 @@ export async function POST(request) {
         }
       })
     } else {
-      entityReq = await prisma.BooardgameRequest.findUnique({
+      entityReq = await prisma.BoardgameRequest.findUnique({
         where: {
           request_id: borrowTicket.id
         }
