@@ -38,9 +38,9 @@ const QRScanner = () => {
   const fetchBook = async (transaction) => {
     const currentDateTime = new Date();
 
-    setBook(transaction.book);
+    setBook(transaction.material);
 
-    const selectedBook = transaction.book;
+    const selectedBook = transaction.material;
     const ticket = transaction.borrowTicket;
     const client = transaction.client;
 
@@ -69,7 +69,7 @@ const QRScanner = () => {
 
     if (
       transaction.borrowTicket.status == "Pending Borrow" &&
-      biu.find((e) => e.id === transaction.book.id) == undefined
+      biu.find((e) => e.id === transaction.material.id) == undefined
     ) {
       newRequestStatus = "Borrow Approved";
       newBookStatus = "Unavailable";
@@ -92,7 +92,7 @@ const QRScanner = () => {
       ).toISOString();
       next_in_q = (bq != undefined && bq.length >= 1) ? bq[0] : undefined
       openModal(transaction);
-    } else if (biu.find((e) => e.id === transaction.book.id) != undefined) {
+    } else if (biu.find((e) => e.id === transaction.material.id) != undefined) {
       toast.warning("Book is still in use by another person");
     } else {
       toast.warning("This borrow ticket has expired");
@@ -103,7 +103,7 @@ const QRScanner = () => {
     console.log("MY TRANSACTIONNNNN ==========================");
     console.log(transaction);
 
-    const selectedBook = transaction.book;
+    const selectedBook = transaction.material;
     const ticket = transaction.borrowTicket;
     const client = transaction.client;
 
