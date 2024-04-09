@@ -21,7 +21,7 @@ const Header = () => {
         radius="xl"
         style={{ transition: "all 0.2s" }}
         onClick={() => {
-          signOut({ redirect: false, callbackUrl: "/" });
+          signOut({ redirect: true, callbackUrl: "/landing" });
         }}
       >
         Logout
