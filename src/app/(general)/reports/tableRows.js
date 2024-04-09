@@ -75,20 +75,55 @@ const TableRows = ({ data }) => {
             {rows}
         </Fragment>;
     }
-    else if (data.type === "userType") {
-        const rows = data.items.map((item) => (
-            <View style={styles.tableContainer}>
-                <View style={styles.row}>
+    else if (data.type === "bookUserType") {
 
-                    <Text style={{ width: "25%" }}>{item.column1}</Text>
-                    <Text style={{ width: "25%" }}>{item.column2}</Text>
-                    <Text style={{ width: "25%" }}>{item.column3}</Text>
-                    <Text style={{ width: "25%" }}>{item.column4}</Text>
 
-                </View>
+
+        const getCountByUserType = (userType) => {
+            const userObject = data.bookUserTypeC.find(obj => obj.user_type === userType);
+            return userObject._count.user_type;
+        }
+
+        return <>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.4%" }]}>Requests per user type</Text>
             </View>
-        ));
-        return <Fragment>{rows}</Fragment>;
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%" }]}>Student</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Faculty</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Staff</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Total</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByUserType("Student")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByUserType("Faculty")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByUserType("Staff")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{data.bookReqCount}</Text>
+            </View>
+        </>;
+    } else if (data.type === "gameUserType") {
+        const getCountByUserType = (userType) => {
+            const userObject = data.gameUserTypeC.find(obj => obj.user_type === userType);
+            return userObject._count.user_type;
+        }
+
+        return <>
+            <View style={styles.row}>
+                <Text style={[styles.rowHeader, { width: "99.4%" }]}>Requests per user type</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%" }]}>Student</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Faculty</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Staff</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>Total</Text>
+            </View>
+            <View style={styles.row}>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByUserType("Student")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByUserType("Faculty")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{getCountByUserType("Staff")}</Text>
+                <Text style={[styles.rowData, { width: "25%" }]}>{data.gameReqCount}</Text>
+            </View>
+        </>;
     }
     else {
         return <Fragment></Fragment>;

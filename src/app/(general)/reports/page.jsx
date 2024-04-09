@@ -119,6 +119,9 @@ const Reports = () => {
   const [bookDeptC, SetBookDeptC] = useState([]);
   const [gameDeptC, SetGameDeptC] = useState([]);
 
+  const [bookReqCount, SetBookReqCount] = useState([]);
+  const [gameReqCount, SetGameReqCount] = useState([]);
+
 
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -153,17 +156,14 @@ const Reports = () => {
         gameDeptC,
       } = await response.json();
 
-      // const [bookUserTypeC, setBookUserTypeC] = useState([]);
-      // const [gameUserTypeC, setGameUserTypeC] = useState([]);
-    
-      // const [bookYearLevelC, setBookYearLevelC] = useState([]);
-      // const [gameYearLevelC, setGameYearLevelC] = useState([]);
-    
-      // const [bookDeptC, SetBookDeptC] = useState([]);
-      // const [gameDeptC, SetGameDeptC] = useState([]);
-  
+
+
       setBookUserTypeC(bookUserTypeC);
       setGameUserTypeC(gameUserTypeC);
+
+
+      console.log(bookUserTypeC);
+      console.log(gameUserTypeC);
 
       setBookYearLevelC(bookYearLevelC);
       setGameYearLevelC(gameYearLevelC);
@@ -173,10 +173,19 @@ const Reports = () => {
 
 
       setBorrows(result);
-      console.log(Object.keys(borrows).length);
+
+      console.log(Object.keys(borrows).length); //total reqs
+
+
 
       setBookR(bookReqs);
       setGameR(gameReqs);
+
+      SetBookReqCount(Object.keys(bookReqs).length);
+      SetGameReqCount(Object.keys(gameReqs).length)
+
+      console.log(bookReqCount); //total book reqs
+      console.log(gameReqCount); //total game reqs
 
       setBookRCounts(book_requests_count);
       setGameRCounts(game_requests_count);
@@ -184,7 +193,7 @@ const Reports = () => {
       setUsers(users);
       setBookPie(bookRC);
       setGamePie(gameRC);
-      
+
 
       console.log(bookRC);
       console.log(gameRC);
@@ -233,6 +242,18 @@ const Reports = () => {
 
   };
 
+  const bookUserType = {
+    type: "bookUserType",
+    bookReqCount: bookReqCount,
+    bookUserTypeC: bookUserTypeC,
+  }
+
+  const gameUserType = {
+    type: "gameUserType",
+    gameReqCount: gameReqCount,
+    gameUserTypeC: gameUserTypeC,
+  }
+
 
   // Create Document Component
   const MyDocument = () => (
@@ -255,7 +276,10 @@ const Reports = () => {
 
         <View style={stylesPDF.user_demographics}>
           <Text style={{ paddingLeft: 60 }}>User Demographics (Books):</Text>
-          <View style={stylesPDF.table}>
+          <View style={stylesPDF.tableContainer}>
+            <View style={stylesPDF.table}>
+              <TableRows data={bookUserType} />
+            </View>
           </View>
         </View>
 
@@ -270,7 +294,10 @@ const Reports = () => {
 
         <View style={stylesPDF.user_demographics}>
           <Text style={{ paddingLeft: 60 }}>User Demographics (Board Games):</Text>
-          <View style={stylesPDF.table}>
+          <View style={stylesPDF.tableContainer}>
+            <View style={stylesPDF.table}>
+              <TableRows data={gameUserType} />
+            </View>
           </View>
         </View>
 

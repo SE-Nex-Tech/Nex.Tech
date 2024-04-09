@@ -175,6 +175,48 @@ const fetchUsers = async (ls, prisma) => {
   };
 };
 
+
+
+const countBookUserType = async (ls, prisma) => {
+  const bookUserTypeC = await prisma.requests.groupBy({
+    by: "user_type",
+    where: {
+      id: { in: ls },
+      type: "Book",
+    },
+    _count: {
+      user_type: true,
+    },
+    orderBy: {
+      _count: {
+        user_type: "desc",
+      },
+    },
+  });
+
+  return bookUserTypeC;
+};
+
+const countGameUserType = async (ls, prisma) => {
+  const gameUserTypeC = await prisma.requests.groupBy({
+    by: "user_type",
+    where: {
+      id: { in: ls },
+      type: "Boardgame",
+    },
+    _count: {
+      user_type: true,
+    }, 
+    orderBy: {
+      _count: {
+        user_type: "desc",
+      },
+    },
+  });
+
+  return gameUserTypeC;
+};
+
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
@@ -200,6 +242,9 @@ export async function POST(request) {
     const bookRC = await mapStatToBook(requestIDs, prisma);
     const gameRC = await mapStatToGame(requestIDs, prisma);
 
+    const bookUserTypeC = await countBookUserType(requestIDs, prisma);
+    const gameUserTypeC = await countGameUserType(requestIDs, prisma);
+
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -210,6 +255,8 @@ export async function POST(request) {
       users,
       bookRC,
       gameRC,
+      bookUserTypeC,
+      gameUserTypeC,
     });
   }
 
@@ -226,6 +273,9 @@ export async function POST(request) {
   const bookRC = await mapStatToBook(requestIDs, prisma);
   const gameRC = await mapStatToGame(requestIDs, prisma);
 
+  const bookUserTypeC = await countBookUserType(requestIDs, prisma);
+  const gameUserTypeC = await countGameUserType(requestIDs, prisma);
+
   prisma.$disconnect();
 
   return NextResponse.json({
@@ -237,5 +287,7 @@ export async function POST(request) {
     users,
     bookRC,
     gameRC,
+    bookUserTypeC,
+    gameUserTypeC,
   });
 }
