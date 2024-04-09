@@ -29,12 +29,8 @@ const GeneratePDF = () => {
     return (
         <>
             <div ref={pdfRef} className={styles.mainContainer}>
-                <div>
-                    <h3>2efa</h3>
-                </div>
                 <h1>hello!</h1>
                 <h1>world!</h1>
-
 
             </div>
             <button onClick={generatePDF}>test</button>
