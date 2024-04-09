@@ -137,6 +137,8 @@ const Reports = () => {
   const [usagePerDepartment, SetUsagePerDepartment] = useState(true);
   const [usagePerUserType, setUsagePerUserType] = useState(true);
 
+  const [validDateRange, SetValidDateRange] = useState(false);
+
   const handleBookSummary = () => {
     SetBookSummary(!bookSummary);
   };
@@ -190,6 +192,13 @@ const Reports = () => {
         bookDeptC,
         gameDeptC,
       } = await response.json();
+
+      if (value != null && value2 != null) {
+        if (value > value2) {
+          SetValidDateRange(false);
+        } else (SetValidDateRange(true));
+      }
+
 
 
 
@@ -338,6 +347,8 @@ const Reports = () => {
   }
 
 
+
+
   // Create Document Component
   const MyDocument = () => (
     <Document>
@@ -422,7 +433,10 @@ const Reports = () => {
   const year = currentDate.getFullYear();
   const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Zero-padding the month
   const day = String(currentDate.getDate()).padStart(2, '0'); // Zero-padding the day
-  const formattedDate = year+month+day;
+  const formattedDate = year + month + day;
+
+
+  const buttonStyle = validDateRange ? styles.activeBtn : styles.inactiveBtn;
 
   return (
     <>
@@ -453,10 +467,12 @@ const Reports = () => {
               radius={"xl"} // END: Set default date to current date
             />
             <Button
-              variant="filled"
-              color="rgb(141, 16, 56)"
-              radius="xl"
+              // variant="filled"
+              // color="rgb(141, 16, 56)"
+              // radius="xl"
               onClick={open}
+              disabled={!validDateRange}
+              className={buttonStyle}
             >
               Generate Report
             </Button>
@@ -521,7 +537,7 @@ const Reports = () => {
                 <PDFDownloadLink document={MyDocument()} fileName={"reports" + formattedDate + ".pdf"} >
                   <button
                     disabled={!bookSummary && !gameSummary}
-                    className={styles.confirmBtn}
+                    className={bookSummary || gameSummary ? styles.activeDownloadBtn : styles.inactiveDownloadBtn}
                   >
                     Download PDF</button>
                 </PDFDownloadLink>
