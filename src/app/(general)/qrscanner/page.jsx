@@ -26,6 +26,8 @@ const QRScanner = () => {
   const current = usePathname();
   const timeZoneOffset = 480;
 
+  const { data: session, status } = useSession();
+
   var newRequestStatus;
   var newBookStatus;
   var confirmLabel;
@@ -34,6 +36,10 @@ const QRScanner = () => {
 
   let receipt_no;
   let next_in_q;
+
+  if (status === "unauthenticated") {
+    return <Unauthenticated />;
+  }
 
   const fetchBook = async (transaction) => {
     const currentDateTime = new Date();
@@ -54,13 +60,13 @@ const QRScanner = () => {
     const bq = data.bq;
     const biu = data.biu;
     console.log(
-      "Book queue ==================================================",
+      "Book queue =================================================="
     );
     console.log(bq);
-    console.log(biu)
+    console.log(biu);
 
     if (
-      bq.length > 0 && 
+      bq.length > 0 &&
       bq[0].id !== transaction.borrowTicket.id &&
       transaction.borrowTicket.status === "Pending Borrow"
     ) {
@@ -78,7 +84,7 @@ const QRScanner = () => {
           ? "Authorize Borrow"
           : "Override Queue";
       borrowDate = new Date(
-        currentDateTime.getTime() + timeZoneOffset * 60000,
+        currentDateTime.getTime() + timeZoneOffset * 60000
       ).toISOString();
       returnDate = null;
       openModal(transaction);
@@ -88,9 +94,9 @@ const QRScanner = () => {
       confirmLabel = "Confirm Return";
       borrowDate = transaction.borrowTicket.borrow_date;
       returnDate = new Date(
-        currentDateTime.getTime() + timeZoneOffset * 60000,
+        currentDateTime.getTime() + timeZoneOffset * 60000
       ).toISOString();
-      next_in_q = (bq != undefined && bq.length >= 1) ? bq[0] : undefined
+      next_in_q = bq != undefined && bq.length >= 1 ? bq[0] : undefined;
       openModal(transaction);
     } else if (biu.find((e) => e.id === transaction.book.id) != undefined) {
       toast.warning("Book is still in use by another person");
@@ -192,44 +198,50 @@ const QRScanner = () => {
     const authorizeRequest = async () => {
       updateRequestStatus();
       updateBookStatus();
-      sendEmail(next_in_q)
+      sendEmail(next_in_q);
     };
 
     const sendEmail = async (next) => {
       if (next == undefined) {
-        return
+        return;
       }
 
-      let email
-      let name
+      let email;
+      let name;
       switch (next.user_type) {
-        case 'Student':
-          email = next.user_student.email
-          name = next.user_student.name
-          break
-        case 'Teacher':
-          email = next.user_faculty.email
-          name = next.user_faculty.name
-          break
-        case 'Staff':
-          email = next.user_staff.email
-          name = next.user_staff.name
-          break
+        case "Student":
+          email = next.user_student.email;
+          name = next.user_student.name;
+          break;
+        case "Teacher":
+          email = next.user_faculty.email;
+          name = next.user_faculty.name;
+          break;
+        case "Staff":
+          email = next.user_staff.email;
+          name = next.user_staff.name;
+          break;
       }
 
-      const book = next.bookRequests.book.title
-      const text = 'Hello ' + name + ', We are glad to inform you that your reservation for ' + book + ' can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is ' + next.id
+      const book = next.bookRequests.book.title;
+      const text =
+        "Hello " +
+        name +
+        ", We are glad to inform you that your reservation for " +
+        book +
+        " can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is " +
+        next.id;
 
-      console.log('SENDING EMAIL TO: ' + email)
+      console.log("SENDING EMAIL TO: " + email);
 
-      const response = await fetch('/api/mail', {
-        method: 'POST',
+      const response = await fetch("/api/mail", {
+        method: "POST",
         body: JSON.stringify({
           to: email,
-          text: text
-        })
-      })
-    }
+          text: text,
+        }),
+      });
+    };
   };
 
   const handleScanSuccess = async (result) => {
@@ -250,14 +262,14 @@ const QRScanner = () => {
   };
 
   const processReceipt = () => {
-    console.log('SCANNING ID ' + receipt_no)
+    console.log("SCANNING ID " + receipt_no);
     let text = {
-      text: '{ "id": ' + receipt_no + ' }'
-    }
-    console.log(JSON.parse(text.text))
+      text: '{ "id": ' + receipt_no + " }",
+    };
+    console.log(JSON.parse(text.text));
 
-    handleScanSuccess(text)
-  }
+    handleScanSuccess(text);
+  };
 
   return (
     <>
@@ -281,7 +293,7 @@ const QRScanner = () => {
           style={{ width: "100px", height: "100px" }}
         />
         <Input
-          placeholder='Receipt Number'
+          placeholder="Receipt Number"
           classNames={styles}
           onChange={(e) => (receipt_no = e.target.value)}
         />
