@@ -47,6 +47,9 @@ export const authOptions = {
         if (!isPasswordValid) {
           return null;
         }
+        if (!user.access) {
+          return null;
+        }
         return {
           id: user.id + "",
           email: user.email,

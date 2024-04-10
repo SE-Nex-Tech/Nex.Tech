@@ -2,7 +2,9 @@
 
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
+
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import {
   TextInput,
   Select,
@@ -98,6 +100,7 @@ const BorrowForm = () => {
 
     if (typeParam) fetchBook();
   }, [id, typeParam]);
+
 
   const downloadQRCode = () => {
     const qrCodeURL = document
@@ -745,7 +748,9 @@ const BorrowForm = () => {
                   <TextInput
                     className={styles.inputField}
                     name="requestType"
+
                     value={typeParam === "game" ? "Game" : "Book"}
+
                     readOnly={true}
                   />
                 </div>
@@ -862,7 +867,9 @@ const BorrowForm = () => {
                   Submit Form{" "}
                 </button>
                 <Link
+
                   href={`/books/${item.id}`}
+
                   className={styles.backBtnContainer}
                 >
                   <button className={styles.backBtn}> Go Back </button>
@@ -941,17 +948,28 @@ const BorrowForm = () => {
                       book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
-                      <button
+
+                      <Button
+                        variant="filled"
+                        color="rgb(141, 16, 56)"
+                        radius="xl"
+                        h={"40px"}
                         className={styles.downloadBtn}
                         onClick={downloadQRCode}
                       >
-                        {" "}
-                        Download{" "}
-                      </button>
-                      <button className={styles.backBtn} onClick={close}>
-                        {" "}
-                        Go Back{" "}
-                      </button>
+                        Download
+                      </Button>
+                      <Button
+                        variant="outline"
+                        color="rgb(141, 16, 56)"
+                        radius="xl"
+                        h={"40px"}
+                        component={Link}
+                        href="/books"
+                      >
+                        Go Back
+                      </Button>
+
                     </div>
                   </div>
                 </Modal>

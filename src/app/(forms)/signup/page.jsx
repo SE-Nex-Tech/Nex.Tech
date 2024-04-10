@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import styles from "./signup.module.scss";
-import { Input, Button, PasswordInput } from "@mantine/core";
+import { Input, Button, PasswordInput, InputWrapper } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 import Image from "next/image";
 import logo from "@/images/logo.png";
@@ -37,40 +37,45 @@ const Signup = () => {
   //     }
   //   };
 
-  const router = useRouter()
+  const router = useRouter();
 
-  const email = useRef('')
-  const password = useRef('')
-  const fname = useRef('')
-  const lname = useRef('')
-  const num = useRef('')
+  const email = useRef("");
+  const [emailValue, setEmailValue] = useState("");
+  const password = useRef("");
+  const [passwordValue, setPasswordValue] = useState("");
+  const fname = useRef("");
+  const [fnameValue, setFnameValue] = useState("");
+  const lname = useRef("");
+  const [lnameValue, setLnameValue] = useState("");
+  const num = useRef("");
+  const [numValue, setNumValue] = useState("");
 
   const onSubmit = async () => {
-    const response = await fetch('/api/signup', {
-      method: 'POST',
+    const response = await fetch("/api/signup", {
+      method: "POST",
       body: JSON.stringify({
         email: email.current,
         password: password.current,
         fname: fname.current,
         lname: lname.current,
-        num: num.current
-      })
-    })
+        num: num.current,
+      }),
+    });
 
-    const result = await response.json()
+    const result = await response.json();
 
     if (result.invalid == undefined) {
-      router.push('/login')
+      router.push("/login");
     } else {
-      toast.warning('Invalid email')
+      toast.warning("Invalid email");
     }
-  }
+  };
 
   const handleKeyDown = (e) => {
     if (e.keycode === 13) {
       onSubmit();
     }
-  }
+  };
 
   return (
     <div className={styles.parent}>
@@ -85,27 +90,80 @@ const Signup = () => {
         <div className={styles.left}>
           <div className={styles.leftUpper}>
             <div className={styles.name}>
-              <Input placeholder="First Name" classNames={styles} onChange={(e) => (fname.current = e.target.value)} onKeyDown={handleKeyDown} />
-              <Input placeholder="Last Name" classNames={styles} onChange={(e) => (lname.current = e.target.value)} onKeyDown={handleKeyDown}/>
+              <Input.Wrapper label={<strong>First Name</strong>}>
+                <Input
+                  placeholder="Juan"
+                  label="First Name"
+                  classNames={styles}
+                  onChange={(e) => {
+                    fname.current = e.target.value;
+                    setFnameValue(e.target.value);
+                  }}
+                  onKeyDown={handleKeyDown}
+                />
+              </Input.Wrapper>
+              <Input.Wrapper label={<strong>Last Name</strong>}>
+                <Input
+                  placeholder="De la Cruz"
+                  classNames={styles}
+                  onChange={(e) => {
+                    lname.current = e.target.value;
+                    setLnameValue(e.target.value);
+                  }}
+                  onKeyDown={handleKeyDown}
+                />
+              </Input.Wrapper>
             </div>
-            <Input placeholder="Email" classNames={styles} onChange={(e) => (email.current = e.target.value)} onKeyDown={handleKeyDown}/>
-            <Input
-              placeholder="Employee / Student Number"
-              classNames={styles}
-              onChange={(e) => (num.current = e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <PasswordInput
-              placeholder="Password"
-              withAsterisk
-              classNames={styles}
-              onChange={(e) => (password.current = e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
+            <Input.Wrapper label={<strong>Email</strong>}>
+              <Input
+                placeholder="juan.delacruz.cics@ust.edu.ph"
+                classNames={styles}
+                onChange={(e) => {
+                  email.current = e.target.value;
+                  setEmailValue(e.target.value);
+                }}
+                onKeyDown={handleKeyDown}
+              />
+            </Input.Wrapper>
+            <Input.Wrapper label={<strong>Employee / Student Number</strong>}>
+              <Input
+                placeholder="2021157407"
+                classNames={styles}
+                onChange={(e) => {
+                  num.current = e.target.value;
+                  setNumValue(e.target.value);
+                }}
+                onKeyDown={handleKeyDown}
+              />
+            </Input.Wrapper>
+            <Input.Wrapper label={<strong>Password</strong>}>
+              <PasswordInput
+                placeholder="At least 6 characters"
+                withAsterisk
+                classNames={styles}
+                onChange={(e) => {
+                  password.current = e.target.value;
+                  setPasswordValue(e.target.value);
+                }}
+                onKeyDown={handleKeyDown}
+              />
+            </Input.Wrapper>
           </div>
           <div className={styles.leftLower}>
-            {/* must remove link and replace it with onClick function */}
-            <Button classNames={{ root: styles.btn }} onClick={onSubmit}>
+            <Button
+              classNames={{ root: styles.btn }}
+              radius={"xl"}
+              w={"400px"}
+              color="rgb(141, 16, 56)"
+              onClick={onSubmit}
+              disabled={
+                !emailValue ||
+                !passwordValue ||
+                !fnameValue ||
+                !lnameValue ||
+                !numValue
+              }
+            >
               Create an account
             </Button>
           </div>
