@@ -233,11 +233,9 @@ const Reports = () => {
       if (value != null && value2 != null) {
         if (value > value2) {
           SetValidDateRange(false);
-          setBookPieChartData([]);
-          setGamePieChartData([]);
         } else (SetValidDateRange(true));
       }
-      
+
       console.log(bookUserTypeC);
       console.log(bookYearLevelC);
       console.log(bookDeptC);
