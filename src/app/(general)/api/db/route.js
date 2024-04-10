@@ -33,7 +33,8 @@ export async function POST(request) {
 
       result = await entity.findMany({
         where: {
-          OR: ors
+          OR: ors,
+          archive: false,
         }
       })
 
@@ -51,7 +52,8 @@ export async function POST(request) {
 
       result = await entity.findMany({
         where: {
-          OR: ors
+          OR: ors,
+          archive: false,
         }
       })
 
@@ -123,8 +125,9 @@ export async function POST(request) {
 
     let conditions = params['where']
 
-    result = await entity.deleteMany({
-      where: conditions
+    result = await entity.updateMany({
+      where: conditions,
+      data: { archive: true }
     })
   }
 
