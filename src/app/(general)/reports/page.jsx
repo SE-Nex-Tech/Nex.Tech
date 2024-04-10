@@ -268,7 +268,10 @@ const Reports = () => {
       }
     };
 
-    getData();
+    if (value != null && value2 != null) {
+      getData();
+    }
+
   }, [value, value2]);
 
   const { data: session, status } = useSession();
@@ -354,7 +357,10 @@ const Reports = () => {
     <Document>
       <Page size="LETTER" style={stylesPDF.page}>
         <View fixed style={stylesPDF.header}>
-          <Image src={"https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Seal_of_the_University_of_Santo_Tomas.svg/1200px-Seal_of_the_University_of_Santo_Tomas.svg.png"} style={{ width: 50, height: 50, }} />
+          {/* <Image 
+          src={"https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Seal_of_the_University_of_Santo_Tomas.svg/1200px-Seal_of_the_University_of_Santo_Tomas.svg.png"} 
+          style={{ width: 50, height: 50, }} 
+          /> */}
           <Text >University of Santo Tomas</Text>
           <Text>College of Information and Computing Sciences</Text>
         </View>
