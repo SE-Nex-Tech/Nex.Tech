@@ -151,15 +151,23 @@ const Reports = () => {
   const [bookPieChartData, setBookPieChartData] = useState([]);
   const [gamePieChartData, setGamePieChartData] = useState([]);
 
+
+  const [bookPieChartCount, setBookPieChartCount] = useState(0);
+  const [gamePieChartCount, setGamePieChartCount] = useState(0);
+
+
   const handleBookPieChart = (event) => {
     const selectedValue = event.target.value;
     setSelectedBookPieChart(selectedValue);
     if (selectedValue === "User Type") {
       setBookPieChartData(bookUserTypePie);
+      setBookPieChartCount(bookReqCount);
     } else if (selectedValue === "Year Level") {
       setBookPieChartData(bookYearLevelPie);
+      setBookPieChartCount(studentBookReqs);
     } else if (selectedValue === "Department") {
       setBookPieChartData(bookDepartmentPie);
+      setBookPieChartCount(studentBookReqs);
     }
   };
 
@@ -168,10 +176,13 @@ const Reports = () => {
     setSelectedGamePieChart(selectedValue);
     if (selectedValue === "User Type") {
       setGamePieChartData(gameUserTypePie);
+      setGamePieChartCount(gameReqCount);
     } else if (selectedValue === "Year Level") {
       setGamePieChartData(gameYearLevelPie);
+      setGamePieChartCount(studentGameReqs);
     } else if (selectedValue === "Department") {
       setGamePieChartData(gameDepartmentPie);
+      setGamePieChartCount(studentGameReqs);
     }
   };
 
@@ -244,27 +255,10 @@ const Reports = () => {
       setBookYearLevelPie(bookPie2);
       setBookDepartmentPie(bookPie3);
 
-      if (selectedBookPieChart === "User Type") {
-        setBookPieChartData(bookPie1);
-      } else if (selectedBookPieChart === "Year Level") {
-        setBookPieChartData(bookPie2);
-      } else if (selectedBookPieChart === "Department") {
-        setBookPieChartData(bookPie3);
-      }
 
       setGameUserTypePie(gamePie1);
       setGameYearLevelPie(gamePie2);
       setGameDepartmentPie(gamePie3);
-
-      if (selectedGamePieChart === "User Type") {
-        setGamePieChartData(gamePie1);
-      } else if (selectedBookPieChart === "Year Level") {
-        setGamePieChartData(gamePie2);
-      } else if (selectedBookPieChart === "Department") {
-        setGamePieChartData(gamePie3);
-      }
-
-
 
 
       setBookUserTypeC(bookUserTypeC);
@@ -299,6 +293,30 @@ const Reports = () => {
 
       setUsers(users);
 
+      if (selectedBookPieChart === "User Type") {
+        setBookPieChartData(bookPie1);
+        setBookPieChartCount(Object.keys(bookReqs).length);
+      } else if (selectedBookPieChart === "Year Level") {
+        setBookPieChartData(bookPie2);
+        setBookPieChartCount(getTotalCount("Book"));
+      } else if (selectedBookPieChart === "Department") {
+        setBookPieChartData(bookPie3);
+        setBookPieChartCount(getTotalCount("Book"));
+      }
+
+      if (selectedGamePieChart === "User Type") {
+        setGamePieChartData(gamePie1);
+        setGamePieChartCount(Object.keys(gameReqs).length);
+      } else if (selectedBookPieChart === "Year Level") {
+        setGamePieChartData(gamePie2);
+        setGamePieChartCount(getTotalCount("Boardgame"));
+      } else if (selectedBookPieChart === "Department") {
+        setGamePieChartData(gamePie3);
+        setGamePieChartCount(getTotalCount("Boardgame"));
+      }
+
+
+
       if (invalid_dates != undefined && inval != undefined) {
         toast.warning("Invalid date range");
         toast.warning("Fetching records starting from 4 weeks ago");
@@ -310,8 +328,6 @@ const Reports = () => {
 
     if (value != null && value2 != null) {
       getData();
-
-
     }
 
   }, [value, value2]);
@@ -643,7 +659,7 @@ const Reports = () => {
                   value={selectedBookPieChart}
                 />
               </div>
-              <PieChart data={bookPieChartData} />
+              <PieChart data={bookPieChartData} count={bookPieChartCount} />
             </div>
             <div className={styles.chart2}>
               <div className={styles.header}>
@@ -655,7 +671,7 @@ const Reports = () => {
                   value={selectedGamePieChart}
                 />
               </div>
-              <PieChart data={gamePieChartData} />
+              <PieChart data={gamePieChartData} count={gamePieChartCount} />
             </div>
           </div>
 
