@@ -109,8 +109,6 @@ const Reports = () => {
   const [gameRCounts, setGameRCounts] = useState([]);
   const [users, setUsers] = useState({});
   const [inval, setInval] = useState();
-  const [bookPie, setBookPie] = useState([]);
-  const [gamePie, setGamePie] = useState([]);
 
   const [bookUserTypeC, setBookUserTypeC] = useState([]);
   const [gameUserTypeC, setGameUserTypeC] = useState([]);
@@ -139,6 +137,44 @@ const Reports = () => {
 
   const [validDateRange, SetValidDateRange] = useState(false);
 
+  const [bookUserTypePie, setBookUserTypePie] = useState([]);
+  const [bookYearLevelPie, setBookYearLevelPie] = useState([]);
+  const [bookDepartmentPie, setBookDepartmentPie] = useState([]);
+
+  const [gameUserTypePie, setGameUserTypePie] = useState([]);
+  const [gameYearLevelPie, setGameYearLevelPie] = useState([]);
+  const [gameDepartmentPie, setGameDepartmentPie] = useState([]);
+
+  const [selectedBookPieChart, setSelectedBookPieChart] = useState("User Type");
+  const [selectedGamePieChart, setSelectedGamePieChart] = useState("User Type");
+
+  const [bookPieChartData, setBookPieChartData] = useState([]);
+  const [gamePieChartData, setGamePieChartData] = useState([]);
+
+  const handleBookPieChart = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedBookPieChart(selectedValue);
+    if (selectedValue === "User Type") {
+      setBookPieChartData(bookUserTypePie);
+    } else if (selectedValue === "Year Level") {
+      setBookPieChartData(bookYearLevelPie);
+    } else if (selectedValue === "Department") {
+      setBookPieChartData(bookDepartmentPie);
+    }
+  };
+
+  const handleGamePieChart = (event) => {
+    const selectedValue = event.target.value;
+    setSelectedGamePieChart(selectedValue);
+    if (selectedValue === "User Type") {
+      setGamePieChartData(gameUserTypePie);
+    } else if (selectedValue === "Year Level") {
+      setGamePieChartData(gameYearLevelPie);
+    } else if (selectedValue === "Department") {
+      setGamePieChartData(gameDepartmentPie);
+    }
+  };
+
   const handleBookSummary = () => {
     SetBookSummary(!bookSummary);
   };
@@ -161,9 +197,6 @@ const Reports = () => {
 
 
 
-
-
-
   useEffect(() => {
     const getData = async () => {
       const response = await fetch("/api/reports", {
@@ -182,8 +215,6 @@ const Reports = () => {
         book_requests_count,
         game_requests_count,
         users,
-        bookRC,
-        gameRC,
         bookUserTypeC,
         gameUserTypeC,
         studentReqs,
@@ -191,12 +222,48 @@ const Reports = () => {
         gameYearLevelC,
         bookDeptC,
         gameDeptC,
+        bookPie1,
+        bookPie2,
+        bookPie3,
+        gamePie1,
+        gamePie2,
+        gamePie3,
       } = await response.json();
 
       if (value != null && value2 != null) {
         if (value > value2) {
           SetValidDateRange(false);
+          setBookPieChartData([]);
+          setGamePieChartData([]);
         } else (SetValidDateRange(true));
+      }
+      
+      console.log(bookUserTypeC);
+      console.log(bookYearLevelC);
+      console.log(bookDeptC);
+
+      setBookUserTypePie(bookPie1);
+      setBookYearLevelPie(bookPie2);
+      setBookDepartmentPie(bookPie3);
+
+      if (selectedBookPieChart === "User Type") {
+        setBookPieChartData(bookPie1);
+      } else if (selectedBookPieChart === "Year Level") {
+        setBookPieChartData(bookPie2);
+      } else if (selectedBookPieChart === "Department") {
+        setBookPieChartData(bookPie3);
+      }
+
+      setGameUserTypePie(gamePie1);
+      setGameYearLevelPie(gamePie2);
+      setGameDepartmentPie(gamePie3);
+
+      if (selectedGamePieChart === "User Type") {
+        setGamePieChartData(gamePie1);
+      } else if (selectedBookPieChart === "Year Level") {
+        setGamePieChartData(gamePie2);
+      } else if (selectedBookPieChart === "Department") {
+        setGamePieChartData(gamePie3);
       }
 
 
@@ -205,12 +272,7 @@ const Reports = () => {
       setBookUserTypeC(bookUserTypeC);
       setGameUserTypeC(gameUserTypeC);
 
-
-      // console.log(bookUserTypeC);
-      // console.log(gameUserTypeC);
-
       setStudentReqs(studentReqs);
-      console.log(studentReqs);
 
       const getTotalCount = (type) => {
         const r = studentReqs.filter(obj => obj.type === type);
@@ -223,20 +285,10 @@ const Reports = () => {
       setBookYearLevelC(bookYearLevelC);
       setGameYearLevelC(gameYearLevelC);
 
-      console.log(bookYearLevelC);
-      console.log(gameYearLevelC);
-
       SetBookDeptC(bookDeptC);
       SetGameDeptC(gameDeptC);
 
-      console.log(bookDeptC);
-      console.log(gameDeptC);
-
       setBorrows(result);
-
-      // console.log(Object.keys(borrows).length); //total reqs
-
-
 
       setBookR(bookReqs);
       setGameR(gameReqs);
@@ -244,21 +296,10 @@ const Reports = () => {
       SetBookReqCount(Object.keys(bookReqs).length);
       SetGameReqCount(Object.keys(gameReqs).length)
 
-      // console.log(bookReqCount); //total book reqs
-      // console.log(gameReqCount); //total game reqs
-
       setBookRCounts(book_requests_count);
       setGameRCounts(game_requests_count);
 
       setUsers(users);
-      setBookPie(bookRC);
-      setGamePie(gameRC);
-
-
-      console.log(bookRC);
-      console.log(gameRC);
-
-      console.log(game_requests_count);
 
       if (invalid_dates != undefined && inval != undefined) {
         toast.warning("Invalid date range");
@@ -268,8 +309,11 @@ const Reports = () => {
       }
     };
 
+
     if (value != null && value2 != null) {
       getData();
+
+
     }
 
   }, [value, value2]);
@@ -555,35 +599,37 @@ const Reports = () => {
 
 
 
-          <h3>Request Summary</h3>
-          <div className={styles.summary}>
-            <Table
-              striped
-              highlightOnHover
-              withTableBorder
-              className={styles.table}
-            >
-              <Table.Thead>
-                <Table.Tr>
-                  <Table.Th>Date</Table.Th>
-                  <Table.Th>Code</Table.Th>
-                  <Table.Th>User Type</Table.Th>
-                  <Table.Th>Name</Table.Th>
-                  <Table.Th>Type</Table.Th>
-                </Table.Tr>
-              </Table.Thead>
-              <Table.Tbody className={styles.table_body}>
-                {borrows.map((r) => (
+          <div className={styles.summary_container}>
+            <h3>Request Summary</h3>
+            <div className={styles.summary}>
+              <Table
+                striped
+                highlightOnHover
+                withTableBorder
+                className={styles.table}
+              >
+                <Table.Thead>
                   <Table.Tr>
-                    <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
-                    <Table.Th>{r.id}</Table.Th>
-                    <Table.Th>{r.user_type}</Table.Th>
-                    <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
-                    <Table.Th>{r.type}</Table.Th>
+                    <Table.Th>Date</Table.Th>
+                    <Table.Th>Code</Table.Th>
+                    <Table.Th>User Type</Table.Th>
+                    <Table.Th>Name</Table.Th>
+                    <Table.Th>Type</Table.Th>
                   </Table.Tr>
-                ))}
-              </Table.Tbody>
-            </Table>
+                </Table.Thead>
+                <Table.Tbody className={styles.table_body}>
+                  {borrows.map((r) => (
+                    <Table.Tr>
+                      <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
+                      <Table.Th>{r.id}</Table.Th>
+                      <Table.Th>{r.user_type}</Table.Th>
+                      <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
+                      <Table.Th>{r.type}</Table.Th>
+                    </Table.Tr>
+                  ))}
+                </Table.Tbody>
+              </Table>
+            </div>
           </div>
         </div>
 
@@ -595,9 +641,11 @@ const Reports = () => {
                 <NativeSelect
                   radius="xl"
                   data={["User Type", "Year Level", "Department"]}
+                  onChange={handleBookPieChart}
+                  value={selectedBookPieChart}
                 />
               </div>
-              <PieChart data={bookPie} />
+              <PieChart data={bookPieChartData} />
             </div>
             <div className={styles.chart2}>
               <div className={styles.header}>
@@ -605,12 +653,15 @@ const Reports = () => {
                 <NativeSelect
                   radius="xl"
                   data={["User Type", "Year Level", "Department"]}
+                  onChange={handleGamePieChart}
+                  value={selectedGamePieChart}
                 />
               </div>
-              <PieChart data={gamePie} />
+              <PieChart data={gamePieChartData} />
             </div>
           </div>
-          <div className={styles.statistics}>
+
+          <div className={styles.summary_container}>
             <h3>Usage Statistics</h3>
             <div className={styles.summary}>
               <Table

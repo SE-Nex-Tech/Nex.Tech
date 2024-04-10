@@ -74,33 +74,7 @@ const bookStatistics = async (ls, prisma) => {
   return book_requests_count;
 };
 
-const mapStatToBook = async (ls, prisma) => {
-  let stats = await bookStatistics(ls, prisma);
-  const books = await prisma.books.findMany({
-    where: {
-      id: { in: stats.map((r) => r.book_id) },
-    },
-  });
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
-    name: books.find((e) => e.id === r.book_id).title,
-    value: r._count.book_id,
-    color: randomHEX(),
-  }));
-
-  return data;
-};
 
 const gameStatistics = async (ls, prisma) => {
   const game_requests_count = await prisma.BoardgameRequest.groupBy({
@@ -121,33 +95,7 @@ const gameStatistics = async (ls, prisma) => {
   return game_requests_count;
 };
 
-const mapStatToGame = async (ls, prisma) => {
-  let stats = await gameStatistics(ls, prisma);
-  const books = await prisma.boardgames.findMany({
-    where: {
-      id: { in: stats.map((r) => r.boardgame_id) },
-    },
-  });
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
-    name: books.find((e) => e.id === r.boardgame_id).title,
-    value: r._count.boardgame_id,
-    color: randomHEX(),
-  }));
-
-  return data;
-};
 
 const fetchUsers = async (ls, prisma) => {
   const students = await prisma.Student.findMany({
@@ -344,6 +292,145 @@ const countGameDept = async (ls, prisma) => {
   return gameDeptC;
 };
 
+
+const mapStatToBook1 = async (ls, prisma) => {
+  const stats = await countBookUserType(ls, prisma);
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: r.user_type,
+    value: r._count.user_type,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
+const mapStatToBook2 = async (ls, prisma) => {
+  const stats = await countBookYearLevel(ls, prisma);
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: r.year_level,
+    value: r._count.year_level,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
+const mapStatToBook3 = async (ls, prisma) => {
+  const stats = await countBookDept(ls, prisma);
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: r.department,
+    value: r._count.department,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
+const mapStatToGame1 = async (ls, prisma) => {
+  let stats = await countGameUserType(ls, prisma);
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: r.user_type,
+    value: r._count.user_type,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
+const mapStatToGame2 = async (ls, prisma) => {
+  let stats = await countGameYearLevel(ls, prisma);
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: r.year_level,
+    value: r._count.year_level,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
+const mapStatToGame3 = async (ls, prisma) => {
+  let stats = await countGameDept(ls, prisma);
+
+  const randomHEX = () => {
+    const alph = "ABCDEF0123456789";
+    let hex = "#";
+    for (let i = 0; i < 6; i++) {
+      let random = Math.floor(Math.random() * alph.length);
+      hex += alph[random];
+    }
+
+    return hex;
+  };
+
+  const data = stats.map((r) => ({
+    name: r.department,
+    value: r._count.department,
+    color: randomHEX(),
+  }));
+
+  return data;
+};
+
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
@@ -385,9 +472,6 @@ export async function POST(request) {
 
     const users = await fetchUsers(requestIDs, prisma);
 
-    const bookRC = await mapStatToBook(requestIDs, prisma);
-    const gameRC = await mapStatToGame(requestIDs, prisma);
-
     const bookUserTypeC = await countBookUserType(requestIDs, prisma);
     const gameUserTypeC = await countGameUserType(requestIDs, prisma);
 
@@ -398,6 +482,15 @@ export async function POST(request) {
 
     const bookDeptC = await countBookDept(requestIDs, prisma);
     const gameDeptC = await countGameDept(requestIDs, prisma);
+
+    const bookPie1 = await mapStatToBook1(requestIDs, prisma);
+    const bookPie2 = await mapStatToBook2(requestIDs, prisma);
+    const bookPie3 = await mapStatToBook3(requestIDs, prisma);
+
+    const gamePie1 = await mapStatToGame1(requestIDs, prisma);
+    const gamePie2 = await mapStatToGame2(requestIDs, prisma);
+    const gamePie3 = await mapStatToGame3(requestIDs, prisma);
+
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -406,8 +499,6 @@ export async function POST(request) {
       book_requests_count,
       game_requests_count,
       users,
-      bookRC,
-      gameRC,
       bookUserTypeC,
       gameUserTypeC,
       studentReqs,
@@ -415,6 +506,12 @@ export async function POST(request) {
       gameYearLevelC,
       bookDeptC,
       gameDeptC,
+      bookPie1,
+      bookPie2,
+      bookPie3,
+      gamePie1,
+      gamePie2,
+      gamePie3,
     });
   }
 
@@ -428,8 +525,6 @@ export async function POST(request) {
 
   const users = await fetchUsers(requestIDs, prisma);
 
-  const bookRC = await mapStatToBook(requestIDs, prisma);
-  const gameRC = await mapStatToGame(requestIDs, prisma);
 
   const bookUserTypeC = await countBookUserType(requestIDs, prisma);
   const gameUserTypeC = await countGameUserType(requestIDs, prisma);
@@ -441,6 +536,15 @@ export async function POST(request) {
 
   const bookDeptC = await countBookDept(requestIDs, prisma);
   const gameDeptC = await countGameDept(requestIDs, prisma);
+
+  const bookPie1 = await mapStatToBook1(requestIDs, prisma);
+  const bookPie2 = await mapStatToBook2(requestIDs, prisma);
+  const bookPie3 = await mapStatToBook3(requestIDs, prisma);
+  
+  const gamePie1 = await mapStatToGame1(requestIDs, prisma);
+  const gamePie2 = await mapStatToGame2(requestIDs, prisma);
+  const gamePie3 = await mapStatToGame3(requestIDs, prisma);
+
   prisma.$disconnect();
 
   return NextResponse.json({
@@ -450,8 +554,6 @@ export async function POST(request) {
     book_requests_count,
     game_requests_count,
     users,
-    bookRC,
-    gameRC,
     bookUserTypeC,
     gameUserTypeC,
     studentReqs,
@@ -459,5 +561,11 @@ export async function POST(request) {
     gameYearLevelC,
     bookDeptC,
     gameDeptC,
+    bookPie1,
+    bookPie2,
+    bookPie3,
+    gamePie1,
+    gamePie2,
+    gamePie3,
   });
 }
