@@ -104,7 +104,7 @@ const BookPage = () => {
                   <p>{book.status}</p>
                 </div>
               </div>
-              <Link href={`/borrowform/${book.id}`}>
+              <Link href={`/borrowform/${book.id}?type=book`}>
                 <button className={styles.btn}>Borrow</button>
               </Link>
             </div>

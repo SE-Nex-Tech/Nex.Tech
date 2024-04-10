@@ -2,7 +2,9 @@
 
 import Header from "@/_components/header/Header";
 import styles from "./borrowform.module.scss";
-import { usePathname, useRouter } from "next/navigation";
+
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+
 import {
   TextInput,
   Select,
@@ -20,7 +22,6 @@ import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import { useParams } from "next/navigation";
 import { format, setSeconds } from "date-fns";
 import Link from "next/link";
-
 const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
@@ -29,7 +30,10 @@ const BorrowForm = () => {
   const timeZoneOffset = 480;
 
   const { id } = useParams();
-  const [book, setBook] = useState([]);
+  const searchParams = useSearchParams();
+  const typeParam = searchParams.get("type");
+
+  const [item, setItem] = useState([]);
   const [loading, setLoading] = useState(true);
   var copyright_date = "";
 
@@ -79,23 +83,24 @@ const BorrowForm = () => {
         const response = await fetch("/api/db", {
           method: "POST",
           body: JSON.stringify({
-            entity: "books",
+            entity: typeParam === "book" ? "books" : "games",
             where: {
               id: parseInt(id),
             },
           }),
         });
 
-        const selectedBook = await response.json();
-        setBook(selectedBook[0]);
+        const selectedItem = await response.json();
+        setItem(selectedItem[0]);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching book:", error);
       }
     };
 
-    fetchBook();
-  }, [id]);
+    if (typeParam) fetchBook();
+  }, [id, typeParam]);
+
 
   const downloadQRCode = () => {
     const qrCodeURL = document
@@ -110,12 +115,12 @@ const BorrowForm = () => {
     document.body.removeChild(qr);
   };
 
-  if (!book) {
-    return <div>Book not found</div>;
+  if (!item) {
+    return <div>Item not found</div>;
   }
 
-  if (book.copyright_date) {
-    copyright_date = format(Date.parse(book.copyright_date), "MM/dd/yyyy");
+  if (item.copyright_date) {
+    copyright_date = format(Date.parse(item.copyright_date), "MM/dd/yyyy");
   }
 
   const requestCode = useRef("201314214");
@@ -134,12 +139,12 @@ const BorrowForm = () => {
   const section = useRef("");
   const status = useRef("Pending");
 
-  var bookId;
+  var itemId;
   var callNum;
 
-  if (book) {
-    bookId = book.id;
-    callNum = book.call_num;
+  if (item) {
+    itemId = item.id;
+    callNum = item.call_num;
   }
 
   const [studentNumberError, setStudentNumberError] = useState(false);
@@ -743,7 +748,9 @@ const BorrowForm = () => {
                   <TextInput
                     className={styles.inputField}
                     name="requestType"
-                    value="Book"
+
+                    value={typeParam === "game" ? "Game" : "Book"}
+
                     readOnly={true}
                   />
                 </div>
@@ -812,37 +819,37 @@ const BorrowForm = () => {
 
                   <div className={styles.info}>
                     <h4>Title:</h4>
-                    <h4 className={styles.infoTitle}>{book.title}</h4>
+                    <h4 className={styles.infoTitle}>{item.title}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Author:</h4>
-                    <h4>{book.author}</h4>
+                    <h4>{item.author}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Call No.:</h4>
-                    <h4>{book.call_num}</h4>
+                    <h4>{item.call_num}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Accession No.:</h4>
-                    <h4>{book.accession_num}</h4>
+                    <h4>{item.accession_num}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Edition:</h4>
-                    <h4>{book.edition}</h4>
+                    <h4>{item.edition}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Publisher:</h4>
-                    <h4>{book.publisher}</h4>
+                    <h4>{item.publisher}</h4>
                   </div>
 
                   <div className={styles.info}>
                     <h4>Publication Place:</h4>
-                    <h4>{book.publication_place}</h4>
+                    <h4>{item.publication_place}</h4>
                   </div>
 
                   <div className={styles.info}>
@@ -860,7 +867,9 @@ const BorrowForm = () => {
                   Submit Form{" "}
                 </button>
                 <Link
-                  href={`/books/${book.id}`}
+
+                  href={`/books/${item.id}`}
+
                   className={styles.backBtnContainer}
                 >
                   <button className={styles.backBtn}> Go Back </button>
@@ -939,6 +948,7 @@ const BorrowForm = () => {
                       book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
+
                       <Button
                         variant="filled"
                         color="rgb(141, 16, 56)"
@@ -959,6 +969,7 @@ const BorrowForm = () => {
                       >
                         Go Back
                       </Button>
+
                     </div>
                   </div>
                 </Modal>
