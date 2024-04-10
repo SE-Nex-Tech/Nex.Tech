@@ -2,15 +2,16 @@ import { fetchData } from "next-auth/client/_utils";
 import React, { useState, useEffect } from "react";
 import Pagination from "../pagination/pagination";
 import styles from "./books.module.scss";
-import { Skeleton, Loader } from "@mantine/core";
+import { Skeleton, Loader, Input, rem } from "@mantine/core";
 import Link from "next/link";
+import { IconSearch } from "@tabler/icons-react";
 
 const Books = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const booksPerPage = 12;
+  const [booksPerPage, setBooksPerPage] = useState(10);
   const totalBooks = 1000;
 
   useEffect(() => {
@@ -22,6 +23,23 @@ const Books = () => {
     };
 
     fetchBooks();
+  }, []);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 768) {
+        setBooksPerPage(5); // Set booksPerPage to 5 for Mobile
+      } else if (window.innerWidth <= 1024) {
+        setBooksPerPage(8); // Set booksPerPage to 8 for Tablet
+      } else {
+        setBooksPerPage(10); // Set booksPerPage to 10 for Desktop
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   if (loading) {
@@ -43,6 +61,13 @@ const Books = () => {
 
   return (
     <div className={styles.parent_container}>
+      <Input
+        placeholder="Search"
+        leftSection={<IconSearch size={16} />}
+        radius="xl"
+        w="100%"
+        onChange={(event) => searchItems(event.currentTarget.value)}
+      />
       <div className={styles.book_container}>
         {currentBooks.map((book, index) => (
           <Link href={`/books/${book.id}`} className={styles.container}>

@@ -27,10 +27,21 @@ const Login = () => {
       callbackUrl: "/",
     });
 
+    const type = await (await fetch('/api/login', {
+      method: 'POST',
+      body: JSON.stringify({
+        email: email.current,
+      })
+    })).json()
+
     if (result.ok) {
       toast.success("Logged in successfully, please wait", { autoClose: 2000 });
       setTimeout(() => {
-        router.push("/dashboard");
+        if (type.type == 'admin') {
+          router.push('/dashboard')
+        } else if (type.type == 'superadmin') {
+          router.push('/admin')
+        }
       }, 2000);
     } else {
       toast.error("Incorrect Credentials!");
@@ -94,8 +105,7 @@ const Login = () => {
             </Link>
           </div>
           <h2 className={styles.forgot}>
-            <Link href="/verify" className={styles.forgot}>
-              {" "}
+            <Link href="/reset" className={styles.forgot}>
               Forgot Password?
             </Link>
           </h2>

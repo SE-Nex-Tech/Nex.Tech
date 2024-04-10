@@ -37,6 +37,43 @@ const Reset = () => {
   //     }
   //   };
 
+  let email = ''
+  let newpass = ''
+  let confirmnew = ''
+
+  const fetchData = async (obj) => {
+    const response = await fetch('/api/reset/request', {
+      method: 'POST',
+      body: JSON.stringify(obj)
+    })
+    const data = await response.json()
+    return data
+  }
+
+  const reset_pass = async () => {
+    let flag = false
+    if (newpass !== confirmnew) {
+      toast.warning('New password confirmation does not match')
+      flag = true
+    }
+    if (flag) {
+      return
+    }
+
+    const fetch = await fetchData({
+      email,
+      newpass,
+      confirmnew
+    })
+
+    if (fetch.invalid != undefined) {
+      toast.error(fetch.msg)
+      return
+    }
+
+    toast.success('Password change requested')
+  }
+
   return (
     <div className={styles.parent}>
       <div className={styles.container}>
@@ -49,24 +86,24 @@ const Reset = () => {
         />
         <div className={styles.left}>
           <div className={styles.leftUpper}>
+            <Input placeholder="Email" classNames={styles} required="true" onChange={(e) => (email = e.target.value)}/>
             <PasswordInput
-              placeholder="Password"
+              placeholder="New Password"
               withAsterisk
               classNames={styles}
+              onChange={(e) => (newpass = e.target.value)}
             />
             <PasswordInput
-              placeholder="Confirm Password"
+              placeholder="Confirm New Password"
               withAsterisk
               classNames={styles}
+              onChange={(e) => (confirmnew = e.target.value)}
             />
           </div>
           <div className={styles.leftLower}>
-            {/* must remove link and replace it with onClick function */}
-            <Link href="/login">
-              <Button classNames={{ root: styles.btn }}>
-                Reset your password
-              </Button>
-            </Link>
+            <Button classNames={{ root: styles.btn }} onClick={reset_pass}>
+              Reset your password
+            </Button>
           </div>
         </div>
         <div className={styles.right}>

@@ -2,19 +2,24 @@ import React, { useState, useEffect, useRef } from "react";
 import { Button, Group, Stack, Input } from "@mantine/core";
 
 const AddForm = ({ selectedRows, closeModal }) => {
-
-  const title = useRef('')
-  const author = useRef('')
-  const callnum = useRef('')
-  const accnum = useRef(0)
-  const edition = useRef('')
-  const pubplace = useRef('')
-  const publisher = useRef('')
+  const barcode = useRef("");
+  const [barcodeValue, setBarcodeValue] = useState("");
+  const title = useRef("");
+  const [titleValue, setTitleValue] = useState("");
+  const author = useRef("");
+  const callnum = useRef("");
+  const [callNumValue, setCallNumValue] = useState("");
+  const accnum = useRef(0);
+  const [accNum, setAccNum] = useState("");
+  const edition = useRef("");
+  const [editionValue, setEditionValue] = useState("");
+  const pubplace = useRef("");
+  const publisher = useRef("");
 
   const create = async () => {
     // TODO: include barcode and copyright data in inputs
     const atts = {
-      barcode: 123456,
+      barcode: barcode.current,
       title: title.current,
       author: author.current,
       call_num: callnum.current,
@@ -23,77 +28,138 @@ const AddForm = ({ selectedRows, closeModal }) => {
       publication_place: pubplace.current,
       publisher: publisher.current,
       copyright_date: new Date().toISOString(),
-      status: 'available'
-    }
+      status: "available",
+    };
 
-    console.log(atts)
+    console.log(atts);
 
     // Integer input validation
-    const ints = ['accession_num']
+    const ints = ["accession_num", "barcode"];
     for (let i = 0; i < ints.length; i++) {
       let input = atts[ints[i]];
 
-      let re = /[^0-9]+/
-      console.log(re.test(input))
+      let re = /[^0-9]+/;
+      console.log(re.test(input));
 
       if (re.test(input)) {
         // TODO: create toast alerting invalid input
-        console.log('invalid input for ' + ints[i])
-        console.log(atts[ints[i]])
-        return
+        console.log("invalid input for " + ints[i]);
+        console.log(atts[ints[i]]);
+        return;
+      } else {
+        console.log("parsing " + ints[i] + " to integer...");
+        atts[ints[i]] = parseInt(atts[ints[i]]);
       }
-      else {
-        console.log('parsing ' + ints[i] + ' to integer...')
-        atts[ints[i]] = parseInt(atts[ints[i]])
-      }
-
-      const response = await fetch('/api/db', {
-        method: 'POST',
-        body: JSON.stringify({
-          entity: 'books',
-          create: 1,
-          data: atts
-        })
-      })
-
-      closeModal();
     }
-  }
 
+    const response = await fetch("/api/db", {
+      method: "POST",
+      body: JSON.stringify({
+        entity: "books",
+        create: 1,
+        data: atts,
+      }),
+    });
+
+    closeModal();
+  };
   return (
     <>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Book Title</strong>}>
-          <Input placeholder="Book Title" onChange={(e) => ( title.current = e.target.value )}/>
-        </Input.Wrapper>
-        <Input.Wrapper label={<strong>Book Author</strong>}>
-          <Input placeholder="Book Author" onChange={(e) => ( author.current = e.target.value )}/>
+        <Input.Wrapper label={<strong>Book Title</strong>} required>
+          <Input
+            placeholder="The Network Navigators"
+            onChange={(e) => {
+              title.current = e.target.value;
+              setTitleValue(e.target.value);
+            }}
+          />
         </Input.Wrapper>
       </Group>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Call Number</strong>}>
-          <Input placeholder="Call Number" onChange={(e) => ( callnum.current = e.target.value )}/>
+        <Input.Wrapper label={<strong>Barcode</strong>} required>
+          <Input
+            placeholder="8293213"
+            onChange={(e) => {
+              barcode.current = e.target.value;
+              setBarcodeValue(e.target.value);
+            }}
+          />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Accession Number</strong>}>
-          <Input placeholder="Accession Number" onChange={(e) => ( accnum.current = e.target.value )}/>
+        <Input.Wrapper label={<strong>Book Author</strong>}>
+          <Input
+            placeholder="Avram Thickin"
+            onChange={(e) => {
+              author.current = e.target.value;
+            }}
+          />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Edition</strong>}>
-          <Input placeholder="Edition" onChange={(e) => ( edition.current = e.target.value )}/>
+      </Group>
+      <Group grow mb={20}>
+        <Input.Wrapper label={<strong>Call Number</strong>} required>
+          <Input
+            placeholder="Wklt.Md.2Wh.qJ3 2058"
+            onChange={(e) => {
+              callnum.current = e.target.value;
+              setCallNumValue(e.target.value);
+            }}
+          />
+        </Input.Wrapper>
+        <Input.Wrapper label={<strong>Accession Number</strong>} required>
+          <Input
+            placeholder="3550736"
+            onChange={(e) => {
+              accnum.current = e.target.value;
+              setAccNum(e.target.value);
+            }}
+          />
+        </Input.Wrapper>
+        <Input.Wrapper label={<strong>Edition</strong>} required>
+          <Input
+            placeholder="18th"
+            onChange={(e) => {
+              edition.current = e.target.value;
+              setEditionValue(e.target.value);
+            }}
+          />
         </Input.Wrapper>
       </Group>
       <Group grow>
         <Input.Wrapper label={<strong>Publication Place</strong>}>
-          <Input placeholder="Publication Place" onChange={(e) => ( pubplace.current = e.target.value )}/>
+          <Input
+            placeholder="CodeCraft Press"
+            onChange={(e) => (pubplace.current = e.target.value)}
+          />
         </Input.Wrapper>
         <Input.Wrapper label={<strong>Publisher</strong>}>
-          <Input placeholder="Publisher" onChange={(e) => ( publisher.current = e.target.value )}/>
+          <Input
+            placeholder="TechPress"
+            onChange={(e) => (publisher.current = e.target.value)}
+          />
         </Input.Wrapper>
       </Group>
       <Stack justify="center" grow mt="xl">
-        <Button variant="filled" color="rgb(141, 16, 56)" radius="xl" onClick={create}>
+        <Button
+          variant="filled"
+          color="rgb(141, 16, 56)"
+          radius="xl"
+          onClick={create}
+          disabled={
+            !titleValue ||
+            !accNum ||
+            !callNumValue ||
+            !editionValue ||
+            !barcodeValue
+          }
+        >
           Save
         </Button>
-        <Button variant="outline" color="rgb(141, 16, 56)" radius="xl" onClick={closeModal}>
+        <Button
+          variant="outline"
+          color="rgb(141, 16, 56)"
+          radius="xl"
+          onClick={closeModal}
+        >
           Discard
         </Button>
       </Stack>
