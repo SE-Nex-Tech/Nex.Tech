@@ -44,9 +44,9 @@ const QRScanner = () => {
   const fetchBook = async (transaction) => {
     const currentDateTime = new Date();
 
-    setBook(transaction.book);
+    setBook(transaction.material);
 
-    const selectedBook = transaction.book;
+    const selectedBook = transaction.material;
     const ticket = transaction.borrowTicket;
     const client = transaction.client;
 
@@ -57,13 +57,14 @@ const QRScanner = () => {
       }),
     });
     const data = await res.json();
-    const bq = data.bq;
-    const biu = data.biu;
+    const bq = transaction.borrowTicket.type == 'Book' ? data.bq : data.gq;
+    const biu = transaction.borrowTicket.type == 'Book' ? data.biu : data.giu;
     console.log(
-      "Book queue =================================================="
+      "Material queue ==================================================",
     );
     console.log(bq);
-    console.log(biu);
+    console.log(biu)
+    console.log(transaction)
 
     if (
       bq.length > 0 &&
@@ -75,7 +76,7 @@ const QRScanner = () => {
 
     if (
       transaction.borrowTicket.status == "Pending Borrow" &&
-      biu.find((e) => e.id === transaction.book.id) == undefined
+      biu.find((e) => e.id === transaction.material.id) == undefined
     ) {
       newRequestStatus = "Borrow Approved";
       newBookStatus = "Unavailable";
@@ -98,7 +99,7 @@ const QRScanner = () => {
       ).toISOString();
       next_in_q = bq != undefined && bq.length >= 1 ? bq[0] : undefined;
       openModal(transaction);
-    } else if (biu.find((e) => e.id === transaction.book.id) != undefined) {
+    } else if (biu.find((e) => e.id === transaction.material.id) != undefined) {
       toast.warning("Book is still in use by another person");
     } else {
       toast.warning("This borrow ticket has expired");
@@ -109,7 +110,7 @@ const QRScanner = () => {
     console.log("MY TRANSACTIONNNNN ==========================");
     console.log(transaction);
 
-    const selectedBook = transaction.book;
+    const selectedBook = transaction.material;
     const ticket = transaction.borrowTicket;
     const client = transaction.client;
 
@@ -223,14 +224,8 @@ const QRScanner = () => {
           break;
       }
 
-      const book = next.bookRequests.book.title;
-      const text =
-        "Hello " +
-        name +
-        ", We are glad to inform you that your reservation for " +
-        book +
-        " can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is " +
-        next.id;
+      const mat = next.type === 'Book' ? next.bookRequests.book.title : next.boardgameRequests.boardgame.title
+      const text = 'Hello ' + name + ', We are glad to inform you that your reservation for ' + mat + ' can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is ' + next.id
 
       console.log("SENDING EMAIL TO: " + email);
 

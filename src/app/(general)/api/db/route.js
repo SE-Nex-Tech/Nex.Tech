@@ -143,11 +143,24 @@ export async function POST(request) {
       }
     })
 
-    const bookReq = await prisma.BookRequest.findUnique({
-      where: {
-        request_id: borrowTicket.id
-      }
-    })
+    console.log(borrowTicket)
+
+    let entityReq;
+    if (borrowTicket.type == 'Book') {
+      entityReq = await prisma.BookRequest.findUnique({
+        where: {
+          request_id: borrowTicket.id
+        }
+      })
+    } else {
+      entityReq = await prisma.BoardgameRequest.findUnique({
+        where: {
+          request_id: borrowTicket.id
+        }
+      })
+    }
+
+    console.log('GOT ENTITY REQ ====================================================================================================')
 
     var client;
     switch (borrowTicket.user_type) {
@@ -176,21 +189,28 @@ export async function POST(request) {
       default:
     }
 
+    let material
+    if (borrowTicket.type == 'Book') {
+      material = await prisma.books.findUnique({
+        where: {
+          id: entityReq.book_id
+        }
+      })
+    } else {
+      material = await prisma.boardgames.findUnique({
+        where: {
+          id: entityReq.boardgame_id
+        }
+      })
+    }
 
-    // const client = await prisma.student.findUnique({
-    //   where: {
-    //     request_id: borrowTicket.id
-    //   }
-    // })
-
-    const book = await prisma.books.findUnique({
-      where: {
-        id: bookReq.book_id
-      }
-    })
+    console.log('GOT ENTITY ITSELF ====================================================================================================')
+    console.log(material)
+    console.log(client)
+    console.log(borrowTicket)
 
     result = {
-      book,
+      material,
       client,
       borrowTicket
     }
