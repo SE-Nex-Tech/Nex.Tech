@@ -9,6 +9,7 @@ import Link from "next/link";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Navigator from "@/_components/navigator/navigator";
+import Image from "next/image";
 
 const BookPage = () => {
   const { id } = useParams();
@@ -77,7 +78,8 @@ const BookPage = () => {
         <div className={styles.main_container}>
           <div className={styles.row_one}>
             <div className={styles.main_information}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+              {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+              {book.image && (<div className={styles.img_container}><Image className={styles.image} src={book.image} width={110} height={140} alt="" /></div>)}
               <p>{book.call_num}</p>
               <h1>{book.title}</h1>
               <p>
