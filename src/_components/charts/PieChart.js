@@ -4,7 +4,7 @@ import { NativeSelect } from "@mantine/core";
 // import { data } from "@/data/pie";
 import styles from "./piechart.module.scss";
 
-const PieChart = ({ data }) => {
+const PieChart = ({ data, count}) => {
   return (
     <>
       <div classname={styles.container}>
@@ -13,7 +13,7 @@ const PieChart = ({ data }) => {
           thickness={30}
           data={data}
           tooltipDataSource="segment"
-          chartLabel={"Out of " + data.length}
+          chartLabel={"Out of " + count}
         />
       </div>
     </>
