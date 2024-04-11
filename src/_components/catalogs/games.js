@@ -12,7 +12,7 @@ const Games = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage, setGamesPerPage] = useState(10);
-  const totalGames = 1000;
+  const totalGames = Object.keys(data).length;
 
   useEffect(() => {
     const fetchGames = async () => {
