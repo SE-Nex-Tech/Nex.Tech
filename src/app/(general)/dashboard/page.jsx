@@ -23,6 +23,7 @@ import Status from "@/_components/dashboard/status";
 import Queuer from "@/_components/dashboard/qStatus";
 import TableBodyGames from "@/_components/tables/tableGames";
 import TableBody from "@/_components/tables/tableBooks";
+import StatusGames from "@/_components/dashboard/statusGames";
 
 const getUserCreds = (element) => {
   switch (element.user_type) {
@@ -210,7 +211,9 @@ const Dashboard = () => {
                     ))}
                   </Tabs.Panel>
 
-                  <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
+                  <Tabs.Panel value="games">
+                    <StatusGames title publisher status />
+                  </Tabs.Panel>
 
                   <Tabs.Panel value="queue">
                     {queue.map((r) => {
