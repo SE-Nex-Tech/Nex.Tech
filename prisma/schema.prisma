@@ -39,10 +39,10 @@ model Boardgames {
   id                Int    @id @default(autoincrement())
   call_num          String @db.Text
   title             String @db.Text
-  accession_num     Int
-  publisher         String @db.Text
-  copyright_date    DateTime @db.Date
-  status            String @db.Text  
+  accession_num     Int?
+  publisher         String? @db.Text
+  copyright_date    DateTime? @db.Date
+  status            String? @db.Text  
   image             String? @db.Text  
   boardgameRequests BoardgameRequest[]   
   archive           Boolean @default(false)

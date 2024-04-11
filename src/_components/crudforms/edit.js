@@ -103,8 +103,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
 
     let re = /[^0-9]+/;
     if (re.test(atts.accession_num)) {
-      console.log("invalid input for accession_num");
-      return;
+      atts.accession_num = null;
     } else {
       atts.accession_num = parseInt(atts.accession_num);
     }

@@ -62,14 +62,20 @@ const GamePage = () => {
               <div className={styles.information_text}>
                 <div className={styles.headers}>
                   <h4>Accession No.: </h4>
-                  <h4>Copyright Date:</h4>
+                  <h4>Copyright Year:</h4>
                   <h4>Status:</h4>
                 </div>
                 <div className={styles.contents}>
-                  <p>{game.accession_num}</p>
 
-                  <p>{copyright_date}</p>
-                  <p>{game.status}</p>
+                  {game.accession_num && (<p>{game.accession_num}</p>)}
+                  {!game.accession_num && (<p>N/A</p>)}
+
+                  {game.copyright_date && (<p>{(new Date(game.copyright_date)).getFullYear()}</p>)}
+                  {!game.copyright_date && (<p>N/A</p>)}
+
+                  {game.status && (<p>{game.status}</p>)}
+                  {!game.status && (<p>N/A</p>)}
+
                 </div>
               </div>
               <Link href={`/borrowform/${game.id}?type=game`}>
