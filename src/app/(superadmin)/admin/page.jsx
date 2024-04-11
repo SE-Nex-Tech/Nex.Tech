@@ -43,7 +43,6 @@ const Admin = () => {
       });
       const data2 = await response2.json();
 
-      console.log(data);
       setAdmin(data);
       setAdmins(data.admins);
       setAuthorize(data.authorize);
@@ -60,10 +59,6 @@ const Admin = () => {
     (admin) => admin.email === session.user.email
   );
   if (superAdmins.length === 0 || status === "unauthenticated") {
-    return <Unauthenticated />;
-  }
-
-  if (status === "unauthenticated") {
     return <Unauthenticated />;
   }
 
