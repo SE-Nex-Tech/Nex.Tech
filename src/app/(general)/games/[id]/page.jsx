@@ -14,6 +14,7 @@ const GamePage = () => {
   const { id } = useParams();
   const [game, setGame] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [queued, setQueued] = useState(false)
   var copyright_date = "";
 
   useEffect(() => {
@@ -24,6 +25,15 @@ const GamePage = () => {
         const selectedGame = data.find((game) => game.id === parseInt(id));
         setGame(selectedGame);
         setLoading(false);
+
+        const res = await fetch('/api/queue', {
+          method: 'POST',
+          body: JSON.stringify({
+            id: parseInt(id)
+          })
+        })
+        const d = await res.json()
+        setQueued(d.gq.length > 0 ? true : false)
       } catch (error) {
         console.error("Error fetching game:", error);
       }
@@ -73,7 +83,7 @@ const GamePage = () => {
                 </div>
               </div>
               <Link href={`/borrowform/${game.id}?type=game`}>
-                <button className={styles.btn}>Borrow</button>
+                <button className={styles.btn}>{queued ? "Reserve (Wait in queue)" : "Borrow"}</button>
               </Link>
             </div>
           </div>
