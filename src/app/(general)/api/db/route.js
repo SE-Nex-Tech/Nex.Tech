@@ -20,7 +20,10 @@ export async function POST(request) {
 
     if (re.test(params['contains'])) {
       console.log('has letters')
-      const stringAttributes = ['title', 'author', 'edition', 'publication_place', 'publisher']
+      let stringAttributes = params['dashboard'] == undefined ? ['title', 'author', 'edition', 'publication_place', 'publisher', 'call_num'] : ['title', 'author']
+      if (params['entity'] !== 'books') {
+        stringAttributes = params['dashboard'] == undefined ? ['title', 'call_num', 'publisher'] : ['title', 'publisher']
+      }
       const ors = []
       for (let i = 0; i < stringAttributes.length; i++) {
         const clause = {}
@@ -42,7 +45,10 @@ export async function POST(request) {
     }
     else {
       console.log('has numbers')
-      const numAttributes = ['id', 'barcode', 'accession_num']
+      let numAttributes = params['dashboard'] == undefined ? ['id', 'barcode', 'accession_num'] : ['id']
+      if (params['entity'] !== 'books') {
+        numAttributes = params['dashboard'] == undefined ? ['id', 'accession_num'] : ['id']
+      }
       const ors = []
       for (let i = 0; i < numAttributes.length; i++) {
         const clause = {}

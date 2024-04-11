@@ -59,6 +59,28 @@ const Games = () => {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const searchItems = async (key) => {
+    if (key.length == 0) {
+      const reset = await fetch("/api/games");
+
+      const result = await reset.json();
+      setData(result);
+      return;
+    }
+    const response = await fetch("/api/db", {
+      method: "POST",
+      body: JSON.stringify({
+        entity: "games",
+        search: 1,
+        dashboard: 1,
+        contains: key,
+      }),
+    });
+
+    const result = await response.json();
+    setData(result);
+  }
+
   return (
     <div className={styles.parent_container}>
       <Input
