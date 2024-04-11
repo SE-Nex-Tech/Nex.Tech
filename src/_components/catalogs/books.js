@@ -75,7 +75,7 @@ const Books = () => {
             <div key={book.id}>
             
             {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
-            {book.image && (<Image src={book.image} width={200} height={200} alt="" />)}
+            {book.image && (<Image className={styles.img_container} src={book.image} width={110} height={140} alt="" />)}
               <h2 className={styles.book_title}>{book.title}</h2>
               <p className={styles.book_author}>{book.author}</p>
               <p className={styles.book_status}>{book.status}</p>
