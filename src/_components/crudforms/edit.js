@@ -1,12 +1,31 @@
-import { Button, Group, Select, Input, Table, Stack } from "@mantine/core";
+import { Button, Group, Select, Input, Table, Stack, Center } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/table";
+import Image from "next/image";
 
 const EditForm = ({ selectedRows, closeModal }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
 
-  const [imageFile, setImageFile] = useState([]);
+
+  const handleSelectChange = (value) => {
+    setSelectedValue(value);
+  };
+
+  const barcode = useRef(selectedRows[0].barcode);
+  const title = useRef(selectedRows[0].title);
+  const author = useRef(selectedRows[0].author);
+  const callnum = useRef(selectedRows[0].call_num);
+  const accnum = useRef(selectedRows[0].accession_num);
+  const edition = useRef(selectedRows[0].edition);
+  const pubplace = useRef(selectedRows[0].publication_place);
+  const publisher = useRef(selectedRows[0].publisher);
+  const image = useRef(selectedRows[0].image);
+
+
+
+  const [imageData, setImageData] = useState(image.current);
+
 
 
   // When the file is selected, set the file state
@@ -15,8 +34,23 @@ const EditForm = ({ selectedRows, closeModal }) => {
       return;
     }
 
+    if (e.target.files[0]) {
 
-    setImageFile(e.target.files[0]);
+      const base64 = toBase64(e.target.files[0]);
+
+      base64.then(result => {
+        console.log(result);
+        image.current = result;
+        setImageData(image.current);
+      }).catch(error => {
+
+        console.error(error);
+      });
+
+
+
+    }
+
   };
 
   // Convert a file to base64 string
@@ -36,32 +70,16 @@ const EditForm = ({ selectedRows, closeModal }) => {
     });
   };
 
+  const deleteImage = async () => {
+    image.current = null;
+    setImageData(null);
+  }
 
 
-  const handleSelectChange = (value) => {
-    setSelectedValue(value);
-  };
 
-  const barcode = useRef(selectedRows[0].barcode);
-  const title = useRef(selectedRows[0].title);
-  const author = useRef(selectedRows[0].author);
-  const callnum = useRef(selectedRows[0].call_num);
-  const accnum = useRef(selectedRows[0].accession_num);
-  const edition = useRef(selectedRows[0].edition);
-  const pubplace = useRef(selectedRows[0].publication_place);
-  const publisher = useRef(selectedRows[0].publisher);
-  const image = useRef(selectedRows[0].image);
 
   const editRecord = async () => {
-
-    if (!imageFile) {
-      return;
-    }
-
-    // Convert the file to base64
-    const base64 = await toBase64(imageFile);
-
-    image.current = base64;
+    console.log(image.current);
 
     const filter = {
       id: selectedRows[0].actual_id,
@@ -98,7 +116,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
     });
 
 
-    setImageFile(null);
+
     closeModal();
   };
   return (
@@ -168,17 +186,34 @@ const EditForm = ({ selectedRows, closeModal }) => {
         </Input.Wrapper>
       </Group>
 
-      <h1>Upload Image</h1>
+      <h5>Upload Image  </h5>
       <Input
         type="file"
         name="avatar"
         accept="image/*"
         onChange={onFileChange}
       />
+      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "Center" }}>
+        <h5>Preview </h5>
+        {imageData && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "Center" }}>
+            <Image src={imageData} width={110} height={140} alt="" />
+            <Button
+              variant="transparent"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              style={{ width: 150, height: 30, fontSize: 12, }}
+              onClick={deleteImage}
+            >
+              Remove Image
+            </Button>
+          </div>
+        )}
+        {!imageData && (<h5>No Image Sets</h5>)}
 
+      </div>
 
-
-      <Stack justify="center" grow mt="xl">
+      <Stack justify="center" grow mt="xl" style={{ margin: 0 }}>
         <Button
           variant="filled"
           color="rgb(141, 16, 56)"

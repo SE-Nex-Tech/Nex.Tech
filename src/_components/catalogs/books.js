@@ -13,12 +13,13 @@ const Books = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(10);
-  const totalBooks = 1000;
+  const totalBooks = Object.keys(data).length;
 
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await fetch("/api/books");
       const data = await response.json();
+      console.log(data);
       setData(data);
       setLoading(false);
     };
