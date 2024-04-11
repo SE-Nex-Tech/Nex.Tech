@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Group, Stack, Input } from "@mantine/core";
+import { Button, Group, Stack, Input, FileInput } from "@mantine/core";
+import Image from "next/image";
+
 
 const AddForm = ({ selectedRows, closeModal }) => {
   const barcode = useRef("");
@@ -17,8 +19,9 @@ const AddForm = ({ selectedRows, closeModal }) => {
   const publisher = useRef("");
   const image = useRef("");
 
-  const [imageFile, setImageFile] = useState([]);
+  const [imageData, setImageData] = useState(image.current);
 
+  const fileInputRef = useRef(null);
 
   // When the file is selected, set the file state
   const onFileChange = (e) => {
@@ -26,9 +29,25 @@ const AddForm = ({ selectedRows, closeModal }) => {
       return;
     }
 
+    if (e.target.files[0]) {
 
-    setImageFile(e.target.files[0]);
+      const base64 = toBase64(e.target.files[0]);
+
+      base64.then(result => {
+        console.log(result);
+        image.current = result;
+        setImageData(image.current);
+      }).catch(error => {
+
+        console.error(error);
+      });
+
+
+
+    }
+
   };
+
 
   // Convert a file to base64 string
   const toBase64 = (file) => {
@@ -47,16 +66,18 @@ const AddForm = ({ selectedRows, closeModal }) => {
     });
   };
 
-  const create = async () => {
+  const deleteImage = async () => {
+    image.current = null;
 
-    if (!imageFile) {
-      return;
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Resetting the value (not directly setting it)
     }
 
-    // Convert the file to base64
-    const base64 = await toBase64(imageFile);
+    setImageData(null);
+  }
 
-    image.current = base64;
+
+  const create = async () => {
 
     // TODO: include barcode and copyright data in inputs
     const atts = {
@@ -181,13 +202,33 @@ const AddForm = ({ selectedRows, closeModal }) => {
         </Input.Wrapper>
       </Group>
 
-      <h1>Upload Image</h1>
+      <h5>Upload Image  </h5>
       <Input
+        ref={fileInputRef}
         type="file"
         name="avatar"
         accept="image/*"
         onChange={onFileChange}
       />
+      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "Center" }}>
+        <h5>Preview </h5>
+        {imageData && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "Center" }}>
+            <Image src={imageData} width={110} height={140} alt="" />
+            <Button
+              variant="transparent"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              style={{ width: 150, height: 30, fontSize: 12, }}
+              onClick={deleteImage}
+            >
+              Remove Image
+            </Button>
+          </div>
+        )}
+        {!imageData && (<h5>No Image Set</h5>)}
+
+      </div>
 
 
       <Stack justify="center" grow mt="xl">

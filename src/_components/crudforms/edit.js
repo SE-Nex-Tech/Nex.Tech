@@ -26,7 +26,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
 
   const [imageData, setImageData] = useState(image.current);
 
-
+  const fileInputRef = useRef(null);
 
   // When the file is selected, set the file state
   const onFileChange = (e) => {
@@ -72,6 +72,11 @@ const EditForm = ({ selectedRows, closeModal }) => {
 
   const deleteImage = async () => {
     image.current = null;
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Resetting the value (not directly setting it)
+    }
+
     setImageData(null);
   }
 
@@ -188,6 +193,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
 
       <h5>Upload Image  </h5>
       <Input
+        ref={fileInputRef}
         type="file"
         name="avatar"
         accept="image/*"
@@ -209,7 +215,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
             </Button>
           </div>
         )}
-        {!imageData && (<h5>No Image Sets</h5>)}
+        {!imageData && (<h5>No Image Set</h5>)}
 
       </div>
 

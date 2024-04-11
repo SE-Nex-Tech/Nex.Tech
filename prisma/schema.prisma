@@ -43,7 +43,8 @@ model Boardgames {
   accession_num     Int
   publisher         String @db.Text
   copyright_date    DateTime @db.Date
-  status            String @db.Text    
+  status            String @db.Text  
+  image             String? @db.Text  
   boardgameRequests BoardgameRequest[]   
   archive           Boolean @default(false)
 }
