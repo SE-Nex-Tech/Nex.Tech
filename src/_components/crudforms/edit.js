@@ -19,21 +19,6 @@ const EditForm = ({ selectedRows, closeModal }) => {
     setImageFile(e.target.files[0]);
   };
 
-
-  // On submit, upload the file
-  const handleSubmit = async (e) => {
-
-    //   // You can upload the base64 to your server here
-    //   await fetch("/api/your-upload-endpoint", {
-    //     method: "POST",
-    //     body: JSON.stringify({ base64 }),
-    //     headers: {
-    //       "Content-Type": "application/json",
-    //     },
-    //   });
-
-  };
-
   // Convert a file to base64 string
   const toBase64 = (file) => {
     return new Promise((resolve, reject) => {

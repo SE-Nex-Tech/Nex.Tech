@@ -15,8 +15,49 @@ const AddForm = ({ selectedRows, closeModal }) => {
   const [editionValue, setEditionValue] = useState("");
   const pubplace = useRef("");
   const publisher = useRef("");
+  const image = useRef("");
+
+  const [imageFile, setImageFile] = useState([]);
+
+
+  // When the file is selected, set the file state
+  const onFileChange = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+
+    setImageFile(e.target.files[0]);
+  };
+
+  // Convert a file to base64 string
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
 
   const create = async () => {
+
+    if (!imageFile) {
+      return;
+    }
+
+    // Convert the file to base64
+    const base64 = await toBase64(imageFile);
+
+    image.current = base64;
+
     // TODO: include barcode and copyright data in inputs
     const atts = {
       barcode: barcode.current,
@@ -28,6 +69,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
       publication_place: pubplace.current,
       publisher: publisher.current,
       copyright_date: new Date().toISOString(),
+      image: image.current,
       status: "available",
     };
 
@@ -138,6 +180,16 @@ const AddForm = ({ selectedRows, closeModal }) => {
           />
         </Input.Wrapper>
       </Group>
+
+      <h1>Upload Image</h1>
+      <Input
+        type="file"
+        name="avatar"
+        accept="image/*"
+        onChange={onFileChange}
+      />
+
+
       <Stack justify="center" grow mt="xl">
         <Button
           variant="filled"
