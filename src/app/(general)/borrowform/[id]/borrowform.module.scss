@@ -213,9 +213,6 @@
   align-items: center;
 }
 
-.qrContainer {
-}
-
 .receiptLabel {
   display: flex;
   flex-direction: column;
@@ -262,4 +259,36 @@
   display: flex;
   flex-direction: column;
   gap: 1rem;
+}
+
+@media only screen and (max-width: 745px) {
+  .mainBody {
+    padding: 0;
+  }
+  .formContents {
+    flex-direction: column;
+    .fieldContainer {
+      min-width: 370px;
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+  }
+  .formContainer {
+    height: auto;
+    min-width: 300px;
+    padding: 0;
+    margin: 0 auto;
+    .formFields {
+      label {
+        font-size: 0.8rem;
+      }
+    }
+  }
+  .input {
+    flex-direction: column;
+    justify-content: left;
+    align-items: start;
+    margin-bottom: 1em;
+  }
 }

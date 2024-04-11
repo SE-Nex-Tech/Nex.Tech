@@ -101,7 +101,6 @@ const BorrowForm = () => {
     if (typeParam) fetchBook();
   }, [id, typeParam]);
 
-
   const downloadQRCode = () => {
     const qrCodeURL = document
       .getElementById("qrCode")
@@ -124,7 +123,7 @@ const BorrowForm = () => {
   }
 
   const requestCode = useRef("201314214");
-  const requestType = useRef(typeParam === 'book' ? "Book" : "Game");
+  const requestType = useRef(typeParam === "book" ? "Book" : "Game");
   const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
   const employeeNumber = useRef("");
@@ -746,10 +745,10 @@ const BorrowForm = () => {
                 <div className={styles.input}>
                   <label>Request Type:</label>
                   <TextInput
-                    className={styles.inputField}
                     name="requestType"
                     value={requestType.current}
                     readOnly={true}
+                    miw="275px"
                   />
                 </div>
 
@@ -766,7 +765,7 @@ const BorrowForm = () => {
 
                 <div className={styles.input}>
                   <label>User Type:</label>
-                  <Button.Group value={null} className={styles.inputField}>
+                  <Button.Group value={null}>
                     <Button
                       name="studentBtn"
                       variant={
@@ -865,9 +864,7 @@ const BorrowForm = () => {
                   Submit Form{" "}
                 </button>
                 <Link
-
                   href={`/books/${item.id}`}
-
                   className={styles.backBtnContainer}
                 >
                   <button className={styles.backBtn}> Go Back </button>
@@ -946,7 +943,6 @@ const BorrowForm = () => {
                       book.
                     </div>
                     <div className={styles.receiptBtnContainer}>
-
                       <Button
                         variant="filled"
                         color="rgb(141, 16, 56)"
@@ -967,7 +963,6 @@ const BorrowForm = () => {
                       >
                         Go Back
                       </Button>
-
                     </div>
                   </div>
                 </Modal>
