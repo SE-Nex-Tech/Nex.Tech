@@ -2,9 +2,16 @@
 
 .mainBody {
   width: 100%;
-  height: 80vh;
-  padding: 5vh 18vw 5vh 18vw;
+  height: 85dvh;
   font-family: "Plus Jakarta Sans", sans-serif;
+  label {
+    width: 100px;
+    font-size: 0.8em;
+    clear: both;
+    display: inline-block;
+    overflow: hidden;
+    white-space: nowrap;
+  }
 }
 
 .formContainer {
@@ -66,6 +73,7 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   gap: 2rem;
 }
 
@@ -264,11 +272,15 @@
 @media only screen and (max-width: 745px) {
   .mainBody {
     padding: 0;
+    overflow-x: hidden;
+    height: auto;
   }
   .formContents {
+    height: auto;
     flex-direction: column;
     .fieldContainer {
-      min-width: 370px;
+      width: 100%;
+      min-width: 350px;
       h2 {
         font-size: 1.2rem;
       }
@@ -276,10 +288,12 @@
   }
   .formContainer {
     height: auto;
-    min-width: 300px;
+    width: 100%;
     padding: 0;
     margin: 0 auto;
     .formFields {
+      width: 80%;
+      min-width: 200px;
       label {
         font-size: 0.8rem;
       }
@@ -290,5 +304,41 @@
     justify-content: left;
     align-items: start;
     margin-bottom: 1em;
+  }
+  .formTitle {
+    min-width: 100px;
+  }
+
+  .imageContainer {
+    width: 100%;
+    min-width: 250px;
+    height: 40%;
+  }
+
+  .itemContainer {
+    width: 100%;
+  }
+}
+@media screen and (max-width: 1105px) {
+  .mainBody {
+    padding-top: 25px;
+    height: 100%;
+    .fieldContainer {
+      width: 100%;
+      min-width: 350px;
+      h2 {
+        font-size: 1.2rem;
+      }
+    }
+    .formContainer {
+      height: 100%;
+    }
+  }
+  .formFields {
+    width: 100%;
+    min-width: 200px;
+    label {
+      font-size: 0.8rem;
+    }
   }
 }

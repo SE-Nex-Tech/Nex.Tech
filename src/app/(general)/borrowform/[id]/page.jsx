@@ -40,6 +40,26 @@ const BorrowForm = () => {
   const [reservation, setReservation] = useState(0);
   const [showConfirmation, setShowConfirmation] = useState(false);
 
+  const [showHeader, setShowHeader] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1105) {
+        setShowHeader(false);
+      } else {
+        setShowHeader(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   const makeReservation = async () => {
     setShowConfirmation(false);
     open();
@@ -327,7 +347,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Student No.:</label>
               <NumberInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="studentNumber"
                 placeholder={studentNumText}
                 hideControls
@@ -349,7 +373,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder={firstNameText}
                 onChange={(e) => {
@@ -365,7 +393,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Middle Initial:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder="R. (Optional)"
                 onChange={(e) => {
@@ -380,7 +412,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Last Name:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder={lastNameText}
                 onChange={(e) => {
@@ -396,7 +432,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Email:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userEmail"
                 placeholder={emailText}
                 onChange={(e) => handleEmailChange(e.target.value)}
@@ -407,7 +447,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Department:</label>
               <Select
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userDepartment"
                 placeholder={departmentText}
                 data={[
@@ -425,7 +469,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Year Level:</label>
               <Select
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="yearLevel"
                 placeholder={yearLevelText}
                 data={["1st Year", "2nd Year", "3rd Year", "4th Year"]}
@@ -439,7 +487,7 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Section:</label>
               <TextInput
-                className={styles.inputField}
+                style={{ minWidth: "230px", width: "100%" }}
                 name="section"
                 placeholder={sectionText}
                 onChange={(e) => handleSectionChange(e.target.value)}
@@ -454,7 +502,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Employee No.:</label>
               <NumberInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="employeeNumber"
                 placeholder={employeeNumText}
                 hideControls
@@ -476,7 +528,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder={firstNameText}
                 onChange={(e) => {
@@ -492,7 +548,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Middle Initial:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder="R. (Optional)"
                 onChange={(e) => {
@@ -507,7 +567,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Last Name:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder={lastNameText}
                 onChange={(e) => {
@@ -523,7 +587,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Email:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userEmail"
                 placeholder={emailText}
                 onChange={(e) => handleEmailChange(e.target.value)}
@@ -534,7 +602,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Department:</label>
               <Select
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userDepartment"
                 placeholder={departmentText}
                 data={[
@@ -556,7 +628,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Employee No.:</label>
               <NumberInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="employeeNumber"
                 placeholder={employeeNumText}
                 hideControls
@@ -578,7 +654,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>First Name:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder={firstNameText}
                 onChange={(e) => {
@@ -594,7 +674,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Middle Initial:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder="R. (Optional)"
                 onChange={(e) => {
@@ -609,7 +693,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Last Name:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userName"
                 placeholder={lastNameText}
                 onChange={(e) => {
@@ -625,7 +713,11 @@ const BorrowForm = () => {
             <div className={styles.input}>
               <label>Email:</label>
               <TextInput
-                className={styles.inputField}
+                style={{
+                  minWidth: "230px",
+                  width: "100%",
+                  marginBottom: "0.8em",
+                }}
                 name="userEmail"
                 placeholder={emailText}
                 onChange={(e) => handleEmailChange(e.target.value)}
@@ -735,7 +827,11 @@ const BorrowForm = () => {
 
   return (
     <div>
-      <Header currentRoute={"/borrowform"} />
+      {showHeader && (
+        <div>
+          <Header currentRoute={"/borrowform"} />
+        </div>
+      )}
       <div className={styles.mainBody}>
         <div className={styles.formContainer}>
           <div className={styles.formContents}>
@@ -748,24 +844,27 @@ const BorrowForm = () => {
                     name="requestType"
                     value={requestType.current}
                     readOnly={true}
-                    miw="275px"
+                    style={{ minWidth: "230px", width: "100%" }}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>Request Date:</label>
                   <DateInput
-                    className={styles.inputField}
                     name="requestDate"
                     valueFormat="DD/MM/YYYY"
                     value={currentDate}
                     readOnly={true}
+                    style={{ minWidth: "230px", width: "100%" }}
                   />
                 </div>
 
                 <div className={styles.input}>
                   <label>User Type:</label>
-                  <Button.Group value={null}>
+                  <Button.Group
+                    value={null}
+                    style={{ minWidth: "230px", width: "100%" }}
+                  >
                     <Button
                       name="studentBtn"
                       variant={
@@ -775,6 +874,7 @@ const BorrowForm = () => {
                         userType.current = "Student";
                         setSelectedUserType("Student");
                       }}
+                      style={{ width: "33.3%" }}
                     >
                       Student
                     </Button>
@@ -787,6 +887,7 @@ const BorrowForm = () => {
                         userType.current = "Faculty";
                         setSelectedUserType("Faculty");
                       }}
+                      style={{ width: "33.3%" }}
                     >
                       Faculty
                     </Button>
@@ -799,6 +900,7 @@ const BorrowForm = () => {
                         userType.current = "Staff";
                         setSelectedUserType("Staff");
                       }}
+                      style={{ width: "33.3%" }}
                     >
                       Staff
                     </Button>
