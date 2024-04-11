@@ -9,6 +9,7 @@ import Link from "next/link";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Navigator from "@/_components/navigator/navigator";
+import Image from "next/image";
 
 const GamePage = () => {
   const { id } = useParams();
@@ -50,7 +51,8 @@ const GamePage = () => {
         <div className={styles.main_container}>
           <div className={styles.row_one}>
             <div className={styles.main_information}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+            {!game.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {game.image && (<div className={styles.img_container}><Image className={styles.image} src={game.image} width={110} height={140} alt="" /></div>)}
               <p>{game.call_num}</p>
               <h1>{game.title}</h1>
               <p>
