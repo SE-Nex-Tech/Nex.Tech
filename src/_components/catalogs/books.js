@@ -5,6 +5,7 @@ import styles from "./books.module.scss";
 import { Skeleton, Loader, Input, rem } from "@mantine/core";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
+import Image from "next/image";
 
 const Books = () => {
   const [data, setData] = useState([]);
@@ -72,7 +73,9 @@ const Books = () => {
         {currentBooks.map((book, index) => (
           <Link href={`/books/${book.id}`} className={styles.container}>
             <div key={book.id}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+            
+            {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {book.image && (<Image src={book.image} width={200} height={200} alt="" />)}
               <h2 className={styles.book_title}>{book.title}</h2>
               <p className={styles.book_author}>{book.author}</p>
               <p className={styles.book_status}>{book.status}</p>

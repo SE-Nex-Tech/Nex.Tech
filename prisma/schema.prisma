@@ -31,6 +31,7 @@ model Books {
   publisher         String @db.Text
   copyright_date    DateTime @db.Date
   status            String @db.Text
+  image             String? @db.Text
   bookRequests      BookRequest[]
   archive           Boolean @default(false)
 }

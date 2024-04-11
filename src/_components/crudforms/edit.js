@@ -5,6 +5,54 @@ import TableBody from "../tables/table";
 const EditForm = ({ selectedRows, closeModal }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
+
+  const [imageFile, setImageFile] = useState([]);
+
+
+  // When the file is selected, set the file state
+  const onFileChange = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+
+    setImageFile(e.target.files[0]);
+  };
+
+
+  // On submit, upload the file
+  const handleSubmit = async (e) => {
+
+    //   // You can upload the base64 to your server here
+    //   await fetch("/api/your-upload-endpoint", {
+    //     method: "POST",
+    //     body: JSON.stringify({ base64 }),
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //   });
+
+  };
+
+  // Convert a file to base64 string
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+
+
   const handleSelectChange = (value) => {
     setSelectedValue(value);
   };
@@ -17,8 +65,19 @@ const EditForm = ({ selectedRows, closeModal }) => {
   const edition = useRef(selectedRows[0].edition);
   const pubplace = useRef(selectedRows[0].publication_place);
   const publisher = useRef(selectedRows[0].publisher);
+  const image = useRef(selectedRows[0].image);
 
   const editRecord = async () => {
+
+    if (!imageFile) {
+      return;
+    }
+
+    // Convert the file to base64
+    const base64 = await toBase64(imageFile);
+
+    image.current = base64;
+
     const filter = {
       id: selectedRows[0].actual_id,
     };
@@ -31,6 +90,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
       edition: edition.current,
       publication_place: pubplace.current,
       publisher: publisher.current,
+      image: image.current,
     };
 
     let re = /[^0-9]+/;
@@ -52,6 +112,8 @@ const EditForm = ({ selectedRows, closeModal }) => {
       }),
     });
 
+
+    setImageFile(null);
     closeModal();
   };
   return (
@@ -120,6 +182,17 @@ const EditForm = ({ selectedRows, closeModal }) => {
           />
         </Input.Wrapper>
       </Group>
+
+      <h1>Upload Image</h1>
+      <Input
+        type="file"
+        name="avatar"
+        accept="image/*"
+        onChange={onFileChange}
+      />
+
+
+
       <Stack justify="center" grow mt="xl">
         <Button
           variant="filled"
