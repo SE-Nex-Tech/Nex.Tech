@@ -92,18 +92,27 @@ const BookPage = () => {
                 <div className={styles.headers}>
                   <h4>Accession No.: </h4>
                   <h4>Edition:</h4>
-                  <h4>Publication Place:</h4>
                   <h4>Publisher:</h4>
-                  <h4>Copyright Date:</h4>
+                  <h4>Copyright Year:</h4>
                   <h4>Status:</h4>
                 </div>
                 <div className={styles.contents}>
-                  <p>{book.accession_num}</p>
-                  <p>{book.edition}</p>
-                  <p>{book.publication_place}</p>
-                  <p>{book.publisher}</p>
-                  <p>{copyright_date}</p>
-                  <p>{book.status}</p>
+                  {book.accession_num && (<p>{book.accession_num}</p>)}
+                  {!book.accession_num && (<p>N/A</p>)}
+
+                  {book.edition && ( <p>{book.edition}</p>)}
+                  {!book.edition && (<p>N/A</p>)}
+
+                 
+
+                  {book.publisher && ( <p>{book.publisher}</p>)}
+                  {!book.publisher && (<p>N/A</p>)}
+
+                  {book.copyright_date && ( <p>{(new Date(book.copyright_date)).getFullYear()}</p>)}
+                  {!book.copyright_date && (<p>N/A</p>)}
+
+                  {book.status && ( <p>{book.status}</p>)}
+                  {!book.status && (<p>N/A</p>)}
                 </div>
               </div>
               <Link href={`/borrowform/${book.id}?type=book`}>

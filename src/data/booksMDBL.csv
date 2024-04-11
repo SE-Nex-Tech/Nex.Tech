@@ -1,0 +1,376 @@
+id,barcode,call_num,title,accession_num,author,edition,publisher,copyright_date
+1,,Q180.55.S7 .Ad18 2023,"Research methods, statistics, and application",,"Adams, Kathrynn Ann amd Eva K. Maguire.",,Los Angeles : SAGE,2023
+2,,Q180.55.E9 .D198 2023,Evaluating research : methodology for people who need to read research,,"Dane, Francis C., 1952- author.",,"Thousand Oaks, California : SAGE",2023
+3,,QA76.73.J38 .H788j 2022,Core Java,,"Horstmann, Cay S., 1959- author.",,Boston : Pearson,2022
+4,,QA76.73 .Su77 2022,Practical Python programming for data scientists,,"Suresh, A., author.",,"Burlington, ON: Arcler Press",2022
+5,,QA76.64 .F769 2020,C++ programming : an object-oriented approach,,"Forouzan, Behrouz A., author.",,"New York, NY : McGraw-Hill Education",2020
+6,,QA76.76.I58 .Q32 2019,Formation control of multi-agent systems a graph rigidity approach,,"Queiroz, Marcio S. de author.",,"Hoboken, NJ John Wiley & Sons",2019
+7,,QA76.9.S88 .D423 2019,Systems analysis and design,,"Dennis, Alan, author.",,"Hoboken, NJ : Wiley",2019
+8,,QA39.2 .T413 2019,3GE collection on mathematics : discrete mathematics.,,3G E-learning,,New York : 3G E-learning LLC,2019
+9,,QA76.73.B3 .T413p 2019,Basic computer coding : PHP,,3G E-learning,,New York : 3G E-learning LLC,2019
+10,,QA76.73.B3 .T413js 2019,Basic computer coding : java script,,3G E-learning,,New York : 3G E-learning LLC,2019
+11,,QA76.73.B3 .T413d 2019,Basic computer coding: SQL,,3G E-learning,,New York : 3G E-learning LLC,2019
+12,,Q335 .St58 2019,Artificial intelligence,,"Stirling, Kaleb",,"New York, NY : Clanrye International",2019
+13,,Q180.55.M4 .R311r 2019,Research methodology : a practical and scientific approach,,[No author identified],,"Boca Raton : CRC Press, Taylor & Francis Group",2019
+14,,QA76.73.P98 .M382 2019,Python for data science for dummies,,"Massaron, Luca, author.",,"Hoboken, NJ : John Wiley & Sons, Inc.",2019
+15,,QA76.73.J38 .F247j 2019,Java programming,,"Farrell, Joyce, author.",,Australia United States : Cengage,2019
+16,,QA76.9.M35 .W95 2019,The beauty of mathematics in computer science,,"Wu, Jun, 1967-, author",,"Boca Raton, FL : Taylor & Francis Group",2019
+17,,HF5548.4.M525 .W773 2019,Office 365,,"Withee, Rosemarie, author.",,"Hoboken, New Jersey : John Wiley & Sons, Inc.",2019
+18,,Q180.55.M67 .D212 2019,Ethics in science : ethical misconduct in scientific research,,"D'Angelo, John, author.",,Boca Raton : Taylor & Francis,2019
+19,,QA39.2 .J639 2019,Discrete mathematics,,"Johnsonbaugh, Richard, 1941- author.",,"Harlow, United Kingdom : Pearson Education Limited",2019
+20,,QA76.73.P98 .L516 2019,Python machine learning,,"Lee, Wei-Meng., author.",,"Newark : John Wiley & Sons, Incorporated",2019
+21,,Q334.7 .Sm52 2019,The promise of artificial intelligence : reckoning and judgment,,"Smith, Brian Cantwell, author.",,"Cambridge, Massachusetts : The MIT Press",2019
+22,,Q180.55.S7 .Ad18 2019,"Research methods, statistics, and applications",,"Adams, Kathrynn Ann, author.",,Los Angeles : Sage,2019
+23,,QA39.3 .B41 2019,Discrete mathematics with ducks,,"Belcastro, Sarah-Marie, author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2019
+24,,QA76.5 .Ol2c 2019,"Computing essentials : making IT work for you, 2019",,"O'Leary, Timothy J., 1947-",,New York : McGraw,2019
+25,,QA76 .T413ai 2019,Core concepts in computer science : Artificial intelligence,,3G E-Learning.,,"New York, NY : 3G E-Learning",2019
+26,,QA76.585 .T413co 2019,Core concepts in computer science: data structures.,,"3G E-Learning LLC, USA, author.",,New York : 3G E-Learing LLC,2019
+27,,QA76.585 .T413da 2019,Core concepts in computer science: database management systems,,"3G E-Learning LLC, USA, author.",,New York : 3G E-Learing LLC,2019
+28,,QA39.3 .Ep71 2020,Discrete mathematics with applications,,"Epp, Susanna S., author.",,Pacific Grove : Brooks/Cole,2020
+29,,QA76.9.C66 .B144 2019,Computers and society : modern perspectives / Ronald M. Baecker.,,"Baecker, Ronald M., author.",,Oxford ; New York : Oxford University Press,2019
+30,,QA76.73.P98 .L174f 2019,"Fundamentals of python : first programs / Kenneth A. Lambert, Martin Osborne, contributing author.",,"Lambert, Kenneth Alfred, 1951- author.",,"Clifton Park, NY : Cengage Learning",2019
+31,,T58.6 .St15p 2018,Principles of information systems,,"Stair, Ralph M., author.",,"Boston, MA : Cengage Learning",2018
+32,,QA76.73.J38 .R262 2018,Building Java programs : a back to basics approach,,"Reges, Stuart, author.",,Boston : Pearson,2018
+33,,QA76.63 .F247 2018,Programming logic and design : introductory,,"Farrell, Joyce, Verfasser.",,Australia : Cengage Learning,2018
+34,,QA76.77 .St18 2018,Operating systems : internals and design principles,,"Stallings, William, author.",,Boston : Pearson,2018
+35,,QA76.73.C153 D151 2018,C++ plus data structures,,"Dale, Nell (Nell B.), author.",,"Burlington, MA : Jones & Bartlett Learning",2018
+36,,QA76.774.M55 .P182 2018,Hands-on Microsoft Windows Server 2016,,"Palmer, Michael J., 1948- author.",,"Boston, MA., : Cengage Learning",2018
+37,,QA76.76.A65 .F844 2018,Android app development,,"Franceschi, Herve, author.",,"Burlington, MA Jones & Bartlett Learning",2018
+38,,QA76.9.D343 .N631 2018,Handbook of statistical analysis and data mining applications,,"Nisbet, Robert, author.",,"London, United Kingdom : Academic Press, an imprint of Elsevier",2018
+39,,QA76.73.P98 .Z66 2018,Complex Network Analysis in Python : Recognize - Construct - Visualize - Analyze - Interpret,,"Zinoviev, Dmitry, author.",,"Raleigh, North Carolina : The Pragmatic Bookshelf",2018
+40,,QA76.774.L46 .M178 2018,"Linux in Easy Steps, 6th Edition",,"Mcgrath, Mike, author.",,[Place of publication not identified] : In Easy Steps Limited,2018
+41,,QA76.7 .Se16 2018,Beginning DAX with Power BI : the SQL pro's guide to better business intelligence,,"Seamark, Philip, author.",,[California] : Apress,2018
+42,,QA76.73 .C999 2018,C++ Technologies,,[No author identified],,Canada : Arcler Press,2018
+43,,T58.6 .J216 2018,Information systems : an introduction,,"Jalaludin, Farah Waheeda, author.",,Malaysia : Oxford Publishing,2018
+44,,QA76.9.A25 .St18 2018,Computer security : principles and practice,,"Stallings, William 1945- Verfasser.",,"New York, NY Pearson",2018
+45,,QA76.5 .T413 2018,Computer hardware & software tools,,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+46,,QA76.59 .T413 2018,Mobile computing,,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+47,,QA76.9.C643 .T413 2018,Computer Organization,,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+48,,QA76.76.H94 .T413p 2018,"Theory, practice and techniques in HTML and CSS",,"3G E-learning LLC, USA, author.",,"New York, NY : 3G E-Learning LLC",2018
+49,,QA76.73.C153 .T413 2018,"Theory, practice and techniques in programming with C++",,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+50,,QA76.76.H94 .T413 2018,XML Based Applications,,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+51,,QA76.76.A65 .T413 2018,Mobile Applications Development Technologies,,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+52,,QA76.9 .Au82 2018,Automata Theory and Logic,,"Prudhomme, Gerard, editor.",,Canada : Arcler Press,2018
+53,,QA76.64 .T413 2018,"Theory, practice and techniques in object oriented programming",,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2018
+54,,QA76.64 .K163 2018,Object oriented programming with java,,"Kaul, Neha, author.",,Canada : Arcler Press,2018
+55,,T58.6 .T413 2018,Information systems,,"3G E-Learning LLC, USA., author.",,"New York, NY : 3G E-Learning LLC",2018
+56,,QA76.575 .T413n 2018,Network information systems,,"3G E-Learning LLC, USA., author.",,"New York, NY : 3G E-Learning LLC",2018
+57,,QA76.73.P98 .M889 2018,"Beginning programming with python for dummies, 2nd edition",,"Mueller, John Paul.",,"Indianapolis, IN : John Wiley and Sons.",2018
+58,,QA76.9.M35 .C762 2018,Connections in discrete mathematics : a celebration of the work of Ron Graham,,[No author identified],,"Cambridge, UK : Cambridge University Press",2018
+59,,QA76.758 .G238 2018,Software engineering,,"Gautam, Anju, author.",,"New Delhi, India : Random Publications",2018
+60,,QA76.9.M35 .T413 2018,Probability and statistics for computer science,,3G E-Learning,,"New York, NY : 3G E-Learning LLC",2018
+61,,QA76.9.D3 .T413 2018,Advanced database management systems,,"3G E-Learning LLC, USA., author.",,"New York, NY : 3G E-Learning LLC",2018
+62,,Q334 .M887 2018,Artificial intelligence for dummies,,"Mueller, John, 1958- author.",,"Hoboken, New Jersey : John Wiley & Sons, Inc.",2018
+63,,T58.6 .St15f 2018,Fundamentals of information systems,,"Stair, Ralph M., author.",,"Boston, MA : Cengage Learning",2018
+64,,HD31 .G875f 2018,Fundamentals of management,,"Griffin, Ricky W., author.",,Australia : Cengage Learning,2018
+65,,QA9.58 .So48 2018,An introduction to the analysis of algorithms,,"Soltys, Michael, 1971- author.",,New Jersey : World Scientific,2018
+66,,QA9.59 .T343 2018,Theory of Computation,,[No author identified],,Canada : Arcler Press,2018
+67,,Q335 .Si64 2018,A classical approach to artificial intelligence,,"Singh, Upinder, author.",,"New Delhi, India : Random Publications",2018
+68,,Q335 .Ar78i 2018,Artificial intelligence and applications,,[No author identified],,Canada : Arcler Press,2018
+69,,QA76.3 .St49 2018,CompTIA security+ : review guide,,"Stewart, James Michael., author.",,"Indianapolis, IN : John Wiley and Sons",2018
+70,,QA76.5 .V59c 2018,"Discovering computers 2018 : digital technology, data, and devices",,"Vermaat, Misty E., author.",,#VALUE!,2018
+71,,TK5105.5 .C762n 2018,Connecting networks v6 : companion guide,,[No author identified],,"Indianapolis, Indiana : Cisco Press",2018
+72,,TK5105.548 .Sca45 2018,Scaling networks v6 companion guide,,[No author identified],,"Indianapolis, Indiana : Cisco Press",2018
+73,,QA76.64 .B261 2017,Objects first with Java : a practical introduction using BlueJ,,"Barnes, David J., 1959 June 7- author.",,"Harlow, Essex : Pearson",2017
+74,,QA76.73.J39 .C441 2017,JavaScript : absolute beginner's guide,,"Chinnathambi, Kirupa, author.",,"Indianapolis, Indiana : Que",2017
+75,,QA76.9.D343 .W784 2017,Data mining : practical machine learning tools and techniques,,"Witten, I. H. (Ian H.), author.",,"Boston, MA : Elsevier",2017
+76,,T58.6 .B474 2017,Mis‚Å∑,,"Bidgoli, Hossein., author.",,"20 Channel Center Street, Mason, MA : Cengage Learning",2017
+77,,QA76.73.P224 .W46 2017,PHP and MySQL web development,,"Welling, Luke, 1972- author.",,"Hoboken, NJ : Addison-Wesley",2017
+78,,QA76.9.A25 .Si58 2017,Hands on ethical hacking and network defense,,"Simpson, Michael T., author.",,"New York, NY : Cengage",2017
+79,,QA76.73.C153 .M178 2017,C++ programming in easy steps,,"McGrath, Mike, 1956- author.",,"Warwickshire, United Kingdom : In Easy Steps",2017
+80,,QA76.76.O63 .T599 2017,Guide to operating systems,,"Tomsho, Greg, author.",,"Boston, MA : Cengage Learning",2017
+81,,T57.6 .In8 2017,"Integrating program management and systems engineering : methods, tools, and organizational systems",,[No author identified],,"Hoboken, New Jersey : John Wiley & Sons, Inc.",2017
+82,,QA76.73.C153 .D368c 2017,C++ how to program : introducing the new C++14 standard,,"Deitel, Paul J., author.",,Boston : Pearson,2017
+83,,T58.8 .L567 2017,"Project management, planning and control : managing engineering, construction and manufacturing proj",,"Lester, Albert, author.",,"Oxford, United Kingdom : Butterworth-Heinemann",2017
+84,,QA76.76.C672 .L576 2017,Level design : processes and experiences,,[No author identified],,"Boca Raton, FL : CRC Press",2017
+85,,QA76.76.H94 .C189p 2017,New perspectives on HTML5 and CSS3 : comprehensive,,"Carey, Patrick, author.",,"Boston, MA : Cengage Learning",2017
+86,,QA76.7 .T55 2017,Programming language explorations,,"Toal, Ray, author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2017
+87,,QA76.76.H94 .F335 2017,Web development and design foundations with HTML5,,"Felke-Morris, Terry, author.",,Boston Pearson Education Limited,2017
+88,,QA76.9.M35 .Ar48 2017,Fundamental proof methods in computer science : a computer-based approach,,"Arkoudas, Konstantine, author.",,"Cambridge, MA : MIT Press",2017
+89,,QA76.76.C672 Sm32 2017,Algorithms and networking for computer games,,"Smed, Jouni, author.",,"Hoboken, NJ, USA : John Wiley & Sons Inc.",2017
+90,,QA76.73.C153 .C739 2017,C++ : the programming language,,[No author identified],,"New York, NY : Larsen & Keller",2017
+91,,T385 .C739g 2017,Computer graphics : principles and practice,,[No author identified],,"New York, NY : Larsen & Keller",2017
+92,,QA76.65 .V829 2017,Visual programming,,[No author identified],,United Arab Emirates : 3G E-learning LLC,2017
+93,,QA76.76.S65 .Si64 2017,Functional software size measurement methodology with effort estimation and performance indication,,"Singh, Jasveer, 1955- author.",,"Hoboken, New Jersey : John Wiley & Sons, Inc.",2017
+94,,QA76.9.D5 .F949 2017,The data and analytics playbook : proven methods for governed data and analytic quality,,"Fryman, Lowell, author.",,"Cambridge, MA : Morgan Kaufmann : Elsevier",2017
+95,,QA76.76.E95 .Ah13 2017,Evolution of knowledge science : myth to medicine : intelligent internet-based humanist machines,,"Ahamed, Syed V., 1938- author.",,Amsterdam : Elsevier/Morgan Kaufmann,2017
+96,,QA76.9.B45 .B48m 2017,Big data management and processing,,[No author identified],,"Boca Raton : Taylor & Francis, CRC Press",2017
+97,,QA76.9.A25 .R299 2017,Reporting on an entity's cybersecurity risk management program and controls : SOC for cybersecurity,,[No author identified],,"New York, NY : American Institute of Certified Public Accountants, May 1",2017
+98,,QA76.9.M35 .H364 2017,"Discrete structures, logic, and computability",,"Hein, James L., author.",,"Burlington, MA : World Headquarters/Jones & Bartlett Learning",2017
+99,,QA76.9.U83 .P697 2017,The joy of UX : User Experience and interactive design for developers,,"Platt, David S., author.",,Boston : Addison-Wesley,2017
+100,,QA76.9.B45 .B48d 2017,Big data analytics using multiple criteria decision-making models,,[No author identified],,"Boca Raton : CRC Press, Taylor & Francis Group",2017
+101,,QA76.9.I52 .In3 2017,Information design : research and practice,,[No author identified],,"London ; New York : Routledge, Taylor & Francis Group",2017
+102,,QA76.9.B45 .K124 2017,Big data computing : a guide for business and technology managers,,"Kale, Vivek, author.",,"Boca Raton : Taylor & Francis, CRC Press",2017
+103,,QA76.9.C65 .C739f 2017,"Computational frameworks : systems, models and applications",,[No author identified],,London : ISTE Press,2017
+104,,QA76.9.H85 .L456 2017,Research methods in human computer interaction,,"Lazar, Jonathan, author.",,"Cambridge, MA : Morgan Kaufmann Publishers, an imprint of Elsevier",2017
+105,,QA76.9.A43 .M887 2017,Algorithms for dummies,,"Mueller, John Paul., author.",,"Indianapolis, IN : Wiley",2017
+106,,QA267.3 .L659 2017,An introduction to formal languages and automata,,"Linz, Peter., author.",,"Burlington, MA : Jones & Bartlett Learning",2017
+107,,QA76.9.A7 .T413 2017,Computer Systems & Architecture,,"3G E-learning LLC, USA, author, editor.",,"New York, NY : 3G E-Learning LLC",2017
+108,,QA76.73.J38 .Si17 2017,OCA Java SE 8 programmer I exam guide (exam 1Z0-808),,"Sierra, Kathy, author.",,New York : McGraw-Hill Education,2017
+109,,TK5105.5 .C497n 2017,Introduction to networks v6 : companion guide,,Cisco Networking Academy.,,"Indianapolis, IN : Cisco Press",2017
+110,,TA174 .L625 2017,"Visualization, modeling, and graphics for engineering design",,"Lieu, Dennis Kenmon, 1959-, author.",,"Boston, MA : Cengage Learning",2017
+111,,QA76.9.H85 .Sh69 2018,Designing the user interface : strategies for effective human-computer interaction,,"Shneiderman, Ben, author.",,"Harlow, Essex Pearson",2018
+112,,HF5415 .B229 2017,Principles of marketing,,"Baquillas, Jonalyn C., author.",,"Makati City : DIWA Learning Systems, Inc.",2017
+113,,T58.5 .N42 2017,New IT passport examination preparation book.,,[No author identified],,Japan : Information-Technology Promotion Agency,2017
+114,,TK5105.5487 .R765 2017,Routing and switching essentials v6 : companion guide,,[No author identified],,"Indianapolis, IN : Cisco Press",2017
+115,,QA76.758 .So23a 2017,Software architecture for big data and the cloud,,[No author identified],,"Cambridge, MA : Morgan Kaufmann",2017
+116,,QA76.7 .Se21 2016,Concepts of programming languages,,"Sebesta, Robert W., author.",,Boston : Pearson,2016
+117,,Q335 .R917 2016,Artificial intelligence : a modern approach,,"Russell, Stuart J. (Stuart Jonathan) author.",,Harlow : Pearson,2016
+118,,QA76.7 .Sco83 2016,Programming language pragmatics,,"Scott, Michael Lee, 1959- author.",,"Waltham, MA : Morgan Kaufmann, an imprint of Elsevier",2016
+119,,TK7874 .In7 2016,2016 IEEE International Conference on Integrated Circuits and Microsystems : ICICM 2016 : November 2,,"Conference: IEEE International Conference on Integrated Circuits and Microsystems (2016 : Chengdu, China)",,"Piscataway, NJ : IEEE Press",2016
+120,,QA76.5 .Ev15t 2016,Technology in action.,,"Evans, Alan (Alan D.), author.",,Boston : Prentice Hall,2016
+121,,HF5387 .C818 2016,Business ethics and social responsibility,,"Cortez, Franz Giuseppe F., author.",,Quezon City : Vibal,2016
+122,,QA297 .B896 2016,Numerical analysis,,"Burden, Richard L., author.",,"Boston, MA : Cengage Learning",2016
+123,,P96.M4 .G589 2016,Media & information literacy,,"Gonzales, Edward D., author.",,"Manila, Philippines : JFS Publishing Services",2016
+124,,HA29 .M533 2016,Next century mathematics : statistics and probability,,"Mercado, Jesus P., author.",,Quezon City : Phoenix Publishing House.,2016
+125,,P96.M4 .B328 2016,Media and information literacy in the 21st century,,"Bautista, Angelito P., author.",,Quezon City : Brilliant Creations Piblishing,2016
+126,,P96.M4 .C168 2016,Media & information literacy,,"Cantor, Olivia L., author.",,"Quezon City : Vibal Group, Inc.",2016
+127,,QA76.76.J38 .M453 2016,Java programming : from problem analysis to program design : lab manual,,"Mayfield, Blayne., author.",,"Andover, Massachusetts : Cengage Learning Asia Pte",2016
+128,,QA76.9.D3 .P889d 2016,Database management systems,,"Pratt, Philip J., author.",,#VALUE!,2016
+129,,QA76.9.D35 .D378 2016,Data structures and algorithms,,"Delfinado, Cecil Jose A., author.",,Quezon City : C & E Publishing,2016
+130,,QA76.73.J38 .G625 2015,Data structures and algorithms in Java,,"Goodrich, Michael T., author.",,"Hoboken, NJ : Wiley",2015
+131,,HD31 .Sch28t 2015,Introduction to management,,"Schermerhorn, John R., author.",,"Hoboken, NJ : John Wiley & Sons",2015
+132,,HD30.28 .C148 2015,Essentials of business analytics,,"Camm, Jeffrey D., author.",,"Taguig, Philippines : Cengage Learning",2015
+133,,QA76.73.B3 .Ib6 2015,Visual basic programming essentials,,"iBook Development Group, Philippines",,: iBook Publishing,2015
+134,,T58.5 .C889 2015,I.T. programming,,"Cruz, Laura M., author.",,#VALUE!,2015
+135,,T58.6 .R334i 2015,Information systems essentials,,"Reynolds, George W., author",,#VALUE!,2015
+136,,TK5105.875.I57 .Sp46 2014,Cyberethics : morality and law in cyberspace,,"Spinello, Richard A., author",,"Burlington, MA : Jones & Bartlett Learning",2014
+137,,QA76.73.J38 .H788e 2019,Big Java : early objects,,"Horstmann, Cay S., 1959-, author.",,"Hoboken, NJ : Wiley",2019
+138,,QA267 .D378 2014,Automata theory,,"Delfinado, Cecil Jose A., author.",,"Quezon City : C & E Publishing, Inc.",2014
+139,,QA76.9.S88 .K334 2014,Systems analysis and design,,"Kendall, Kenneth E., 1948-",,"Upper Saddle River, NJ ; Singapore : Pearson",2014
+140,,TK5105.5 .C762 2014,Connecting networks : companion guide,,[No author identified],,"Indianapolis, Indiana : Cisco Press",2014
+141,,T58.6 .St15f 2014,Fundamentals of information systems,,"Stair, Ralph M.",,Boston : Course Technology/Cengage Learning,2014
+142,,QA76.5 .C739 2014,Computing essentials.,,[No author identified],,#VALUE!,2014
+143,,QA76.758 .So23e 2014,Software engineering.,,[No author identified],,#VALUE!,2014
+144,,QA76.758 .F962 2014,Fundamentals of software engineering.,,[No author identified],,#VALUE!,2014
+145,,TK5105.5487 .R765 2014,Routing and switching essentials v6 : companion guide,,[No author identified],,"Indianapolis, IN : Cisco Press",2014
+146,,TK5105.548 .Sca45n 2014,Scaling networks : companion guide,,[No author identified],,Indiana : Cisco Press,2014
+147,,TK5105.59.St18n 2014,Network security essentials : applications and standards,,"Stallings, William, author.",,Boston : Pearson,2014
+148,,TK5105.5 .C497 2014,Connecting networks : companion guide,,Cisco Networking Academy,,"Indianapolis, Indiana : Cisco Press",2014
+149,,QA76.73.J38 .C152 2013,Introduction to compiler construction in a Java world,,"Campbell, Bill, 1950-",,"Boca Raton, FL : CRC Press",2013
+150,,TK5105.5 .In8 2014,Introduction to networks : companion guide,,[No author identified],,"Indianapolis, Indiana, USA : Cisco Press",2014
+151,,QA267 .Si75 2013,Introduction to the theory of computation,,"Sipser, Michael.",,"Boston, MA : Course Technology Cengage Learning",2013
+152,,QA76.9.S88 .R742 2013,System analysis and design,,"Roth, Roberta M.",,"Hoboken, N.J. : Wiley ; Chichester : John Wiley [distributor]",2013
+153,,HF5415 .P932ma 2013,Marketing foundations,,"Pride, William M., 1942- author.",,Andover : Cengage Learning Asia Pte Ltd.,2013
+154,,QA76.9.C66 .B112 2013,"A gift of fire : social, legal, and ethical issues for computing technology",,"Baase, Sara, author.",,"Boston ; Upper Saddle River, NJ : Pearson",2013
+155,,QA551 .B868 2013,Geometry : worktext,,"Buiza, Frederick D., author.",,"Quezon City, Philippines",2013
+156,,QA155 .L329 2013,College algebra,,"Larson, Ron, author.",,"Pasig City, Philippines ; Andover : Cengage Learning Asia Pte Ltd",2013
+157,,QA76.9.S88 .R723 2013,Understanding systems analysis and design,,"Rosenblatt, Harry J., author.",,#VALUE!,2013
+158,,QA76.9.S88 .Sh44 2013,Systems analysis and design,,"Shelly, Gary B., author.",,#VALUE!,2013
+159,,T58.6 .L365m 2013,Management information systems : managing the digital firm,,"Laudon, Kenneth C., 1944- author.",,Boston : Pearson,2013
+160,,QA76.76.C65 .C786 2012,Engineering a compiler,,"Cooper, Keith D.",,Amsterdam ; Boston : Elsevier/Morgan Kaufmann,2012
+161,,QA76.9.A43 .L579 2012,Introduction to the design & analysis of algorithms,,"Levitin, Anany.",,Boston : Pearson,2012
+162,,QA267.3 .L659 2012,An introduction to formal languages and automata,,"Linz, Peter.",,"Sudbury, MA : Jones & Bartlett Learning",2012
+163,,QA76.7 .L926 2012,Programming languages : principles and practice,,"Louden, Kenneth C., author.",,"Boston, MA : Course Technology/Cengage Learning",2012
+164,,TS155 .C69 2012,Operations management,,"Collier, David A.",,"Mason, OH ; Andover : Cengage",2012
+165,,QA76.9.M65 .B771 2012,Computer ethics,,"Brinkman, William ""Bo"" John, author.",,#VALUE!,2012
+166,,BC108 .Ag91 2012,A handbook in basic logic.,,"Aguas, Jove Jim S., author.",,Quezon City : Milcar Printing Press,2012
+167,,QA76.73.J38 .M295d 2012,Data structures in Java,,"Malik, D. S., author.",,Andover,2012
+168,,QA76.73.C153 .M295 2012,Creating data structures using C++ : a guide,,"Malik, D. S., author.",,Singapore : Cengage Learning Asia Pte Ltd,2012
+169,,HD30.28 .St1u 2012,Understanding fundamentals of strategic magement,,"St. John, Caron H., author.",,"Pasig City, Philippines ; Andover : Cengage Learning Asia Pte Ltd",2012
+170,,HF5549 .D416 2012,Human resource management,,"DeNisi, Angelo S., author.",,Andover : Cengage Learningn,2012
+171,,HF5635 .R571 2012,Intermediate accounting,,"Robles, Nenita S., author.",,Mandaluyong City : Millenium Books,2012
+172,,QA76.76.H94 .V855i 2012,HTML5 and CSS3 : introductory,,"Vodnik, Sasha, author.",,#VALUE!,2012
+173,,QA76.76.J38 .M295 2012,Java programming : from problem analysis to program design,,"Malik, D. S., author.",,"Andover, Massachusetts : Cengage Learning Asia Pte",2012
+174,,QA76.76.J38 .M453 2012,Java programming : from problem analysis to program design : lab manual,,"Mayfield, Blayne., author.",,"Andover, Massachusetts : Cengage Learning Asia Pte",2012
+175,,QA76.76.O63 .M184 2012,Operating systems,,"Palmer, Michael., author.",,#VALUE!,2012
+176,,QC23.2 .P569c 2012,College physics : study guide and workbook.,,"Physics Committee. Far Eastern University, author.",,"[Manila, Philippines] : [publisher not identified]",2012
+177,,T58.6 .B474m 2012,Management Information Systems,,"Bidgoli, Hossein, author.",,"Pasig City, Philippines : Cengage Learning Asia Pte Ltd",2012
+178,,QA76.9.M35 .St34 2011,Discrete mathematics for computer scientists,,"Stein, Clifford, 1965-",,"Boston, Mass. : Pearson/Addison-Wesley",2011
+179,,T58.6 .Oz1 2011,Principles of management information systems,,"Oz, Effy, author.",,#VALUE!,2011
+180,,QA76.9.S88 .K334 2011,Systems analysis and design,,"Kendall, Kenneth E., 1948-, author.",,Boston : Pearson Prentice Hall,2011
+181,,QA76.73.C153 .Sch64 2011,C++ programming : problem analysis to program design ; lab manual,,"Scholl, Judy., author.",,Andover : Cengage Learning,2011
+182,,QA76.73.C153 .M295p 2011,C++ programming : problem analysis to program design,,"Malik, D. S., author.",,"Andover, MA : Cengage Learning",2011
+183,,QA76.758 .Sch11 2011,Object-oriented and classical software engineering,,"Schach, Stephen R.",,New York : McGraw-Hill,2011
+184,,QA76.64 .H415 2011,An introduction to programming using Alice 2.2,,"Herbert, Charles W.",,"Boston, Mass. : Course Technology",2011
+185,,HD30.28 .Ir2k 2011,The management of strategy : concepts and cases,,"Ireland, R. Duane, author.",,Australia : South-Western Cengage Learning,2011
+186,,QA76 .F247 2011,Computer fundamentals and logic formulation,,"Farrell, Joyce, author.",,#VALUE!,2011
+187,,QA76.5 .Ol2c 2011,Computing essentials : making IT work for you,,"O'Leary, Timothy J., author.",,New York : McGraw-Hill,2011
+188,,QA76.5 .Sh44f 2011,Discovering computers : fundamentals,,"Shelly, Gary B., author.",,#VALUE!,2011
+189,,QA76.76.O63 .M184o 2011,Operating systems,,"McHoes, Ann McIver, 1950-, author.",,#VALUE!,2011
+190,,QA39.3 .M295 2010,Discrete mathematics : theory and applications,,"Malik, D.S.",,Australia : Cengage Learning,2010
+191,,Q342 .P785 2010,Artificial intelligence : foundations of computational agents,,"Poole, David L.",,New York : Cambridge University Press,2010
+192,,QA76.9.A43 .Sk32 2010,The algorithm design manual,,"Skiena, Steven S.",,London : Springer,2010
+193,,QA76.5 .M827n 2010,Understanding computers,,"Morley, Deborah., author.",,#VALUE!,2010
+194,,QA267 .M877 2010,"Algorithms, languages, automata, and compilers : a practical approach",,"Mozgovoy, Maxim.",,"Sudbury, Mass. : Jones and Bartlett Publishers",2010
+195,,HF5415 .K967c 2010,Principles of contemporary marketing,,"Kurtz, David L., author.",,"Australia : Mason, OH : South-Western Cengage Learning",2010
+196,,HD31 .D131n 2010,New era of management,,"Daft, Richard L., author.",,"Australia : South-Western, Cengage Learning",2010
+197,,QA76.758 .P926p 2010,Software engineering : a practitioner's approach,,"Pressman, Roger S.",,New York : McGraw-Hill Higher Education,2010
+198,,TA352 .P999u 2010,Understanding engineering mechanics : dynamics,,"Pytel, Andrew, author",,Austrilia : Cengage Learning,2010
+199,,HD30.28 .D471co 2010,Strategic management : creating competitive advantages,,"Dess, Gregory G., author.",,Boston : McGraw-Hill Education,2010
+200,,HF5635 .G378 2010,Fundamentals of accounting,,"Gilbertson, Claudia Bienias, author.",,Australia : Cengage Learning,2010
+201,,QA76.73.B3 .Os8 2010,Introduction to programming in visual basic .NET : using visual studio 2008,,"Osumo, Rio J., author.",,#VALUE!,2010
+202,,QA76.758 .P483 2010,Software engineering : theory and practice,,"Pfleeger, Shari Lawrence author.",,"Boston, Massachusetts : Pearson",2010
+203,,TK5105.59 .C481 2010,Security awareness : applying practical security in your world,,"Ciampa, Mark., author.",,#VALUE!,2010
+204,,QA76.6 .In8a 2009,Introduction to algorithms,,[No author identified],,"Cambridge, MA : The MIT Press",2009
+205,,QA76.76.C65 .M289 2009,Writing compilers and interpreters : a modern software engineering approach using Java,,"Mak, Ronald, 1953-",,"Indianapolis, Ind. : Wiley Pub. ; Chichester : John Wiley [distributor]",2009
+206,,T58.5 .T682 2009,Training for IT trainers.,,[No author identified],,USA : Hitachi Information Academy Co.,2009
+207,,QA402 .Sa84a 2009,Systems analysis and design,,"Satzinger, John W., author.",,Australia : Cengage Learning,2009
+208,,QA76.642 .L63 2009,Principles of parallel programming,,"Lin, Calvin, author.",,"Boston, Mass : Pearson/Addison Wesley",2009
+209,,QA76.73 .F247d 2009,Programming logic and design,,"Farrell, Joyce., author.",,#VALUE!,2009
+210,,QA76.73.C15 .D368 2009,C : how to program,,"Deitel, Paul J., author.",,"Jurong, Singapore : Prentice Hall",2009
+211,,QA76.9.S88 .K334 2009,Systems analysis and design,,"Kendall, Kenneth E., 1948-, author.",,Jurong Singapore : Pearson Prentice Hall,2009
+212,,QA76.9.S88 .Sh44 2009,Systems analysis and design methods,,"Shelly, Gary B., author.",,#VALUE!,2009
+213,,T58.5 .St15 2009,Introduction to information systems,,"Stair, Ralph, author.",,Australia : Cengage learning,2009
+214,,TK5103.8 .L589 2008,LAN switching and wireless : CCNA exploration companion guide,,"Lewis, Wayne",,"Indianapolis, Ind. : Cisco Press",2008
+215,,TK5105.543 .G796 2008,Routing protocols and concepts : CCNA exploration companion guide,,"Graziani, Rick.",,"Indianapolis, Ind. : Cisco Press",2008
+216,,QA76.3 .V137 2008,Accessing the WAN : CCNA exploration companion guide,,"Vachon, Bob., author.",,"Indianapolis, Ind. : Cisco Press",2008
+217,,QA276.4 .N229 2008,Statistics for engineers and scientists,,"Navidi, William Cyrus, author.",,Boston : McGraw-Hill Higher Education,2008
+218,,TK5105.5 .P182 2008,Hands-on networking fundamentals,,"Palmer, Michael, author.",,"Boston, MA : Thomson/Course Technology",2008
+219,,HD31 .B317 2008,Management : leading & collaborating in a competitive world,,"Bateman, Thomas S., author.",,"Boston, Mass, : McGraw-Hill/Irwin",2008
+220,,QA76 .An23f 2008,Computer fundamentals and logic formulation,,"Anderson, Greg., author.",,#VALUE!,2008
+221,,QA76.5 .M827 2008,Understanding computers : today and tomorrow,,"Morley, Deborah, author.",,Australia : Thompson Learning,2008
+222,,TK5105.5 .D986 2008,Network fundamentals : CCNA exploration labs and study guide,,"Dye, Mark, author.",,"Indianapolis, Ind. : Cisco Press",2008
+223,,TK5105.5 .W582 2008,Data communications and computer networks : a business user's approach,,"White, Curt M., author.",,Australia : Thomson/Course Technology,2008
+224,,QA76.76.C65 .C738 2007,"Compilers : principles, techniques, & tools",,[No author identified],,Boston : Pearson/Addison Wesley,2007
+225,,HD30.213 .Oz1 2007,Management information systems,,"Oz, Effy, author.",,Boston : Thomson Course Technology,2007
+226,,HD31 .R538i 2007,Introduction to management,,"Robbins, Stephen P., 1943-, author.",,Singapore : Pearson/Prentice Hall,2007
+227,,HF5657.4 .M311 2007,Management accounting,,[No author identified],,"Upper Saddle River, N.J. : Prentice Hall",2007
+228,,QA267 .Si75 2007,Introduction to the theory of computation,,"Sipser, Michael, author.",,Australia : Thomson Course Technology,2007
+229,,QA76.76.O63 .P182g 2007,Guide to operating systems,,"Palmer, Michael J., 1948- author.",,"Boston, Mass : Thomson/Course Technology",2007
+230,,QA76.76.O63 .F679 2006,Understanding operating systems,,"Flynn, Ida M.",,"Boston, Mass. : Thomson Course Technology",2006
+231,,QA152.3 .B328 2006,XP introductory algebra,,"Bautista, Evangeline P., author.",,"Metro Manila : Vibal Publishing HOuse, Inc.",2006
+232,,QA76.5 .Sh44 2006,Discovering computers 2006 : a gateway to information ; web enhanced ; complete,,"Shelly, Gary B., author.",,Boston,2006
+233,,HF5549 .Ed71 2005,Human resource management : concepts and applications in the Philippines,,"Edralin, Divina M.",,"Quezon City : Abiva Publishing House, Inc.",2005
+234,,HF5548.35 .H926 2004,Core concepts of Information technology auditing,,"Hunton, James E., author.",,"Hoboken, New Jersey : Wiley",2004
+235,,T58.6 .M225 2004,Management information systems,,"McLeod, Raymond, author.",,Singapore : Pearson Education (Asia) Pte. Ltd.,2004
+236,,TA351 .B392 2004,Vector mechanics for engineers. Statics,,"Beer, Ferdinand P. (Ferdinand Pierre), 1915-2003, author.",,Boston : McGraw-Hill,2004
+237,,QA76.6 .R547 2006,Simple program design : a step-by-step approach,,"Robertson, Lesley Anne, author.",,Australia : Course Technology : Cengage Learning,2006
+238,,QA76.5 .In8t 2003,Introduction to computer systems,,[No author identified],,Japan : Ministry of Economy,2003
+239,,QA76.5 .C174 2003,Computers : tools for an information age,,"Capron, H. L., author.",,"Upper Saddle River, N.J. : Prentice Hall",2003
+240,,QA39.3 .R722 2003,Discrete mathematics and its applications,,"Rosen, Kenneth H., author.",,Boston : McGraw-Hill,2003
+241,,QA76.527 .N389 2002,Network and database technologies.,,[No author identified],,Japan : Ministry of Economy,2002
+242,,QA76.73.J38 .D368 2002,Java : how to program,,"Deitel, Harvey M.",,"Upper Saddle River, N.J. : Prentice Hall",2002
+243,,T58.6 .Sy87 2002,System development and operations,,[No author identified],,Japan : Ministry of Economy,2002
+244,,TK5105.8885.A26 .M828 2001,Active server pages.,,"Morneau, Keith.",,Australia : Thomson Learning,2001
+245,,TK7871.58.O6 .C831 2001,Operational amplifiers and linear integrated circuits,,"Coughlin, Robert F., author.",,"Upper Saddle River, N.J. : Prentice Hall",2001
+246,,QA76.625 .K124 2001,Internet programming with VBScript and JavaScript,,"Kalata, Kathleen., author.",,"Boston, MA : Course Technology",2001
+247,,QA76.73.J38 .G625 2001,Data structures and algorithms in Java,,"Goodrich, Michael T., author.",,"Hoboken, NJ : Wiley",2001
+248,,QA76.758 .P483s 2001,Software engineering : theory and practice,,"Pfleeger, Shari Lawrence author.",,New Jersey : Prentice-Hall,2001
+249,,TA345 .Sch33 2000,Applied numerical methods for engineers : using MATLAB and C,,"Schilling, Robert Joseph.",,"Pacific Grove, CA : Brooks/Cole/Thomson Learning",2000
+250,,TA642 .K154 1999,Matrix analysis of structures,,"Kassimali, Aslam., author.",,Singapore : Thomson Learning,1999
+251,,TK7888.3 .Er21 1999,Introduction to digital systems,,"Ercegovac, Milos D., author.",,New York : John Wiley Sons,1999
+252,,QA76.9.F5 .F718 1999,File structures: an object-oriented approach with C++,,"Folk, Michael J., author.",,"Reading, Massachusetts : Addison-Wesley",1999
+253,,TS155 .D295 1999,Fundamentals of operations manegement,,"Davis, Mark M., 1944-, author.",,#VALUE!,1999
+254,,QA76.76.C65 .L926 1997,Compiler construction : principles and practice,,"Louden, Kenneth C.",,Boston : PWS Pub. Co.,1997
+255,,TK7868.D5 .P198 1994,Digital design,,"Pappas, Nicholas L., author.",,Minneapolis/St. Paul : West Pub. Co.,1994
+256,,TK7888.4 .H326 1993,Introduction to digital logic design,,"Hayes, John P., author.",,Reading,1993
+257,,QA76.758 .P483 1992,Software engineering : the production of quality software,,"Pfleeger, Shari Lawrence., author.",,#VALUE!,1992
+258,,QA76.758 .P926p 1997,Software engineering : a practitioner's approach,,"Pressman, Roger S., author.",,New York : McGraw-Hill,1997
+259,,HF5635 .P267 1990,Introductory accounting,,"Pasion, D.S., author.",,#VALUE!,1990
+260,,QA76.73.P2 .Sa94t 1988,Turbo Pascal : an introduction to the art and science of programming,,"Savitch, Walter J., author. 1943-",,"Menlo Park, California : Benjamin/Cummings Pub. Co.",1988
+261,,QA76.76.O63 .T155 1987,Operating systems : design and implementation,,"Tanenbaum, Andrew S., 1944- author.",,"Englewood Cliffs, N.J. : Prentice-Hall",1987
+262,,QA76.9.S88 .T464 2017,Systems analysis and design,,"Tilley, Scott, author.",,#VALUE!,2017
+263,,QA76.9.Q36 .D262 2019,Data analysis and applications.,,[No author identified],,#VALUE!,2019
+264,,QA39.3 .R722 2019,Discrete mathematics and its applications,,"Rosen, Kenneth H.. author.",,New York,2019
+265,,QA10.5 .Ab83 2019,Integrating computers and problem posing in mathematics teacher education,,"Abramovich, Sergei, author.",,#VALUE!,2019
+266,,QA309 .R685,Lecture-workbook in integral calculus,,"Roque, Cielo T., author.",,[place of publication not identified] : [publisher not identified],N/A
+267,,TA350 .En33,Engineering mechanics.,,[No author identified],,#VALUE!,N/A
+268,,QA76.585 .R269 2019,Cloud Computing Basics,,"Rehman, T.B., author.",,"Dulles, Virginia : Mercury Learning",2019
+269,,Q335 .Ar78n 2019,Artificial intelligence in the age of neural networks and brain computing,,[No author identified],,"London, United Kingdom ; San Diego, CA, United States : Academic Press, an imprint of Elsevier",2019
+270,,QA76.73.J38 .C64 2019,Computing and programming with Java,,[No author identified],,New York : Larsen & Keller Education,2019
+271,,QA76.585 .H86 2018,Mobile cloud computing : foundations and service models,,"Huang, Dijiang, author.",,"Cambridge, MA, United States : Morgan Kaufmann Publishers, an imprint of Elsevier",2018
+272,,QA76.5913 .Se51 2018,Semantic computing,,[No author identified],,"Hackensack, New Jersey : World Scientific",2018
+273,,QA76.59 .F229 2021,Mobile interface theory : embodied space and locative media,,"Farman, Jason, author.",,"New York, NY : Routledge, Taylor & Francis Group",2021
+274,,QA79.9.C643 .N912 2019,Essentials of computer organization and architecture,,"Null, Linda, author.",,"Burlington, Massachusetts : Jones & Bartlett Learning",2019
+275,,QA76.585 .Se26s 2019,"Security, privacy and digital forensics in the cloud",,"Hoboken, NJ",,Singapore : John Wiley & Sons,2019
+276,,QA76.585 .Sp34 2019,Oracle Database Exadata Cloud Service : a beginner's guide,,"Spendolini, Brian, author.",,New York : McGraw-Hill Education,2019
+277,,T58.6 .Al13 2019,"Information systems management : governance, urbanization and alignment",,"Alban, Daniel, author.",,London : Wiley-ISTE,2019
+278,,QA76.585 .M767 2018,CompTIA cloud+ study guide : exam CV0-002,,"Montgomery, Todd, author.",,"Indianapolis, Indiana : Sybex, a Wiley brand",2018
+279,,QA76.585 .W697 2018,CompTIA cloud+ certification study guide (exam CVO-002),,"Wilson, Scott 1973- author.",,New York : McGraw-Hill Education,2018
+280,,QA76.9.A25 .M454 2018,CompTIA CSA+ cybersecurity analyst certification all-in-one exam guide (exam CSO-001).,,"Maymi, Fernando, author.",,New York : McGraw-Hill Education,2018
+281,,QA297 .Ar67 2018,Numerical methods and optimization / y Dr. Hari Arora.,,"Arora, Hari., author.",,New Delhi : S. K. Kataria & Sons,2018
+282,,QA76.9.B45 .B48a 2017,"Big data analytics for sensor-network collected intelligence / edited by Hui-Huang Hsu, Chuan-Yu Chang, Ching-Hsien Hsu.",,[No author identified],,"London, United Kingdom : Academic Press, an imprint of Elsevier",2017
+283,,QA76.73.P98 .G986 2021,Introduction to computation and programming using Python : with application to computational modeling,,"Guttag, John, author.",,"Cambridge, Massachusetts : The MIT Press",2021
+284,,QA76.6 .C42 2019,Computer programming for beginners : a step-by-step guide,,"Chemuturi, Murali, 1950- author.",,"Boca Raton : Taylor & Francis, CRC Press",2019
+285,,QA76.625 .D345 2019,"Web programming with HTML5, CSS, and JavaScript",,"Dean, John, 1962- author.",,"Burlington, Massachusetts : Jones & Bartlett Learning",2019
+286,,QA76.62 .M887 2019,Functional programming for dummies,,"Mueller, John, 1958- author.",,"Hoboken, New Jersey : John Wiley & Sons, Inc.",2019
+287,,QA76.73.J38 .L613i 2019,Introduction to java programming,,"Liang, Y. Daniel., author.",,Boston : Pearson Limited,2019
+288,,QA76.73.C153 .M725 2018,Introduction to C++ programming,,"Mohammad, Wan Anis Wan author.",,"Shah Alam, Selangor : Oxford Fajar",2018
+289,,QA76.73.C153 .M295 2018,C++ programming : program design including data structures,,"Malik, D. S., author.",,Australia : Cengage Learning,2018
+290,,QA76.64 .B738 2017,"Object-oriented programming with SIMOTION : fundamentals, program examples and software concepts acc",,"Braun, Michael, author.",,Erlangen : Publicis,2017
+291,,QA76.9.D3 .T329 2017,Computer fundamentals and programming in C,,"Thareja, Reema, author.",,New Delhi,2017
+292,,QA76.73.P224 .M492t 2018,"Sams teach yourself PHP, MySQL & JavaScript all in one",,"Meloni, Julie C., author.",,"[London, England?] : Pearson",2018
+293,,QA76.73.J38 .Sa94 2019,Java : an introduction to problem solving & programming,,"Savitch, Walter J., 1943- author.",,"Harlow, United Kingdom : Pearson Education Limited",2019
+294,,QA76.73.C153 .G116 2019,Starting out with C++ : from control structures through objects,,"Gaddis, Tony, author.",,"Hoboken, NJ : Pearson",2019
+295,,HD30.23 .C148 2019,"Business analytics : descriptive, predictive, prescriptive/ Jeffrey Camm (Wake Forest University) [and six others].",,"Camm, Jeffrey D., 1958- author.",,"Boston, MA, USA : Cengage",2019
+296,,HD75.8 .M549 2018,Financing infrastructure projects : a practical guide / Tony Merna and Faisal F Al-Thani.,,"Merna, Tony (Bank director), author.",,"Westminster, London : ICE Publishing",2018
+297,,HF5548.4.M523 .M167e 2019,Excel data analysis for dummies / by Paul McFedries.,,"McFedries, Paul, author.",,"Hoboken, NJ : John Wiley & Sons, Inc.",2019
+298,,Q180.55.E4 .F915 2019,Qualitative data analysis with ATLAS.ti / Susanne Friese.,,"Friese, Susanne, author.",,London : SAGE Publications,2019
+299,,Q223 .Al45 2018,Mastering academic writing in the sciences : a step-by-step guide / Marialuisa Aliotta.,,"Aliotta, Marialuisa, author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2018
+300,,Q325.5 .G675 2018,"Machine learning : a constraint-based approach / Marco Gori, Universit√† di Siena.",,"Gori, Marco, author.",,"Cambridge, Massachusetts : Morgan Kaufmann Publishers, an imprint of Elsevier",2018
+301,,Q325.5 .L725 2019,"Machine learning for signal processing : data science, algorithms, and computational statistics / Max A. Little.",,"Little, Max A., author.",,"Oxford, United Kingdom : Oxford University Press",2019
+302,,Q335 . R917 2022,Artificial intelligence : a modern approach / Stuart J. Russell and Peter Norvig ; contributing writers: Ming-Wei Chang [and eight others].,,"Russell, Stuart J. (Stuart Jonathan), author.",,Harlow : Pearson,2022
+303,,Q360 .Sa84 2022,Concepts of information theory & coding / P.S. Satyanarayana and Andy Wilkinson.,,"Satyanarayana, P. S., author.",,United Kingdon : ED-Tech Press,2022
+304,,QA11.2 .B815 2019,"Introductory mathematics and statistics through sports : supplementary activities and writing projects / Tricia Muldoon Brown (Georgia Southern University), Eric B. Kahn (Bloomsburg University).",,"Brown, Tricia Muldoon, 1981- author.",,"Oxford, United Kingdom ; New York, NY : Oxford University Press",2019
+305,,QA267.3 .R39 2018,"Logic and language models for computer science / Dana Richards, Henry Hamburger.",,"Richards, Dana, 1955- author.",,New Jersey ; London ; Singapore ; Beijing ; Shanghai ; Hong Kong ; Taipei ; Chennai ; Tokyo : World Scientific,2018
+306,,QA267.7 .V881 2018,"Grammar of complexity : from mathematics to a sustainable world / Dimitri Volchenkov, Texas Tech University, USA.",,"Volchenkov, Dimitri, author.",,New Jersey : World Scientific,2018
+307,,QA273.A5 .G762 2020,"Probability, random variables, statistics, and random processes : fundamentals and applications / Ali Grami.",,"Grami, Ali, 1955- author.",,"Hoboken, NJ : John Wiley & Sons",2020
+308,,QA276.12 .J636s 2019,Statistics : principles and methods / Richard A. Johnson and Gouri K. Bhattacharyya.,,"Johnson, Richard A. (Richard Arnold), 1937- author.",,"[Hoboken, NJ] : Wiley",2019
+309,,QA279 .T924 2019,Applied mixed model analysis : a practical guide / Jos W.R. Twisk.,,"Twisk, Jos W. R., 1962- Authorhor",,"Cambridge ; New York, NY : Cambridge University Press",2019
+310,,QA279.2 .C55 2018,"Predictive statistics : analysis and inference beyond models / Bertrand S. Clarke (University of Nebraska, Lincoln), Jennifer L. Clarke (University of Nebraska, Lincoln).",,"Clarke, Bertrand S. (Bertrand Salem), 1963- author.",,Cambridge ; New York : Cambridge University Press,2018
+311,,QA280 .P196 2019,"Linear models and time-series analysis : regression, ANOVA, ARMA and GARCH / Marc S. Paolella.",,"Paolella, Marc S., author.",,"Hoboken, NJ : John Wiley & Sons, Inc.",2019
+312,,QA280 .W424m 2019,Multivariate Time Series Analysis and Applications / William W.S. Wei,,"Wei, William, author",,"Newark : John Wiley & Sons, Incorporated",2019
+313,,QA297 .Al54 2019,"Numerical analysis for applied science / Myron B. Allen III (University of Wyoming, Laramie, USA), Eli L. Isaacson (University of Wyoming, Laramie, USA).",,"Allen, Myron B., 1954- author.",,"Hoboken, NJ : Wiley",2019
+314,,QA76.3 .St49 2014,CompTIA security+ : review guide / James M. Stewart.,,"Stewart, James Michael.",,Indianapolis : Wiley Technology Pub.,2014
+315,,QA76.575 .Sh61 2019,"Image and video compression for multimedia engineering : fundamentals, algorithms, and standards / Yun Q. Shi and Huifang Sun.",,"Shi, Yun Q., author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2019
+316,,QA76.58 .F695 2018,Distributed algorithms : an intuitive approach / Wan Fokkink.,,"Fokkink, Wan, 1965- author.",,"Cambridge, MA : The MIT Press",2018
+317,,QA76.59 .V465 2019,Mobile app development : ta career guide/ Olivia Vaughn.,,"Vaughn, Olivia, author.",,NY : Larsen & Keller,2019
+318,,QA76.64 .D154 2018,"Object-oriented data structures using Java / Nell Dale, Daniel T. Joyce, Chip Weems.",,"Dale, Nell (Nell B.), author.",,"Burlington, MA : Jones & Bartlett Learning",2018
+319,,QA76.73 .W697 2019,Mastering deep learning fundamentals with python : the Absolute ultimate guide for beginner's to expert and step by step guide to understand python programming concepts / Richard Wilson.,,"Wilson, Richard, author.",,[Place of publication not identified] : CPSIA information can be obtained,2019
+320,,QA76.73.B3 .T413j 2019,Basic computer coding: C++,,3G E-learning,,New York : 3G E-learning LLC,2019
+321,,QA76.73.B3 .T413s 2019,Basic computer coding: CSS,,3G E-learning,,New York : 3G E-learning LLC,2019
+322,,QA76.73.J3 .An23j 2019,"Java illuminated : an active learning approach / Julie Anderson, Herve Franceschi.",,"Anderson, Julie, 1947- author.",,"Burlington, MA : Jones & Bartlett Learning",2019
+323,,QA76.73.J38 .Sch32b 2018,"Java. A beginner's guide :create, compile, and run Java Programs Today / Herbert Schildt.",,"Schildt, Herbert, author.",,New York : McGraw-Hill Education,2018
+324,,QA76.73.J38 .Sch32r 2018,Java : the complete reference / Herbert Schildt.,,"Schildt, Herbert, author.",,New York : McGraw-Hill Education,2018
+325,,QA76.73.P98 .G116 2019,Starting out with Python / Tony Gaddis.,,"Gaddis, Tony, author.",,"New York, NY : Pearson",2019
+326,,QA76.73.P98 .Oh6 2018,Python for R users : a data science approach / Ajay Ohri.,,"Ohri, A. (Ajay), author.",,"Hoboken, NJ : John Wiley & Sons, Inc.",2018
+327,,QA76.73.R3 .W675 2017,Learning statistics : concepts and applications in R / Teaching Company.,,"Williams, Talithia, host, instructor.",,"[Chantilly, Virginia] : Teaching Company",2017
+328,,QA76.73.S28 .L589 2017,"Object-orientation, abstraction, and data structures using Scala / Mark C. Lewis, Lisa L. Lacher.",,"Lewis, Mark C. (Mark Christopher), 1974- author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2017
+329,,QA76.758 .Sh23t 2020,Theoretical computer science / Er. Lata Sharma,,"Sharma, Er. Lata, author",,New Delhi,2020
+330,,QA76.758 .T789 2018,"Essentials of software engineering / Frank Tsui, Orlando Karam, Barbara Bernal.",,"Tsui, Frank F., author.",,"Burlington, Massachusetts : Jones & Bartlett Learning",2018
+331,,QA76.76 .O63 .St18 2018,Operating systems : internals and design principles / William Stallings.,,"Stallings, William, author.",,"Harlow, Essex : Pearson",2018
+332,,QA76.76.C672 .B64 2018,"Introduction to game design, prototyping, and development : from concept to playable game with Unity and C# / Jeremy Gibson Bond.",,"Bond, Jeremy Gibson, author.",,"Upper Saddle River, NJ : Addison-Wesley",2018
+333,,QA76.76.C672 .M622 2019,Artificial intelligence for games / Ian Millington.,,"Millington, Ian, author.",,Boca Raton : CRC Press,2019
+334,,QA76.76.C68 .Sa97 2018,Malware data science : attack detection and attribution / by Joshua Saxe with Hillary Sanders.,,"Saxe, Joshua, author.",,"San Francisco, CA : No Starch Press",2018
+335,,QA76.76.D47 .T329 2019,Software development: a career guide / by Marc Thatcher,,"Thatcher, Marc. author",,#VALUE!,2019
+336,,QA76.76.D57 .An28 2019,"Practical binary analysis : build your own Linux tools for binary instrumentation, analysis, and disassembly / by Dennis Andriesse.",,"Andriesse, Dennis, author.",,San Francisco : No Starch Press,2019
+337,,QA76.76.F75 .Sch65 2018,"Free software, the internet, and global communities of resistance / Sara Schoonmaker.",,"Schoonmaker, Sara, 1956- author.",,"New York, NY ; Abingdon, Oxon: Routledge",2018
+338,,QA76.76.O63 .H699 2020,"Survey of Operating Systems / Jane Holcombe, Charles Holcombe.",,"Holcombe, Jane, author.",,New York : McGraw-Hill Education,2020
+339,,QA76.76.Q35 .L317 2018,"Software quality assurance / by Claude Y. Laporte, Alain April.",,"Laporte, Claude Y., author.",,"Hoboken, NJ : IEEE Press",2018
+340,,QA76.76.S62 .B65 2017,"Speed, data, and ecosystems : excelling in a software-driven world / Jan Bosch, Chalmers University of Technology, Gothenburg, Sweden.",,"Bosch, Jan, author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2017
+341,,QA76.774.A53 .C815 2017,"Android programming concepts / Trish Cornez, University of Redlands, Richard Cornez, University of Redlands.",,"Cornez, Trish.",,#VALUE!,2017
+342,,QA76.774.M55 .T599 2018,"MCSA guide to installation, storage, and compute with Windows server 2016, exam 70-740 / Greg Tomsho.",,"Tomsho, Greg., author.",,"Clifton Park, NY : Cengage Learning",2018
+343,,QA76.9.A25 .K56 2018,"Fundamentals of information systems security / David Kim, Michael G. Solomon.",,"Kim, David (Information technology security consultant), author.",,"Burlington, MA : Jones & Bartlett Learning",2018
+344,,QA76.9.A25 .M576 2018,"Mike Meyers' CompTIA security+ certification guide, (exam SY0-501) / Mike Meyers, Scott Jernigan.",,"Meyers, Mike, 1961- author.",,San Francisco : McGraw-Hill Education,2018
+345,,QA76.9.A25 .M72 2018,Modern cryptography and computational number theory / edited by Megan Cosgrove.,,[No author identified],,USA : Clanrye International,2018
+346,,QA76.9.A25 .T424 2018,"Big data analytics with applications in insider threat detection / Bhavani Thuraisingham, Mohammad Mehedy Masud, Pallabi Parveen, Latifur Khan.",,"Thuraisingham, Bhavani M., author.",,#VALUE!,2018
+347,,QA76.9.A43 .Il6 2019,Illustrated handbook of algorithms/ [edited by] Aleksandar Mratinkovic [and 10 others].,,{No author identified],,"New York, NY : 3G E-learning LLC",2019
+348,,QA76.9.A43 .M887 2022,"Algorithms / by John Paul Mueller, Luca Massaron.",,"Mueller, John P, author.",,"Hoboken, New Jersey : John Wiley & Sons, Inc.",2022
+349,,QA76.9.A43 .St45 2019,Essential algorithms : a practical approach to computer algorithms using Python and C# / Rod Stephens.,,"Stephens, Rod, 1961- author.",,"Indianapolis, IN : Wiley",2019
+350,,QA76.9.A73 .B456 2019,Essentials of computer architecture / Earl Bermann.,,"Bermann, Earl, author.",,New York : Willford Press,2019
+351,,QA76.9.A73 .C734 2017,Essentials of computer architecture / Douglas Comer.,,"Comer, Douglas, author.",,"Boca Raton : CRC Press, Taylor & Francis Group, CRC Press is an imprint of the Taylor & Francis Group, an informa business",2017
+352,,QA76.9.B45 .G341 2021,Big data management : data governance principles for big data analytics / Peter Ghavami.,,"Ghavami, Peter K., author.",,Berlin ; Boston : Walter de Gruyter GmbH,2021
+353,,QA76.9.B56 .Ar84 2019,"Blockchain for business : discover how Blockchain networks are transforming companies, driving growth, and creating new business models / Jai Singh Arun, Jerry Cuomo, Nitin Gaur ; foreword by Don Tapscott.",,"Arun, Jai Singh, author.",,#VALUE!,2019
+354,,QA76.9.C65 .M698 2018,"Introduction to mathematical modeling and computer simulations / Vladimir Mityushev, Wojciech Nawalaniec, Natalia Rylko.",,"Mityushev, Vladimir V., author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2018
+355,,QA76.9.C66 .H117s 2018,Social engineering : the science of human hacking / Christopher Hadnagy.,,"Hadnagy, Christopher, author.",,"Indianapolis, IN : Wiley",2018
+356,,QA76.9.D26 .B984 2018,"A data scientist's guide to acquiring, cleaning and managing data in R / by Samuel Buttrey and Lyn R. Whitaker.",,"Buttrey, Samuel, author.",,"Hoboken, NJ, USA : Wiley",2018
+357,,QA76.9.D26 .C816 2018,"Database systems : design, implementation, and management / Carlos Coronel, Steven Morris.",,"Coronel, Carlos, author.",,"Boston, MA, USA : Cengage Learning",2018
+358,,QA76.9.D3 .C998 2018,"Oracle database 12C release 2 testing tools and techniques for performance and scalability / Jim Czuprynski, Deiby G√¢omez, Bert Scalzo.",,"Czuprynski, Jim, author.",,New York : McGraw-Hill Education,2018
+359,,QA76.9.D343 .G159 2019,"Network data mining and analysis / Ming Gao, East China Normal University, China, EE-Peng Lim, Singapore Management University, Singapore, David Lo, Singapore Management University, Singapore.",,"Gao, Ming (Data analyst), author.",,New Jersey : World Scientific,2019
+360,,QA76.9.D343 .Y16 2019,Introduction to algorithms for data mining and machine learning / Xin-She Yang.,,"Yang, Xin-She, author.",,"London, United Kingdom ; San Diego, CA, United States : Academic Press, an imprint of Elsevier",2019
+361,,QA76.9.D37 .D38 2019,Data warehousing essentials / Julio Bolton.,,"Bolton, Julio., author.",,"NY, USA : Larsen & Keller",2019
+362,,QA76.9.H85 .C496 2022,UX research methods for media and communication studies : an introduction to contemporary qualitative methods / Angela M. Cirucci and Urszula M. Pruchniewska.,,"Cirucci, Angela M., author.",,"New York, NY : Routledge",2022
+363,,QA76.9.H85 .Sh56 2019,"Understanding virtual reality : interface, application, and design / William R. Sherman, Alan B. Craig.",,"Sherman, William R., author.",,Amsterdam : Morgan Kaufmann,2019
+364,,QA76.9.I52 .G767 2019,"Data visualization : charts, maps, and interactive graphics / Robert Grant.",,"Grant, Robert, 1974- author.",,"Boca Raton : CRC Press, Taylor & Francis Group",2019
+365,,QA76.9.M35 .R346 2018,Introductory discrete mathematics / Christopher Rhoades.,,"Rhoades, Chirstopher., author.",,USA : Willford Press,2018
+366,,QA76.9.N38 .Ei84 2019,Introduction to natural language processing / Jacob Eisenstein.,,"Eisenstein, Jacob, author. Author.",,"Cambridge, Massachusetts : The MIT Press",2019
+367,,QA76.9.Q36 .M133 2021,"Introduction to modern modelling methods / D. Betsy McCoach, Dakota W. Cintron.",,"McCoach, D. Betsy, auteur.",,Los Angeles : SAGE,2021
+368,,T57.62 .D852 2018,Modeling and simulation : challenges and best practices for industry / Guillaume Dubois.,,"Dubois, Guillaume., author.",,"Boca Raton, FL : CRC Press",2018
+369,,T58.5 .C869 2017,Making it in IT / Terry Critchley.,,"Critchley, Terry. author.",,#VALUE!,2017
+370,,T58.5 .Ot2 2019,Information technology control and audit / Angel Otero.,,"Otero, Angel R, author.",,New York : CRS Press,2019
+371,,T58.5 .R134 2019,"Introduction to information systems / R. Kelly Rainer, Brad Prince",,"Rainer, R. Kelly, Jr., 1949-, author.",,"Singapore: John Wiley & Sons, Inc.",2019
+372,,T58.5 .V23 2018,"Information systems today : managing the digital world / Joseph Valacich (University of Arizona), Christoph Schneider (City University of Hong Kong).",,"Valacich, Joseph S., 1959- author.",,#VALUE!,2018
+373,,T59.5 .Ar78 2019,"Artificial intelligence safety and security / edited by Roman V. Yampolskiy, Computer Engineering and Computer Science, Speed School of Engineering, University of Louisville.",,[No author identified],,Boca Raton : CRC Press/Taylor & Francis Group,2019
+374,,TA1634 .M184 2018,"Machine vision algorithms and applications / edited by CarstenSteger, Markus Ulrich, and Christian Wiedemann.",,[No author identified],,"Weinheim, Germany : Wiley-VCH",2018
+375,,TJ223.M53 .G646 2019,Automata and computability : programmer's perspective / Ganesh Lalitha Gopalakrishnan.,,"Gopalakrishnan, Ganesh, author.",,"Boca Raton, FL : CRC Press/Taylor & Francis Group",2019
