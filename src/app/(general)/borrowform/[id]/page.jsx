@@ -146,7 +146,7 @@ const BorrowForm = () => {
   }
 
   const requestCode = useRef("201314214");
-  const requestType = useRef(typeParam === "book" ? "Book" : "Game");
+  const requestType = useRef(typeParam === "book" ? "Book" : "Boardgame");
   const requestDate = format(currentDate, "MM/dd/yyyy");
   const studentNumber = useRef("");
   const employeeNumber = useRef("");
