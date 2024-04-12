@@ -79,6 +79,11 @@ const AddForm = ({ selectedRows, closeModal }) => {
 
   const create = async () => {
 
+    if(barcode.current == ""){
+      barcode.current= null;
+    }
+
+
     // TODO: include barcode and copyright data in inputs
     const atts = {
       barcode: barcode.current,
@@ -96,24 +101,24 @@ const AddForm = ({ selectedRows, closeModal }) => {
 
     console.log(atts);
 
-    // Integer input validation
-    const ints = ["accession_num", "barcode"];
-    for (let i = 0; i < ints.length; i++) {
-      let input = atts[ints[i]];
+    // // Integer input validation
+    // const ints = ["accession_num", "barcode"];
+    // for (let i = 0; i < ints.length; i++) {
+    //   let input = atts[ints[i]];
 
-      let re = /[^0-9]+/;
-      console.log(re.test(input));
+    //   let re = /[^0-9]+/;
+    //   console.log(re.test(input));
 
-      if (re.test(input)) {
-        // TODO: create toast alerting invalid input
-        console.log("invalid input for " + ints[i]);
-        console.log(atts[ints[i]]);
-        return;
-      } else {
-        console.log("parsing " + ints[i] + " to integer...");
-        atts[ints[i]] = parseInt(atts[ints[i]]);
-      }
-    }
+    //   if (re.test(input)) {
+    //     // TODO: create toast alerting invalid input
+    //     console.log("invalid input for " + ints[i]);
+    //     console.log(atts[ints[i]]);
+    //     return;
+    //   } else {
+    //     console.log("parsing " + ints[i] + " to integer...");
+    //     atts[ints[i]] = parseInt(atts[ints[i]]);
+    //   }
+    // }
 
     const response = await fetch("/api/db", {
       method: "POST",
@@ -140,7 +145,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
         </Input.Wrapper>
       </Group>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Barcode</strong>} required>
+        <Input.Wrapper label={<strong>Barcode</strong>}>
           <Input
             placeholder="8293213"
             onChange={(e) => {
@@ -168,7 +173,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
             }}
           />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Accession Number</strong>} required>
+        <Input.Wrapper label={<strong>Accession Number</strong>}>
           <Input
             placeholder="3550736"
             onChange={(e) => {
@@ -177,7 +182,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
             }}
           />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Edition</strong>} required>
+        <Input.Wrapper label={<strong>Edition</strong>}>
           <Input
             placeholder="18th"
             onChange={(e) => {
@@ -239,10 +244,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
           onClick={create}
           disabled={
             !titleValue ||
-            !accNum ||
-            !callNumValue ||
-            !editionValue ||
-            !barcodeValue
+            !callNumValue 
           }
         >
           Save

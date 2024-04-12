@@ -4,6 +4,7 @@
   width: 100%;
   height: 85dvh;
   font-family: "Plus Jakarta Sans", sans-serif;
+
   label {
     width: 100px;
     font-size: 0.8em;
@@ -111,11 +112,11 @@
   gap: 0.5rem;
 }
 
-.info > h4 {
+.info>h4 {
   font-weight: normal;
 }
 
-.info > h4.infoTitle {
+.info>h4.infoTitle {
   font-weight: bold;
 }
 
@@ -198,7 +199,7 @@
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-.receiptContainer > h2 {
+.receiptContainer>h2 {
   text-decoration: underline;
 }
 
@@ -227,11 +228,11 @@
   align-items: center;
 }
 
-.receiptLabel > h4 {
+.receiptLabel>h4 {
   font-weight: normal;
 }
 
-.receiptLabel > h4:first-of-type {
+.receiptLabel>h4:first-of-type {
   font-weight: bold;
 }
 
@@ -250,11 +251,11 @@
   gap: 0.2rem;
 }
 
-.reqInfo > h4 {
+.reqInfo>h4 {
   font-weight: normal;
 }
 
-.reqInfo > h4:first-of-type {
+.reqInfo>h4:first-of-type {
   font-weight: bold;
 }
 
@@ -275,36 +276,44 @@
     overflow-x: hidden;
     height: auto;
   }
+
   .formContents {
     height: auto;
     flex-direction: column;
+
     .fieldContainer {
       width: 100%;
       min-width: 350px;
+
       h2 {
         font-size: 1.2rem;
       }
     }
   }
+
   .formContainer {
     height: auto;
     width: 100%;
     padding: 0;
     margin: 0 auto;
+
     .formFields {
       width: 80%;
       min-width: 200px;
+
       label {
         font-size: 0.8rem;
       }
     }
   }
+
   .input {
     flex-direction: column;
     justify-content: left;
     align-items: start;
     margin-bottom: 1em;
   }
+
   .formTitle {
     min-width: 100px;
   }
@@ -315,28 +324,64 @@
     height: 40%;
   }
 
+  .img_holder {
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    width: 110px;
+    height: 140px;
+    background-color: aqua;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .img_container {
+    padding: 50;
+    display: flex;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    background-color: rgb(239, 239, 239);
+    width: 120px;
+    height: 150px;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image {
+    width: 110px;
+    height: 140px;
+    justify-content: center;
+    align-items: center;
+  }
+
   .itemContainer {
     width: 100%;
   }
 }
+
 @media screen and (max-width: 1105px) {
   .mainBody {
     padding-top: 25px;
     height: 100%;
+
     .fieldContainer {
       width: 100%;
       min-width: 350px;
+
       h2 {
         font-size: 1.2rem;
       }
     }
+
     .formContainer {
       height: 100%;
     }
   }
+
   .formFields {
     width: 100%;
     min-width: 200px;
+
     label {
       font-size: 0.8rem;
     }

@@ -27,6 +27,7 @@ model Books {
   accession_num     Int?
   author            String @db.Text
   edition           String? @db.Text
+  publication_place String? @db.Text
   publisher         String? @db.Text
   copyright_date    DateTime @db.Date
   status            String? @db.Text

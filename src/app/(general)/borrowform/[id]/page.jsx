@@ -12,6 +12,7 @@ import {
   NumberInput,
   Modal,
   Input,
+  Skeleton,
 } from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
@@ -22,6 +23,8 @@ import { QRCodeSVG, QRCodeCanvas } from "qrcode.react";
 import { useParams } from "next/navigation";
 import { format, setSeconds } from "date-fns";
 import Link from "next/link";
+import Image from "next/image";
+
 const BorrowForm = () => {
   const current = usePathname();
   const currentDate = new Date();
@@ -912,7 +915,8 @@ const BorrowForm = () => {
             </div>
             <div className={styles.itemContainer}>
               <div className={styles.itemInfo}>
-                <div className={styles.imageContainer}></div>
+              {!item.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+              {item.image && (<div className={styles.img_container}><Image className={styles.image} src={item.image} width={110} height={140} alt="" /></div>)}
                 <div className={styles.itemDetails}>
                   <TextInput name="itemId" value="" type="hidden" />
 
@@ -946,10 +950,7 @@ const BorrowForm = () => {
                     <h4>{item.publisher}</h4>
                   </div>
 
-                  <div className={styles.info}>
-                    <h4>Publication Place:</h4>
-                    <h4>{item.publication_place}</h4>
-                  </div>
+
 
                   <div className={styles.info}>
                     <h4>Copyright Date:</h4>

@@ -21,6 +21,7 @@ CREATE TABLE "Books" (
     "accession_num" INTEGER,
     "author" TEXT NOT NULL,
     "edition" TEXT,
+    "publication_place" TEXT,
     "publisher" TEXT,
     "copyright_date" DATE NOT NULL,
     "status" TEXT,
