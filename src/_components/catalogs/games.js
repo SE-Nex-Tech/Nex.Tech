@@ -1,38 +1,38 @@
 import { fetchData } from "next-auth/client/_utils";
 import React, { useState, useEffect } from "react";
 import Pagination from "../pagination/pagination";
-import styles from "./books.module.scss";
-import { Skeleton, Loader, Input, rem } from "@mantine/core";
+import styles from "./games.module.scss";
+import { Skeleton, Loader, Input } from "@mantine/core";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
 
-const Books = () => {
+const Games = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [booksPerPage, setBooksPerPage] = useState(10);
-  const totalBooks = 1000;
+  const [gamesPerPage, setGamesPerPage] = useState(10);
+  const totalGames = 1000;
 
   useEffect(() => {
-    const fetchBooks = async () => {
-      const response = await fetch("/api/books");
+    const fetchGames = async () => {
+      const response = await fetch("/api/games");
       const data = await response.json();
       setData(data);
       setLoading(false);
     };
 
-    fetchBooks();
+    fetchGames();
   }, []);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth <= 768) {
-        setBooksPerPage(5); // Set booksPerPage to 5 for Mobile
+        setGamesPerPage(5); // Set booksPerPage to 5 for Mobile
       } else if (window.innerWidth <= 1024) {
-        setBooksPerPage(8); // Set booksPerPage to 8 for Tablet
+        setGamesPerPage(8); // Set booksPerPage to 8 for Tablet
       } else {
-        setBooksPerPage(10); // Set booksPerPage to 10 for Desktop
+        setGamesPerPage(10); // Set booksPerPage to 10 for Desktop
       }
     };
 
@@ -53,15 +53,15 @@ const Books = () => {
     );
   }
 
-  const indexOfLastBook = currentPage * booksPerPage;
-  const indexOfFirstBook = indexOfLastBook - booksPerPage;
-  const currentBooks = data.slice(indexOfFirstBook, indexOfLastBook);
+  const indexOfLastGame = currentPage * gamesPerPage;
+  const indexOfFirstGame = indexOfLastGame - gamesPerPage;
+  const currentGames = data.slice(indexOfFirstGame, indexOfLastGame);
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
   const searchItems = async (key) => {
     if (key.length == 0) {
-      const reset = await fetch("/api/books");
+      const reset = await fetch("/api/games");
 
       const result = await reset.json();
       setData(result);
@@ -70,7 +70,7 @@ const Books = () => {
     const response = await fetch("/api/db", {
       method: "POST",
       body: JSON.stringify({
-        entity: "books",
+        entity: "games",
         search: 1,
         dashboard: 1,
         contains: key,
@@ -91,21 +91,21 @@ const Books = () => {
         onChange={(event) => searchItems(event.currentTarget.value)}
       />
       <div className={styles.book_container}>
-        {currentBooks.map((book, index) => (
-          <Link href={`/books/${book.id}`} className={styles.container}>
-            <div key={book.id}>
+        {currentGames.map((game, index) => (
+          <Link href={`/games/${game.id}`} className={styles.container}>
+            <div key={game.id}>
               <Skeleton className={styles.img_holder}></Skeleton>
-              <h2 className={styles.book_title}>{book.title}</h2>
-              <p className={styles.book_author}>{book.author}</p>
-              <p className={styles.book_status}>{book.status}</p>
+              <h2 className={styles.book_title}>{game.title}</h2>
+              <p className={styles.book_author}>{game.accession_number}</p>
+              <p className={styles.book_status}>{game.publisher}</p>
             </div>
           </Link>
         ))}
       </div>
 
       <Pagination
-        booksPerPage={booksPerPage}
-        totalBooks={totalBooks}
+        booksPerPage={gamesPerPage}
+        totalBooks={totalGames}
         currentPage={currentPage}
         paginate={paginate}
       />
@@ -113,4 +113,4 @@ const Books = () => {
   );
 };
 
-export default Books;
+export default Games;

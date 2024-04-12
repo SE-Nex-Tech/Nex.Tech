@@ -81,34 +81,3 @@
     background-color: #840f34;
   }
 }
-
-@media screen and (max-width: 820px) {
-  .center {
-    margin-top: 1em;
-    height: auto !important;
-  }
-
-  .main_container {
-    min-width: 260px !important;
-  }
-  .row_one {
-    flex-direction: column !important;
-    gap: 1em;
-  }
-  .row_two {
-    flex-direction: column;
-    gap: 1em;
-  }
-
-  .information {
-    width: 220px;
-    font-size: 0.7em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .btn {
-    width: 200px;
-  }
-}

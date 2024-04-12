@@ -4,7 +4,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
 
 const StaffFields = (transaction) => {
-    const selectedBook = transaction.book
+    const selectedBook = transaction.material
     const ticket = transaction.borrowTicket
     const client = transaction.client
 

@@ -17,7 +17,11 @@ const bookQ = async (pc, id) => {
       },
     },
     include: {
-      bookRequests: true,
+      bookRequests: {
+        include: {
+          book: true,
+        }
+      },
       boardgameRequests: true,
       user_student: true,
       user_faculty: true,
@@ -29,9 +33,36 @@ const bookQ = async (pc, id) => {
   });
 };
 
-const gameQ = async (pc) => {
+const gameQ = async (pc, id) => {
   // TODO: fetch game queue
   // implement after working boardgame seed
+  if (pc == undefined) {
+    pc = new PrismaClient();
+  }
+  return await pc.requests.findMany({
+    where: {
+      borrow_date: null,
+      return_date: null,
+      type: "Game",
+      boardgameRequests: {
+        boardgame_id: id,
+      },
+    },
+    include: {
+      bookRequests: true,
+      boardgameRequests: {
+        include: {
+          boardgame: true,
+        }
+      },
+      user_student: true,
+      user_faculty: true,
+      user_staff: true,
+    },
+    orderBy: {
+      date: "asc",
+    },
+  });
 };
 
 const allQ = async (pc) => {
@@ -46,7 +77,11 @@ const allQ = async (pc) => {
           book: true,
         },
       },
-      boardgameRequests: true,
+      boardgameRequests: {
+        include: {
+          boardgame: true,
+        }
+      },
       user_student: true,
       user_faculty: true,
       user_staff: true,
@@ -80,9 +115,29 @@ const booksIU = async (pc) => {
   return iu;
 };
 
-const giu = async (pc) => {
+const gamesIU = async (pc) => {
   // TODO: implement query for Games-In-Use
   // after working boardgame seed
+  const data = await pc.requests.findMany({
+    where: {
+      return_date: null,
+      borrow_date: {
+        not: null,
+      },
+      type: "Game",
+    },
+    include: {
+      boardgameRequests: {
+        include: {
+          boardgame: true,
+        },
+      },
+    },
+  });
+
+  const iu = data.map((r) => r.boardgameRequests.boardgame);
+
+  return iu;
 };
 
-export { bookQ, gameQ, allQ, booksIU, giu };
+export { bookQ, gameQ, allQ, booksIU, gamesIU };

@@ -13,3 +13,9 @@
   border-radius: 10px;
   gap: 0.8em;
 }
+
+@media screen and (max-width: 820px) {
+  .navigator {
+    min-width: 260px !important;
+  }
+}

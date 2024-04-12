@@ -1,36 +1,35 @@
 import { Button, Group, Stack, Select, Input, Table } from "@mantine/core";
 import React, { useState } from "react";
-import TableBody from "../tables/table";
+import TableBody from "../tables/tableBooks";
 
 const ArchiveForm = ({ selectedRows, closeModal }) => {
-
   const archiveRecords = async () => {
-    console.log(selectedRows.length)
-    console.log(selectedRows)
+    console.log(selectedRows.length);
+    console.log(selectedRows);
 
-    const ids = []
+    const ids = [];
     for (let i = 0; i < selectedRows.length; i++) {
       ids.push(selectedRows[i].actual_id);
     }
 
-    console.log('IDs identified')
-    console.log(ids)
+    console.log("IDs identified");
+    console.log(ids);
 
-    const response = await fetch('/api/db', {
-      method: 'POST',
+    const response = await fetch("/api/db", {
+      method: "POST",
       body: JSON.stringify({
-        entity: 'books',
+        entity: "books",
         delete: 1,
         where: {
           id: {
-            in: ids
-          }
-        }
-      })
-    })
+            in: ids,
+          },
+        },
+      }),
+    });
 
-    closeModal()
-  }
+    closeModal();
+  };
 
   return (
     <>
@@ -50,10 +49,20 @@ const ArchiveForm = ({ selectedRows, closeModal }) => {
       ))}
 
       <Stack justify="center" mt="xl">
-        <Button variant="filled" color="rgb(141, 16, 56)" radius="xl" onClick={archiveRecords}>
+        <Button
+          variant="filled"
+          color="rgb(141, 16, 56)"
+          radius="xl"
+          onClick={archiveRecords}
+        >
           Archive
         </Button>
-        <Button variant="outline" color="rgb(141, 16, 56)" radius="xl" onClick={closeModal}>
+        <Button
+          variant="outline"
+          color="rgb(141, 16, 56)"
+          radius="xl"
+          onClick={closeModal}
+        >
           Cancel
         </Button>
       </Stack>

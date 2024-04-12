@@ -13,29 +13,36 @@ import Sort from "@/_components/sort/sort";
 import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
-import TableBody from "@/_components/tables/table";
+import TableBody from "@/_components/tables/tableBooks";
 import sortby from "./sortby";
 
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
+import TableBodyGames from "@/_components/tables/tableGames";
 
 const Database = () => {
   const current = usePathname();
 
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const [refreshKey, setRefreshKey] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/books");
+      const response2 = await fetch("/api/games");
       const data = await response.json();
+      const data2 = await response2.json();
       setData(data);
+      setData2(data2);
       setLoading(false);
     };
 
     fetchData();
-  }, []);
+  }, [refreshKey]);
 
   const { data: session, status } = useSession();
 
@@ -107,7 +114,10 @@ const Database = () => {
             leftSection={<IconSearch size={16} />}
             radius="xl"
             w={rem(300)}
-            onChange={(event) => searchItems(event.currentTarget.value)}
+            onChange={(event) => {
+              searchItems(event.currentTarget.value);
+              setSelectedRows([]);
+            }}
           />
           <NativeSelect
             radius="xl"
@@ -136,7 +146,10 @@ const Database = () => {
               <option value="author_descending">Descending</option>
             </optgroup>
           </NativeSelect>
-          <AddButton selectedRows={selectedRows} />
+          <AddButton
+            selectedRows={selectedRows}
+            setRefreshKey={setRefreshKey}
+          />
 
           <EditButton selectedRows={selectedRows} />
           <DeleteButton selectedRows={selectedRows} />
@@ -170,7 +183,15 @@ const Database = () => {
                 setSelectedRows={setSelectedRows}
               />
             </Tabs.Panel>
-            <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
+            <Tabs.Panel value="games">
+              <TableBodyGames
+                data={data2}
+                pageSize={6}
+                disablePageButton={false}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+            </Tabs.Panel>
           </Tabs>
         </div>
       </Center>

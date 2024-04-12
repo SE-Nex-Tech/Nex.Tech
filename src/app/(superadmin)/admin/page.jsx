@@ -11,37 +11,46 @@ import {
 import TableAuth from "@/_components/superadmin/tableAuth";
 import TableAdmin from "@/_components/superadmin/tableAdmin";
 import TablePassword from "@/_components/superadmin/tablePassword";
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
+
+import { useSession, getSession } from "next-auth/react";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
 
 const Admin = () => {
-
-  const [admin, setAdmin] = useState([])
-  const [admins, setAdmins] = useState([])
-  const [authorize, setAuthorize] = useState([])
-  const [newpass, setNewpass] = useState([])
-  const [rc, setRC] = useState(0)
+  const [admin, setAdmin] = useState([]);
+  const [admins, setAdmins] = useState([]);
+  const [authorize, setAuthorize] = useState([]);
+  const [newpass, setNewpass] = useState([]);
+  const [rc, setRC] = useState(0);
+  const { data: session, status } = useSession();
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await fetch('/api/superadmin/data', {
-        method: 'POST',
-        body: JSON.stringify({})
-      })
-      const data = await response.json()
+      const response = await fetch("/api/superadmin/data", {
+        method: "POST",
+        body: JSON.stringify({}),
+      });
+      const data = await response.json();
 
-      console.log('REFRESING CONTENT ==================================================')
+      console.log(
+        "REFRESING CONTENT =================================================="
+      );
 
-      console.log(data)
+      console.log(data);
       setAdmin(data);
-      setAdmins(data.admins)
-      setAuthorize(data.authorize)
-      setNewpass(data.newpass)
-    }
+      setAdmins(data.admins);
+      setAuthorize(data.authorize);
+      setNewpass(data.newpass);
+    };
 
-    fetchData()
-  }, [rc])
+    fetchData();
+  }, [rc]);
 
   const iconStyle = { width: rem(12), height: rem(12) };
+
+  if (status === "unauthenticated") {
+    return <Unauthenticated />;
+  }
   return (
     <Center
       maw="80%"

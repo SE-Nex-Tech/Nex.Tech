@@ -5,30 +5,43 @@ const prisma = new PrismaClient();
 
 export async function borrow(req) {
   // const books = await prisma.books.findMany();
-  const books = await prisma.books.findUnique({
-    where: {
-      id: parseInt(req['materialID'])
-    }
-  });
-  console.log("Book to borrow: ----------------");
-  console.log(books);
+  let material
+  if (req['entity'] === 'book') {
+    material = await prisma.books.findUnique({
+      where: {
+        id: parseInt(req['materialID'])
+      }
+    });
+  } else {
+    material = await prisma.boardgames.findUnique({
+      where: {
+        id: parseInt(req['materialID'])
+      }
+    })
+  }
+  console.log("Material to borrow: ----------------");
+  console.log(material);
 
 
-    switch (req['user_type']) {
-      case 'Student':
-        return await prisma.requests.create({
-          data: borrow_bookStudent(req)
-          });
-      case 'Faculty':
-        return await prisma.requests.create({
-          data: borrow_bookFaculty(req)
-          });
-      case 'Staff':
-        return await prisma.requests.create({
-            data: borrow_bookStaff(req)
-          });
-      default:
-        return null;
+  let temp;
+  switch (req['user_type']) {
+    case 'Student':
+      temp = borrow_Student(req)
+      return await prisma.requests.create({
+        data: getMaterial(req, temp)
+        });
+    case 'Faculty':
+      temp = borrow_Faculty(req)
+      return await prisma.requests.create({
+        data: getMaterial(req, temp)
+        });
+    case 'Staff':
+      temp = borrow_Faculty(req)
+      return await prisma.requests.create({
+          data: getMaterial(req, temp)
+        });
+    default:
+      return null;
   }
   // console.log('book requests');
   // console.log(await prisma.bookrequest.findMany());
@@ -37,7 +50,7 @@ export async function borrow(req) {
 
 }
 
-function borrow_bookStudent(params) {
+function borrow_Student(params) {
   return {
     date: params['date'],
     borrow_date: null,
@@ -45,15 +58,6 @@ function borrow_bookStudent(params) {
     status: 'Pending Borrow',
     type: params['type'],
     user_type: params['user_type'],
-    bookRequests: {
-      create: {
-        book: {
-          connect: {
-            id: params['materialID']
-          }
-        }
-      }
-    },
     user_student: {
       create: {
         student_num: params['studentID'],
@@ -68,8 +72,7 @@ function borrow_bookStudent(params) {
   }
 }
 
-
-function borrow_bookFaculty(params) {
+function borrow_Faculty(params) {
   return {
     date: params['date'],
     borrow_date: null,
@@ -77,15 +80,6 @@ function borrow_bookFaculty(params) {
     status: 'Pending Borrow',
     type: params['type'],
     user_type: params['user_type'],
-    bookRequests: {
-      create: {
-        book: {
-          connect: {
-            id: params['materialID']
-          }
-        }
-      }
-    },
     user_faculty: {
       create: {
         employee_num: params['employeeID'],
@@ -99,7 +93,7 @@ function borrow_bookFaculty(params) {
 
 }
 
-function borrow_bookStaff(params) {
+function borrow_Staff(params) {
   return {
     date: params['date'],
     borrow_date: null,
@@ -107,15 +101,6 @@ function borrow_bookStaff(params) {
     status: 'Pending Borrow',
     type: params['type'],
     user_type: params['user_type'],
-    bookRequests: {
-      create: {
-        book: {
-          connect: {
-            id: params['materialID']
-          }
-        }
-      }
-    },
     user_staff: {
       create: {
         employee_num: params['employeeID'],
@@ -128,3 +113,28 @@ function borrow_bookStaff(params) {
 
 }
 
+function getMaterial(params, data) {
+  if (params['entity'] === 'book') {
+    data['bookRequests'] = {
+      create: {
+        book: {
+          connect: {
+            id: params['materialID']
+          }
+        }
+      }
+    }
+  } else {
+    data['boardgameRequests'] = {
+      create: {
+        boardgame: {
+          connect: {
+            id: params['materialID']
+          }
+        }
+      }
+    }
+  }
+
+  return data
+}

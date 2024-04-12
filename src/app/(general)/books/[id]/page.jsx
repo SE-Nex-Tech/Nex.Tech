@@ -32,6 +32,29 @@ const BookPage = () => {
     fetchBook();
   }, [id]);
 
+  const [showHeader, setShowHeader] = useState(true);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth <= 1105) {
+        setIsMobile(true);
+        setShowHeader(false);
+      } else {
+        setIsMobile(false);
+        setShowHeader(true);
+      }
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   if (!book) {
     return <div>Book not found</div>;
   }
@@ -43,7 +66,11 @@ const BookPage = () => {
   return (
     <>
       <div>
-        <Header currentRoute={"/books"} />
+        {showHeader && (
+          <div>
+            <Header currentRoute={"/books"} />
+          </div>
+        )}
       </div>
       <Center className={styles.center} maw="100%" m={25} h="81.5%">
         <Navigator buttonText={"Go Back"} showIcon disableLink={false} />
@@ -77,7 +104,7 @@ const BookPage = () => {
                   <p>{book.status}</p>
                 </div>
               </div>
-              <Link href={`/borrowform/${book.id}`}>
+              <Link href={`/borrowform/${book.id}?type=book`}>
                 <button className={styles.btn}>Borrow</button>
               </Link>
             </div>
