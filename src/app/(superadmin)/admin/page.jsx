@@ -39,7 +39,7 @@ const Admin = () => {
 
       const response2 = await fetch("/api/superadmin/valid", {
         method: "POST",
-        body: JSON.stringify({}),
+        body: JSON.stringify(),
       });
       const data2 = await response2.json();
 
@@ -48,6 +48,7 @@ const Admin = () => {
       setAuthorize(data.authorize);
       setNewpass(data.newpass);
       setValidAdmins(data2);
+      console.log(JSON.stringify(validAdmins));
     };
 
     fetchData();
@@ -55,10 +56,7 @@ const Admin = () => {
 
   const iconStyle = { width: rem(12), height: rem(12) };
 
-  const superAdmins = validAdmins.filter(
-    (admin) => admin.email === session.user.email
-  );
-  if (superAdmins.length === 0 || status === "unauthenticated") {
+  if (validAdmins.length === 0 || status === "unauthenticated") {
     return <Unauthenticated />;
   }
 
