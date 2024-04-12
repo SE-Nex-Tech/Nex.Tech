@@ -222,6 +222,7 @@ const Dashboard = () => {
                         author={r.author}
                         barcode={r.barcode}
                         status={r.status}
+                        image={r.image}
                       />
                     ))}
                   </Tabs.Panel>
@@ -232,6 +233,7 @@ const Dashboard = () => {
                         title={r.title}
                         publisher={r.publisher}
                         status={r.status}
+                        image={r.image}
                       />
                     ))}
                   </Tabs.Panel>
