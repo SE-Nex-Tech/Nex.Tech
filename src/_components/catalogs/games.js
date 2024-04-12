@@ -94,7 +94,7 @@ const Games = () => {
       <div className={styles.book_container}>
         {currentGames.map((game, index) => (
           <Link href={`/games/${game.id}`} className={styles.container}>
-            <div key={game.id}>
+            <div style={{maxWidth: "250px"}} key={game.id}>
             {!game.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
             {game.image && (<div className={styles.img_container}><Image className={styles.image} src={game.image} width={110} height={140} alt="" /></div>)}
               <h2 className={styles.book_title}>{game.title}</h2>
