@@ -21,6 +21,9 @@ import {
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import Status from "@/_components/dashboard/status";
 import Queuer from "@/_components/dashboard/qStatus";
+import TableBodyGames from "@/_components/tables/tableGames";
+import TableBody from "@/_components/tables/tableBooks";
+import StatusGames from "@/_components/dashboard/statusGames";
 
 const getUserCreds = (element) => {
   switch (element.user_type) {
@@ -49,11 +52,13 @@ const getUserCreds = (element) => {
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
+  const [data2, setData2] = useState([]);
   const [loading, setLoading] = useState(true);
   const [queue, setQueue] = useState([]);
   const [biu, setBiu] = useState([]);
 
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
+  const columnNamesGames = Object.values(Prisma.BoardgamesScalarFieldEnum);
 
   const headerMapping = {
     id: "ID",
@@ -67,12 +72,36 @@ const Dashboard = () => {
     publisher: "Publisher",
   };
 
+  const headerMappingGames = {
+    id: "ID",
+    call_num: "Call Number",
+    title: "Title",
+    accession_num: "Accession Number",
+    publisher: "Publisher",
+    copyright_date: "Copyright Date",
+  };
+
   const visibleColumns = ["id", "author", "title", "publisher"];
+
+  const visibleColumnsGames = [
+    "id",
+    "call_num",
+    "title",
+    "accession_num",
+    "publisher",
+    "copyright_date",
+  ];
 
   const columns = columnNames.map((columnName) => ({
     header: headerMapping[columnName] || columnName,
     accessorKey: columnName,
   }));
+
+  const columnsGames = columnNamesGames.map((columnNamesGames) => ({
+    header: headerMappingGames[columnNamesGames] || columnNamesGames,
+    accessorKey: columnNamesGames,
+  }));
+
   const table = useReactTable({
     data,
     columns,
@@ -84,21 +113,15 @@ const Dashboard = () => {
       },
     },
   });
-
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/books");
+      const response2 = await fetch("/api/games");
       const data = await response.json();
+      const data2 = await response2.json();
       setData(data);
+      setData2(data2);
       setLoading(false);
-
-      let res = await fetch("/api/queue", {
-        method: "POST",
-        body: JSON.stringify({}),
-      });
-      let dat = await res.json();
-      setQueue(dat.allq);
-      setBiu(dat.biu);
     };
 
     fetchData();
@@ -188,19 +211,26 @@ const Dashboard = () => {
                     ))}
                   </Tabs.Panel>
 
-                  <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
+                  <Tabs.Panel value="games">
+                    <StatusGames title publisher status />
+                  </Tabs.Panel>
 
                   <Tabs.Panel value="queue">
                     {queue.map((r) => {
-                      console.log(r)
-                      return (<Queuer
-                        title={r.type == "Book" ? r.bookRequests.book.title : r.boardgameRequests.boardgame.title}
-                        borrower={getUserCreds(r).name}
-                        email={getUserCreds(r).email}
-                        user_type={r.user_type}
-                      />)
-                    }
-                    )}
+                      console.log(r);
+                      return (
+                        <Queuer
+                          title={
+                            r.type == "Book"
+                              ? r.bookRequests.book.title
+                              : r.boardgameRequests.boardgame.title
+                          }
+                          borrower={getUserCreds(r).name}
+                          email={getUserCreds(r).email}
+                          user_type={r.user_type}
+                        />
+                      );
+                    })}
                   </Tabs.Panel>
                 </Tabs>
               </div>
@@ -240,90 +270,22 @@ const Dashboard = () => {
               </Tabs.List>
 
               <Tabs.Panel value="books">
-                <table className={styles.database_table}>
-                  {table.getHeaderGroups().map((headerGroup) => (
-                    <tr key={headerGroup.id} className={styles.database_header}>
-                      {headerGroup.headers
-                        .filter((header) =>
-                          [
-                            "id",
-                            "book_author",
-                            "book_title",
-                            "book_publisher",
-                          ].includes(header.id),
-                        )
-                        .map((header) => (
-                          <th key={header.id}>
-                            {flexRender(
-                              header.column.columnDef.header,
-                              header.getContext(),
-                            )}
-                          </th>
-                        ))}
-                    </tr>
-                  ))}
-
-                  <tbody className={styles.database_body}>
-                    {table.getRowModel().rows.map((row) => (
-                      <tr key={row.id} className={styles.database_body_row}>
-                        {row
-                          .getVisibleCells()
-                          .filter((cell) =>
-                            visibleColumns.includes(
-                              cell.column.columnDef.accessorKey,
-                            ),
-                          )
-                          .map((cell) => (
-                            <td>
-                              {flexRender(
-                                cell.column.columnDef.cell,
-                                cell.getContext(),
-                              )}
-                            </td>
-                          ))}
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-                <div className={styles.page_btn}>
-                  <Button
-                    variant="filled"
-                    color="rgb(141, 16, 56)"
-                    radius="xl"
-                    onClick={() => table.setPageIndex(0)}
-                  >
-                    First
-                  </Button>
-                  <Button
-                    variant="filled"
-                    color="rgb(141, 16, 56)"
-                    radius="xl"
-                    onClick={() => table.previousPage()}
-                    disabled={!table.getCanPreviousPage()}
-                  >
-                    Previous
-                  </Button>
-                  <Button
-                    variant="filled"
-                    color="rgb(141, 16, 56)"
-                    radius="xl"
-                    onClick={() => table.nextPage()}
-                    disabled={!table.getCanNextPage()}
-                  >
-                    Next
-                  </Button>
-                  <Button
-                    variant="filled"
-                    color="rgb(141, 16, 56)"
-                    radius="xl"
-                    onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                  >
-                    Last
-                  </Button>
-                </div>
+                <TableBody
+                  data={data}
+                  pageSize={4}
+                  disablePageButton={false}
+                  disableCheckbox={true}
+                />
               </Tabs.Panel>
 
-              <Tabs.Panel value="games">Messages tab content</Tabs.Panel>
+              <Tabs.Panel value="games">
+                <TableBodyGames
+                  data={data2}
+                  pageSize={4}
+                  disablePageButton={false}
+                  disableCheckbox={true}
+                />
+              </Tabs.Panel>
             </Tabs>
           </div>
           <div className={styles.reports}>

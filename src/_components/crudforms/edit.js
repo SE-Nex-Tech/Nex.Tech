@@ -1,6 +1,6 @@
 import { Button, Group, Select, Input, Table, Stack, Center } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
-import TableBody from "../tables/table";
+import TableBody from "../tables/tableBooks";
 import Image from "next/image";
 
 const EditForm = ({ selectedRows, closeModal }) => {
