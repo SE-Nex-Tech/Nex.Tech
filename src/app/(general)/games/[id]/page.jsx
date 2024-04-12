@@ -47,7 +47,7 @@ const GamePage = () => {
         <Header currentRoute={"/games"} />
       </div>
       <Center className={styles.center} maw="100%" m={25} h="81.5%">
-        <Navigator buttonText={"Go Back"} showIcon disableLink={false} />
+        <Navigator buttonText={"Go Back"} showIcon disableLink={false} link={"games"} />
         <div className={styles.main_container}>
           <div className={styles.row_one}>
             <div className={styles.main_information}>
