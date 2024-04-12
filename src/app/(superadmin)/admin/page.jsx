@@ -19,6 +19,7 @@ import Unauthenticated from "@/_components/authentication/unauthenticated";
 const Admin = () => {
   const [admin, setAdmin] = useState([]);
   const [admins, setAdmins] = useState([]);
+  const [validAdmins, setValidAdmins] = useState([]);
   const [authorize, setAuthorize] = useState([]);
   const [newpass, setNewpass] = useState([]);
   const [rc, setRC] = useState(0);
@@ -36,11 +37,18 @@ const Admin = () => {
         "REFRESING CONTENT =================================================="
       );
 
-      console.log(data);
+      const response2 = await fetch("/api/superadmin/valid", {
+        method: "POST",
+        body: JSON.stringify(),
+      });
+      const data2 = await response2.json();
+
       setAdmin(data);
       setAdmins(data.admins);
       setAuthorize(data.authorize);
       setNewpass(data.newpass);
+      setValidAdmins(data2);
+      console.log(JSON.stringify(validAdmins));
     };
 
     fetchData();
@@ -48,9 +56,10 @@ const Admin = () => {
 
   const iconStyle = { width: rem(12), height: rem(12) };
 
-  if (status === "unauthenticated") {
+  if (validAdmins.length === 0 || status === "unauthenticated") {
     return <Unauthenticated />;
   }
+
   return (
     <Center
       maw="80%"

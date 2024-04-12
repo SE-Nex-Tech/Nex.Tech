@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-1. [Node.js](https://nodejs.org/) and [PostgreSQL](https://www.postgresql.org/) installed on your machine.
+1. [Node.js](https://nodejs.org/), [Git](https://git-scm.com/downloads), and [PostgreSQL](https://www.postgresql.org/) installed on your machine.
 2. A code editor (e.g., Visual Studio Code, Sublime Text).
 
 ## Steps
@@ -17,18 +17,20 @@ Open a terminal and navigate to the directory where you want to clone the reposi
 git clone https://github.com/SE-Nex-Tech/Nex.Tech.git
 ```
 
+### Make sure you are under the repository directory before proceeding to the next steps.
+
+Go to the main branch and fetch the latest changes.
+```bash
+git checkout main
+git pull
+```
+
 ### 2. Install dependencies
 
 This command installs the necessary Node.js modules specified in the package.json file.
 
-npm:
 ```bash
-npm install
-```
-OR
-yarn:
-```bash
-yarn
+yarn #or yarn install
 ```
 
 ### 3. PostgreSQL Setup
@@ -37,44 +39,33 @@ In the .env file, change DATABASE_URL based on your personal setup.
 
 ### 4. Populate using Prisma
 
-Delete prisma/migrations folder.
-Run the following commands:
+**Delete prisma/migrations folder**.
+Then, run the following commands:
 ```bash
-npx prisma migrate dev
+npx prisma migrate dev #then y, then name it as seed
 npx prisma db seed
+node prisma/request_seed.js
 ```
 
-### 5.1 Run the server in development mode
+### 5.1 Build the app and run the server (recommended for non-developers)
+
+Enter the commands:
+```bash
+yarn build
+yarn start
+```
+
+### OR
+
+### 5.2 Run the server in development mode
 
 Start the development server with the following command:
 
-npm:
-```bash
-npm run dev
-```
-
-yarn:
 ```bash
 yarn dev
 ```
 
 > Note: development mode is not the optimized version of the app; waiting times will be slow. Build the app instead if you don't need to debug the source code.
-
-### 5.2 Build the app and run the server
-
-Enter the commands for
-
-npm:
-```bash
-npm run build
-npm run start
-```
-
-yarn:
-```bash
-yarn build
-yarn start
-```
 
 ### 6. Access the App
 
@@ -82,8 +73,9 @@ Open a web browser and navigate to http://localhost:3000. You should see the Nex
 
 Any changes you make to the code will automatically trigger hot reloading, so you can see updates without restarting the server.
 
-### 7. Access Prisma Studio
-Run this command:
+### Optional Step: Access Prisma Studio (For Database Checking)
+Run this command on a different terminal:
 ```bash
 npx prisma studio
 ```
+Prisma Studio will be accessible at http://localhost:5432.
