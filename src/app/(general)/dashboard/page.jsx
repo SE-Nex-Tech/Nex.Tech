@@ -21,9 +21,12 @@ import {
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import Status from "@/_components/dashboard/status";
 import Queuer from "@/_components/dashboard/qStatus";
+import Reports from "../reports/page";
+
 import TableBodyGames from "@/_components/tables/tableGames";
 import TableBody from "@/_components/tables/tableBooks";
 import StatusGames from "@/_components/dashboard/statusGames";
+
 
 const getUserCreds = (element) => {
   switch (element.user_type) {
@@ -289,7 +292,10 @@ const Dashboard = () => {
             </Tabs>
           </div>
           <div className={styles.reports}>
-            <div className={styles.header_reports}>Reports</div>
+            <div className={styles.header_reports}>
+              <h1>Reports</h1>
+            </div>
+            <Reports hideHeader />
           </div>
         </div>
       </Center>

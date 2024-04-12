@@ -145,6 +145,8 @@
     width: 50%;
     border-radius: 15px;
     padding: 2em;
+    height: 100%;
+    overflow-y: auto;
   }
 
   .root2 {
@@ -221,4 +223,13 @@
 
 .page_btn button:hover {
   background-color: #7c0e31;
+}
+
+.header_reports {
+  h1 {
+    font-size: 1.5em;
+    font-family: "Plus Jakarta Sans", sans-serif;
+    font-weight: bold;
+    margin-bottom: 1em;
+  }
 }
