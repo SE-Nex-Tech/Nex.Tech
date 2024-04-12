@@ -125,6 +125,16 @@ const Dashboard = () => {
       setData(data);
       setData2(data2);
       setLoading(false);
+
+      let res = await fetch('/api/queue', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: 1
+        })
+      })
+      let d = await res.json()
+      setBiu(d.biu)
+      setQueue(d.allq)
     };
 
     fetchData();
