@@ -1,9 +1,12 @@
-import { Button, Group, Select, Input, Table, Stack } from "@mantine/core";
+import { Button, Group, Select, Input, Table, Stack, Center } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
+import Image from "next/image";
 
 const EditForm = ({ selectedRows, closeModal }) => {
   const [selectedValue, setSelectedValue] = useState("");
+
+
 
   const handleSelectChange = (value) => {
     setSelectedValue(value);
@@ -17,8 +20,72 @@ const EditForm = ({ selectedRows, closeModal }) => {
   const edition = useRef(selectedRows[0].edition);
   const pubplace = useRef(selectedRows[0].publication_place);
   const publisher = useRef(selectedRows[0].publisher);
+  const image = useRef(selectedRows[0].image);
+
+
+
+  const [imageData, setImageData] = useState(image.current);
+
+  const fileInputRef = useRef(null);
+
+  // When the file is selected, set the file state
+  const onFileChange = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    if (e.target.files[0]) {
+
+      const base64 = toBase64(e.target.files[0]);
+
+      base64.then(result => {
+        console.log(result);
+        image.current = result;
+        setImageData(image.current);
+      }).catch(error => {
+
+        console.error(error);
+      });
+
+
+
+    }
+
+  };
+
+  // Convert a file to base64 string
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const deleteImage = async () => {
+    image.current = null;
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Resetting the value (not directly setting it)
+    }
+
+    setImageData(null);
+  }
+
+
+
 
   const editRecord = async () => {
+    console.log(image.current);
+
     const filter = {
       id: selectedRows[0].actual_id,
     };
@@ -31,12 +98,12 @@ const EditForm = ({ selectedRows, closeModal }) => {
       edition: edition.current,
       publication_place: pubplace.current,
       publisher: publisher.current,
+      image: image.current,
     };
 
     let re = /[^0-9]+/;
     if (re.test(atts.accession_num)) {
-      console.log("invalid input for accession_num");
-      return;
+      atts.accession_num = null;
     } else {
       atts.accession_num = parseInt(atts.accession_num);
     }
@@ -51,6 +118,8 @@ const EditForm = ({ selectedRows, closeModal }) => {
         data: atts,
       }),
     });
+
+
 
     closeModal();
   };
@@ -120,7 +189,36 @@ const EditForm = ({ selectedRows, closeModal }) => {
           />
         </Input.Wrapper>
       </Group>
-      <Stack justify="center" grow mt="xl">
+
+      <h5>Upload Image  </h5>
+      <Input
+        ref={fileInputRef}
+        type="file"
+        name="avatar"
+        accept="image/*"
+        onChange={onFileChange}
+      />
+      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "Center" }}>
+        <h5>Preview </h5>
+        {imageData && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "Center" }}>
+            <Image src={imageData} width={110} height={140} alt="" />
+            <Button
+              variant="transparent"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              style={{ width: 150, height: 30, fontSize: 12, }}
+              onClick={deleteImage}
+            >
+              Remove Image
+            </Button>
+          </div>
+        )}
+        {!imageData && (<h5>No Image Set</h5>)}
+
+      </div>
+
+      <Stack justify="center" grow mt="xl" style={{ margin: 0 }}>
         <Button
           variant="filled"
           color="rgb(141, 16, 56)"

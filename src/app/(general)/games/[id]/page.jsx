@@ -9,6 +9,7 @@ import Link from "next/link";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Navigator from "@/_components/navigator/navigator";
+import Image from "next/image";
 
 const GamePage = () => {
   const { id } = useParams();
@@ -46,11 +47,12 @@ const GamePage = () => {
         <Header currentRoute={"/games"} />
       </div>
       <Center className={styles.center} maw="100%" m={25} h="81.5%">
-        <Navigator buttonText={"Go Back"} showIcon disableLink={false} />
+        <Navigator buttonText={"Go Back"} showIcon disableLink={false} link={"games"} />
         <div className={styles.main_container}>
           <div className={styles.row_one}>
             <div className={styles.main_information}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+            {!game.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {game.image && (<div className={styles.img_container}><Image className={styles.image} src={game.image} width={110} height={140} alt="" /></div>)}
               <p>{game.call_num}</p>
               <h1>{game.title}</h1>
               <p>
@@ -62,14 +64,20 @@ const GamePage = () => {
               <div className={styles.information_text}>
                 <div className={styles.headers}>
                   <h4>Accession No.: </h4>
-                  <h4>Copyright Date:</h4>
+                  <h4>Copyright Year:</h4>
                   <h4>Status:</h4>
                 </div>
                 <div className={styles.contents}>
-                  <p>{game.accession_num}</p>
 
-                  <p>{copyright_date}</p>
-                  <p>{game.status}</p>
+                  {game.accession_num && (<p>{game.accession_num}</p>)}
+                  {!game.accession_num && (<p>N/A</p>)}
+
+                  {game.copyright_date && (<p>{(new Date(game.copyright_date)).getFullYear()}</p>)}
+                  {!game.copyright_date && (<p>N/A</p>)}
+
+                  {game.status && (<p>{game.status}</p>)}
+                  {!game.status && (<p>N/A</p>)}
+
                 </div>
               </div>
               <Link href={`/borrowform/${game.id}?type=game`}>

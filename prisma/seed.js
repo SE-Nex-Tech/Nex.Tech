@@ -4,9 +4,10 @@ const fs = require("fs");
 const csv = require("csv-parser");
 
 const path = require("path");
-const booksFilePath = path.resolve(__dirname, "../src/data/books.csv");
-const boardgamesFilePath = path.resolve(__dirname, "../src/data/boardgames.csv");
-const requestsFilePath = path.resolve(__dirname, "../src/data/requests.csv");
+const booksFilePath = path.resolve(__dirname, "../src/data/booksMDBL.csv");
+const boardgamesFilePath = path.resolve(__dirname, "../src/data/boardgamesMDBL.csv");
+const imagesFilePath = path.resolve(__dirname, "../src/images/bibliotechai/");
+
 
 
 const prisma = new PrismaClient();
@@ -35,6 +36,9 @@ async function main() {
     skipDuplicates: true,
   });
 
+
+  const imageFileNames = fs.readdirSync(imagesFilePath);
+  console.log(imageFileNames);
   const books = [];
   fs.createReadStream(booksFilePath)
     .pipe(csv())
@@ -43,8 +47,32 @@ async function main() {
       delete row.id
       row.barcode = parseInt(row.barcode, 10);
       row.accession_num = parseInt(row.accession_num, 10);
-      row.copyright_date = new Date(row.copyright_date);
-      books.push(row);
+      row.status = "Available"
+
+      row.copyright_date = new Date(`${parseInt(row.copyright_date)}-01-01 00:00:00`);
+
+
+      // Find the corresponding image file name based on the call_num field
+      const imageFileName = imageFileNames.find((fileName) => {
+      
+        // Assuming each image file name contains the call_num
+        // You may need to adjust the comparison based on your actual file naming convention
+        return fileName.includes(row.call_num);
+      });
+
+      if (imageFileName) {
+        // Construct the full image path
+        const imagePath = path.resolve(imagesFilePath, imageFileName);
+
+        // Read the image file and encode it to base64
+        const imageData = `data:image/png;base64,${fs.readFileSync(imagePath, "base64")}`;
+
+        // Push the book object with the extracted information and image data
+        books.push({
+          ...row,
+          image: imageData,
+        });
+      }
     })
     .on("end", async () => {
       await prisma.books.createMany({
@@ -60,10 +88,35 @@ async function main() {
   fs.createReadStream(boardgamesFilePath)
     .pipe(csv())
     .on("data", (row) => {
-      row.id = parseInt(row.id, 10);
+      // row.id = parseInt(row.id, 10);
+      delete row.id
       row.accession_num = parseInt(row.accession_num, 10);
-      row.copyright_date = new Date(row.copyright_date);
-      boardgames.push(row);
+      row.status = "Available"
+
+      row.copyright_date = new Date(`${parseInt(row.copyright_date)}-01-01 00:00:00`);
+
+
+      // Find the corresponding image file name based on the call_num field
+      const imageFileName = imageFileNames.find((fileName) => {
+      
+        // Assuming each image file name contains the call_num
+        // You may need to adjust the comparison based on your actual file naming convention
+        return fileName.includes(row.call_num);
+      });
+
+      if (imageFileName) {
+        // Construct the full image path
+        const imagePath = path.resolve(imagesFilePath, imageFileName);
+
+        // Read the image file and encode it to base64
+        const imageData = `data:image/png;base64,${fs.readFileSync(imagePath, "base64")}`;
+
+        // Push the book object with the extracted information and image data
+        boardgames.push({
+          ...row,
+          image: imageData,
+        });
+      }
     })
     .on("end", async () => {
       await prisma.boardgames.createMany({

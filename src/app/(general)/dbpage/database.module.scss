@@ -49,7 +49,7 @@
 
 .tab2 {
   transition: all 0.3s linear;
-  overflow-y: auto;
+  overflow: hidden;
 
   &:hover,
   &:active {

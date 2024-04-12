@@ -5,6 +5,7 @@ import styles from "./games.module.scss";
 import { Skeleton, Loader, Input } from "@mantine/core";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
+import Image from "next/image";
 
 const Games = () => {
   const [data, setData] = useState([]);
@@ -12,7 +13,7 @@ const Games = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [gamesPerPage, setGamesPerPage] = useState(10);
-  const totalGames = 1000;
+  const totalGames = Object.keys(data).length;
 
   useEffect(() => {
     const fetchGames = async () => {
@@ -94,7 +95,8 @@ const Games = () => {
         {currentGames.map((game, index) => (
           <Link href={`/games/${game.id}`} className={styles.container}>
             <div key={game.id}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+            {!game.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {game.image && (<div className={styles.img_container}><Image className={styles.image} src={game.image} width={110} height={140} alt="" /></div>)}
               <h2 className={styles.book_title}>{game.title}</h2>
               <p className={styles.book_author}>{game.accession_number}</p>
               <p className={styles.book_status}>{game.publisher}</p>

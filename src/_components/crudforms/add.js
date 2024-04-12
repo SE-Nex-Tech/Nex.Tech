@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Group, Stack, Input } from "@mantine/core";
+import { Button, Group, Stack, Input, FileInput } from "@mantine/core";
+import Image from "next/image";
+
 
 const AddForm = ({ selectedRows, closeModal }) => {
   const barcode = useRef("");
@@ -15,8 +17,73 @@ const AddForm = ({ selectedRows, closeModal }) => {
   const [editionValue, setEditionValue] = useState("");
   const pubplace = useRef("");
   const publisher = useRef("");
+  const image = useRef("");
+
+  const [imageData, setImageData] = useState(image.current);
+
+  const fileInputRef = useRef(null);
+
+  // When the file is selected, set the file state
+  const onFileChange = (e) => {
+    if (!e.target.files) {
+      return;
+    }
+
+    if (e.target.files[0]) {
+
+      const base64 = toBase64(e.target.files[0]);
+
+      base64.then(result => {
+        console.log(result);
+        image.current = result;
+        setImageData(image.current);
+      }).catch(error => {
+
+        console.error(error);
+      });
+
+
+
+    }
+
+  };
+
+
+  // Convert a file to base64 string
+  const toBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+
+      fileReader.readAsDataURL(file);
+
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  };
+
+  const deleteImage = async () => {
+    image.current = null;
+
+    if (fileInputRef.current) {
+      fileInputRef.current.value = ''; // Resetting the value (not directly setting it)
+    }
+
+    setImageData(null);
+  }
+
 
   const create = async () => {
+
+    if(barcode.current == ""){
+      barcode.current= null;
+    }
+
+
     // TODO: include barcode and copyright data in inputs
     const atts = {
       barcode: barcode.current,
@@ -28,29 +95,30 @@ const AddForm = ({ selectedRows, closeModal }) => {
       publication_place: pubplace.current,
       publisher: publisher.current,
       copyright_date: new Date().toISOString(),
+      image: image.current,
       status: "available",
     };
 
     console.log(atts);
 
-    // Integer input validation
-    const ints = ["accession_num", "barcode"];
-    for (let i = 0; i < ints.length; i++) {
-      let input = atts[ints[i]];
+    // // Integer input validation
+    // const ints = ["accession_num", "barcode"];
+    // for (let i = 0; i < ints.length; i++) {
+    //   let input = atts[ints[i]];
 
-      let re = /[^0-9]+/;
-      console.log(re.test(input));
+    //   let re = /[^0-9]+/;
+    //   console.log(re.test(input));
 
-      if (re.test(input)) {
-        // TODO: create toast alerting invalid input
-        console.log("invalid input for " + ints[i]);
-        console.log(atts[ints[i]]);
-        return;
-      } else {
-        console.log("parsing " + ints[i] + " to integer...");
-        atts[ints[i]] = parseInt(atts[ints[i]]);
-      }
-    }
+    //   if (re.test(input)) {
+    //     // TODO: create toast alerting invalid input
+    //     console.log("invalid input for " + ints[i]);
+    //     console.log(atts[ints[i]]);
+    //     return;
+    //   } else {
+    //     console.log("parsing " + ints[i] + " to integer...");
+    //     atts[ints[i]] = parseInt(atts[ints[i]]);
+    //   }
+    // }
 
     const response = await fetch("/api/db", {
       method: "POST",
@@ -77,7 +145,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
         </Input.Wrapper>
       </Group>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Barcode</strong>} required>
+        <Input.Wrapper label={<strong>Barcode</strong>}>
           <Input
             placeholder="8293213"
             onChange={(e) => {
@@ -105,7 +173,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
             }}
           />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Accession Number</strong>} required>
+        <Input.Wrapper label={<strong>Accession Number</strong>}>
           <Input
             placeholder="3550736"
             onChange={(e) => {
@@ -114,7 +182,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
             }}
           />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Edition</strong>} required>
+        <Input.Wrapper label={<strong>Edition</strong>}>
           <Input
             placeholder="18th"
             onChange={(e) => {
@@ -138,6 +206,36 @@ const AddForm = ({ selectedRows, closeModal }) => {
           />
         </Input.Wrapper>
       </Group>
+
+      <h5>Upload Image  </h5>
+      <Input
+        ref={fileInputRef}
+        type="file"
+        name="avatar"
+        accept="image/*"
+        onChange={onFileChange}
+      />
+      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "Center" }}>
+        <h5>Preview </h5>
+        {imageData && (
+          <div style={{ display: "flex", flexDirection: "column", alignItems: "Center" }}>
+            <Image src={imageData} width={110} height={140} alt="" />
+            <Button
+              variant="transparent"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              style={{ width: 150, height: 30, fontSize: 12, }}
+              onClick={deleteImage}
+            >
+              Remove Image
+            </Button>
+          </div>
+        )}
+        {!imageData && (<h5>No Image Set</h5>)}
+
+      </div>
+
+
       <Stack justify="center" grow mt="xl">
         <Button
           variant="filled"
@@ -146,10 +244,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
           onClick={create}
           disabled={
             !titleValue ||
-            !accNum ||
-            !callNumValue ||
-            !editionValue ||
-            !barcodeValue
+            !callNumValue 
           }
         >
           Save

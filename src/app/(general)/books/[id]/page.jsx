@@ -9,6 +9,7 @@ import Link from "next/link";
 import { IconChevronLeft } from "@tabler/icons-react";
 import { format } from "date-fns";
 import Navigator from "@/_components/navigator/navigator";
+import Image from "next/image";
 
 const BookPage = () => {
   const { id } = useParams();
@@ -73,11 +74,12 @@ const BookPage = () => {
         )}
       </div>
       <Center className={styles.center} maw="100%" m={25} h="81.5%">
-        <Navigator buttonText={"Go Back"} showIcon disableLink={false} />
+        <Navigator buttonText={"Go Back"} showIcon disableLink={false} link={"books"} />
         <div className={styles.main_container}>
           <div className={styles.row_one}>
             <div className={styles.main_information}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+              {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+              {book.image && (<div className={styles.img_container}><Image className={styles.image} src={book.image} width={110} height={140} alt="" /></div>)}
               <p>{book.call_num}</p>
               <h1>{book.title}</h1>
               <p>
@@ -90,18 +92,27 @@ const BookPage = () => {
                 <div className={styles.headers}>
                   <h4>Accession No.: </h4>
                   <h4>Edition:</h4>
-                  <h4>Publication Place:</h4>
                   <h4>Publisher:</h4>
-                  <h4>Copyright Date:</h4>
+                  <h4>Copyright Year:</h4>
                   <h4>Status:</h4>
                 </div>
                 <div className={styles.contents}>
-                  <p>{book.accession_num}</p>
-                  <p>{book.edition}</p>
-                  <p>{book.publication_place}</p>
-                  <p>{book.publisher}</p>
-                  <p>{copyright_date}</p>
-                  <p>{book.status}</p>
+                  {book.accession_num && (<p>{book.accession_num}</p>)}
+                  {!book.accession_num && (<p>N/A</p>)}
+
+                  {book.edition && ( <p>{book.edition}</p>)}
+                  {!book.edition && (<p>N/A</p>)}
+
+                 
+
+                  {book.publisher && ( <p>{book.publisher}</p>)}
+                  {!book.publisher && (<p>N/A</p>)}
+
+                  {book.copyright_date && ( <p>{(new Date(book.copyright_date)).getFullYear()}</p>)}
+                  {!book.copyright_date && (<p>N/A</p>)}
+
+                  {book.status && ( <p>{book.status}</p>)}
+                  {!book.status && (<p>N/A</p>)}
                 </div>
               </div>
               <Link href={`/borrowform/${book.id}?type=book`}>

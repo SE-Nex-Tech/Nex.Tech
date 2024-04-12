@@ -3,7 +3,7 @@ import { IconChevronLeft } from "@tabler/icons-react";
 import styles from "./navigator.module.scss";
 import Link from "next/link";
 
-const Navigator = ({ buttonText, showIcon = true, disableLink = false }) => {
+const Navigator = ({ buttonText, showIcon = true, disableLink = false, link }) => {
   return (
     <>
       {disableLink ? (
@@ -12,7 +12,7 @@ const Navigator = ({ buttonText, showIcon = true, disableLink = false }) => {
           {buttonText}
         </div>
       ) : (
-        <Link href={"/books"} className={styles.navigator}>
+        <Link href={`/${link}`} className={styles.navigator}>
           {showIcon && <IconChevronLeft size={32} />}
           {buttonText}
         </Link>

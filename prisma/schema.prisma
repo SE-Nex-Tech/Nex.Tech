@@ -21,16 +21,17 @@ model Admin {
 
 model Books {
   id                Int    @id @default(autoincrement())
-  barcode           Int
+  barcode           Int?
   call_num          String @db.Text
   title             String @db.Text
-  accession_num     Int
+  accession_num     Int?
   author            String @db.Text
-  edition           String @db.Text
-  publication_place String @db.Text
-  publisher         String @db.Text
+  edition           String? @db.Text
+  publication_place String? @db.Text
+  publisher         String? @db.Text
   copyright_date    DateTime @db.Date
-  status            String @db.Text
+  status            String? @db.Text
+  image             String? @db.Text
   bookRequests      BookRequest[]
   archive           Boolean @default(false)
 }
@@ -39,10 +40,11 @@ model Boardgames {
   id                Int    @id @default(autoincrement())
   call_num          String @db.Text
   title             String @db.Text
-  accession_num     Int
-  publisher         String @db.Text
-  copyright_date    DateTime @db.Date
-  status            String @db.Text    
+  accession_num     Int?
+  publisher         String? @db.Text
+  copyright_date    DateTime? @db.Date
+  status            String? @db.Text  
+  image             String? @db.Text  
   boardgameRequests BoardgameRequest[]   
   archive           Boolean @default(false)
 }

@@ -29,7 +29,6 @@ const TableBody = ({
     accession_num: "Accession Number",
     author: "Author",
     edition: "Edition",
-    publication_place: "Publication Place",
     publisher: "Publisher",
   };
 
@@ -38,7 +37,6 @@ const TableBody = ({
     "author",
     "title",
     "publisher",
-    "publication_place",
     "edition",
     "accession_num",
     "call_num",
@@ -77,9 +75,9 @@ const TableBody = ({
             accession_num: row.original.accession_num,
             author: row.original.author,
             edition: row.original.edition,
-            publication_place: row.original.publication_place,
             publisher: row.original.publisher,
-            actual_id: row.original.id
+            actual_id: row.original.id,
+            image: row.original.image,
           },
         ];
       }

@@ -4,8 +4,6 @@ const fs = require("fs");
 const csv = require("csv-parser");
 
 const path = require("path");
-const booksFilePath = path.resolve(__dirname, "../src/data/books.csv");
-const boardgamesFilePath = path.resolve(__dirname, "../src/data/boardgames.csv");
 const requestsFilePath = path.resolve(__dirname, "../src/data/requests.csv");
 
 
@@ -139,7 +137,7 @@ async function main() {
                   create:
                   {
                     boardgame: {
-                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                      connect: { id: Math.floor(Math.random() * 15) + 1 },
                     },
                   },
 
@@ -171,7 +169,7 @@ async function main() {
                   create:
                   {
                     boardgame: {
-                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                      connect: { id: Math.floor(Math.random() * 15) + 1 },
                     },
                   },
 
@@ -201,7 +199,7 @@ async function main() {
                   create:
                   {
                     boardgame: {
-                      connect: { id: Math.floor(Math.random() * 200) + 1 },
+                      connect: { id: Math.floor(Math.random() * 15) + 1 },
                     },
                   },
 

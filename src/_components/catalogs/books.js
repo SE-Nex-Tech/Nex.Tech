@@ -5,6 +5,7 @@ import styles from "./books.module.scss";
 import { Skeleton, Loader, Input, rem } from "@mantine/core";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
+import Image from "next/image";
 
 const Books = () => {
   const [data, setData] = useState([]);
@@ -12,12 +13,13 @@ const Books = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [booksPerPage, setBooksPerPage] = useState(10);
-  const totalBooks = 1000;
+  const totalBooks = Object.keys(data).length;
 
   useEffect(() => {
     const fetchBooks = async () => {
       const response = await fetch("/api/books");
       const data = await response.json();
+      console.log(data);
       setData(data);
       setLoading(false);
     };
@@ -93,8 +95,10 @@ const Books = () => {
       <div className={styles.book_container}>
         {currentBooks.map((book, index) => (
           <Link href={`/books/${book.id}`} className={styles.container}>
-            <div key={book.id}>
-              <Skeleton className={styles.img_holder}></Skeleton>
+            <div style={{maxWidth: "250px"}} key={book.id}>
+            
+            {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {book.image && (<div className={styles.img_container}><Image className={styles.image} src={book.image} width={110} height={140} alt="" /></div>)}
               <h2 className={styles.book_title}>{book.title}</h2>
               <p className={styles.book_author}>{book.author}</p>
               <p className={styles.book_status}>{book.status}</p>
