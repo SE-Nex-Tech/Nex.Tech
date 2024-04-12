@@ -73,7 +73,7 @@ const Books = () => {
       <div className={styles.book_container}>
         {currentBooks.map((book, index) => (
           <Link href={`/books/${book.id}`} className={styles.container}>
-            <div key={book.id}>
+            <div style={{maxWidth: "250px"}} key={book.id}>
             
             {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
             {book.image && (<div className={styles.img_container}><Image className={styles.image} src={book.image} width={110} height={140} alt="" /></div>)}
