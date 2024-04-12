@@ -28,6 +28,8 @@ const Database = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [refreshKey, setRefreshKey] = useState(0);
+
   useEffect(() => {
     const fetchData = async () => {
       const response = await fetch("/api/books");
@@ -40,7 +42,7 @@ const Database = () => {
     };
 
     fetchData();
-  }, []);
+  }, [refreshKey]);
 
   const { data: session, status } = useSession();
 
@@ -112,7 +114,10 @@ const Database = () => {
             leftSection={<IconSearch size={16} />}
             radius="xl"
             w={rem(300)}
-            onChange={(event) => searchItems(event.currentTarget.value)}
+            onChange={(event) => {
+              searchItems(event.currentTarget.value);
+              setSelectedRows([]);
+            }}
           />
           <NativeSelect
             radius="xl"
@@ -141,7 +146,10 @@ const Database = () => {
               <option value="author_descending">Descending</option>
             </optgroup>
           </NativeSelect>
-          <AddButton selectedRows={selectedRows} />
+          <AddButton
+            selectedRows={selectedRows}
+            setRefreshKey={setRefreshKey}
+          />
 
           <EditButton selectedRows={selectedRows} />
           <DeleteButton selectedRows={selectedRows} />
