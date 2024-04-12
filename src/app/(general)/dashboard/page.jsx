@@ -59,6 +59,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [queue, setQueue] = useState([]);
   const [biu, setBiu] = useState([]);
+  const [giu, setGiu] = useState([])
 
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
   const columnNamesGames = Object.values(Prisma.BoardgamesScalarFieldEnum);
@@ -134,6 +135,7 @@ const Dashboard = () => {
       })
       let d = await res.json()
       setBiu(d.biu)
+      setGiu(d.giu)
       setQueue(d.allq)
     };
 
@@ -225,7 +227,13 @@ const Dashboard = () => {
                   </Tabs.Panel>
 
                   <Tabs.Panel value="games">
-                    <StatusGames title publisher status />
+                    {giu.map((r) => (
+                      <StatusGames
+                        title={r.title}
+                        publisher={r.publisher}
+                        status={r.status}
+                      />
+                    ))}
                   </Tabs.Panel>
 
                   <Tabs.Panel value="queue">
