@@ -21,13 +21,12 @@ model Admin {
 
 model Books {
   id                Int    @id @default(autoincrement())
-  barcode           Int?
   call_num          String @db.Text
-  title             String @db.Text
+  title             String? @db.Text
   accession_num     Int?
-  author            String @db.Text
+  barcode           Int?
+  author            String? @db.Text
   edition           String? @db.Text
-  publication_place String? @db.Text
   publisher         String? @db.Text
   copyright_date    String? @db.Text
   status            String? @db.Text

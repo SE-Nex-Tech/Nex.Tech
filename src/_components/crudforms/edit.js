@@ -1,11 +1,11 @@
-import { Button, Group, Select, Input, Table, Stack, Center, Textarea} from "@mantine/core";
+import { Button, Group, Select, Input, Table, Stack, Center, Textarea } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification}) => {
+const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
 
@@ -13,7 +13,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   const handleSelectChange = (value) => {
     setSelectedValue(value);
   };
-  
+
 
   const barcode = useRef(selectedRows[0]?.barcode);
   const title = useRef(selectedRows[0]?.title);
@@ -21,7 +21,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   const callnum = useRef(selectedRows[0]?.call_num);
   const accnum = useRef(selectedRows[0]?.accession_num);
   const edition = useRef(selectedRows[0]?.edition);
-  const pubplace = useRef(selectedRows[0]?.publication_place);
+  const copyright_date = useRef(selectedRows[0]?.copyright_date);
   const publisher = useRef(selectedRows[0]?.publisher);
   const image = useRef(selectedRows[0]?.image);
   const condition = useRef(selectedRows[0]?.condition);
@@ -88,7 +88,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
 
   const editRecord = async () => {
-    if(selectedRows[0]==null){
+    if (selectedRows[0] == null) {
       return;
     }
     console.log(image.current);
@@ -103,7 +103,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       call_num: callnum.current,
       accession_num: accnum.current,
       edition: edition.current,
-      publication_place: pubplace.current,
+      copyright_date: copyright_date.current,
       publisher: publisher.current,
       image: image.current,
       condition: condition.current
@@ -132,7 +132,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     // }else{
     //   setRefreshKey(1);
     // }
-    
+
     setNotification("Item Edited successfully!");
     closeModal();
     setSelectedRows([]);
@@ -188,18 +188,18 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         </Input.Wrapper>
       </Group>
       <Group grow>
-        <Input.Wrapper label={<strong>Publication Place</strong>}>
-          <Input
-            placeholder="Publication Plce"
-            defaultValue={selectedRows[0]?.publication_place}
-            onChange={(e) => (pubplace.current = e.target.value)}
-          />
-        </Input.Wrapper>
         <Input.Wrapper label={<strong>Publisher</strong>}>
           <Input
-            placeholder="Publisher"
             defaultValue={selectedRows[0]?.publisher}
+            placeholder="TechPress"
             onChange={(e) => (publisher.current = e.target.value)}
+          />
+        </Input.Wrapper>
+        <Input.Wrapper label={<strong>Copyright Date</strong>}>
+          <Input
+            placeholder="2024"
+            defaultValue={selectedRows[0]?.copyright_date}
+            onChange={(e) => (copyright_date.current = e.target.value)}
           />
         </Input.Wrapper>
       </Group>
@@ -234,13 +234,13 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
 
       <Input.Wrapper label={<strong>Condition</strong>}>
-          <Textarea
-            defaultValue={selectedRows[0]?.condition}
-            autosize
-            placeholder="Complete components and in perfect condition"
-            onChange={(event) => (condition.current = event.currentTarget.value)}
-          />
-        </Input.Wrapper>
+        <Textarea
+          defaultValue={selectedRows[0]?.condition}
+          autosize
+          placeholder="Complete components and in perfect condition"
+          onChange={(event) => (condition.current = event.currentTarget.value)}
+        />
+      </Input.Wrapper>
 
 
       <Stack justify="center" grow mt="xl" style={{ margin: 0 }}>

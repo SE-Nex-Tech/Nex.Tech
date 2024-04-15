@@ -82,6 +82,7 @@ const TableBody = ({
             publisher: row.original.publisher,
             actual_id: row.original.id,
             image: row.original.image,
+            copyright_date: row.original.copyright_date,
             condition: row.original.condition,
           },
         ];

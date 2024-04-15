@@ -72,6 +72,8 @@ const BorrowForm = () => {
     userName.current =
       lastName.current + ", " + firstName.current + " " + middleName.current;
 
+
+      console.log(userType.current);
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({

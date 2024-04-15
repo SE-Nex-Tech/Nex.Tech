@@ -107,7 +107,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
       copyright_date: copyrightDate,
       image: image.current,
       condition: condition,
-      status: "available",
+      status: "Available",
     };
 
     // console.log(atts);

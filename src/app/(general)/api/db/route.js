@@ -96,7 +96,6 @@ export async function POST(request) {
     if (params['entity'] == 'books') {
       let filter = params['where']
       let info = params['data']
-      info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
       result = await entity.update({
         where: filter,
         data: info

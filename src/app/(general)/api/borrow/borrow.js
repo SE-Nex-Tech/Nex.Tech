@@ -36,7 +36,7 @@ export async function borrow(req) {
         data: getMaterial(req, temp)
         });
     case 'Staff':
-      temp = borrow_Faculty(req)
+      temp = borrow_Staff(req)
       return await prisma.requests.create({
           data: getMaterial(req, temp)
         });

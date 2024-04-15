@@ -16,7 +16,6 @@ const BookPage = () => {
   const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(true);
   const [queued, setQueued] = useState(false)
-  var copyright_date = "";
 
   useEffect(() => {
     const fetchBook = async () => {
@@ -70,9 +69,7 @@ const BookPage = () => {
     return <div>Book not found</div>;
   }
 
-  if (book.copyright_date) {
-    copyright_date = format(Date.parse(book.copyright_date), "MM/dd/yyyy");
-  }
+
 
   return (
     <>
