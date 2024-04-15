@@ -37,42 +37,42 @@ const Reset = () => {
   //     }
   //   };
 
-  let email = ''
-  let newpass = ''
-  let confirmnew = ''
+  let email = "";
+  let newpass = "";
+  let confirmnew = "";
 
   const fetchData = async (obj) => {
-    const response = await fetch('/api/reset/request', {
-      method: 'POST',
-      body: JSON.stringify(obj)
-    })
-    const data = await response.json()
-    return data
-  }
+    const response = await fetch("/api/reset/request", {
+      method: "POST",
+      body: JSON.stringify(obj),
+    });
+    const data = await response.json();
+    return data;
+  };
 
   const reset_pass = async () => {
-    let flag = false
+    let flag = false;
     if (newpass !== confirmnew) {
-      toast.warning('New password confirmation does not match')
-      flag = true
+      toast.warning("New password confirmation does not match");
+      flag = true;
     }
     if (flag) {
-      return
+      return;
     }
 
     const fetch = await fetchData({
       email,
       newpass,
-      confirmnew
-    })
+      confirmnew,
+    });
 
     if (fetch.invalid != undefined) {
-      toast.error(fetch.msg)
-      return
+      toast.error(fetch.msg);
+      return;
     }
 
-    toast.success('Password change requested')
-  }
+    toast.success("Password change requested");
+  };
 
   return (
     <div className={styles.parent}>
@@ -86,7 +86,12 @@ const Reset = () => {
         />
         <div className={styles.left}>
           <div className={styles.leftUpper}>
-            <Input placeholder="Email" classNames={styles} required="true" onChange={(e) => (email = e.target.value)}/>
+            <Input
+              placeholder="Email"
+              classNames={styles}
+              required="true"
+              onChange={(e) => (email = e.target.value)}
+            />
             <PasswordInput
               placeholder="New Password"
               withAsterisk
@@ -101,13 +106,23 @@ const Reset = () => {
             />
           </div>
           <div className={styles.leftLower}>
-            <Button classNames={{ root: styles.btn }} onClick={reset_pass}>
+            <Button
+              radius={"xl"}
+              w={"400px"}
+              color="rgb(141, 16, 56)"
+              classNames={{ root: styles.btn }}
+              onClick={reset_pass}
+            >
               Reset your password
             </Button>
           </div>
         </div>
         <div className={styles.right}>
           <div className={styles.gradientOverlay}></div>
+          <div className={styles.hero}>
+            <h1>CICS BiblioTechAI</h1>
+            <p>Online Portal</p>
+          </div>
           <Image src={building} className={styles.building} />
         </div>
       </div>

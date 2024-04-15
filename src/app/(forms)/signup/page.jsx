@@ -219,6 +219,10 @@ const Signup = () => {
         </div>
         <div className={styles.right}>
           <div className={styles.gradientOverlay}></div>
+          <div className={styles.hero}>
+            <h1>CICS BiblioTechAI</h1>
+            <p>Online Portal</p>
+          </div>
           <Image src={building} className={styles.building} />
         </div>
       </div>
