@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Button, Group, Stack, Input, FileInput } from "@mantine/core";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-
-const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey }) => {
+const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification }) => {
   const barcode = useRef("");
   const [barcodeValue, setBarcodeValue] = useState("");
   const title = useRef("");
@@ -105,8 +106,8 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey }) => {
       status: "available",
     };
 
-      // console.log(atts);
-    
+    // console.log(atts);
+
     // // Integer input validation
     // const ints = ["accession_num", "barcode"];
     // for (let i = 0; i < ints.length; i++) {
@@ -135,13 +136,13 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey }) => {
       }),
     });
 
-    if (refreshKey == 1) {
-      setRefreshKey(0);
-    } else {
-      setRefreshKey(1);
-    }
+    // if (refreshKey == 1) {
+    //   setRefreshKey(0);
+    // } else {
+    //   setRefreshKey(1);
+    // }
 
-
+    setNotification("Item Created successfully!");
     closeModal();
   };
   return (

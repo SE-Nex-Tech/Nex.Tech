@@ -1,8 +1,11 @@
 import { Button, Group, Stack, Select, Input, Table } from "@mantine/core";
 import React, { useState } from "react";
 import TableBody from "../tables/tableBooks";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey }) => {
+const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification }) => {
+
   const archiveRecords = async () => {
     console.log(selectedRows.length);
     console.log(selectedRows);
@@ -29,12 +32,13 @@ const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey,
     });
 
 
-    if(refreshKey==1){
-      setRefreshKey(0);
-    }else{
-      setRefreshKey(1);
-    }
+    // if(refreshKey==1){
+    //   setRefreshKey(0);
+    // }else{
+    //   setRefreshKey(1);
+    // }
     
+    setNotification("Item/s Archived successfully!");
     closeModal();
     setSelectedRows([]);
 

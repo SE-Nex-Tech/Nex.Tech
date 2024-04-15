@@ -2,8 +2,10 @@ import { Button, Group, Select, Input, Table, Stack, Center } from "@mantine/cor
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
 import Image from "next/image";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey}) => {
+const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification}) => {
   const [selectedValue, setSelectedValue] = useState("");
 
 
@@ -123,12 +125,13 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       }),
     });
 
-    if(refreshKey==1){
-      setRefreshKey(0);
-    }else{
-      setRefreshKey(1);
-    }
+    // if(refreshKey==1){
+    //   setRefreshKey(0);
+    // }else{
+    //   setRefreshKey(1);
+    // }
     
+    setNotification("Item Edited successfully!");
     closeModal();
     setSelectedRows([]);
   };
@@ -245,6 +248,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           Discard
         </Button>
       </Stack>
+      <ToastContainer />
     </>
   );
 };

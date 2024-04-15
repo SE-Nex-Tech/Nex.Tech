@@ -20,6 +20,9 @@ import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import TableBodyGames from "@/_components/tables/tableGames";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Database = () => {
   const current = usePathname();
 
@@ -29,6 +32,23 @@ const Database = () => {
   const [loading, setLoading] = useState(true);
 
   const [refreshKey, setRefreshKey] = useState(0);
+
+  // const [notification, setNotification] = useState("");
+
+  const setNotification = (notification) => {
+    console.log(notification);
+    if (notification != "") {
+      toast.success(notification, { position: "bottom-right", autoClose: 2000 });
+    }
+
+    setTimeout(() => {
+      if (refreshKey == 1) {
+        setRefreshKey(0);
+      } else {
+        setRefreshKey(1);
+      }
+    }, 2500);
+  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -43,6 +63,7 @@ const Database = () => {
 
     fetchData();
 
+    // showNotification();
 
 
   }, [refreshKey]);
@@ -152,18 +173,22 @@ const Database = () => {
           <AddButton
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
+            setNotification={setNotification}
           />
 
           <EditButton
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
             setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey} />
+            refreshKey={refreshKey}
+            setNotification={setNotification} />
+
           <DeleteButton
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
             setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey} />
+            refreshKey={refreshKey}
+            setNotification={setNotification} />
         </div>
         <div className={styles.table_container}>
           <Tabs
@@ -206,6 +231,7 @@ const Database = () => {
           </Tabs>
         </div>
       </Center>
+      <ToastContainer />
     </>
   );
 };
