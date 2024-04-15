@@ -42,6 +42,8 @@ const Database = () => {
     };
 
     fetchData();
+
+
   }, [refreshKey]);
 
   const { data: session, status } = useSession();
@@ -148,11 +150,21 @@ const Database = () => {
           </NativeSelect>
           <AddButton
             selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
             setRefreshKey={setRefreshKey}
+            refreshKey={refreshKey}
           />
 
-          <EditButton selectedRows={selectedRows} />
-          <DeleteButton selectedRows={selectedRows} />
+          <EditButton
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            setRefreshKey={setRefreshKey}
+            refreshKey={refreshKey} />
+          <DeleteButton
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            setRefreshKey={setRefreshKey}
+            refreshKey={refreshKey} />
         </div>
         <div className={styles.table_container}>
           <Tabs

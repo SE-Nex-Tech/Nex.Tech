@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
 import Image from "next/image";
 
-const EditForm = ({ selectedRows, closeModal }) => {
+const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey}) => {
   const [selectedValue, setSelectedValue] = useState("");
 
 
@@ -11,16 +11,17 @@ const EditForm = ({ selectedRows, closeModal }) => {
   const handleSelectChange = (value) => {
     setSelectedValue(value);
   };
+  
 
-  const barcode = useRef(selectedRows[0].barcode);
-  const title = useRef(selectedRows[0].title);
-  const author = useRef(selectedRows[0].author);
-  const callnum = useRef(selectedRows[0].call_num);
-  const accnum = useRef(selectedRows[0].accession_num);
-  const edition = useRef(selectedRows[0].edition);
-  const pubplace = useRef(selectedRows[0].publication_place);
-  const publisher = useRef(selectedRows[0].publisher);
-  const image = useRef(selectedRows[0].image);
+  const barcode = useRef(selectedRows[0]?.barcode);
+  const title = useRef(selectedRows[0]?.title);
+  const author = useRef(selectedRows[0]?.author);
+  const callnum = useRef(selectedRows[0]?.call_num);
+  const accnum = useRef(selectedRows[0]?.accession_num);
+  const edition = useRef(selectedRows[0]?.edition);
+  const pubplace = useRef(selectedRows[0]?.publication_place);
+  const publisher = useRef(selectedRows[0]?.publisher);
+  const image = useRef(selectedRows[0]?.image);
 
 
 
@@ -84,6 +85,9 @@ const EditForm = ({ selectedRows, closeModal }) => {
 
 
   const editRecord = async () => {
+    if(selectedRows[0]==null){
+      return;
+    }
     console.log(image.current);
 
     const filter = {
@@ -119,9 +123,14 @@ const EditForm = ({ selectedRows, closeModal }) => {
       }),
     });
 
-
-
+    if(refreshKey==1){
+      setRefreshKey(0);
+    }else{
+      setRefreshKey(1);
+    }
+    
     closeModal();
+    setSelectedRows([]);
   };
   return (
     <>
@@ -129,7 +138,7 @@ const EditForm = ({ selectedRows, closeModal }) => {
         <Input.Wrapper label={<strong>Book Title</strong>}>
           <Input
             placeholder="Book Title"
-            defaultValue={selectedRows[0].title}
+            defaultValue={selectedRows[0]?.title}
             onChange={(e) => (title.current = e.target.value)}
           />
         </Input.Wrapper>
@@ -138,14 +147,14 @@ const EditForm = ({ selectedRows, closeModal }) => {
         <Input.Wrapper label={<strong>Barcode</strong>}>
           <Input
             placeholder="Barcode"
-            defaultValue={selectedRows[0].barcode}
+            defaultValue={selectedRows[0]?.barcode}
             onChange={(e) => (barcode.current = e.target.value)}
           />
         </Input.Wrapper>
         <Input.Wrapper label={<strong>Book Author</strong>}>
           <Input
             placeholder="Book Author"
-            defaultValue={selectedRows[0].author}
+            defaultValue={selectedRows[0]?.author}
             onChange={(e) => (author.current = e.target.value)}
           />
         </Input.Wrapper>
@@ -154,21 +163,21 @@ const EditForm = ({ selectedRows, closeModal }) => {
         <Input.Wrapper label={<strong>Call Number</strong>}>
           <Input
             placeholder="Call Number"
-            defaultValue={selectedRows[0].call_num}
+            defaultValue={selectedRows[0]?.call_num}
             onChange={(e) => (callnum.current = e.target.value)}
           />
         </Input.Wrapper>
         <Input.Wrapper label={<strong>Accession Number</strong>}>
           <Input
             placeholder="Accession Number"
-            defaultValue={selectedRows[0].accession_num}
+            defaultValue={selectedRows[0]?.accession_num}
             onChange={(e) => (accnum.current = e.target.value)}
           />
         </Input.Wrapper>
         <Input.Wrapper label={<strong>Edition</strong>}>
           <Input
             placeholder="Edition"
-            defaultValue={selectedRows[0].edition}
+            defaultValue={selectedRows[0]?.edition}
             onChange={(e) => (edition.current = e.target.value)}
           />
         </Input.Wrapper>
@@ -177,14 +186,14 @@ const EditForm = ({ selectedRows, closeModal }) => {
         <Input.Wrapper label={<strong>Publication Place</strong>}>
           <Input
             placeholder="Publication Plce"
-            defaultValue={selectedRows[0].publication_place}
+            defaultValue={selectedRows[0]?.publication_place}
             onChange={(e) => (pubplace.current = e.target.value)}
           />
         </Input.Wrapper>
         <Input.Wrapper label={<strong>Publisher</strong>}>
           <Input
             placeholder="Publisher"
-            defaultValue={selectedRows[0].publisher}
+            defaultValue={selectedRows[0]?.publisher}
             onChange={(e) => (publisher.current = e.target.value)}
           />
         </Input.Wrapper>

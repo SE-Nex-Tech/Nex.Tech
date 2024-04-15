@@ -38,7 +38,7 @@ async function main() {
 
 
   const imageFileNames = fs.readdirSync(imagesFilePath);
-  console.log(imageFileNames);
+  // console.log(imageFileNames);
   const books = [];
   fs.createReadStream(booksFilePath)
     .pipe(csv())

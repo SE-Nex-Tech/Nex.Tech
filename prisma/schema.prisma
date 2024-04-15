@@ -32,6 +32,7 @@ model Books {
   copyright_date    DateTime @db.Date
   status            String? @db.Text
   image             String? @db.Text
+  condition         String? @db.Text
   bookRequests      BookRequest[]
   archive           Boolean @default(false)
 }
@@ -45,6 +46,7 @@ model Boardgames {
   copyright_date    DateTime? @db.Date
   status            String? @db.Text  
   image             String? @db.Text  
+  condition         String? @db.Text
   boardgameRequests BoardgameRequest[]   
   archive           Boolean @default(false)
 }
