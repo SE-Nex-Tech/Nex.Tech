@@ -73,8 +73,6 @@ export async function POST(request) {
 
     if (params['entity'] == 'books') {
       const conditions = params['data'];
-      // conditions['id'] = Date.now();
-      // console.log(conditions)
       result = await entity.create({
         data: conditions
       })
@@ -113,15 +111,16 @@ export async function POST(request) {
       })
     }
 
-    else {
+    else if(params['entity'] == 'boardgames') {
+      console.log("gamessss");
       let filter = params['where']
       let info = params['data']
-      info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
       result = await entity.update({
         where: filter,
         data: info
       })
     }
+
   }
 
   else if (params['delete'] != undefined) {

@@ -26,8 +26,10 @@ const TableBodyGames = ({
     call_num: "Call Number",
     title: "Title",
     accession_num: "Accession Number",
+    barcode: "Barcode",
     publisher: "Publisher",
     copyright_date: "Copyright Date",
+    condition: "Condition",
   };
 
   const visibleColumns = [
@@ -35,8 +37,10 @@ const TableBodyGames = ({
     "call_num",
     "title",
     "accession_num",
+    "barcode",
     "publisher",
     "copyright_date",
+    "condition"
   ];
 
   const columns = columnNames.map((columnName) => ({
@@ -70,6 +74,10 @@ const TableBodyGames = ({
             accession_num: row.original.accession_num,
             publisher: row.original.publisher,
             copyright_date: row.original.copyright_date,
+            barcode: row.original.barcode,
+            condition: row.original.condition,
+            image: row.original.image,
+            actual_id: row.original.id,
           },
         ];
       }

@@ -27,6 +27,10 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
   const [condition, setCondition] = useState("");
 
+  const type = useRef(selectedType.current);
+
+  console.log(type.current);
+
 
   // When the file is selected, set the file state
   const onFileChange = (e) => {
@@ -95,65 +99,86 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     barcode.current = parseInt(barcode.current);
     accnum.current = parseInt(accnum.current);
 
-    // TODO: include barcode and copyright data in inputs
-    const atts = {
-      barcode: barcode.current,
-      title: title.current,
-      author: author.current,
-      call_num: callnum.current,
-      accession_num: accnum.current,
-      edition: edition.current,
-      publisher: publisher.current,
-      copyright_date: copyrightDate,
-      image: image.current,
-      condition: condition,
-      status: "Available",
-    };
 
-    // console.log(atts);
+    if (selectedType == "books") {
+      const atts = {
+        barcode: barcode.current,
+        title: title.current,
+        author: author.current,
+        call_num: callnum.current,
+        accession_num: accnum.current,
+        edition: edition.current,
+        publisher: publisher.current,
+        copyright_date: copyrightDate,
+        image: image.current,
+        condition: condition,
+        status: "Available",
+      };
 
-    // // Integer input validation
-    // const ints = ["accession_num", "barcode"];
-    // for (let i = 0; i < ints.length; i++) {
-    //   let input = atts[ints[i]];
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "books",
+          create: 1,
+          data: atts,
+        }),
+      });
+    } else {
 
-    //   let re = /[^0-9]+/;
-    //   console.log(re.test(input));
+      const atts = {
+        barcode: barcode.current,
+        title: title.current,
+        call_num: callnum.current,
+        accession_num: accnum.current,
+        publisher: publisher.current,
+        copyright_date: copyrightDate,
+        image: image.current,
+        condition: condition,
+        status: "Available",
+      };
 
-    //   if (re.test(input)) {
-    //     // TODO: create toast alerting invalid input
-    //     console.log("invalid input for " + ints[i]);
-    //     console.log(atts[ints[i]]);
-    //     return;
-    //   } else {
-    //     console.log("parsing " + ints[i] + " to integer...");
-    //     atts[ints[i]] = parseInt(atts[ints[i]]);
-    //   }
-    // }/
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "boardgames",
+          create: 1,
+          data: atts,
+        }),
+      });
 
-    const response = await fetch("/api/db", {
-      method: "POST",
-      body: JSON.stringify({
-        entity: "books",
-        create: 1,
-        data: atts,
-      }),
-    });
+      console.log(atts);
+      console.log(response);
 
-    // if (refreshKey == 1) {
-    //   setRefreshKey(0);
-    // } else {
-    //   setRefreshKey(1);
-    // }
+    }
+
+
+
+
 
     setNotification("Item Created successfully!");
     closeModal();
   };
   return (
     <>
-      <div style={{overflow: "auto"}}>
+      <div style={{ overflow: "auto" }}>
+
+
         <Group grow mb={20}>
-          <Input.Wrapper label={<strong>Book Title</strong>} required>
+
+          {(type.current === 'books') && (
+            <Input.Wrapper label={<strong>Book Title</strong>} required>
+              <Input
+                placeholder="The Network Navigators"
+                onChange={(e) => {
+                  title.current = e.target.value;
+                  setTitleValue(e.target.value);
+                }}
+              />
+            </Input.Wrapper>
+          )}
+
+          {(type.current === 'games') && (
+            <Input.Wrapper label={<strong>Boardgame Title</strong>} required>
             <Input
               placeholder="The Network Navigators"
               onChange={(e) => {
@@ -162,8 +187,13 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               }}
             />
           </Input.Wrapper>
+          )}
+
+
         </Group>
+
         <Group grow mb={20}>
+
           <Input.Wrapper label={<strong>Barcode</strong>}>
             <Input
               placeholder="8293213"
@@ -173,16 +203,23 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               }}
             />
           </Input.Wrapper>
-          <Input.Wrapper label={<strong>Book Author</strong>}>
-            <Input
-              placeholder="Avram Thickin"
-              onChange={(e) => {
-                author.current = e.target.value;
-              }}
-            />
-          </Input.Wrapper>
+
+          {(type.current === 'books') && (
+            <Input.Wrapper label={<strong>Book Author</strong>}>
+              <Input
+                placeholder="Avram Thickin"
+                onChange={(e) => {
+                  author.current = e.target.value;
+                }}
+              />
+            </Input.Wrapper>
+          )}
+
         </Group>
+
+
         <Group grow mb={20}>
+
           <Input.Wrapper label={<strong>Call Number</strong>} required>
             <Input
               placeholder="Wklt.Md.2Wh.qJ3 2058"
@@ -192,6 +229,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               }}
             />
           </Input.Wrapper>
+
           <Input.Wrapper label={<strong>Accession Number</strong>}>
             <Input
               placeholder="3550736"
@@ -201,29 +239,37 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               }}
             />
           </Input.Wrapper>
-          <Input.Wrapper label={<strong>Edition</strong>}>
-            <Input
-              placeholder="18th"
-              onChange={(e) => {
-                edition.current = e.target.value;
-                setEditionValue(e.target.value);
-              }}
-            />
-          </Input.Wrapper>
+
+          {(type.current === 'books') && (
+            <Input.Wrapper label={<strong>Edition</strong>}>
+              <Input
+                placeholder="18th"
+                onChange={(e) => {
+                  edition.current = e.target.value;
+                  setEditionValue(e.target.value);
+                }}
+              />
+            </Input.Wrapper>
+          )}
+
+
         </Group>
         <Group grow>
+
           <Input.Wrapper label={<strong>Publisher</strong>}>
             <Input
               placeholder="TechPress"
               onChange={(e) => (publisher.current = e.target.value)}
             />
           </Input.Wrapper>
+
           <Input.Wrapper label={<strong>Copyright Date</strong>}>
             <Input
               placeholder="2024"
               onChange={(e) => (setCopyrightDate(e.target.value))}
             />
           </Input.Wrapper>
+
         </Group>
 
         <h5>Upload Image  </h5>

@@ -112,7 +112,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     barcode.current = parseInt(barcode.current);
     accnum.current = parseInt(accnum.current);
 
-    if (selectedType = "books") {
+    if (selectedType == "books") {
       const filter = {
         id: selectedRows[0].actual_id,
       };
@@ -141,6 +141,31 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       });
 
     } else {
+
+      const filter = {
+        id: selectedRows[0].actual_id,
+      };
+      const atts = {
+        barcode: barcode.current,
+        title: title.current,
+        call_num: callnum.current,
+        accession_num: accnum.current,
+        copyright_date: copyright_date.current,
+        publisher: publisher.current,
+        image: image.current,
+        condition: condition.current
+      };
+
+      console.log("proceeding");
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "boardgames",
+          update: 1,
+          where: filter,
+          data: atts,
+        }),
+      });
 
     }
 
