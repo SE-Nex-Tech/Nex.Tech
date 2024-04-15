@@ -2,7 +2,7 @@ import { Button, Group, Stack, Select, Input, Table } from "@mantine/core";
 import React, { useState } from "react";
 import TableBody from "../tables/tableBooks";
 
-const ArchiveForm = ({ selectedRows, closeModal }) => {
+const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey }) => {
   const archiveRecords = async () => {
     console.log(selectedRows.length);
     console.log(selectedRows);
@@ -28,7 +28,16 @@ const ArchiveForm = ({ selectedRows, closeModal }) => {
       }),
     });
 
+
+    if(refreshKey==1){
+      setRefreshKey(0);
+    }else{
+      setRefreshKey(1);
+    }
+    
     closeModal();
+    setSelectedRows([]);
+
   };
 
   return (
