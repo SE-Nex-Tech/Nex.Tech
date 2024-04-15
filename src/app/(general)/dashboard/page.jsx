@@ -59,6 +59,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [queue, setQueue] = useState([]);
   const [biu, setBiu] = useState([]);
+  const [giu, setGiu] = useState([])
 
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
   const columnNamesGames = Object.values(Prisma.BoardgamesScalarFieldEnum);
@@ -125,6 +126,17 @@ const Dashboard = () => {
       setData(data);
       setData2(data2);
       setLoading(false);
+
+      let res = await fetch('/api/queue', {
+        method: 'POST',
+        body: JSON.stringify({
+          id: 1
+        })
+      })
+      let d = await res.json()
+      setBiu(d.biu)
+      setGiu(d.giu)
+      setQueue(d.allq)
     };
 
     fetchData();
@@ -210,12 +222,20 @@ const Dashboard = () => {
                         author={r.author}
                         barcode={r.barcode}
                         status={r.status}
+                        image={r.image}
                       />
                     ))}
                   </Tabs.Panel>
 
                   <Tabs.Panel value="games">
-                    <StatusGames title publisher status />
+                    {giu.map((r) => (
+                      <StatusGames
+                        title={r.title}
+                        publisher={r.publisher}
+                        status={r.status}
+                        image={r.image}
+                      />
+                    ))}
                   </Tabs.Panel>
 
                   <Tabs.Panel value="queue">
