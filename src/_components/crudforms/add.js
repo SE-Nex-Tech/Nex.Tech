@@ -87,10 +87,8 @@ const AddForm = ({ selectedRows, closeModal }) => {
       accnum.current= null;
     }
 
-    barcode.current= parseInt(accnum.current);
-    accnum.current= parseInt(accnum.current);
-
-
+    barcode.current = parseInt(barcode.current);
+    accnum.current = parseInt(accnum.current);
 
     // TODO: include barcode and copyright data in inputs
     const atts = {

@@ -6,6 +6,31 @@ const csv = require("csv-parser");
 const path = require("path");
 const requestsFilePath = path.resolve(__dirname, "../src/data/requests.csv");
 
+// Define options for department and their corresponding weights
+const departmentOptions = [
+  { value: "Computer Science", weight: 3 },
+  { value: "Information Technology", weight: 4 },
+  { value: "Information Systems", weight: 2 },
+];
+
+// Define options for year_level and their corresponding weights
+const yearLevelOptions = [
+  { value: "1st Year", weight: 3 },
+  { value: "2nd Year", weight: 4 },
+  { value: "3rd Year", weight: 2 },
+  { value: "4th Year", weight: 2 }
+];
+
+// Function to select a random element considering weights
+function weightedRandom(weights) {
+  const totalWeight = weights.reduce((acc, option) => acc + option.weight, 0);
+  let random = Math.random() * totalWeight;
+
+  for (const option of weights) {
+    random -= option.weight;
+    if (random <= 0) return option.value;
+  }
+}
 
 const prisma = new PrismaClient();
 
@@ -23,8 +48,13 @@ async function main() {
     })
     .on("end", async () => {
       for (const data of requests) {
+        const randomDepartment = weightedRandom(departmentOptions);
+        const randomYearLevel = weightedRandom(yearLevelOptions);
+
         if (data.type == "Book") {
           if (data.user_type == "Student") {
+
+
             const request = await prisma.requests.create({
               data: {
 
@@ -48,8 +78,8 @@ async function main() {
                   {
                     student_num: "2021131421",
                     name: "Sample Name",
-                    department: "Computer Science",
-                    year_level: "3rd Year",
+                    department: randomDepartment,
+                    year_level: randomYearLevel,
                     section: "3CSC",
                     email: "sample@email.com",
                   }
@@ -82,7 +112,7 @@ async function main() {
                     employee_num: "2021131232",
                     name: "Sample Name",
                     email: "sample@email.com",
-                    department: "Information Technology",
+                    department: randomDepartment,
                   }
                 }
 
@@ -147,8 +177,8 @@ async function main() {
                   {
                     student_num: "2021131421",
                     name: "Sample Name",
-                    department: "Computer Science",
-                    year_level: "3rd Year",
+                    department: randomDepartment,
+                    year_level: randomYearLevel,
                     section: "3CSC",
                     email: "sample@email.com",
                   }
@@ -180,7 +210,7 @@ async function main() {
                     employee_num: "2021131232",
                     name: "Sample Name",
                     email: "sample@email.com",
-                    department: "Information Technology",
+                    department: randomDepartment,
                   }
                 }
               },
