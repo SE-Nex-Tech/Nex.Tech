@@ -15,6 +15,7 @@ const BookPage = () => {
   const { id } = useParams();
   const [book, setBook] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [queued, setQueued] = useState(false)
   var copyright_date = "";
 
   useEffect(() => {
@@ -25,6 +26,15 @@ const BookPage = () => {
         const selectedBook = data.find((book) => book.id === parseInt(id));
         setBook(selectedBook);
         setLoading(false);
+
+        const res = await fetch('/api/queue', {
+          method: 'POST',
+          body: JSON.stringify({
+            id: parseInt(id)
+          })
+        })
+        const d = await res.json()
+        setQueued(d.bq.length > 0 ? true : false)
       } catch (error) {
         console.error("Error fetching book:", error);
       }
@@ -116,7 +126,7 @@ const BookPage = () => {
                 </div>
               </div>
               <Link href={`/borrowform/${book.id}?type=book`}>
-                <button className={styles.btn}>Borrow</button>
+                <button className={styles.btn}>{queued ? "Reserve (Wait in queue)" : "Borrow"}</button>
               </Link>
             </div>
           </div>
