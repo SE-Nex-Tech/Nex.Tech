@@ -101,6 +101,7 @@ const Signup = () => {
               <TextInput
                 placeholder="Juan"
                 label="First Name"
+                required
                 classNames={styles}
                 error={
                   fname.current === "" || /^[a-zA-Z]+$/.test(fname.current)
@@ -132,6 +133,7 @@ const Signup = () => {
             <TextInput
               placeholder="De la Cruz"
               label="Last Name"
+              required
               classNames={styles}
               error={
                 lname.current === "" || /^[a-zA-Z]+$/.test(lname.current)
@@ -147,6 +149,7 @@ const Signup = () => {
             <TextInput
               placeholder="juan.delacruz.cics@ust.edu.ph"
               label="Email"
+              required
               error={
                 email.current &&
                 !/^[A-Za-z0-9._%+-]+@ust\.edu\.ph$/.test(email.current)
@@ -163,6 +166,7 @@ const Signup = () => {
             <TextInput
               placeholder="2021157407"
               label="Employee / Student Number"
+              required
               error={
                 num.current &&
                 (!/^\d+$/.test(num.current) || num.current.length < 10)
