@@ -141,9 +141,7 @@ const BorrowForm = () => {
     return <div>Item not found</div>;
   }
 
-  if (item.copyright_date) {
-    copyright_date = format(Date.parse(item.copyright_date), "MM/dd/yyyy");
-  }
+
 
   const requestCode = useRef("201314214");
   const requestType = useRef(typeParam === "book" ? "Book" : "Boardgame");
@@ -954,7 +952,7 @@ const BorrowForm = () => {
 
                   <div className={styles.info}>
                     <h4>Copyright Date:</h4>
-                    <h4>{copyright_date}</h4>
+                    <h4>{item.copyright_date}</h4>
                   </div>
                 </div>
               </div>

@@ -1,4 +1,4 @@
-import { Button, Group, Select, Input, Table, Stack, Center } from "@mantine/core";
+import { Button, Group, Select, Input, Table, Stack, Center, Textarea} from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
 import Image from "next/image";
@@ -24,6 +24,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   const pubplace = useRef(selectedRows[0]?.publication_place);
   const publisher = useRef(selectedRows[0]?.publisher);
   const image = useRef(selectedRows[0]?.image);
+  const condition = useRef(selectedRows[0]?.condition);
 
 
 
@@ -105,6 +106,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       publication_place: pubplace.current,
       publisher: publisher.current,
       image: image.current,
+      condition: condition.current
     };
 
     let re = /[^0-9]+/;
@@ -229,6 +231,17 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         {!imageData && (<h5>No Image Set</h5>)}
 
       </div>
+
+
+      <Input.Wrapper label={<strong>Condition</strong>}>
+          <Textarea
+            defaultValue={selectedRows[0]?.condition}
+            autosize
+            placeholder="Complete components and in perfect condition"
+            onChange={(event) => (condition.current = event.currentTarget.value)}
+          />
+        </Input.Wrapper>
+
 
       <Stack justify="center" grow mt="xl" style={{ margin: 0 }}>
         <Button

@@ -47,9 +47,8 @@ async function main() {
       delete row.id
       row.barcode = parseInt(row.barcode, 10);
       row.accession_num = parseInt(row.accession_num, 10);
-      row.status = "Available"
+      row.status = "Available";
 
-      row.copyright_date = new Date(`${parseInt(row.copyright_date)}-01-01 00:00:00`);
 
 
       // Find the corresponding image file name based on the call_num field
@@ -93,7 +92,6 @@ async function main() {
       row.accession_num = parseInt(row.accession_num, 10);
       row.status = "Available"
 
-      row.copyright_date = new Date(`${parseInt(row.copyright_date)}-01-01 00:00:00`);
 
 
       // Find the corresponding image file name based on the call_num field

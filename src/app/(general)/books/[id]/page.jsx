@@ -118,7 +118,7 @@ const BookPage = () => {
                   {book.publisher && ( <p>{book.publisher}</p>)}
                   {!book.publisher && (<p>N/A</p>)}
 
-                  {book.copyright_date && ( <p>{(new Date(book.copyright_date)).getFullYear()}</p>)}
+                  {book.copyright_date && ( <p>{book.copyright_date}</p>)}
                   {!book.copyright_date && (<p>N/A</p>)}
 
                   {book.status && ( <p>{book.status}</p>)}

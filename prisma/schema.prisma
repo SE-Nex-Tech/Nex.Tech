@@ -29,7 +29,7 @@ model Books {
   edition           String? @db.Text
   publication_place String? @db.Text
   publisher         String? @db.Text
-  copyright_date    DateTime @db.Date
+  copyright_date    String? @db.Text
   status            String? @db.Text
   image             String? @db.Text
   condition         String? @db.Text
@@ -43,7 +43,7 @@ model Boardgames {
   title             String @db.Text
   accession_num     Int?
   publisher         String? @db.Text
-  copyright_date    DateTime? @db.Date
+  copyright_date    String? @db.Text
   status            String? @db.Text  
   image             String? @db.Text  
   condition         String? @db.Text

@@ -73,7 +73,6 @@ export async function POST(request) {
 
     if (params['entity'] == 'books') {
       const conditions = params['data'];
-      conditions['copyright_date'] = new Date(conditions['copyright_date']).toISOString();
       // conditions['id'] = Date.now();
       // console.log(conditions)
       result = await entity.create({
@@ -85,7 +84,6 @@ export async function POST(request) {
     }
     else {
       const conditions = params['data'];
-      conditions['copyright_date'] = new Date(conditions['copyright_date']).toISOString();
       conditions['id'] = Date.now();
       result = await entity.create({
         data: conditions
