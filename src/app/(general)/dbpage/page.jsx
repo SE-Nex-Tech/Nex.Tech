@@ -44,6 +44,7 @@ const Database = () => {
     fetchData();
 
 
+
   }, [refreshKey]);
 
   const { data: session, status } = useSession();
@@ -149,8 +150,6 @@ const Database = () => {
             </optgroup>
           </NativeSelect>
           <AddButton
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
           />

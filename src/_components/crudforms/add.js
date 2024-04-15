@@ -3,7 +3,7 @@ import { Button, Group, Stack, Input, FileInput } from "@mantine/core";
 import Image from "next/image";
 
 
-const AddForm = ({ selectedRows, closeModal }) => {
+const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey }) => {
   const barcode = useRef("");
   const [barcodeValue, setBarcodeValue] = useState("");
   const title = useRef("");
@@ -79,12 +79,12 @@ const AddForm = ({ selectedRows, closeModal }) => {
 
   const create = async () => {
 
-    if(barcode.current == ""){
-      barcode.current= null;
+    if (barcode.current == "") {
+      barcode.current = null;
     }
 
-    if(accnum.current == ""){
-      accnum.current= null;
+    if (accnum.current == "") {
+      accnum.current = null;
     }
 
     barcode.current = parseInt(barcode.current);
@@ -105,8 +105,8 @@ const AddForm = ({ selectedRows, closeModal }) => {
       status: "available",
     };
 
-    console.log(atts);
-
+      // console.log(atts);
+    
     // // Integer input validation
     // const ints = ["accession_num", "barcode"];
     // for (let i = 0; i < ints.length; i++) {
@@ -124,7 +124,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
     //     console.log("parsing " + ints[i] + " to integer...");
     //     atts[ints[i]] = parseInt(atts[ints[i]]);
     //   }
-    // }
+    // }/
 
     const response = await fetch("/api/db", {
       method: "POST",
@@ -134,6 +134,13 @@ const AddForm = ({ selectedRows, closeModal }) => {
         data: atts,
       }),
     });
+
+    if (refreshKey == 1) {
+      setRefreshKey(0);
+    } else {
+      setRefreshKey(1);
+    }
+
 
     closeModal();
   };
@@ -250,7 +257,7 @@ const AddForm = ({ selectedRows, closeModal }) => {
           onClick={create}
           disabled={
             !titleValue ||
-            !callNumValue 
+            !callNumValue
           }
         >
           Save
