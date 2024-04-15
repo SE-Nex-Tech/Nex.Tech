@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Header from "@/_components/header/Header";
 import styles from "./database.module.scss";
 import { Center, Tabs, rem, Loader } from "@mantine/core";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Input } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { NativeSelect } from "@mantine/core";
@@ -33,7 +33,19 @@ const Database = () => {
 
   const [refreshKey, setRefreshKey] = useState(0);
 
-  // const [notification, setNotification] = useState("");
+  const [activeTab, setActiveTab] = useState("books");
+  // const [selectedType, setSelectedType] = useState("books");
+
+  const selectedType = useRef("books");
+
+
+  const handleTabChange = (value) => {
+
+    setActiveTab(value);
+    selectedType.current = value;
+
+  };
+
 
   const setNotification = (notification) => {
     console.log(notification);
@@ -49,6 +61,7 @@ const Database = () => {
       }
     }, 2500);
   }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -174,6 +187,7 @@ const Database = () => {
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
             setNotification={setNotification}
+            selectedType={selectedType}
           />
 
           <EditButton
@@ -181,14 +195,18 @@ const Database = () => {
             setSelectedRows={setSelectedRows}
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
-            setNotification={setNotification} />
+            setNotification={setNotification}
+            selectedType={selectedType}
+          />
 
           <DeleteButton
             selectedRows={selectedRows}
             setSelectedRows={setSelectedRows}
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
-            setNotification={setNotification} />
+            setNotification={setNotification}
+            selectedType={selectedType}
+          />
         </div>
         <div className={styles.table_container}>
           <Tabs
@@ -197,6 +215,8 @@ const Database = () => {
             radius="md"
             defaultValue="books"
             variant="outline"
+            value={activeTab}
+            onChange={handleTabChange}
             classNames={{
               list: styles.list2,
               tabLabel: styles.tabLabel2,

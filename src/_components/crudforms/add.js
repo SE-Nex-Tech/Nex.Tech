@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification }) => {
+const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType }) => {
   const barcode = useRef("");
   const [barcodeValue, setBarcodeValue] = useState("");
   const title = useRef("");

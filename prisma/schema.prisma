@@ -41,6 +41,7 @@ model Boardgames {
   call_num          String @db.Text
   title             String @db.Text
   accession_num     Int?
+  barcode           Int?
   publisher         String? @db.Text
   copyright_date    String? @db.Text
   status            String? @db.Text  

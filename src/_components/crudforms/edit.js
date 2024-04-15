@@ -5,8 +5,11 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification }) => {
+const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType }) => {
   const [selectedValue, setSelectedValue] = useState("");
+
+
+
 
 
 
@@ -25,6 +28,11 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   const publisher = useRef(selectedRows[0]?.publisher);
   const image = useRef(selectedRows[0]?.image);
   const condition = useRef(selectedRows[0]?.condition);
+
+  const type = useRef(selectedType.current);
+
+  console.log(type.current);
+  // console.log(type.current);
 
 
 
@@ -88,50 +96,56 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
 
   const editRecord = async () => {
+
     if (selectedRows[0] == null) {
       return;
     }
-    console.log(image.current);
 
-    const filter = {
-      id: selectedRows[0].actual_id,
-    };
-    const atts = {
-      barcode: barcode.current,
-      title: title.current,
-      author: author.current,
-      call_num: callnum.current,
-      accession_num: accnum.current,
-      edition: edition.current,
-      copyright_date: copyright_date.current,
-      publisher: publisher.current,
-      image: image.current,
-      condition: condition.current
-    };
-
-    let re = /[^0-9]+/;
-    if (re.test(atts.accession_num)) {
-      atts.accession_num = null;
-    } else {
-      atts.accession_num = parseInt(atts.accession_num);
+    if (barcode.current == "") {
+      barcode.current = null;
     }
 
-    console.log("proceeding");
-    const response = await fetch("/api/db", {
-      method: "POST",
-      body: JSON.stringify({
-        entity: "books",
-        update: 1,
-        where: filter,
-        data: atts,
-      }),
-    });
+    if (accnum.current == "") {
+      accnum.current = null;
+    }
 
-    // if(refreshKey==1){
-    //   setRefreshKey(0);
-    // }else{
-    //   setRefreshKey(1);
-    // }
+    barcode.current = parseInt(barcode.current);
+    accnum.current = parseInt(accnum.current);
+
+    if (selectedType = "books") {
+      const filter = {
+        id: selectedRows[0].actual_id,
+      };
+      const atts = {
+        barcode: barcode.current,
+        title: title.current,
+        author: author.current,
+        call_num: callnum.current,
+        accession_num: accnum.current,
+        edition: edition.current,
+        copyright_date: copyright_date.current,
+        publisher: publisher.current,
+        image: image.current,
+        condition: condition.current
+      };
+
+      console.log("proceeding");
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "books",
+          update: 1,
+          where: filter,
+          data: atts,
+        }),
+      });
+
+    } else {
+
+    }
+
+
+
 
     setNotification("Item Edited successfully!");
     closeModal();
@@ -140,13 +154,28 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   return (
     <>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Book Title</strong>}>
-          <Input
-            placeholder="Book Title"
-            defaultValue={selectedRows[0]?.title}
-            onChange={(e) => (title.current = e.target.value)}
-          />
-        </Input.Wrapper>
+        {(type.current === 'books') && (
+          <Input.Wrapper label={<strong>Book Title</strong>}>
+            <Input
+              placeholder="Book Title"
+              defaultValue={selectedRows[0]?.title}
+              onChange={(e) => (title.current = e.target.value)}
+            />
+          </Input.Wrapper>
+        )}
+
+        {(type.current === 'games') && (
+          <Input.Wrapper label={<strong>Boardgame Title</strong>}>
+            <Input
+              placeholder="Boardgame Title"
+              defaultValue={selectedRows[0]?.title}
+              onChange={(e) => (title.current = e.target.value)}
+            />
+          </Input.Wrapper>
+        )}
+
+
+
       </Group>
       <Group grow mb={20}>
         <Input.Wrapper label={<strong>Barcode</strong>}>
@@ -156,13 +185,17 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
             onChange={(e) => (barcode.current = e.target.value)}
           />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Book Author</strong>}>
-          <Input
-            placeholder="Book Author"
-            defaultValue={selectedRows[0]?.author}
-            onChange={(e) => (author.current = e.target.value)}
-          />
-        </Input.Wrapper>
+
+        {(type.current === 'books') && (
+          <Input.Wrapper label={<strong>Book Author</strong>}>
+            <Input
+              placeholder="Book Author"
+              defaultValue={selectedRows[0]?.author}
+              onChange={(e) => (author.current = e.target.value)}
+            />
+          </Input.Wrapper>
+        )}
+
       </Group>
       <Group grow mb={20}>
         <Input.Wrapper label={<strong>Call Number</strong>}>
@@ -179,13 +212,18 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
             onChange={(e) => (accnum.current = e.target.value)}
           />
         </Input.Wrapper>
-        <Input.Wrapper label={<strong>Edition</strong>}>
-          <Input
-            placeholder="Edition"
-            defaultValue={selectedRows[0]?.edition}
-            onChange={(e) => (edition.current = e.target.value)}
-          />
-        </Input.Wrapper>
+
+        {(type.current === 'books') && (
+          <Input.Wrapper label={<strong>Edition</strong>}>
+            <Input
+              placeholder="Edition"
+              defaultValue={selectedRows[0]?.edition}
+              onChange={(e) => (edition.current = e.target.value)}
+            />
+          </Input.Wrapper>
+        )}
+
+
       </Group>
       <Group grow>
         <Input.Wrapper label={<strong>Publisher</strong>}>

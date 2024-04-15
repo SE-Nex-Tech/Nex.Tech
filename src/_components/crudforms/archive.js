@@ -4,7 +4,7 @@ import TableBody from "../tables/tableBooks";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification }) => {
+const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType}) => {
 
   const archiveRecords = async () => {
     console.log(selectedRows.length);
