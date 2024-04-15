@@ -43,7 +43,7 @@ const Database = () => {
 
     setActiveTab(value);
     selectedType.current = value;
-
+    setSelectedRows([]);
   };
 
 
