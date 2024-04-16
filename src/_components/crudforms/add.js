@@ -1,25 +1,28 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Group, Stack, Input, FileInput, Textarea } from "@mantine/core";
+import { Button, Group, Stack, Input, FileInput, Textarea, NumberInput } from "@mantine/core";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType}) => {
+const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType }) => {
   const barcode = useRef("");
-  const [barcodeValue, setBarcodeValue] = useState("");
   const title = useRef("");
-  const [titleValue, setTitleValue] = useState("");
   const author = useRef("");
   const callnum = useRef("");
-  const [callNumValue, setCallNumValue] = useState("");
   const accnum = useRef(0);
-  const [accNum, setAccNum] = useState("");
   const edition = useRef("");
-  const [editionValue, setEditionValue] = useState("");
   const publisher = useRef("");
-  const [copyrightDate, setCopyrightDate] = useState("");
-
   const image = useRef("");
+
+  const [titleValue, setTitleValue] = useState("");
+  const [callNumValue, setCallNumValue] = useState("");
+  const [authorValue, setAuthorValue] = useState("");
+  const [accNum, setAccNum] = useState("");
+  const [editionValue, setEditionValue] = useState("");
+  const [copyrightDate, setCopyrightDate] = useState("");
+  const [barcodeValue, setBarcodeValue] = useState("");
+
+
 
   const [imageData, setImageData] = useState(image.current);
 
@@ -29,7 +32,83 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
   const type = useRef(selectedType.current);
 
-  console.log(type.current);
+
+  const [bookTitleError, setBookTitleError] = useState(false);
+  const [gameTitleError, setGameTitleError] = useState(false);
+  const [callNumError, setCallNumError] = useState(false);
+  const [authorError, setAuthorError] = useState(false);
+
+  const validateFormSubmit = () => {
+    const checkEmptyField = (value, setErrorState) => {
+      if (
+        value.current == "" ||
+        value.current == null ||
+        value.current == "None"
+      ) {
+        setErrorState(true);
+        return false;
+      } else {
+        setErrorState(false);
+        return true;
+      }
+    };
+
+    var isValid = true;
+
+    console.log(type.current);
+
+    if (type.current == "books") {
+      isValid = !bookTitleError
+        ? checkEmptyField(title, setBookTitleError) && isValid
+        : !bookTitleError;
+
+      isValid = !authorError
+        ? checkEmptyField(author, setAuthorError) && isValid
+        : !authorError;
+    } else {
+      isValid = !gameTitleError
+        ? checkEmptyField(title, setGameTitleError) && isValid
+        : !gameTitleError;
+    }
+
+    isValid = !callNumError
+      ? checkEmptyField(callnum, setCallNumError) && isValid
+      : !callNumError;
+
+    console.log(isValid);
+    if (isValid) {
+      create();
+    } else {
+      toast.error("Missing/Incorrect fields", { autoClose: 2000 });
+    }
+  };
+
+  const validateInputChange = (value, refValue, setErrorState) => {
+    if (value.replace(/\s/g, "") == "" || value == null || value == "None") {
+      // If the value is empty or contains only whitespace
+      setErrorState(true); // Set state to true
+      refValue.current = value;
+    } else {
+      setErrorState(false); // Set state to false
+      refValue.current = value; // Update the value
+    }
+  };
+
+  const bookTitleText = bookTitleError
+    ? "This field is required"
+    : "Fundamentals of Computer Programming";
+
+  const gameTitleText = gameTitleError
+    ? "This field is required"
+    : "Game of the Generals";
+
+  const callNumText = callNumError
+    ? "This field is required"
+    : "QA76.56.F1 .Tb21c 2024";
+
+  const authorText = authorError
+    ? "This field is required"
+    : "John Smith";
 
 
   // When the file is selected, set the file state
@@ -161,11 +240,13 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           {(type.current === 'books') && (
             <Input.Wrapper label={<strong>Book Title</strong>} required>
               <Input
-                placeholder="The Network Navigators"
                 onChange={(e) => {
-                  title.current = e.target.value;
+                  validateInputChange(e.target.value, title, setBookTitleError);
                   setTitleValue(e.target.value);
                 }}
+                error={bookTitleError}
+                placeholder={bookTitleText}
+
               />
             </Input.Wrapper>
           )}
@@ -173,11 +254,12 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           {(type.current === 'games') && (
             <Input.Wrapper label={<strong>Boardgame Title</strong>} required>
               <Input
-                placeholder="The Network Navigators"
                 onChange={(e) => {
-                  title.current = e.target.value;
+                  validateInputChange(e.target.value, title, setGameTitleError);
                   setTitleValue(e.target.value);
                 }}
+                error={gameTitleError}
+                placeholder={gameTitleText}
               />
             </Input.Wrapper>
           )}
@@ -189,21 +271,24 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
           <Input.Wrapper label={<strong>Call Number</strong>} required>
             <Input
-              placeholder="Wklt.Md.2Wh.qJ3 2058"
               onChange={(e) => {
-                callnum.current = e.target.value;
+                validateInputChange(e.target.value, callnum, setCallNumError);
                 setCallNumValue(e.target.value);
               }}
+              error={callNumError}
+              placeholder={callNumText}
             />
           </Input.Wrapper>
 
           {(type.current === 'books') && (
-            <Input.Wrapper label={<strong>Book Author</strong>}>
+            <Input.Wrapper label={<strong>Book Author</strong>} required>
               <Input
-                placeholder="Avram Thickin"
                 onChange={(e) => {
-                  author.current = e.target.value;
+                  validateInputChange(e.target.value, author, setAuthorError);
+                  setAuthorValue(e.target.value);
                 }}
+                error={authorError}
+                placeholder={authorText}
               />
             </Input.Wrapper>
           )}
@@ -212,26 +297,27 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
 
         <Group grow mb={20}>
-
-
-
           <Input.Wrapper label={<strong>Barcode</strong>}>
-            <Input
-              placeholder="8293213"
-              onChange={(e) => {
-                barcode.current = e.target.value;
-                setBarcodeValue(e.target.value);
-              }}
+            <NumberInput
+              hideControls
+              allowNegative={false}
+              allowDecimal={false}
+              max={999999999999999999}
+              clampBehavior="strict"
+              placeholder="172284612332"
+              onChange={(value) => (barcode.current = value)}
             />
           </Input.Wrapper>
 
           <Input.Wrapper label={<strong>Accession Number</strong>}>
-            <Input
-              placeholder="3550736"
-              onChange={(e) => {
-                accnum.current = e.target.value;
-                setAccNum(e.target.value);
-              }}
+            <NumberInput
+              hideControls
+              allowNegative={false}
+              allowDecimal={false}
+              max={999999999999999999}
+              clampBehavior="strict"
+              placeholder="202127216232"
+              onChange={(value) => (accnum.current = value)}
             />
           </Input.Wrapper>
 
@@ -259,9 +345,14 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           </Input.Wrapper>
 
           <Input.Wrapper label={<strong>Copyright Date</strong>}>
-            <Input
+            <NumberInput
+              hideControls
+              allowNegative={false}
+              allowDecimal={false}
+              max={2099}
+              clampBehavior="strict"
               placeholder="2024"
-              onChange={(e) => (setCopyrightDate(e.target.value))}
+              onChange={(value) => (setCopyrightDate(value.toString()))}
             />
           </Input.Wrapper>
 
@@ -312,10 +403,10 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
             variant="filled"
             color="rgb(141, 16, 56)"
             radius="xl"
-            onClick={create}
+            onClick={validateFormSubmit}
             disabled={
               !titleValue ||
-              !callNumValue
+              !callNumValue || !authorValue
             }
           >
             Save

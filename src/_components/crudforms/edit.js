@@ -25,16 +25,14 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
   const type = useRef(selectedType.current);
 
+
+
   const [bookTitleError, setBookTitleError] = useState(false);
   const [gameTitleError, setGameTitleError] = useState(false);
   const [callNumError, setCallNumError] = useState(false);
   const [authorError, setAuthorError] = useState(false);
 
-
-
   const validateFormSubmit = () => {
-
-
     const checkEmptyField = (value, setErrorState) => {
       if (
         value.current == "" ||
@@ -71,15 +69,10 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       ? checkEmptyField(callnum, setCallNumError) && isValid
       : !callNumError;
 
-
-
-
-
     console.log(isValid);
     if (isValid) {
       editRecord();
     } else {
-      console.log("Missing/Incorrect fields");
       toast.error("Missing/Incorrect fields", { autoClose: 2000 });
     }
   };
