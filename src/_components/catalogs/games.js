@@ -6,6 +6,7 @@ import { Skeleton, Loader, Input } from "@mantine/core";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
 import Image from "next/image";
+import placeholderImg from "@/images/placeholder.jpg"
 
 const Games = () => {
   const [data, setData] = useState([]);
@@ -95,7 +96,12 @@ const Games = () => {
         {currentGames.map((game, index) => (
           <Link href={`/games/${game.id}`} className={styles.container}>
             <div style={{maxWidth: "250px"}} key={game.id}>
-            {!game.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {!game.image && (<Image
+                src={placeholderImg}
+                width={110} height={140}
+                className={styles.img_holder}
+                alt="Item No Image"
+              />)}
             {game.image && (<div className={styles.img_container}><Image className={styles.image} src={game.image} width={110} height={140} alt="" /></div>)}
               <h2 className={styles.book_title}>{game.title}</h2>
               <p className={styles.book_author}>{game.accession_number}</p>
