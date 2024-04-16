@@ -176,9 +176,14 @@ const Database = () => {
     setData(result);
   };
 
-  const sorter = async (by, data) => {
-    let new_data = structuredClone(sortby(by, data));
-    setData(new_data);
+  const sorter = async (by) => {
+    if (selectedType.current === 'books') {
+      let new_data = structuredClone(sortby(by, data));
+      setData(new_data);
+    } else {
+      let new_data2 = structuredClone(sortby(by, data2));
+      setData2(new_data2);
+    }
   };
 
   return (
@@ -205,7 +210,7 @@ const Database = () => {
           <NativeSelect
             radius="xl"
             w={rem(200)}
-            onChange={(e) => sorter(e.target.value, data)}
+            onChange={(e) => sorter(e.target.value)}
           >
             <hr />
 

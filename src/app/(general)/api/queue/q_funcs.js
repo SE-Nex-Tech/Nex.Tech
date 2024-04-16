@@ -124,7 +124,7 @@ const gamesIU = async (pc) => {
       borrow_date: {
         not: null,
       },
-      type: "Game",
+      type: "Boardgame",
     },
     include: {
       boardgameRequests: {

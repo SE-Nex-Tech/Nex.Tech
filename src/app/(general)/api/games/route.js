@@ -5,7 +5,12 @@ const prisma = new PrismaClient();
 
 export async function GET(request) {
   const params = Object.fromEntries(await request.nextUrl.searchParams);
-  const games = await prisma.Boardgames.findMany();
+  const games = await prisma.Boardgames.findMany({
+    where: { archive: false },
+    orderBy: {
+      id: 'asc',
+    }
+  });
   // console.log(params['andy'] == 'value');
   return NextResponse.json(games);
 }
