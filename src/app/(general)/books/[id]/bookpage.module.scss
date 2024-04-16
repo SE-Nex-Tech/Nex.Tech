@@ -34,7 +34,6 @@
       .img_container {
         padding: 50;
         display: flex;
-        margin: 0 auto;
         margin-bottom: 10px;
         background-color: rgb(239, 239, 239);
         width: 120px;
@@ -49,7 +48,6 @@
         justify-content: center;
         align-items: center;
       }
-
     }
 
     .row_two {
@@ -137,4 +135,12 @@
   .btn {
     width: 200px;
   }
+}
+.main_information {
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }

@@ -9,6 +9,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useSession, getSession } from "next-auth/react";
 import BooksMobile from "@/_components/catalogs/booksMobile";
 import Games from "@/_components/catalogs/games";
+import GamesMobile from "@/_components/catalogs/gamesMobile";
 
 const GamesCatalog = () => {
   const current = usePathname();
@@ -45,7 +46,7 @@ const GamesCatalog = () => {
         )}
       </div>
       <Center className={styles.center} maw="100%" mih="80%">
-        {isMobile ? <BooksMobile /> : <Games />}
+        {isMobile ? <GamesMobile /> : <Games />}
       </Center>
     </>
   );
