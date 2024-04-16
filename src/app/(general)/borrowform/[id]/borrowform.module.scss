@@ -112,11 +112,11 @@
   gap: 0.5rem;
 }
 
-.info>h4 {
+.info > h4 {
   font-weight: normal;
 }
 
-.info>h4.infoTitle {
+.info > h4.infoTitle {
   font-weight: bold;
 }
 
@@ -142,6 +142,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 1em;
 }
 
 .cancelBtn {
@@ -199,7 +200,7 @@
   font-family: "Plus Jakarta Sans", sans-serif;
 }
 
-.receiptContainer>h2 {
+.receiptContainer > h2 {
   text-decoration: underline;
 }
 
@@ -228,11 +229,11 @@
   align-items: center;
 }
 
-.receiptLabel>h4 {
+.receiptLabel > h4 {
   font-weight: normal;
 }
 
-.receiptLabel>h4:first-of-type {
+.receiptLabel > h4:first-of-type {
   font-weight: bold;
 }
 
@@ -251,11 +252,11 @@
   gap: 0.2rem;
 }
 
-.reqInfo>h4 {
+.reqInfo > h4 {
   font-weight: normal;
 }
 
-.reqInfo>h4:first-of-type {
+.reqInfo > h4:first-of-type {
   font-weight: bold;
 }
 
@@ -356,6 +357,25 @@
 
   .itemContainer {
     width: 100%;
+  }
+  .receiptContainer {
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .infoContainer {
+    flex-direction: column;
+    gap: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+  }
+  .requestDetails {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
   }
 }
 

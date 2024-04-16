@@ -13,6 +13,7 @@ import {
   Modal,
   Input,
   Skeleton,
+  Checkbox,
 } from "@mantine/core";
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import { DateInput } from "@mantine/dates";
@@ -24,7 +25,7 @@ import { useParams } from "next/navigation";
 import { format, setSeconds } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
-import placeholderImg from "@/images/placeholder.jpg"
+import placeholderImg from "@/images/placeholder.jpg";
 
 const BorrowForm = () => {
   const current = usePathname();
@@ -70,10 +71,9 @@ const BorrowForm = () => {
 
     const currentDateTime = new Date();
 
-    userName.current = firstName.current
+    userName.current = firstName.current;
 
-
-      console.log(userType.current);
+    console.log(userType.current);
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({
@@ -143,8 +143,6 @@ const BorrowForm = () => {
     return <div>Item not found</div>;
   }
 
-
-
   const requestCode = useRef("201314214");
   const requestType = useRef(typeParam === "book" ? "Book" : "Boardgame");
   const requestDate = format(currentDate, "MM/dd/yyyy");
@@ -190,7 +188,9 @@ const BorrowForm = () => {
   const studentNumText = studentNumberError
     ? "This field is required"
     : "2021523418";
-  const firstNameText = firstNameError ? "This field is required" : "John Doe Smith";
+  const firstNameText = firstNameError
+    ? "This field is required"
+    : "John Doe Smith";
   const emailText = emailError
     ? "This field is required"
     : "johndoe.smith@ust.edu.ph";
@@ -791,15 +791,26 @@ const BorrowForm = () => {
             </div>
             <div className={styles.itemContainer}>
               <div className={styles.itemInfo}>
-
-                
-              {!item.image && (<Image
-                src={placeholderImg}
-                width={110} height={140}
-                className={styles.img_holder}
-                alt="Item No Image"
-              />)}
-              {item.image && (<div className={styles.img_container}><Image className={styles.image} src={item.image} width={110} height={140} alt="" /></div>)}
+                {!item.image && (
+                  <Image
+                    src={placeholderImg}
+                    width={110}
+                    height={140}
+                    className={styles.img_holder}
+                    alt="Item No Image"
+                  />
+                )}
+                {item.image && (
+                  <div className={styles.img_container}>
+                    <Image
+                      className={styles.image}
+                      src={item.image}
+                      width={110}
+                      height={140}
+                      alt=""
+                    />
+                  </div>
+                )}
 
                 <div className={styles.itemDetails}>
                   <TextInput name="itemId" value="" type="hidden" />
@@ -859,24 +870,51 @@ const BorrowForm = () => {
                   onClose={closeConfirmation}
                   centered
                   withCloseButton={false}
-                  size="30%"
+                  size="60%"
                   closeOnClickOutside={false}
                 >
                   <div className={styles.confirmation}>
                     <h2>Confirm Request</h2>
-                    <p>Are you sure you want to make this request?</p>
-                    <button
+                    <p>
+                      The data entered into this form will be kept confidential
+                      and protected, and its usage will be restricted to its
+                      intended purposes only. This means that the information
+                      will not be disclosed to any third parties or used for any
+                      other reasons outside of the educational context. The
+                      purpose of collecting this information is solely to
+                      support academic activities and to ensure that it is used
+                      in a responsible and ethical manner.
+                    </p>
+
+                    <p>
+                      By clicking{" "}
+                      <span style={{ fontWeight: "bold" }}>"Confirm"</span>, you
+                      acknowledge that you have read, understood, and abide by
+                      the Data Privacy Act’s provisions when sharing your
+                      personal information
+                    </p>
+                    <Button
+                      variant="filled"
+                      color="rgb(141, 16, 56)"
+                      radius="xl"
+                      w="40%"
+                      h={"35px"}
                       className={styles.confirmBtn}
                       onClick={makeReservation}
                     >
                       Confirm
-                    </button>
-                    <button
+                    </Button>
+                    <Button
+                      variant="filled"
+                      color="rgb(141, 16, 56)"
+                      radius="xl"
+                      w="40%"
+                      h={"35px"}
                       className={styles.cancelBtn}
                       onClick={closeConfirmation}
                     >
                       Cancel
-                    </button>
+                    </Button>
                   </div>
                 </Modal>
 
@@ -885,7 +923,7 @@ const BorrowForm = () => {
                   onClose={close}
                   centered
                   withCloseButton={false}
-                  size="50%"
+                  size="100%"
                   closeOnClickOutside={false}
                 >
                   <div className={styles.receiptContainer}>
@@ -942,8 +980,7 @@ const BorrowForm = () => {
                         color="rgb(141, 16, 56)"
                         radius="xl"
                         h={"40px"}
-                        component={Link}
-                        href={typeParam === "game" ? "/games" : "/books"}
+                        onClick={close}
                       >
                         Go Back
                       </Button>
