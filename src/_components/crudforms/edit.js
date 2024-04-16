@@ -90,8 +90,8 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
   const editRecord = async () => {
 
-    console.log(data);
-    console.log(data2);
+    // console.log(data);
+    // console.log(data2);
 
     if (selectedRows[0] == null) {
       return;
