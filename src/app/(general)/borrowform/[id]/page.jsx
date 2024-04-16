@@ -791,6 +791,7 @@ const BorrowForm = () => {
             </div>
             <div className={styles.itemContainer}>
               <div className={styles.itemInfo}>
+
                 
               {!item.image && (<Image
                 src={placeholderImg}
@@ -799,6 +800,7 @@ const BorrowForm = () => {
                 alt="Item No Image"
               />)}
               {item.image && (<div className={styles.img_container}><Image className={styles.image} src={item.image} width={110} height={140} alt="" /></div>)}
+
                 <div className={styles.itemDetails}>
                   <TextInput name="itemId" value="" type="hidden" />
 
@@ -832,8 +834,6 @@ const BorrowForm = () => {
                     <h4>{item.publisher}</h4>
                   </div>
 
-
-
                   <div className={styles.info}>
                     <h4>Copyright Date:</h4>
                     <h4>{item.copyright_date}</h4>
@@ -845,11 +845,10 @@ const BorrowForm = () => {
                   className={styles.submitBtn}
                   onClick={validateFormSubmit}
                 >
-                  {" "}
-                  Submit Form{" "}
+                  Submit Form
                 </button>
                 <Link
-                  href={`/books/${item.id}`}
+                  href={`/${typeParam + "s"}/${item.id}`}
                   className={styles.backBtnContainer}
                 >
                   <button className={styles.backBtn}> Go Back </button>
@@ -944,7 +943,7 @@ const BorrowForm = () => {
                         radius="xl"
                         h={"40px"}
                         component={Link}
-                        href="/books"
+                        href={typeParam === "game" ? "/games" : "/books"}
                       >
                         Go Back
                       </Button>
