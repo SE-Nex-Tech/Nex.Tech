@@ -183,7 +183,6 @@ const QRScanner = () => {
         status: newBookStatus,
       };
 
-
       if (ticket.type == "Book") {
         const response = await fetch("/api/db", {
           method: "POST",
@@ -194,7 +193,7 @@ const QRScanner = () => {
             data: atts,
           }),
         });
-      }else{
+      } else {
         const response = await fetch("/api/db", {
           method: "POST",
           body: JSON.stringify({
@@ -205,8 +204,6 @@ const QRScanner = () => {
           }),
         });
       }
-
-
 
       console.log("close");
     };
@@ -312,10 +309,22 @@ const QRScanner = () => {
           style={{ width: "100px", height: "100px" }}
         />
         <div className={styles.hero}>
+          <div className={styles.note}>
+            <p className={styles.label}>
+              <IconInfoCircle width={26} height={26} />
+              For borrowing, reserving, or returning, point the camera at the
+              receipt.
+              <br />
+              Alternatively, you could input the Receipt Number in the field
+              below.
+            </p>
+          </div>
+
           <div className={styles.input_button}>
             <Input
               placeholder="Receipt Number"
               classNames={styles}
+              radius="xl"
               onChange={(e) => (receipt_no = e.target.value)}
             />
             <Button
@@ -328,14 +337,6 @@ const QRScanner = () => {
               Process Receipt
             </Button>
           </div>
-          <p className={styles.label}>
-            <IconInfoCircle width={26} height={26} />
-            For borrowing, reserving, or returning, point the camera at the
-            receipt.
-            <br />
-            Alternatively, you could input the Receipt Number in the field
-            below.
-          </p>
         </div>
       </Center>
       <ToastContainer />
