@@ -19,9 +19,15 @@ const Login = () => {
 
   const router = useRouter();
 
-  const initialLoginAttempts =
-    Number(localStorage.getItem("loginAttempts")) || 0;
-  const initialCounter = Number(localStorage.getItem("counter")) || 5 * 60;
+  const isLocalStorageAvailable =
+    typeof window !== "undefined" && window.localStorage;
+
+  const initialLoginAttempts = isLocalStorageAvailable
+    ? Number(localStorage.getItem("loginAttempts")) || 0
+    : 0;
+  const initialCounter = isLocalStorageAvailable
+    ? Number(localStorage.getItem("counter")) || 5 * 60
+    : 5 * 60;
 
   const [loginAttempts, setLoginAttempts] = useState(initialLoginAttempts);
   const [isButtonDisabled, setIsButtonDisabled] = useState(
@@ -30,9 +36,10 @@ const Login = () => {
   const [counter, setCounter] = useState(initialCounter);
 
   useEffect(() => {
-    localStorage.setItem("loginAttempts", loginAttempts);
-    localStorage.setItem("counter", counter);
-
+    if (isLocalStorageAvailable) {
+      localStorage.setItem("loginAttempts", loginAttempts);
+      localStorage.setItem("counter", counter);
+    }
     let intervalId;
 
     if (isButtonDisabled && counter > 0) {
@@ -46,7 +53,7 @@ const Login = () => {
     }
 
     return () => clearInterval(intervalId);
-  }, [isButtonDisabled, counter, loginAttempts]);
+  }, [isButtonDisabled, counter, loginAttempts, isLocalStorageAvailable]);
 
   const onSubmit = async () => {
     const result = await signIn("credentials", {
@@ -106,7 +113,7 @@ const Login = () => {
               leftSection={<IconAt size={16} />}
               classNames={styles}
               onChange={(e) => (email.current = e.target.value)}
-              onKeyDown={handleKeyDown}
+              onKeyDown={isButtonDisabled ? null : handleKeyDown}
             />
             <PasswordInput
               placeholder="Password"
@@ -114,7 +121,7 @@ const Login = () => {
               leftSection={<IconLock size={16} />}
               classNames={styles}
               onChange={(e) => (password.current = e.target.value)}
-              onKeyDown={handleKeyDown}
+              onKeyDown={isButtonDisabled ? null : handleKeyDown}
             />
           </div>
           <div className={styles.leftLower}>
@@ -137,7 +144,7 @@ const Login = () => {
 
             <Link href="/signup">
               <Button
-                variant="filled"
+                variant="outline"
                 color="rgb(141, 16, 56)"
                 radius="xl"
                 classNames={{ root: styles.btn2 }}
