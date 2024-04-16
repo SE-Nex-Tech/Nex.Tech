@@ -60,7 +60,14 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
     var isValid = true;
 
-    console.log(type.current);
+    const checkBookDuplicateCallNumber = (callNumber) => {
+      return bookDB.some((book) => book.call_num === callNumber);
+    };
+
+    const checkGameDuplicateCallNumber = (callNumber) => {
+      return gameDB.some((game) => game.call_num === callNumber);
+    };
+
 
 
     if (type.current == "books") {
@@ -81,12 +88,27 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
       ? checkEmptyField(callnum, setCallNumError) && isValid
       : !callNumError;
 
-    console.log(isValid);
     if (isValid) {
-      create();
+      const callNumber = callnum.current;
+      if (type.current == "books") {
+
+        if (isValid && checkBookDuplicateCallNumber(callNumber)) {
+          toast.error("Call number already exists", { autoClose: 2000 });
+        } else {
+          create();
+        }
+      }
+      else {
+        if (isValid && checkGameDuplicateCallNumber(callNumber)) {
+          toast.error("Call number already exists", { autoClose: 2000 });
+        } else {
+          create();
+        }
+      }
     } else {
       toast.error("Missing/Incorrect fields", { autoClose: 2000 });
     }
+
   };
 
   const validateInputChange = (value, refValue, setErrorState) => {
@@ -432,6 +454,14 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
             Discard
           </Button>
         </Stack>
+        <ToastContainer
+        position="top-right"
+        limit={3}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme="light"
+      />
       </div>
     </>
   );
