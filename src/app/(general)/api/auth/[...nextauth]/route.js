@@ -2,6 +2,7 @@ import NextAuth, { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcrypt";
 const { PrismaClient } = require("@prisma/client");
+import logger from '@/logger/logger'
 
 const prisma = new PrismaClient();
 
@@ -50,6 +51,7 @@ export const authOptions = {
         if (!user.access) {
           return null;
         }
+        logger(user.email + ' logged in succesfully', true)
         return {
           id: user.id + "",
           email: user.email,

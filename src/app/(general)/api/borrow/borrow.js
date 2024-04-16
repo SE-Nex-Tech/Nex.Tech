@@ -1,5 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
+import logger from '@/logger/logger'
 
 const prisma = new PrismaClient();
 
@@ -21,6 +22,7 @@ export async function borrow(req) {
   }
   console.log("Material to borrow: ----------------");
   console.log(material);
+  logger('Created a borrow ticket for ' + material.title + ' by ' + req['name'], false)
 
 
   let temp;

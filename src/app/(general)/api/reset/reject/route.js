@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
+import logger from '@/logger/logger'
 
 export async function POST(request) {
   const prisma = new PrismaClient()
@@ -15,6 +16,8 @@ export async function POST(request) {
       date_rejected: now
     }
   })
+
+  logger('Change password request ID ' + params['id'] + ' rejected', true)
 
   prisma.$disconnect()
   return NextResponse.json(pass)

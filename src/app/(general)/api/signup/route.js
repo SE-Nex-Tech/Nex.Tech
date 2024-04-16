@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 const { hash } = require("bcrypt");
+import logger from '@/logger/logger'
 
 export async function POST(request) {
   const prisma = new PrismaClient();
@@ -30,6 +31,8 @@ export async function POST(request) {
       type: "admin",
     },
   });
+
+  logger('Sign up request for ' + params['email'], false)
 
   await prisma.$disconnect();
   return NextResponse.json(result);
