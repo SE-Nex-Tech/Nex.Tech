@@ -708,7 +708,7 @@ const BorrowForm = () => {
     <div>
       {showHeader && (
         <div>
-          <Header currentRoute={"/borrowform"} />
+          <Header currentRoute={(item.status === 'Available') ? "/borrowform" : "/reserveform"} />
         </div>
       )}
       <div className={styles.mainBody}>
