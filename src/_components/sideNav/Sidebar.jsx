@@ -183,6 +183,8 @@ function Sidebar() {
     return (
       <aside
         className={`${styles.sidebar} ${isCollapsed ? styles.collapsed : ""}`}
+        onMouseEnter={() => setIsCollapsed(false)}
+        onMouseLeave={() => setIsCollapsed(true)}
       >
         <div className={styles.heading}>
           <div className={styles.headingLeft}>
