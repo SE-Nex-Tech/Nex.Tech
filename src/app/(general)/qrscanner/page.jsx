@@ -183,15 +183,30 @@ const QRScanner = () => {
         status: newBookStatus,
       };
 
-      const response = await fetch("/api/db", {
-        method: "POST",
-        body: JSON.stringify({
-          entity: "books",
-          update: 1,
-          where: filter,
-          data: atts,
-        }),
-      });
+
+      if (ticket.type == "Book") {
+        const response = await fetch("/api/db", {
+          method: "POST",
+          body: JSON.stringify({
+            entity: "books",
+            update: 1,
+            where: filter,
+            data: atts,
+          }),
+        });
+      }else{
+        const response = await fetch("/api/db", {
+          method: "POST",
+          body: JSON.stringify({
+            entity: "boardgames",
+            update: 1,
+            where: filter,
+            data: atts,
+          }),
+        });
+      }
+
+
 
       console.log("close");
     };
