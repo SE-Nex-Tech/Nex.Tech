@@ -8,15 +8,9 @@ import "react-toastify/dist/ReactToastify.css";
 const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
-
-
-
-
-
   const handleSelectChange = (value) => {
     setSelectedValue(value);
   };
-
 
   const barcode = useRef(selectedRows[0]?.barcode);
   const title = useRef(selectedRows[0]?.title);
@@ -31,7 +25,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
   const type = useRef(selectedType.current);
 
-  console.log(type.current);
+  // console.log(type.current);
   // console.log(type.current);
 
 
@@ -51,7 +45,6 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       const base64 = toBase64(e.target.files[0]);
 
       base64.then(result => {
-        console.log(result);
         image.current = result;
         setImageData(image.current);
       }).catch(error => {
@@ -97,6 +90,9 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
   const editRecord = async () => {
 
+    console.log(data);
+    console.log(data2);
+
     if (selectedRows[0] == null) {
       return;
     }
@@ -112,7 +108,8 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     barcode.current = parseInt(barcode.current);
     accnum.current = parseInt(accnum.current);
 
-    if (selectedType == "books") {
+    console.log(selectedType.current);
+    if (selectedType.current == "books") {
       const filter = {
         id: selectedRows[0].actual_id,
       };
@@ -169,9 +166,6 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
     }
 
-
-
-
     setNotification("Item Edited successfully!");
     closeModal();
     setSelectedRows([]);
@@ -203,14 +197,13 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
       </Group>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Barcode</strong>}>
+        <Input.Wrapper label={<strong>Call Number</strong>}>
           <Input
-            placeholder="Barcode"
-            defaultValue={selectedRows[0]?.barcode}
-            onChange={(e) => (barcode.current = e.target.value)}
+            placeholder="Call Number"
+            defaultValue={selectedRows[0]?.call_num}
+            onChange={(e) => (callnum.current = e.target.value)}
           />
         </Input.Wrapper>
-
         {(type.current === 'books') && (
           <Input.Wrapper label={<strong>Book Author</strong>}>
             <Input
@@ -223,13 +216,15 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
       </Group>
       <Group grow mb={20}>
-        <Input.Wrapper label={<strong>Call Number</strong>}>
+
+        <Input.Wrapper label={<strong>Barcode</strong>}>
           <Input
-            placeholder="Call Number"
-            defaultValue={selectedRows[0]?.call_num}
-            onChange={(e) => (callnum.current = e.target.value)}
+            placeholder="Barcode"
+            defaultValue={selectedRows[0]?.barcode}
+            onChange={(e) => (barcode.current = e.target.value)}
           />
         </Input.Wrapper>
+
         <Input.Wrapper label={<strong>Accession Number</strong>}>
           <Input
             placeholder="Accession Number"

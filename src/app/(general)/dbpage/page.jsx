@@ -188,6 +188,7 @@ const Database = () => {
             refreshKey={refreshKey}
             setNotification={setNotification}
             selectedType={selectedType}
+         
           />
 
           <EditButton
@@ -197,6 +198,7 @@ const Database = () => {
             refreshKey={refreshKey}
             setNotification={setNotification}
             selectedType={selectedType}
+        
           />
 
           <DeleteButton

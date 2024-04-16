@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType }) => {
+const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType}) => {
   const barcode = useRef("");
   const [barcodeValue, setBarcodeValue] = useState("");
   const title = useRef("");
@@ -100,7 +100,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     accnum.current = parseInt(accnum.current);
 
 
-    if (selectedType == "books") {
+    if (selectedType.current == "books") {
       const atts = {
         barcode: barcode.current,
         title: title.current,
@@ -146,14 +146,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
         }),
       });
 
-      console.log(atts);
-      console.log(response);
-
     }
-
-
-
-
 
     setNotification("Item Created successfully!");
     closeModal();
@@ -179,14 +172,14 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
           {(type.current === 'games') && (
             <Input.Wrapper label={<strong>Boardgame Title</strong>} required>
-            <Input
-              placeholder="The Network Navigators"
-              onChange={(e) => {
-                title.current = e.target.value;
-                setTitleValue(e.target.value);
-              }}
-            />
-          </Input.Wrapper>
+              <Input
+                placeholder="The Network Navigators"
+                onChange={(e) => {
+                  title.current = e.target.value;
+                  setTitleValue(e.target.value);
+                }}
+              />
+            </Input.Wrapper>
           )}
 
 
@@ -194,12 +187,12 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
         <Group grow mb={20}>
 
-          <Input.Wrapper label={<strong>Barcode</strong>}>
+          <Input.Wrapper label={<strong>Call Number</strong>} required>
             <Input
-              placeholder="8293213"
+              placeholder="Wklt.Md.2Wh.qJ3 2058"
               onChange={(e) => {
-                barcode.current = e.target.value;
-                setBarcodeValue(e.target.value);
+                callnum.current = e.target.value;
+                setCallNumValue(e.target.value);
               }}
             />
           </Input.Wrapper>
@@ -220,12 +213,14 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
         <Group grow mb={20}>
 
-          <Input.Wrapper label={<strong>Call Number</strong>} required>
+
+
+          <Input.Wrapper label={<strong>Barcode</strong>}>
             <Input
-              placeholder="Wklt.Md.2Wh.qJ3 2058"
+              placeholder="8293213"
               onChange={(e) => {
-                callnum.current = e.target.value;
-                setCallNumValue(e.target.value);
+                barcode.current = e.target.value;
+                setBarcodeValue(e.target.value);
               }}
             />
           </Input.Wrapper>

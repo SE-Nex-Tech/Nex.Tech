@@ -80,7 +80,17 @@ export async function POST(request) {
       result['id'] = result['id'].toString();
       console.log(result);
     }
+    else if (params['entity'] == 'boardgames') {
+      const conditions = params['data'];
+      result = await entity.create({
+        data: conditions
+      })
+
+      result['id'] = result['id'].toString();
+      console.log(result)
+    }
     else {
+      console.log(result);
       const conditions = params['data'];
       conditions['id'] = Date.now();
       result = await entity.create({
@@ -111,8 +121,8 @@ export async function POST(request) {
       })
     }
 
-    else if(params['entity'] == 'boardgames') {
-      console.log("gamessss");
+    else if (params['entity'] == 'boardgames') {
+      
       let filter = params['where']
       let info = params['data']
       result = await entity.update({
