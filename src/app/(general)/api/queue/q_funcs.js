@@ -43,7 +43,7 @@ const gameQ = async (pc, id) => {
     where: {
       borrow_date: null,
       return_date: null,
-      type: "Game",
+      type: "Boardgame",
       boardgameRequests: {
         boardgame_id: id,
       },
