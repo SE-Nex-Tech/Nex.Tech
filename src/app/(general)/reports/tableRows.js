@@ -65,10 +65,10 @@ const TableRows = ({ data }) => {
 
             return <>
                 <View style={styles.row}>
-                    <Text style={[styles.rowHeader, { width: "99.8%" }]}>Popular Books</Text>
+                    <Text style={[styles.rowHeader, { width: "99.8%" }]}>Popular Boardgames</Text>
                 </View>
                 <View style={styles.row}>
-                    <Text style={[styles.rowData, { width: "50%" }]}>Book Title</Text>
+                    <Text style={[styles.rowData, { width: "50%" }]}>Boardgame Title</Text>
                     <Text style={[styles.rowData, { width: "50%" }]}>Usage Count</Text>
                 </View>
                 {rows}

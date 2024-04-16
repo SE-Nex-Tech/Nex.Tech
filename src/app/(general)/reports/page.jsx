@@ -478,31 +478,28 @@ const Reports = ({ hideHeader }) => {
           </View>
         )}
 
-        {gameSummary &&
-          (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
-            <View style={stylesPDF.user_demographics}>
-              <Text style={{ paddingLeft: 60 }}>
-                User Demographics (Board Games):
-              </Text>
-              <View style={stylesPDF.tableContainer}>
-                <View style={stylesPDF.table}>
-                  <TableRows data={gameUserType} />
-                </View>
-                <View style={stylesPDF.table}>
-                  <TableRows data={gameYearLevel} />
-                </View>
-                <View style={stylesPDF.table}>
-                  <TableRows data={gameDept} />
-                </View>
+        {(gameSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
+          <View style={stylesPDF.user_demographics}>
+            <Text style={{ paddingLeft: 60 }}>User Demographics (Boardgames):</Text>
+            <View style={stylesPDF.tableContainer}>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameUserType} />
+              </View>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameYearLevel} />
+              </View>
+              <View style={stylesPDF.table}>
+                <TableRows data={gameDept} />
+
               </View>
             </View>
           )}
 
         {gameSummary && (
           <View style={stylesPDF.usage_statistics}>
-            <Text style={{ paddingLeft: 60 }}>
-              Usage Statistics (Board Games):
-            </Text>
+
+            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Boardgames):</Text>
+
             <View style={stylesPDF.tableContainer}>
               <View style={stylesPDF.table}>
                 <TableRows data={gameUsage} />

@@ -1,8 +1,13 @@
 import { Button, Group, Stack, Select, Input, Table } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
-const ArchiveForm = ({ selectedRows, closeModal }) => {
+const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType }) => {
+
+  const type = useRef(selectedType.current);
+
   const archiveRecords = async () => {
     console.log(selectedRows.length);
     console.log(selectedRows);
@@ -15,20 +20,40 @@ const ArchiveForm = ({ selectedRows, closeModal }) => {
     console.log("IDs identified");
     console.log(ids);
 
-    const response = await fetch("/api/db", {
-      method: "POST",
-      body: JSON.stringify({
-        entity: "books",
-        delete: 1,
-        where: {
-          id: {
-            in: ids,
+    if (selectedType.current == "books") {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "books",
+          delete: 1,
+          where: {
+            id: {
+              in: ids,
+            },
           },
-        },
-      }),
-    });
+        }),
+      });
+    }
+    else {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "boardgames",
+          delete: 1,
+          where: {
+            id: {
+              in: ids,
+            },
+          },
+        }),
+      });
+    }
 
+
+    setNotification("Item/s Archived successfully!");
     closeModal();
+    setSelectedRows([]);
+
   };
 
   return (
@@ -36,17 +61,39 @@ const ArchiveForm = ({ selectedRows, closeModal }) => {
       <h2 style={{ marginBottom: "0.9em" }}>
         Are you sure to archive selected field/s?
       </h2>
-      {selectedRows.map((row) => (
-        <p key={row.id}>
-          <span style={{ fontWeight: "bold" }}>Title: </span>
-          {row.title}
-          <br />
-          <span style={{ fontWeight: "bold" }}>Author: </span>
-          {row.author} <br />
-          <hr />
-          <br />
-        </p>
-      ))}
+
+
+      {(type.current === 'books') && (
+        <>
+          {selectedRows.map((row) => (
+            <p key={row.id}>
+              <span style={{ fontWeight: "bold" }}>Title: </span>
+              {row.title}
+              <br />
+              <span style={{ fontWeight: "bold" }}>Author: </span>
+              {row.author} <br />
+              <hr />
+              <br />
+            </p>
+          ))}
+        </>
+      )}
+      {(type.current === 'games') && (
+        <>
+          {selectedRows.map((row) => (
+            <p key={row.id}>
+              <span style={{ fontWeight: "bold" }}>Title: </span>
+              {row.title}
+              <br />
+              <span style={{ fontWeight: "bold" }}>Publisher: </span>
+              {row.publisher} <br />
+              <hr />
+              <br />
+            </p>
+          ))}
+        </>
+      )}
+
 
       <Stack justify="center" mt="xl">
         <Button

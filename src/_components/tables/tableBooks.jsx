@@ -30,6 +30,8 @@ const TableBody = ({
     author: "Author",
     edition: "Edition",
     publisher: "Publisher",
+    copyright_date: "Copyright Date",
+    condition: "Condition",
   };
 
   const visibleColumns = [
@@ -41,6 +43,8 @@ const TableBody = ({
     "accession_num",
     "call_num",
     "barcode",
+    "copyright_date",
+    "condition",
   ];
 
   const columns = columnNames.map((columnName) => ({
@@ -78,6 +82,8 @@ const TableBody = ({
             publisher: row.original.publisher,
             actual_id: row.original.id,
             image: row.original.image,
+            copyright_date: row.original.copyright_date,
+            condition: row.original.condition,
           },
         ];
       }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import AddForm from "../crudforms/add";
-const AddButton = () => {
+const AddButton = ({ refreshKey, setRefreshKey, setNotification, selectedType, bookDB, gameDB }) => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
@@ -18,7 +18,15 @@ const AddButton = () => {
         }}
         withCloseButton={false}
       >
-        <AddForm closeModal={close}/>
+        <AddForm
+          closeModal={close}
+          setRefreshKey={setRefreshKey}
+          refreshKey={refreshKey}
+          setNotification={setNotification}
+          selectedType={selectedType}
+          bookDB={bookDB}
+          gameDB={gameDB}
+        />
       </Modal>
 
       <Button

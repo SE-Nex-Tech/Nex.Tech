@@ -69,9 +69,10 @@ const BorrowForm = () => {
 
     const currentDateTime = new Date();
 
-    userName.current =
-      lastName.current + ", " + firstName.current + " " + middleName.current;
+    userName.current = firstName.current
 
+
+      console.log(userType.current);
     const borrow = await fetch("/api/borrow", {
       method: "POST",
       body: JSON.stringify({
@@ -141,9 +142,7 @@ const BorrowForm = () => {
     return <div>Item not found</div>;
   }
 
-  if (item.copyright_date) {
-    copyright_date = format(Date.parse(item.copyright_date), "MM/dd/yyyy");
-  }
+
 
   const requestCode = useRef("201314214");
   const requestType = useRef(typeParam === "book" ? "Book" : "Boardgame");
@@ -152,8 +151,6 @@ const BorrowForm = () => {
   const employeeNumber = useRef("");
   const userType = useRef("Student");
   const firstName = useRef("");
-  const lastName = useRef("");
-  const middleName = useRef("");
   const userName = useRef("");
   const userEmail = useRef("");
   const userDepartment = useRef("None");
@@ -171,7 +168,6 @@ const BorrowForm = () => {
 
   const [studentNumberError, setStudentNumberError] = useState(false);
   const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [sectionError, setSectionError] = useState(false);
   const [departmentError, setDepartmentError] = useState(false);
@@ -193,8 +189,7 @@ const BorrowForm = () => {
   const studentNumText = studentNumberError
     ? "This field is required"
     : "2021523418";
-  const firstNameText = firstNameError ? "This field is required" : "John Doe";
-  const lastNameText = lastNameError ? "This field is required" : "Smith";
+  const firstNameText = firstNameError ? "This field is required" : "John Doe Smith";
   const emailText = emailError
     ? "This field is required"
     : "johndoe.smith@ust.edu.ph";
@@ -299,7 +294,6 @@ const BorrowForm = () => {
           ? checkEmptyField(studentNumber, setStudentNumberError) && isValid
           : !studentNumberError;
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
-        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
         isValid =
           checkEmptyField(userDepartment, setDepartmentError) && isValid;
         isValid = checkEmptyField(yearLevel, setYearLevelError) && isValid;
@@ -315,7 +309,6 @@ const BorrowForm = () => {
           ? checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid
           : !employeeNumberError;
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
-        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
         isValid = !emailError
           ? checkEmptyField(userEmail, setEmailError) && isValid
           : !emailError;
@@ -327,7 +320,6 @@ const BorrowForm = () => {
           ? checkEmptyField(employeeNumber, setEmployeeNumberError) && isValid
           : !employeeNumberError;
         isValid = checkEmptyField(firstName, setFirstNameError) && isValid;
-        isValid = checkEmptyField(lastName, setLastNameError) && isValid;
         isValid = !emailError
           ? checkEmptyField(userEmail, setEmailError) && isValid
           : !emailError;
@@ -374,7 +366,7 @@ const BorrowForm = () => {
             </div>
 
             <div className={styles.input}>
-              <label>First Name:</label>
+              <label>Name:</label>
               <TextInput
                 style={{
                   minWidth: "230px",
@@ -390,45 +382,6 @@ const BorrowForm = () => {
                   validateInputChange(validValue, firstName, setFirstNameError);
                 }}
                 error={firstNameError}
-              />
-            </div>
-
-            <div className={styles.input}>
-              <label>Middle Initial:</label>
-              <TextInput
-                style={{
-                  minWidth: "230px",
-                  width: "100%",
-                  marginBottom: "0.8em",
-                }}
-                name="userName"
-                placeholder="R. (Optional)"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s.]/g, "");
-                  e.target.value = validValue;
-                  middleName.current = validValue;
-                }}
-              />
-            </div>
-
-            <div className={styles.input}>
-              <label>Last Name:</label>
-              <TextInput
-                style={{
-                  minWidth: "230px",
-                  width: "100%",
-                  marginBottom: "0.8em",
-                }}
-                name="userName"
-                placeholder={lastNameText}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s]/g, "");
-                  e.target.value = validValue;
-                  validateInputChange(validValue, lastName, setLastNameError);
-                }}
-                error={lastNameError}
               />
             </div>
 
@@ -529,7 +482,7 @@ const BorrowForm = () => {
             </div>
 
             <div className={styles.input}>
-              <label>First Name:</label>
+              <label>Name:</label>
               <TextInput
                 style={{
                   minWidth: "230px",
@@ -545,45 +498,6 @@ const BorrowForm = () => {
                   validateInputChange(validValue, firstName, setFirstNameError);
                 }}
                 error={firstNameError}
-              />
-            </div>
-
-            <div className={styles.input}>
-              <label>Middle Initial:</label>
-              <TextInput
-                style={{
-                  minWidth: "230px",
-                  width: "100%",
-                  marginBottom: "0.8em",
-                }}
-                name="userName"
-                placeholder="R. (Optional)"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s.]/g, "");
-                  e.target.value = validValue;
-                  middleName.current = validValue;
-                }}
-              />
-            </div>
-
-            <div className={styles.input}>
-              <label>Last Name:</label>
-              <TextInput
-                style={{
-                  minWidth: "230px",
-                  width: "100%",
-                  marginBottom: "0.8em",
-                }}
-                name="userName"
-                placeholder={lastNameText}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s]/g, "");
-                  e.target.value = validValue;
-                  validateInputChange(validValue, lastName, setLastNameError);
-                }}
-                error={lastNameError}
               />
             </div>
 
@@ -655,7 +569,7 @@ const BorrowForm = () => {
             </div>
 
             <div className={styles.input}>
-              <label>First Name:</label>
+              <label>Name:</label>
               <TextInput
                 style={{
                   minWidth: "230px",
@@ -671,45 +585,6 @@ const BorrowForm = () => {
                   validateInputChange(validValue, firstName, setFirstNameError);
                 }}
                 error={firstNameError}
-              />
-            </div>
-
-            <div className={styles.input}>
-              <label>Middle Initial:</label>
-              <TextInput
-                style={{
-                  minWidth: "230px",
-                  width: "100%",
-                  marginBottom: "0.8em",
-                }}
-                name="userName"
-                placeholder="R. (Optional)"
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s.]/g, "");
-                  e.target.value = validValue;
-                  middleName.current = validValue;
-                }}
-              />
-            </div>
-
-            <div className={styles.input}>
-              <label>Last Name:</label>
-              <TextInput
-                style={{
-                  minWidth: "230px",
-                  width: "100%",
-                  marginBottom: "0.8em",
-                }}
-                name="userName"
-                placeholder={lastNameText}
-                onChange={(e) => {
-                  const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s]/g, "");
-                  e.target.value = validValue;
-                  validateInputChange(validValue, lastName, setLastNameError);
-                }}
-                error={lastNameError}
               />
             </div>
 
@@ -954,7 +829,7 @@ const BorrowForm = () => {
 
                   <div className={styles.info}>
                     <h4>Copyright Date:</h4>
-                    <h4>{copyright_date}</h4>
+                    <h4>{item.copyright_date}</h4>
                   </div>
                 </div>
               </div>

@@ -20,7 +20,7 @@ export async function POST(request) {
 
     if (re.test(params['contains'])) {
       console.log('has letters')
-      let stringAttributes = params['dashboard'] == undefined ? ['title', 'author', 'edition', 'publication_place', 'publisher', 'call_num'] : ['title', 'author']
+      let stringAttributes = params['dashboard'] == undefined ? ['title', 'author', 'edition', 'publisher', 'call_num'] : ['title', 'author']
       if (params['entity'] !== 'books') {
         stringAttributes = params['dashboard'] == undefined ? ['title', 'call_num', 'publisher'] : ['title', 'publisher']
       }
@@ -73,9 +73,6 @@ export async function POST(request) {
 
     if (params['entity'] == 'books') {
       const conditions = params['data'];
-      conditions['copyright_date'] = new Date(conditions['copyright_date']).toISOString();
-      // conditions['id'] = Date.now();
-      // console.log(conditions)
       result = await entity.create({
         data: conditions
       })
@@ -83,9 +80,18 @@ export async function POST(request) {
       result['id'] = result['id'].toString();
       console.log(result);
     }
-    else {
+    else if (params['entity'] == 'boardgames') {
       const conditions = params['data'];
-      conditions['copyright_date'] = new Date(conditions['copyright_date']).toISOString();
+      result = await entity.create({
+        data: conditions
+      })
+
+      result['id'] = result['id'].toString();
+      console.log(result)
+    }
+    else {
+      console.log(result);
+      const conditions = params['data'];
       conditions['id'] = Date.now();
       result = await entity.create({
         data: conditions
@@ -98,7 +104,6 @@ export async function POST(request) {
     if (params['entity'] == 'books') {
       let filter = params['where']
       let info = params['data']
-      info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
       result = await entity.update({
         where: filter,
         data: info
@@ -116,15 +121,16 @@ export async function POST(request) {
       })
     }
 
-    else {
+    else if (params['entity'] == 'boardgames') {
+
       let filter = params['where']
       let info = params['data']
-      info['copyright_date'] = (info['copyright_date'] != undefined) ? new Date(info['copyright_date']).toISOString() : undefined
       result = await entity.update({
         where: filter,
         data: info
       })
     }
+
   }
 
   else if (params['delete'] != undefined) {
@@ -135,6 +141,17 @@ export async function POST(request) {
       where: conditions,
       data: { archive: true }
     })
+  }
+
+  else if (params['content'] != undefined) {
+    if (params['entity'] == 'books') {
+      entity = prisma.books
+
+    } else if (params['entity'] == 'boardgames') {
+      entity = prisma.boardgames
+    }
+    result = await entity.findMany()
+    return NextResponse.json(result)
   }
 
   else if (params['scanqr'] != undefined) {

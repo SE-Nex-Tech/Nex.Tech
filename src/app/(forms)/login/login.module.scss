@@ -96,6 +96,30 @@
     width: 500px;
     position: relative;
 
+    .hero {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      color: white;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      text-align: center;
+      text-shadow: 4px 4px 14px rgba(0, 0, 0, 0.3);
+      h1 {
+        font-size: 3.5em;
+        white-space: nowrap;
+      }
+      p {
+        font-size: 1.5em;
+        white-space: nowrap;
+      }
+      p,
+      h1 {
+        padding: 0;
+        margin: 0;
+      }
+    }
+
     .building {
       object-fit: cover;
       height: 100%;
