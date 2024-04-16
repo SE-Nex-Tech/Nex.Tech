@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import styles from "./login.module.scss";
 import { Input, Button, PasswordInput } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
@@ -18,6 +18,35 @@ const Login = () => {
   const password = useRef("");
 
   const router = useRouter();
+
+  const initialLoginAttempts =
+    Number(localStorage.getItem("loginAttempts")) || 0;
+  const initialCounter = Number(localStorage.getItem("counter")) || 5 * 60;
+
+  const [loginAttempts, setLoginAttempts] = useState(initialLoginAttempts);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(
+    initialLoginAttempts >= 5
+  );
+  const [counter, setCounter] = useState(initialCounter);
+
+  useEffect(() => {
+    localStorage.setItem("loginAttempts", loginAttempts);
+    localStorage.setItem("counter", counter);
+
+    let intervalId;
+
+    if (isButtonDisabled && counter > 0) {
+      intervalId = setInterval(() => {
+        setCounter((counter) => counter - 1);
+      }, 1000);
+    } else if (counter === 0) {
+      setIsButtonDisabled(false);
+      setCounter(5 * 60);
+      setLoginAttempts(0);
+    }
+
+    return () => clearInterval(intervalId);
+  }, [isButtonDisabled, counter, loginAttempts]);
 
   const onSubmit = async () => {
     const result = await signIn("credentials", {
@@ -47,6 +76,10 @@ const Login = () => {
       }, 2000);
     } else {
       toast.error("Incorrect Credentials!");
+      setLoginAttempts((prevAttempts) => prevAttempts + 1);
+      if (loginAttempts + 1 >= 5) {
+        setIsButtonDisabled(true);
+      }
     }
   };
 
@@ -85,12 +118,19 @@ const Login = () => {
             />
           </div>
           <div className={styles.leftLower}>
+            {isButtonDisabled && (
+              <p className={styles.countdown}>
+                Try again in {Math.floor(counter / 60)}:
+                {counter % 60 < 10 ? `0${counter % 60}` : counter % 60} minutes
+              </p>
+            )}
             <Button
               variant="filled"
               color="rgb(141, 16, 56)"
               radius="xl"
               classNames={{ root: styles.btn }}
               onClick={onSubmit}
+              disabled={isButtonDisabled}
             >
               Login
             </Button>
