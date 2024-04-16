@@ -27,7 +27,6 @@ import TableBodyGames from "@/_components/tables/tableGames";
 import TableBody from "@/_components/tables/tableBooks";
 import StatusGames from "@/_components/dashboard/statusGames";
 
-
 const getUserCreds = (element) => {
   switch (element.user_type) {
     case "Student":
@@ -59,7 +58,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [queue, setQueue] = useState([]);
   const [biu, setBiu] = useState([]);
-  const [giu, setGiu] = useState([])
+  const [giu, setGiu] = useState([]);
 
   const columnNames = Object.values(Prisma.BooksScalarFieldEnum);
   const columnNamesGames = Object.values(Prisma.BoardgamesScalarFieldEnum);
@@ -127,16 +126,16 @@ const Dashboard = () => {
       setData2(data2);
       setLoading(false);
 
-      let res = await fetch('/api/queue', {
-        method: 'POST',
+      let res = await fetch("/api/queue", {
+        method: "POST",
         body: JSON.stringify({
-          id: 1
-        })
-      })
-      let d = await res.json()
-      setBiu(d.biu)
-      setGiu(d.giu)
-      setQueue(d.allq)
+          id: 1,
+        }),
+      });
+      let d = await res.json();
+      setBiu(d.biu);
+      setGiu(d.giu);
+      setQueue(d.allq);
     };
 
     fetchData();
@@ -177,7 +176,7 @@ const Dashboard = () => {
       <div>
         <Header currentRoute={current} />
       </div>
-      <Center className={styles.center} maw="100%" m={25} h="81.5%">
+      <Center className={styles.center} maw="100%" m={25} h="auto">
         <div className={styles.first_row}>
           <div className={styles.borrow_status}>
             <div className={styles.header_borrow}>
@@ -295,7 +294,7 @@ const Dashboard = () => {
               <Tabs.Panel value="books">
                 <TableBody
                   data={data}
-                  pageSize={4}
+                  pageSize={6}
                   disablePageButton={false}
                   disableCheckbox={true}
                 />
