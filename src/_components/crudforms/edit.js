@@ -1,4 +1,4 @@
-import { Button, Group, Select, Input, Table, Stack, Center, Textarea } from "@mantine/core";
+import { Button, Group, Select, Input, Table, Stack, Center, Textarea, NumberInput, } from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
 import Image from "next/image";
@@ -25,8 +25,92 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
   const type = useRef(selectedType.current);
 
-  // console.log(type.current);
-  // console.log(type.current);
+  const [bookTitleError, setBookTitleError] = useState(false);
+  const [gameTitleError, setGameTitleError] = useState(false);
+  const [callNumError, setCallNumError] = useState(false);
+  const [authorError, setAuthorError] = useState(false);
+
+
+
+  const validateFormSubmit = () => {
+
+
+    const checkEmptyField = (value, setErrorState) => {
+      if (
+        value.current == "" ||
+        value.current == null ||
+        value.current == "None"
+      ) {
+        setErrorState(true);
+        return false;
+      } else {
+        setErrorState(false);
+        return true;
+      }
+    };
+
+    var isValid = true;
+
+    console.log(type.current);
+
+    if (type.current == "books") {
+      isValid = !bookTitleError
+        ? checkEmptyField(title, setBookTitleError) && isValid
+        : !bookTitleError;
+
+      isValid = !authorError
+        ? checkEmptyField(author, setAuthorError) && isValid
+        : !authorError;
+    } else {
+      isValid = !gameTitleError
+        ? checkEmptyField(title, setGameTitleError) && isValid
+        : !gameTitleError;
+    }
+
+    isValid = !callNumError
+      ? checkEmptyField(callnum, setCallNumError) && isValid
+      : !callNumError;
+
+
+
+
+
+    console.log(isValid);
+    if (isValid) {
+      editRecord();
+    } else {
+      console.log("Missing/Incorrect fields");
+      toast.error("Missing/Incorrect fields", { autoClose: 2000 });
+    }
+  };
+
+  const validateInputChange = (value, refValue, setErrorState) => {
+    if (value == "" || value == null || value.current == "None") {
+      // If the value is empty or contains only whitespace
+      setErrorState(true); // Set state to true
+      refValue.current = value;
+    } else {
+      setErrorState(false); // Set state to false
+      refValue.current = value; // Update the value
+    }
+  };
+
+  const bookTitleText = bookTitleError
+    ? "This field is required"
+    : "Fundamentals of Computer Programming";
+
+  const gameTitleText = gameTitleError
+    ? "This field is required"
+    : "Game of the Generals";
+
+  const callNumText = callNumError
+    ? "This field is required"
+    : "QA76.56.F1 .Tb21c 2024";
+
+  const authorText = authorError
+    ? "This field is required"
+    : "John Smith";
+
 
 
 
@@ -176,9 +260,15 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         {(type.current === 'books') && (
           <Input.Wrapper label={<strong>Book Title</strong>}>
             <Input
-              placeholder="Book Title"
               defaultValue={selectedRows[0]?.title}
-              onChange={(e) => (title.current = e.target.value)}
+
+              onChange={(e) => {
+                validateInputChange(e.target.value, title, setBookTitleError);
+              }}
+
+              error={bookTitleError}
+              placeholder={bookTitleText}
+
             />
           </Input.Wrapper>
         )}
@@ -186,30 +276,39 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         {(type.current === 'games') && (
           <Input.Wrapper label={<strong>Boardgame Title</strong>}>
             <Input
-              placeholder="Boardgame Title"
               defaultValue={selectedRows[0]?.title}
-              onChange={(e) => (title.current = e.target.value)}
+              onChange={(e) => {
+                validateInputChange(e.target.value, title, setGameTitleError);
+              }}
+              error={gameTitleError}
+              placeholder={gameTitleText}
             />
           </Input.Wrapper>
         )}
-
-
-
       </Group>
+
       <Group grow mb={20}>
         <Input.Wrapper label={<strong>Call Number</strong>}>
           <Input
-            placeholder="Call Number"
             defaultValue={selectedRows[0]?.call_num}
-            onChange={(e) => (callnum.current = e.target.value)}
+            onChange={(e) => {
+              validateInputChange(e.target.value, callnum, setCallNumError);
+            }}
+            error={callNumError}
+            placeholder={callNumText}
           />
         </Input.Wrapper>
+
+
         {(type.current === 'books') && (
           <Input.Wrapper label={<strong>Book Author</strong>}>
             <Input
-              placeholder="Book Author"
               defaultValue={selectedRows[0]?.author}
-              onChange={(e) => (author.current = e.target.value)}
+              onChange={(e) => {
+                validateInputChange(e.target.value, author, setAuthorError);
+              }}
+              error={authorError}
+              placeholder={authorText}
             />
           </Input.Wrapper>
         )}
@@ -218,25 +317,35 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
       <Group grow mb={20}>
 
         <Input.Wrapper label={<strong>Barcode</strong>}>
-          <Input
-            placeholder="Barcode"
+          <NumberInput
+            hideControls
+            allowNegative={false}
+            allowDecimal={false}
+            max={999999999999999999}
+            clampBehavior="strict"
+            placeholder="172284612332"
             defaultValue={selectedRows[0]?.barcode}
-            onChange={(e) => (barcode.current = e.target.value)}
+            onChange={(value) => (barcode.current = value)}
           />
         </Input.Wrapper>
 
         <Input.Wrapper label={<strong>Accession Number</strong>}>
-          <Input
-            placeholder="Accession Number"
+          <NumberInput
+            hideControls
+            allowNegative={false}
+            allowDecimal={false}
+            max={999999999999999999}
+            clampBehavior="strict"
+            placeholder="202127216232"
             defaultValue={selectedRows[0]?.accession_num}
-            onChange={(e) => (accnum.current = e.target.value)}
+            onChange={(value) => (accnum.current = value)}
           />
         </Input.Wrapper>
 
         {(type.current === 'books') && (
           <Input.Wrapper label={<strong>Edition</strong>}>
             <Input
-              placeholder="Edition"
+              placeholder="12th"
               defaultValue={selectedRows[0]?.edition}
               onChange={(e) => (edition.current = e.target.value)}
             />
@@ -254,10 +363,15 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           />
         </Input.Wrapper>
         <Input.Wrapper label={<strong>Copyright Date</strong>}>
-          <Input
+          <NumberInput
+            hideControls
+            allowNegative={false}
+            allowDecimal={false}
+            max={2090}
+            clampBehavior="strict"
             placeholder="2024"
             defaultValue={selectedRows[0]?.copyright_date}
-            onChange={(e) => (copyright_date.current = e.target.value)}
+            onChange={(value) => (copyright_date.current = value.toString())}
           />
         </Input.Wrapper>
       </Group>
@@ -306,7 +420,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           variant="filled"
           color="rgb(141, 16, 56)"
           radius="xl"
-          onClick={editRecord}
+          onClick={validateFormSubmit}
         >
           Save
         </Button>
@@ -319,7 +433,14 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           Discard
         </Button>
       </Stack>
-      <ToastContainer />
+      <ToastContainer
+        position="top-right"
+        limit={3}
+        closeOnClick
+        rtl={false}
+        draggable
+        theme="light"
+      />
     </>
   );
 };
