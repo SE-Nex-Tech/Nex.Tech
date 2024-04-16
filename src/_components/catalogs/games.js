@@ -13,7 +13,7 @@ const Games = () => {
   const [loading, setLoading] = useState(true);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const [gamesPerPage, setGamesPerPage] = useState(10);
+  const [gamesPerPage, setGamesPerPage] = useState(8);
   const totalGames = Object.keys(data).length;
 
   useEffect(() => {
