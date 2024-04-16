@@ -23,3 +23,17 @@
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .input_button {
+    padding-top: 2em;
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+  }
+}

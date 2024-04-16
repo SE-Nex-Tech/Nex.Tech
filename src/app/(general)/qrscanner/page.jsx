@@ -57,14 +57,14 @@ const QRScanner = () => {
       }),
     });
     const data = await res.json();
-    const bq = transaction.borrowTicket.type == 'Book' ? data.bq : data.gq;
-    const biu = transaction.borrowTicket.type == 'Book' ? data.biu : data.giu;
+    const bq = transaction.borrowTicket.type == "Book" ? data.bq : data.gq;
+    const biu = transaction.borrowTicket.type == "Book" ? data.biu : data.giu;
     console.log(
-      "Material queue ==================================================",
+      "Material queue =================================================="
     );
     console.log(bq);
-    console.log(biu)
-    console.log(transaction)
+    console.log(biu);
+    console.log(transaction);
 
     if (
       bq.length > 0 &&
@@ -224,8 +224,17 @@ const QRScanner = () => {
           break;
       }
 
-      const mat = next.type === 'Book' ? next.bookRequests.book.title : next.boardgameRequests.boardgame.title
-      const text = 'Hello ' + name + ', We are glad to inform you that your reservation for ' + mat + ' can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is ' + next.id
+      const mat =
+        next.type === "Book"
+          ? next.bookRequests.book.title
+          : next.boardgameRequests.boardgame.title;
+      const text =
+        "Hello " +
+        name +
+        ", We are glad to inform you that your reservation for " +
+        mat +
+        " can now be availed. Please show your receipt/QR code to the librarian. In case you lost your QR code, your receipt number is " +
+        next.id;
 
       console.log("SENDING EMAIL TO: " + email);
 
@@ -287,19 +296,32 @@ const QRScanner = () => {
           }}
           style={{ width: "100px", height: "100px" }}
         />
-        <Input
-          placeholder="Receipt Number"
-          classNames={styles}
-          onChange={(e) => (receipt_no = e.target.value)}
-        />
-        <Button classNames={{ root: styles.btn }} onClick={processReceipt}>
-          Process Receipt
-        </Button>
-        <p className={styles.label}>
-          <IconInfoCircle width={26} height={26} />
-          For borrowing, reserving, or returning, point the camera at the
-          receipt.
-        </p>
+        <div className={styles.hero}>
+          <div className={styles.input_button}>
+            <Input
+              placeholder="Receipt Number"
+              classNames={styles}
+              onChange={(e) => (receipt_no = e.target.value)}
+            />
+            <Button
+              variant="filled"
+              color="rgb(141, 16, 56)"
+              radius="xl"
+              classNames={{ root: styles.btn }}
+              onClick={processReceipt}
+            >
+              Process Receipt
+            </Button>
+          </div>
+          <p className={styles.label}>
+            <IconInfoCircle width={26} height={26} />
+            For borrowing, reserving, or returning, point the camera at the
+            receipt.
+            <br />
+            Alternatively, you could input the Receipt Number in the field
+            below.
+          </p>
+        </div>
       </Center>
       <ToastContainer />
     </>
