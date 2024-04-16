@@ -4,7 +4,15 @@ import React, { useState, useEffect, useRef, Fragment } from "react";
 import Header from "@/_components/header/Header";
 import { usePathname } from "next/navigation";
 import styles from "./reports.module.scss";
-import { Button, Center, NativeSelect, Loader, Switch, Group, Modal } from "@mantine/core";
+import {
+  Button,
+  Center,
+  NativeSelect,
+  Loader,
+  Switch,
+  Group,
+  Modal,
+} from "@mantine/core";
 import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
@@ -12,8 +20,18 @@ import PieChart from "@/_components/charts/PieChart";
 import { data } from "@/data/pie";
 import { ToastContainer, toast } from "react-toastify";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
-import { PDFViewer, PDFDownloadLink, Document, Page, Text, View, StyleSheet, Font, Image } from "@react-pdf/renderer";
-import { useDisclosure } from '@mantine/hooks';
+import {
+  PDFViewer,
+  PDFDownloadLink,
+  Document,
+  Page,
+  Text,
+  View,
+  StyleSheet,
+  Font,
+  Image,
+} from "@react-pdf/renderer";
+import { useDisclosure } from "@mantine/hooks";
 import TableRows from "./tableRows";
 import logoCICS from "@/images/cicslogo.png";
 
@@ -34,24 +52,23 @@ import Unauthenticated from "@/_components/authentication/unauthenticated";
 // Font.register({ family: 'Plus Jakarta Sans', src: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" });
 // Font.register({ family: 'Plus Jakarta Sans', src: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap", fontStyle: 'normal', fontWeight: 'normal'});
 
-
 // Create styles
 const stylesPDF = StyleSheet.create({
   page: {
-    flexDirection: 'column',
+    flexDirection: "column",
     fontSize: 12,
     padding: "40 0 40 0",
   },
 
   header: {
     padding: "7 0 7 0",
-    textAlign: 'center',
+    textAlign: "center",
     alignItems: "center",
   },
 
   title: {
     padding: "7 0 7 0",
-    textAlign: 'center',
+    textAlign: "center",
     alignItems: "center",
   },
 
@@ -61,7 +78,6 @@ const stylesPDF = StyleSheet.create({
 
   user_demographics: {
     padding: "7 0 7 0",
-
   },
 
   usage_statistics: {
@@ -82,19 +98,16 @@ const stylesPDF = StyleSheet.create({
   },
 
   pageNumber: {
-    position: 'absolute',
+    position: "absolute",
     fontSize: 12,
     top: 760,
     bottom: 0,
     left: 425,
     right: 0,
-    textAlign: 'center',
-    color: 'grey',
+    textAlign: "center",
+    color: "grey",
   },
-
 });
-
-
 
 const Reports = ({ hideHeader }) => {
   const current = usePathname();
@@ -125,7 +138,6 @@ const Reports = ({ hideHeader }) => {
   const [bookReqCount, SetBookReqCount] = useState([]);
   const [gameReqCount, SetGameReqCount] = useState([]);
 
-
   const [opened, { open, close }] = useDisclosure(false);
 
   const [bookSummary, SetBookSummary] = useState(true);
@@ -150,10 +162,8 @@ const Reports = ({ hideHeader }) => {
   const [bookPieChartData, setBookPieChartData] = useState([]);
   const [gamePieChartData, setGamePieChartData] = useState([]);
 
-
   const [bookPieChartCount, setBookPieChartCount] = useState(0);
   const [gamePieChartCount, setGamePieChartCount] = useState(0);
-
 
   const handleBookPieChart = (event) => {
     const selectedValue = event.target.value;
@@ -205,8 +215,6 @@ const Reports = ({ hideHeader }) => {
     setUsagePerUserType(!usagePerUserType);
   };
 
-
-
   useEffect(() => {
     const getData = async () => {
       const response = await fetch("/api/reports", {
@@ -243,7 +251,7 @@ const Reports = ({ hideHeader }) => {
       if (value != null && value2 != null) {
         if (value > value2) {
           SetValidDateRange(false);
-        } else (SetValidDateRange(true));
+        } else SetValidDateRange(true);
       }
 
       console.log(bookUserTypeC);
@@ -254,11 +262,9 @@ const Reports = ({ hideHeader }) => {
       setBookYearLevelPie(bookPie2);
       setBookDepartmentPie(bookPie3);
 
-
       setGameUserTypePie(gamePie1);
       setGameYearLevelPie(gamePie2);
       setGameDepartmentPie(gamePie3);
-
 
       setBookUserTypeC(bookUserTypeC);
       setGameUserTypeC(gameUserTypeC);
@@ -266,9 +272,9 @@ const Reports = ({ hideHeader }) => {
       setStudentReqs(studentReqs);
 
       const getTotalCount = (type) => {
-        const r = studentReqs.filter(obj => obj.type === type);
+        const r = studentReqs.filter((obj) => obj.type === type);
         return Object.keys(r).length;
-      }
+      };
 
       setStudentBookReqs(getTotalCount("Book"));
       setStudentGameReqs(getTotalCount("Boardgame"));
@@ -285,7 +291,7 @@ const Reports = ({ hideHeader }) => {
       setGameR(gameReqs);
 
       SetBookReqCount(Object.keys(bookReqs).length);
-      SetGameReqCount(Object.keys(gameReqs).length)
+      SetGameReqCount(Object.keys(gameReqs).length);
 
       setBookRCounts(book_requests_count);
       setGameRCounts(game_requests_count);
@@ -314,8 +320,6 @@ const Reports = ({ hideHeader }) => {
         setGamePieChartCount(getTotalCount("Boardgame"));
       }
 
-
-
       if (invalid_dates != undefined && inval != undefined) {
         toast.warning("Invalid date range");
         toast.warning("Fetching records starting from 4 weeks ago");
@@ -324,11 +328,9 @@ const Reports = ({ hideHeader }) => {
       }
     };
 
-
     if (value != null && value2 != null) {
       getData();
     }
-
   }, [value, value2]);
 
   const { data: session, status } = useSession();
@@ -353,7 +355,6 @@ const Reports = ({ hideHeader }) => {
     display: bookSummary,
     bookRCounts: bookRCounts,
     bookR: bookR,
-
   };
 
   const gameUsage = {
@@ -361,7 +362,6 @@ const Reports = ({ hideHeader }) => {
     display: gameSummary,
     gameRCounts: gameRCounts,
     gameR: gameR,
-
   };
 
   const bookUserType = {
@@ -369,45 +369,42 @@ const Reports = ({ hideHeader }) => {
     display: bookSummary && usagePerUserType,
     bookReqCount: bookReqCount,
     bookUserTypeC: bookUserTypeC,
-  }
+  };
 
   const gameUserType = {
     type: "gameUserType",
     display: gameSummary && usagePerUserType,
     gameReqCount: gameReqCount,
     gameUserTypeC: gameUserTypeC,
-  }
+  };
 
   const bookYearLevel = {
     type: "bookYearLevel",
     display: bookSummary && usagePerYearLevel,
     studentBookReqs: studentBookReqs,
     bookYearLevelC: bookYearLevelC,
-  }
+  };
 
   const gameYearLevel = {
     type: "gameYearLevel",
     display: gameSummary && usagePerYearLevel,
     studentGameReqs: studentGameReqs,
     gameYearLevelC: gameYearLevelC,
-  }
+  };
 
   const bookDept = {
     type: "bookDept",
     display: bookSummary && usagePerDepartment,
     studentBookReqs: studentBookReqs,
     bookDeptC: bookDeptC,
-  }
+  };
 
   const gameDept = {
     type: "gameDept",
     display: gameSummary && usagePerDepartment,
     studentGameReqs: studentGameReqs,
     gameDeptC: gameDeptC,
-  }
-
-
-
+  };
 
   // Create Document Component
   const MyDocument = () => (
@@ -418,7 +415,7 @@ const Reports = ({ hideHeader }) => {
           src={"https://upload.wikimedia.org/wikipedia/en/thumb/2/24/Seal_of_the_University_of_Santo_Tomas.svg/1200px-Seal_of_the_University_of_Santo_Tomas.svg.png"} 
           style={{ width: 50, height: 50, }} 
           /> */}
-          <Text >University of Santo Tomas</Text>
+          <Text>University of Santo Tomas</Text>
           <Text>College of Information and Computing Sciences</Text>
         </View>
         <View fixed style={stylesPDF.title}>
@@ -426,28 +423,51 @@ const Reports = ({ hideHeader }) => {
         </View>
         <View fixed style={stylesPDF.admin_info}>
           <Text>Generated by: {session.user.name}</Text>
-          <Text>Report Period: {new Date(value).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })} - {new Date(value2).toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}</Text>
-          <Text>Report Creation Date: {new Date().toLocaleDateString('en-US', { month: 'long', day: '2-digit', year: 'numeric' })}</Text>
+          <Text>
+            Report Period:{" "}
+            {new Date(value).toLocaleDateString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}{" "}
+            -{" "}
+            {new Date(value2).toLocaleDateString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}
+          </Text>
+          <Text>
+            Report Creation Date:{" "}
+            {new Date().toLocaleDateString("en-US", {
+              month: "long",
+              day: "2-digit",
+              year: "numeric",
+            })}
+          </Text>
         </View>
 
-        {(bookSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
-          <View style={stylesPDF.user_demographics}>
-            <Text style={{ paddingLeft: 60 }}>User Demographics (Books):</Text>
-            <View style={stylesPDF.tableContainer}>
-              <View style={stylesPDF.table}>
-                <TableRows data={bookUserType} />
-              </View>
-              <View style={stylesPDF.table}>
-                <TableRows data={bookYearLevel} />
-              </View>
-              <View style={stylesPDF.table}>
-                <TableRows data={bookDept} />
+        {bookSummary &&
+          (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
+            <View style={stylesPDF.user_demographics}>
+              <Text style={{ paddingLeft: 60 }}>
+                User Demographics (Books):
+              </Text>
+              <View style={stylesPDF.tableContainer}>
+                <View style={stylesPDF.table}>
+                  <TableRows data={bookUserType} />
+                </View>
+                <View style={stylesPDF.table}>
+                  <TableRows data={bookYearLevel} />
+                </View>
+                <View style={stylesPDF.table}>
+                  <TableRows data={bookDept} />
+                </View>
               </View>
             </View>
-          </View>)}
+          )}
 
-
-        {(bookSummary) && (
+        {bookSummary && (
           <View style={stylesPDF.usage_statistics}>
             <Text style={{ paddingLeft: 60 }}>Usage Statistics (Books):</Text>
             <View style={stylesPDF.tableContainer}>
@@ -455,49 +475,58 @@ const Reports = ({ hideHeader }) => {
                 <TableRows data={bookUsage} />
               </View>
             </View>
-          </View>)}
+          </View>
+        )}
 
-        {(gameSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
-          <View style={stylesPDF.user_demographics}>
-            <Text style={{ paddingLeft: 60 }}>User Demographics (Board Games):</Text>
-            <View style={stylesPDF.tableContainer}>
-              <View style={stylesPDF.table}>
-                <TableRows data={gameUserType} />
-              </View>
-              <View style={stylesPDF.table}>
-                <TableRows data={gameYearLevel} />
-              </View>
-              <View style={stylesPDF.table}>
-                <TableRows data={gameDept} />
+        {gameSummary &&
+          (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
+            <View style={stylesPDF.user_demographics}>
+              <Text style={{ paddingLeft: 60 }}>
+                User Demographics (Board Games):
+              </Text>
+              <View style={stylesPDF.tableContainer}>
+                <View style={stylesPDF.table}>
+                  <TableRows data={gameUserType} />
+                </View>
+                <View style={stylesPDF.table}>
+                  <TableRows data={gameYearLevel} />
+                </View>
+                <View style={stylesPDF.table}>
+                  <TableRows data={gameDept} />
+                </View>
               </View>
             </View>
-          </View>)}
+          )}
 
-        {(gameSummary) && (
+        {gameSummary && (
           <View style={stylesPDF.usage_statistics}>
-            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Board Games):</Text>
+            <Text style={{ paddingLeft: 60 }}>
+              Usage Statistics (Board Games):
+            </Text>
             <View style={stylesPDF.tableContainer}>
               <View style={stylesPDF.table}>
                 <TableRows data={gameUsage} />
               </View>
             </View>
-          </View>)}
+          </View>
+        )}
 
-
-        <Text style={stylesPDF.pageNumber} render={({ pageNumber, totalPages }) => (
-          `Page ${pageNumber} of ${totalPages}`
-        )} fixed />
+        <Text
+          style={stylesPDF.pageNumber}
+          render={({ pageNumber, totalPages }) =>
+            `Page ${pageNumber} of ${totalPages}`
+          }
+          fixed
+        />
       </Page>
     </Document>
   );
 
-
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, '0'); // Zero-padding the month
-  const day = String(currentDate.getDate()).padStart(2, '0'); // Zero-padding the day
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Zero-padding the month
+  const day = String(currentDate.getDate()).padStart(2, "0"); // Zero-padding the day
   const formattedDate = year + month + day;
-
 
   const buttonStyle = validDateRange ? styles.activeBtn : styles.inactiveBtn;
 
@@ -536,9 +565,9 @@ const Reports = ({ hideHeader }) => {
               radius={"xl"} // END: Set default date to current date
             />
             <Button
-              // variant="filled"
-              // color="rgb(141, 16, 56)"
-              // radius="xl"
+              variant="filled"
+              color="rgb(141, 16, 56)"
+              radius="xl"
               onClick={open}
               disabled={!validDateRange}
               className={buttonStyle}
@@ -554,7 +583,8 @@ const Reports = ({ hideHeader }) => {
             centered
             // size="30%"
             size="70%"
-            closeOnClickOutside={false}>
+            closeOnClickOutside={false}
+          >
             <div className={styles.report_customization}>
               <div className={styles.modal_container}>
                 <div className={styles.customization_container}>
@@ -585,38 +615,39 @@ const Reports = ({ hideHeader }) => {
                     label="Department"
                     onChange={handleUsagePerDepartment}
                   />
-
                 </div>
 
-
                 <div className={styles.preview_container}>
-
                   <h1>Preview:</h1>
-                  <PDFViewer
-                    width="600"
-                    height="500"
-                    showToolbar="false"
-                  >
+                  <PDFViewer width="600" height="500" showToolbar="false">
                     <MyDocument />
                   </PDFViewer>
                 </div>
               </div>
 
               <div className={styles.btn_container}>
-                <PDFDownloadLink document={MyDocument()} fileName={"reports" + formattedDate + ".pdf"} >
+                <PDFDownloadLink
+                  document={MyDocument()}
+                  fileName={"reports" + formattedDate + ".pdf"}
+                >
                   <button
                     disabled={!bookSummary && !gameSummary}
-                    className={bookSummary || gameSummary ? styles.activeDownloadBtn : styles.inactiveDownloadBtn}
+                    className={
+                      bookSummary || gameSummary
+                        ? styles.activeDownloadBtn
+                        : styles.inactiveDownloadBtn
+                    }
                   >
-                    Download PDF</button>
+                    Download PDF
+                  </button>
                 </PDFDownloadLink>
 
-                <button className={styles.cancelBtn} onClick={close}>Cancel</button>
+                <button className={styles.cancelBtn} onClick={close}>
+                  Cancel
+                </button>
               </div>
             </div>
           </Modal>
-
-
 
           <div className={styles.summary_container}>
             <h3>Request Summary</h3>

@@ -93,17 +93,18 @@
 .second_row {
   min-width: 100%;
   border-radius: 15px;
-  height: 390px;
+  height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   gap: 2em;
 
   .database {
     background-color: #ffffff;
-    width: 50%;
+    width: 100%;
     border-radius: 15px;
-    padding: 1em;
+    padding: 2em;
     overflow: auto;
+    height: 50%;
 
     .header_database {
       display: flex;
@@ -142,10 +143,10 @@
 
   .reports {
     background-color: #ffffff;
-    width: 50%;
+    width: 100%;
     border-radius: 15px;
     padding: 2em;
-    height: 100%;
+    height: 50%;
     overflow-y: auto;
   }
 
