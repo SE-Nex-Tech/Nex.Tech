@@ -30,13 +30,20 @@ const Database = () => {
   const [data2, setData2] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [refreshKey, setRefreshKey] = useState(0);
-
   const [activeTab, setActiveTab] = useState("books");
   // const [selectedType, setSelectedType] = useState("books");
 
+  // const [bookDB, setBookDB] = useState([]);
+  // const [gameDB, setGameDB] = useState([]);
+
+  const bookDB = useRef("");
+  const gameDB = useRef("");
+
+
   const selectedType = useRef("books");
+
+
 
 
   const handleTabChange = (value) => {
@@ -69,6 +76,9 @@ const Database = () => {
       const response2 = await fetch("/api/games");
       const data = await response.json();
       const data2 = await response2.json();
+
+      console.log(data);
+      console.log(data2);
       setData(data);
       setData2(data2);
       setLoading(false);
@@ -76,7 +86,43 @@ const Database = () => {
 
     fetchData();
 
-    // showNotification();
+    const fetchBooksDB = async () => {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "books",
+          content: 1,
+        }),
+      });
+
+      const resultDB = await response.json();
+      
+      bookDB.current = resultDB;
+      // console.log(resultDB);
+    }
+
+    fetchBooksDB()
+
+    const fetchGamesDB = async () => {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "boardgames",
+          content: 1,
+        }),
+      });
+
+      const resultDB = await response.json();
+    
+      gameDB.current = resultDB;
+      // console.log(resultDB);
+    }
+
+    fetchGamesDB();
+
+    console.log(bookDB.current);
+    console.log(gameDB.current);
+   
 
 
   }, [refreshKey]);
@@ -188,7 +234,8 @@ const Database = () => {
             refreshKey={refreshKey}
             setNotification={setNotification}
             selectedType={selectedType}
-         
+            bookDB={bookDB.current}
+            gameDB={gameDB.current}
           />
 
           <EditButton
@@ -198,7 +245,8 @@ const Database = () => {
             refreshKey={refreshKey}
             setNotification={setNotification}
             selectedType={selectedType}
-        
+            bookDB={bookDB.current}
+            gameDB={gameDB.current}
           />
 
           <DeleteButton

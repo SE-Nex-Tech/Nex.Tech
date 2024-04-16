@@ -4,7 +4,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType }) => {
+const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType, bookDB, gameDB }) => {
   const barcode = useRef("");
   const title = useRef("");
   const author = useRef("");
@@ -38,6 +38,10 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
   const [callNumError, setCallNumError] = useState(false);
   const [authorError, setAuthorError] = useState(false);
 
+  console.log(type.current);
+  console.log(bookDB);
+  console.log(gameDB);
+
   const validateFormSubmit = () => {
     const checkEmptyField = (value, setErrorState) => {
       if (
@@ -56,6 +60,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     var isValid = true;
 
     console.log(type.current);
+
 
     if (type.current == "books") {
       isValid = !bookTitleError

@@ -21,7 +21,7 @@ model Admin {
 
 model Books {
   id                Int    @id @default(autoincrement())
-  call_num          String @db.Text
+  call_num          String @db.Text @unique
   title             String? @db.Text
   accession_num     Int?
   barcode           Int?
@@ -38,7 +38,7 @@ model Books {
 
 model Boardgames {
   id                Int    @id @default(autoincrement())
-  call_num          String @db.Text
+  call_num          String @db.Text @unique
   title             String @db.Text
   accession_num     Int?
   barcode           Int?

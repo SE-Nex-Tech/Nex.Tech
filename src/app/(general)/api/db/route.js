@@ -122,7 +122,7 @@ export async function POST(request) {
     }
 
     else if (params['entity'] == 'boardgames') {
-      
+
       let filter = params['where']
       let info = params['data']
       result = await entity.update({
@@ -141,6 +141,17 @@ export async function POST(request) {
       where: conditions,
       data: { archive: true }
     })
+  }
+
+  else if (params['content'] != undefined) {
+    if (params['entity'] == 'books') {
+      entity = prisma.books
+
+    } else if (params['entity'] == 'boardgames') {
+      entity = prisma.boardgames
+    }
+    result = await entity.findMany()
+    return NextResponse.json(result)
   }
 
   else if (params['scanqr'] != undefined) {

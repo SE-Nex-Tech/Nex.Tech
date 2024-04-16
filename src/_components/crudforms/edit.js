@@ -5,7 +5,7 @@ import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType }) => {
+const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType, bookDB, gameDB }) => {
   const [selectedValue, setSelectedValue] = useState("");
 
   const handleSelectChange = (value) => {
@@ -25,7 +25,9 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
   const type = useRef(selectedType.current);
 
-
+  console.log(type.current);
+  console.log(bookDB);
+  console.log(gameDB);
 
   const [bookTitleError, setBookTitleError] = useState(false);
   const [gameTitleError, setGameTitleError] = useState(false);
