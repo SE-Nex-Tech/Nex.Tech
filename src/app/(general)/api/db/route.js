@@ -20,7 +20,7 @@ export async function POST(request) {
 
     if (re.test(params['contains'])) {
       console.log('has letters')
-      let stringAttributes = params['dashboard'] == undefined ? ['title', 'author', 'edition', 'publication_place', 'publisher', 'call_num'] : ['title', 'author']
+      let stringAttributes = params['dashboard'] == undefined ? ['title', 'author', 'edition', 'publisher', 'call_num'] : ['title', 'author']
       if (params['entity'] !== 'books') {
         stringAttributes = params['dashboard'] == undefined ? ['title', 'call_num', 'publisher'] : ['title', 'publisher']
       }
