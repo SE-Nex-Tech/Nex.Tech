@@ -1,7 +1,4 @@
 .label {
-  position: absolute;
-  z-index: 1;
-  top: 80%;
   pointer-events: none;
   font-weight: 400;
   font-size: var(--mantine-font-size-sm);
@@ -29,9 +26,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  min-width: 30%;
+  height: 120px;
+  gap: 1em;
 
   .input_button {
-    padding-top: 2em;
     display: flex;
     flex-direction: row;
     gap: 1em;
