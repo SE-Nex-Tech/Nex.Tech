@@ -47,10 +47,6 @@ const GamePage = () => {
     return <div>Game not found</div>;
   }
 
-  if (game.copyright_date) {
-    copyright_date = format(Date.parse(game.copyright_date), "MM/dd/yyyy");
-  }
-
   return (
     <>
       <div>
@@ -82,7 +78,7 @@ const GamePage = () => {
                   {game.accession_num && (<p>{game.accession_num}</p>)}
                   {!game.accession_num && (<p>N/A</p>)}
 
-                  {game.copyright_date && (<p>{(new Date(game.copyright_date)).getFullYear()}</p>)}
+                  {game.copyright_date && (<p>{game.copyright_date}</p>)}
                   {!game.copyright_date && (<p>N/A</p>)}
 
                   {game.status && (<p>{game.status}</p>)}

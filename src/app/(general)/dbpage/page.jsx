@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Header from "@/_components/header/Header";
 import styles from "./database.module.scss";
 import { Center, Tabs, rem, Loader } from "@mantine/core";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Input } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { NativeSelect } from "@mantine/core";
@@ -20,6 +20,9 @@ import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import TableBodyGames from "@/_components/tables/tableGames";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 const Database = () => {
   const current = usePathname();
 
@@ -27,8 +30,45 @@ const Database = () => {
   const [data2, setData2] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [refreshKey, setRefreshKey] = useState(0);
+  const [activeTab, setActiveTab] = useState("books");
+  // const [selectedType, setSelectedType] = useState("books");
+
+  // const [bookDB, setBookDB] = useState([]);
+  // const [gameDB, setGameDB] = useState([]);
+
+  const bookDB = useRef("");
+  const gameDB = useRef("");
+
+
+  const selectedType = useRef("books");
+
+
+
+
+  const handleTabChange = (value) => {
+
+    setActiveTab(value);
+    selectedType.current = value;
+    setSelectedRows([]);
+  };
+
+
+  const setNotification = (notification) => {
+    console.log(notification);
+    if (notification != "") {
+      toast.success(notification, { position: "bottom-right", autoClose: 2000 });
+    }
+
+    setTimeout(() => {
+      if (refreshKey == 1) {
+        setRefreshKey(0);
+      } else {
+        setRefreshKey(1);
+      }
+    }, 2500);
+  }
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,12 +76,55 @@ const Database = () => {
       const response2 = await fetch("/api/games");
       const data = await response.json();
       const data2 = await response2.json();
+
+      console.log(data);
+      console.log(data2);
       setData(data);
       setData2(data2);
       setLoading(false);
     };
 
     fetchData();
+
+    const fetchBooksDB = async () => {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "books",
+          content: 1,
+        }),
+      });
+
+      const resultDB = await response.json();
+      
+      bookDB.current = resultDB;
+      // console.log(resultDB);
+    }
+
+    fetchBooksDB()
+
+    const fetchGamesDB = async () => {
+      const response = await fetch("/api/db", {
+        method: "POST",
+        body: JSON.stringify({
+          entity: "boardgames",
+          content: 1,
+        }),
+      });
+
+      const resultDB = await response.json();
+    
+      gameDB.current = resultDB;
+      // console.log(resultDB);
+    }
+
+    fetchGamesDB();
+
+    console.log(bookDB.current);
+    console.log(gameDB.current);
+   
+
+
   }, [refreshKey]);
 
   const { data: session, status } = useSession();
@@ -147,12 +230,33 @@ const Database = () => {
             </optgroup>
           </NativeSelect>
           <AddButton
-            selectedRows={selectedRows}
             setRefreshKey={setRefreshKey}
+            refreshKey={refreshKey}
+            setNotification={setNotification}
+            selectedType={selectedType}
+            bookDB={bookDB.current}
+            gameDB={gameDB.current}
           />
 
-          <EditButton selectedRows={selectedRows} />
-          <DeleteButton selectedRows={selectedRows} />
+          <EditButton
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            setRefreshKey={setRefreshKey}
+            refreshKey={refreshKey}
+            setNotification={setNotification}
+            selectedType={selectedType}
+            bookDB={bookDB.current}
+            gameDB={gameDB.current}
+          />
+
+          <DeleteButton
+            selectedRows={selectedRows}
+            setSelectedRows={setSelectedRows}
+            setRefreshKey={setRefreshKey}
+            refreshKey={refreshKey}
+            setNotification={setNotification}
+            selectedType={selectedType}
+          />
         </div>
         <div className={styles.table_container}>
           <Tabs
@@ -161,6 +265,8 @@ const Database = () => {
             radius="md"
             defaultValue="books"
             variant="outline"
+            value={activeTab}
+            onChange={handleTabChange}
             classNames={{
               list: styles.list2,
               tabLabel: styles.tabLabel2,
@@ -195,6 +301,7 @@ const Database = () => {
           </Tabs>
         </div>
       </Center>
+      <ToastContainer />
     </>
   );
 };

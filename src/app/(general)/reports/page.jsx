@@ -459,7 +459,7 @@ const Reports = ({ hideHeader }) => {
 
         {(gameSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
           <View style={stylesPDF.user_demographics}>
-            <Text style={{ paddingLeft: 60 }}>User Demographics (Board Games):</Text>
+            <Text style={{ paddingLeft: 60 }}>User Demographics (Boardgames):</Text>
             <View style={stylesPDF.tableContainer}>
               <View style={stylesPDF.table}>
                 <TableRows data={gameUserType} />
@@ -475,7 +475,7 @@ const Reports = ({ hideHeader }) => {
 
         {(gameSummary) && (
           <View style={stylesPDF.usage_statistics}>
-            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Board Games):</Text>
+            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Boardgames):</Text>
             <View style={stylesPDF.tableContainer}>
               <View style={stylesPDF.table}>
                 <TableRows data={gameUsage} />
