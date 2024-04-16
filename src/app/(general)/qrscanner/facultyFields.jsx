@@ -28,7 +28,7 @@ const FacultyFields = (transaction) => {
             <strong>Call No.:</strong> {selectedBook.call_num}
         </p>
         <p>
-            <strong>Book Title:</strong> {selectedBook.title}
+            <strong>Title:</strong> {selectedBook.title}
         </p>
         <p>
             <strong>Request Date:</strong> {formattedDateTime}
