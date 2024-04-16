@@ -6,6 +6,8 @@ const getPageTitle = (pathname) => {
       return "Books Catalog";
     case "/borrowform":
       return "Borrow Request Form";
+    case "/reserveform":
+      return "Reserve Request Form"
     case "/games":
       return "Games Catalog";
     case "/dashboard":
