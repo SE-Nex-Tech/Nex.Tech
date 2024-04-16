@@ -2,7 +2,7 @@
 
 import React, { useRef, useState } from "react";
 import styles from "./signup.module.scss";
-import { Input, Button, PasswordInput, InputWrapper } from "@mantine/core";
+import { Input, Button, PasswordInput, TextInput } from "@mantine/core";
 import { IconAt, IconLock } from "@tabler/icons-react";
 import Image from "next/image";
 import logo from "@/images/logo.png";
@@ -45,6 +45,8 @@ const Signup = () => {
   const [passwordValue, setPasswordValue] = useState("");
   const fname = useRef("");
   const [fnameValue, setFnameValue] = useState("");
+  const mname = useRef("");
+  const [mnameValue, setMnameValue] = useState("");
   const lname = useRef("");
   const [lnameValue, setLnameValue] = useState("");
   const num = useRef("");
@@ -57,6 +59,7 @@ const Signup = () => {
         email: email.current,
         password: password.current,
         fname: fname.current,
+        mname: mname.current,
         lname: lname.current,
         num: num.current,
       }),
@@ -65,7 +68,12 @@ const Signup = () => {
     const result = await response.json();
 
     if (result.invalid == undefined) {
-      router.push("/login");
+      toast.success("Signed up successfully, please wait for authorization.", {
+        autoClose: 4000,
+      });
+      setTimeout(() => {
+        router.push("/login");
+      }, 4200);
     } else {
       toast.warning("Invalid email");
     }
@@ -90,64 +98,104 @@ const Signup = () => {
         <div className={styles.left}>
           <div className={styles.leftUpper}>
             <div className={styles.name}>
-              <Input.Wrapper label={<strong>First Name</strong>}>
-                <Input
-                  placeholder="Juan"
-                  label="First Name"
-                  classNames={styles}
-                  onChange={(e) => {
-                    fname.current = e.target.value;
-                    setFnameValue(e.target.value);
-                  }}
-                  onKeyDown={handleKeyDown}
-                />
-              </Input.Wrapper>
-              <Input.Wrapper label={<strong>Last Name</strong>}>
-                <Input
-                  placeholder="De la Cruz"
-                  classNames={styles}
-                  onChange={(e) => {
-                    lname.current = e.target.value;
-                    setLnameValue(e.target.value);
-                  }}
-                  onKeyDown={handleKeyDown}
-                />
-              </Input.Wrapper>
+              <TextInput
+                placeholder="Juan"
+                label="First Name"
+                required
+                classNames={styles}
+                error={
+                  fname.current === "" || /^[a-zA-Z]+$/.test(fname.current)
+                    ? ""
+                    : "Numeric characters not allowed."
+                }
+                onChange={(e) => {
+                  fname.current = e.target.value;
+                  setFnameValue(e.target.value);
+                }}
+                onKeyDown={handleKeyDown}
+              />
+              <TextInput
+                placeholder="Manuel"
+                label="Middle Name"
+                error={
+                  mname.current === "" || /^[a-zA-Z]+$/.test(mname.current)
+                    ? ""
+                    : "Numeric characters not allowed."
+                }
+                classNames={styles}
+                onChange={(e) => {
+                  mname.current = e.target.value;
+                  setMnameValue(e.target.value);
+                }}
+                onKeyDown={handleKeyDown}
+              />
             </div>
-            <Input.Wrapper label={<strong>Email</strong>}>
-              <Input
-                placeholder="juan.delacruz.cics@ust.edu.ph"
-                classNames={styles}
-                onChange={(e) => {
-                  email.current = e.target.value;
-                  setEmailValue(e.target.value);
-                }}
-                onKeyDown={handleKeyDown}
-              />
-            </Input.Wrapper>
-            <Input.Wrapper label={<strong>Employee / Student Number</strong>}>
-              <Input
-                placeholder="2021157407"
-                classNames={styles}
-                onChange={(e) => {
-                  num.current = e.target.value;
-                  setNumValue(e.target.value);
-                }}
-                onKeyDown={handleKeyDown}
-              />
-            </Input.Wrapper>
-            <Input.Wrapper label={<strong>Password</strong>}>
-              <PasswordInput
-                placeholder="At least 6 characters"
-                withAsterisk
-                classNames={styles}
-                onChange={(e) => {
-                  password.current = e.target.value;
-                  setPasswordValue(e.target.value);
-                }}
-                onKeyDown={handleKeyDown}
-              />
-            </Input.Wrapper>
+            <TextInput
+              placeholder="De la Cruz"
+              label="Last Name"
+              required
+              classNames={styles}
+              error={
+                lname.current === "" || /^[a-zA-Z]+$/.test(lname.current)
+                  ? ""
+                  : "Numeric characters not allowed."
+              }
+              onChange={(e) => {
+                lname.current = e.target.value;
+                setLnameValue(e.target.value);
+              }}
+              onKeyDown={handleKeyDown}
+            />
+            <TextInput
+              placeholder="juan.delacruz.cics@ust.edu.ph"
+              label="Email"
+              required
+              error={
+                email.current &&
+                !/^[A-Za-z0-9._%+-]+@ust\.edu\.ph$/.test(email.current)
+                  ? "Invalid email address."
+                  : ""
+              }
+              classNames={styles}
+              onChange={(e) => {
+                email.current = e.target.value;
+                setEmailValue(e.target.value);
+              }}
+              onKeyDown={handleKeyDown}
+            />
+            <TextInput
+              placeholder="2021157407"
+              label="Employee / Student Number"
+              required
+              error={
+                num.current &&
+                (!/^\d+$/.test(num.current) || num.current.length < 10)
+                  ? "Invalid number."
+                  : ""
+              }
+              classNames={styles}
+              onChange={(e) => {
+                num.current = e.target.value;
+                setNumValue(e.target.value);
+              }}
+              onKeyDown={handleKeyDown}
+            />
+            <PasswordInput
+              placeholder="- - - - - - - -"
+              withAsterisk
+              label="Password"
+              error={
+                password.current.length < 8 && password.current !== ""
+                  ? "Password must be at least 8 characters long."
+                  : ""
+              }
+              classNames={styles}
+              onChange={(e) => {
+                password.current = e.target.value;
+                setPasswordValue(e.target.value);
+              }}
+              onKeyDown={handleKeyDown}
+            />
           </div>
           <div className={styles.leftLower}>
             <Button
@@ -161,7 +209,12 @@ const Signup = () => {
                 !passwordValue ||
                 !fnameValue ||
                 !lnameValue ||
-                !numValue
+                !numValue ||
+                !/^[a-zA-Z]+$/.test(fnameValue) ||
+                !/^[a-zA-Z]+$/.test(lnameValue) ||
+                !/^\d+$/.test(numValue) ||
+                numValue.length < 10 ||
+                passwordValue.length < 8
               }
             >
               Create an account
@@ -170,6 +223,10 @@ const Signup = () => {
         </div>
         <div className={styles.right}>
           <div className={styles.gradientOverlay}></div>
+          <div className={styles.hero}>
+            <h1>CICS BiblioTechAI</h1>
+            <p>Online Portal</p>
+          </div>
           <Image src={building} className={styles.building} />
         </div>
       </div>

@@ -27,20 +27,22 @@ const Login = () => {
       callbackUrl: "/",
     });
 
-    const type = await (await fetch('/api/login', {
-      method: 'POST',
-      body: JSON.stringify({
-        email: email.current,
+    const type = await (
+      await fetch("/api/login", {
+        method: "POST",
+        body: JSON.stringify({
+          email: email.current,
+        }),
       })
-    })).json()
+    ).json();
 
     if (result.ok) {
       toast.success("Logged in successfully, please wait", { autoClose: 2000 });
       setTimeout(() => {
-        if (type.type == 'admin') {
-          router.push('/dashboard')
-        } else if (type.type == 'superadmin') {
-          router.push('/admin')
+        if (type.type == "admin") {
+          router.push("/dashboard");
+        } else if (type.type == "superadmin") {
+          router.push("/admin");
         }
       }, 2000);
     } else {
@@ -112,6 +114,10 @@ const Login = () => {
         </div>
         <div className={styles.right}>
           <div className={styles.gradientOverlay}></div>
+          <div className={styles.hero}>
+            <h1>CICS BiblioTechAI</h1>
+            <p>Online Portal</p>
+          </div>
           <Image src={building} className={styles.building} />
         </div>
       </div>
