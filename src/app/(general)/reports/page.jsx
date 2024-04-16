@@ -493,7 +493,8 @@ const Reports = ({ hideHeader }) => {
 
               </View>
             </View>
-          )}
+          </View>
+        )}
 
         {gameSummary && (
           <View style={stylesPDF.usage_statistics}>

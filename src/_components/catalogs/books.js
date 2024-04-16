@@ -6,6 +6,8 @@ import { Skeleton, Loader, Input, rem } from "@mantine/core";
 import Link from "next/link";
 import { IconSearch } from "@tabler/icons-react";
 import Image from "next/image";
+import placeholderImg from "@/images/placeholder.jpg"
+
 
 const Books = () => {
   const [data, setData] = useState([]);
@@ -95,10 +97,15 @@ const Books = () => {
       <div className={styles.book_container}>
         {currentBooks.map((book, index) => (
           <Link href={`/books/${book.id}`} className={styles.container}>
-            <div style={{maxWidth: "250px"}} key={book.id}>
-            
-            {!book.image && (<Skeleton className={styles.img_holder}></Skeleton>)}
-            {book.image && (<div className={styles.img_container}><Image className={styles.image} src={book.image} width={110} height={140} alt="" /></div>)}
+            <div style={{ maxWidth: "250px" }} key={book.id}>
+
+              {!book.image && (<Image
+                src={placeholderImg}
+                width={110} height={140}
+                className={styles.img_holder}
+                alt="Item No Image"
+              />)}
+              {book.image && (<div className={styles.img_container}><Image className={styles.image} src={book.image} width={110} height={140} alt="" /></div>)}
               <h2 className={styles.book_title}>{book.title}</h2>
               <p className={styles.book_author}>{book.author}</p>
               <p className={styles.book_status}>{book.status}</p>

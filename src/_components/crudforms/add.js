@@ -33,6 +33,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
   const type = useRef(selectedType.current);
 
 
+
   const [bookTitleError, setBookTitleError] = useState(false);
   const [gameTitleError, setGameTitleError] = useState(false);
   const [callNumError, setCallNumError] = useState(false);
@@ -93,9 +94,15 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
       // If the value is empty or contains only whitespace
       setErrorState(true); // Set state to true
       refValue.current = value;
+      if (type.current != "books") {
+        setAuthorValue("1");
+      }
     } else {
       setErrorState(false); // Set state to false
       refValue.current = value; // Update the value
+      if (type.current != "books") {
+        setAuthorValue("1");
+      }
     }
   };
 

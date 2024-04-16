@@ -24,6 +24,7 @@ import { useParams } from "next/navigation";
 import { format, setSeconds } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
+import placeholderImg from "@/images/placeholder.jpg"
 
 const BorrowForm = () => {
   const current = usePathname();
@@ -790,20 +791,16 @@ const BorrowForm = () => {
             </div>
             <div className={styles.itemContainer}>
               <div className={styles.itemInfo}>
-                {!item.image && (
-                  <Skeleton className={styles.img_holder}></Skeleton>
-                )}
-                {item.image && (
-                  <div className={styles.img_container}>
-                    <Image
-                      className={styles.image}
-                      src={item.image}
-                      width={110}
-                      height={140}
-                      alt=""
-                    />
-                  </div>
-                )}
+
+                
+              {!item.image && (<Image
+                src={placeholderImg}
+                width={110} height={140}
+                className={styles.img_holder}
+                alt="Item No Image"
+              />)}
+              {item.image && (<div className={styles.img_container}><Image className={styles.image} src={item.image} width={110} height={140} alt="" /></div>)}
+
                 <div className={styles.itemDetails}>
                   <TextInput name="itemId" value="" type="hidden" />
 

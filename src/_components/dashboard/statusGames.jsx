@@ -2,7 +2,8 @@ import React from "react";
 import styles from "./status.module.scss";
 import Image from "next/image";
 import cover from "@/images/bookcover.jpg";
-import { Skeleton} from "@mantine/core";
+import { Skeleton } from "@mantine/core";
+import placeholderImg from "@/images/placeholder.jpg"
 
 const StatusGames = ({ title, publisher, status, image }) => {
   return (
@@ -16,7 +17,12 @@ const StatusGames = ({ title, publisher, status, image }) => {
       <tr>
         <td>
           <div className={styles.cover_holder}>
-          {!image && (<Skeleton className={styles.img_holder}></Skeleton>)}
+            {!image && (<Image
+              src={placeholderImg}
+              width={110} height={140}
+              className={styles.img_holder}
+              alt="Item No Image"
+            />)}
             {image && (<div className={styles.img_container}><Image className={styles.image} src={image} width={110} height={140} alt="" /></div>)}
           </div>
         </td>

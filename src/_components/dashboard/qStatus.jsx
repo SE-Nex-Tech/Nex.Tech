@@ -2,8 +2,9 @@ import React from "react";
 import styles from "./status.module.scss";
 import Image from "next/image";
 import cover from "@/images/bookcover.jpg";
+import placeholderImg from "@/images/placeholder.jpg"
 
-const Queuer = ({ title, borrower, email, user_type, imagepath }) => {
+const Queuer = ({ title, borrower, email, user_type, image }) => {
   return (
     <table className={styles.main_table}>
       <tr>
@@ -16,7 +17,13 @@ const Queuer = ({ title, borrower, email, user_type, imagepath }) => {
       <tr>
         <td>
           <div className={styles.cover_holder}>
-            <Image src={cover} className={styles.cover} />
+            {!image && (<Image
+              src={placeholderImg}
+              width={110} height={140}
+              className={styles.img_holder}
+              alt="Item No Image"
+            />)}
+            {image && (<div className={styles.img_container}><Image className={styles.image} src={image} width={110} height={140} alt="" /></div>)}
           </div>
         </td>
         <td>{title}</td>

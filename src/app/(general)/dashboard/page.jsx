@@ -250,6 +250,7 @@ const Dashboard = () => {
                           borrower={getUserCreds(r).name}
                           email={getUserCreds(r).email}
                           user_type={r.user_type}
+                          image={r.image}
                         />
                       );
                     })}
