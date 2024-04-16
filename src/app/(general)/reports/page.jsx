@@ -145,6 +145,7 @@ const Reports = ({ hideHeader }) => {
   const [usagePerYearLevel, setUsagePerYearLevel] = useState(true);
   const [usagePerDepartment, SetUsagePerDepartment] = useState(true);
   const [usagePerUserType, setUsagePerUserType] = useState(true);
+  const [totalCount, setTotalCount] = useState(true);
 
   const [validDateRange, SetValidDateRange] = useState(false);
 
@@ -214,6 +215,10 @@ const Reports = ({ hideHeader }) => {
   const handleUsagePerUserType = () => {
     setUsagePerUserType(!usagePerUserType);
   };
+
+  const handleTotalCount = () => {
+    setTotalCount(!totalCount);
+  }
 
   useEffect(() => {
     const getData = async () => {
@@ -467,7 +472,7 @@ const Reports = ({ hideHeader }) => {
             </View>
           )}
 
-        {bookSummary && (
+        {bookSummary && totalCount && (
           <View style={stylesPDF.usage_statistics}>
             <Text style={{ paddingLeft: 60 }}>Usage Statistics (Books):</Text>
             <View style={stylesPDF.tableContainer}>
@@ -496,7 +501,7 @@ const Reports = ({ hideHeader }) => {
           </View>
         )}
 
-        {gameSummary && (
+        {gameSummary && totalCount && (
           <View style={stylesPDF.usage_statistics}>
 
             <Text style={{ paddingLeft: 60 }}>Usage Statistics (Boardgames):</Text>
@@ -613,6 +618,11 @@ const Reports = ({ hideHeader }) => {
                     label="Department"
                     onChange={handleUsagePerDepartment}
                   />
+                  <Switch
+                    defaultChecked={totalCount}
+                    label="Total Count"
+                    onChange={handleTotalCount}
+                  />
                 </div>
 
                 <div className={styles.preview_container}>
@@ -631,7 +641,7 @@ const Reports = ({ hideHeader }) => {
                   <button
                     disabled={!bookSummary && !gameSummary}
                     className={
-                      bookSummary || gameSummary
+                      (bookSummary || gameSummary) && (usagePerUserType || usagePerDepartment || usagePerYearLevel || totalCount)
                         ? styles.activeDownloadBtn
                         : styles.inactiveDownloadBtn
                     }
