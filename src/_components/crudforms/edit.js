@@ -51,6 +51,21 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
 
     var isValid = true;
 
+    const checkBookDuplicateCallNumber = (callNumber) => {
+      if (callNumber === selectedRows[0]?.call_num) {
+        return false;
+      }
+
+      return bookDB.some((book) => book.call_num === callNumber);
+    };
+
+    const checkGameDuplicateCallNumber = (callNumber) => {
+      if (callNumber === selectedRows[0]?.call_num) {
+        return false;
+      }
+      return gameDB.some((game) => game.call_num === callNumber);
+    };
+
     console.log(type.current);
 
     if (type.current == "books") {
@@ -67,16 +82,37 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         : !gameTitleError;
     }
 
+
     isValid = !callNumError
       ? checkEmptyField(callnum, setCallNumError) && isValid
       : !callNumError;
 
+
     console.log(isValid);
+
     if (isValid) {
-      editRecord();
+      const callNumber = callnum.current;
+      if (type.current == "books") {
+
+        if (isValid && checkBookDuplicateCallNumber(callNumber)) {
+          toast.error("Call number already exists", { autoClose: 2000 });
+        } else {
+          editRecord();
+        }
+      }
+      else {
+        if (isValid && checkGameDuplicateCallNumber(callNumber)) {
+          toast.error("Call number already exists", { autoClose: 2000 });
+        } else {
+          editRecord();
+        }
+      }
     } else {
       toast.error("Missing/Incorrect fields", { autoClose: 2000 });
     }
+
+
+
   };
 
   const validateInputChange = (value, refValue, setErrorState) => {
