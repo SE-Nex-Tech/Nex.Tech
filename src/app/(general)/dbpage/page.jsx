@@ -124,27 +124,19 @@ const Database = () => {
             w={rem(200)}
             onChange={(e) => sorter(e.target.value, data)}
           >
-            <option>Sort by:</option>
+            <hr />
+
+            <option value="id_ascending">ID - Ascending</option>
+            <option value="id_descending">ID - Descending</option>
+
+            <hr />
+            <option value="title_ascending">Title - Ascending</option>
+            <option value="title_descending">Title - Descending</option>
 
             <hr />
 
-            <optgroup label="ID">
-              <option value="id_ascending">Ascending</option>
-              <option value="id_descending">Descending</option>
-            </optgroup>
-
-            <hr />
-            <optgroup label="Title">
-              <option value="title_ascending">Ascending</option>
-              <option value="title_descending">Descending</option>
-            </optgroup>
-
-            <hr />
-
-            <optgroup label="Author">
-              <option value="author_ascending">Ascending</option>
-              <option value="author_descending">Descending</option>
-            </optgroup>
+            <option value="author_ascending">Author - Ascending</option>
+            <option value="author_descending">Author -Descending</option>
           </NativeSelect>
           <AddButton
             selectedRows={selectedRows}
