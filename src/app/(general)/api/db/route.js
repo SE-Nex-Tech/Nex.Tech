@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 import { NextResponse } from "next/server";
 const { hash } = require('bcrypt');
+import logger from '@/logger/logger'
 
 const prisma = new PrismaClient();
 
@@ -97,6 +98,8 @@ export async function POST(request) {
         data: conditions
       })
     }
+
+    logger(params['entity'] + ' with ID ' + result.id + ' created', true)
   }
 
   else if (params['update'] != undefined) {
@@ -131,6 +134,8 @@ export async function POST(request) {
       })
     }
 
+    logger(params['entity'] + ' entity with conditions ' + JSON.stringify(params['where']) + ' updated with the following data: ' + JSON.stringify(params['data']), true)
+
   }
 
   else if (params['delete'] != undefined) {
@@ -141,6 +146,8 @@ export async function POST(request) {
       where: conditions,
       data: { archive: true }
     })
+
+    logger(params['entity'] + ' with the conditiions ' + JSON.stringify(conditions) + ' have been archived', true)
   }
 
   else if (params['content'] != undefined) {
@@ -159,6 +166,7 @@ export async function POST(request) {
 
     console.log('ACCESSING QR')
     console.log(id)
+    logger('Scanned valid QR code ' + id, true)
 
     const borrowTicket = await prisma.requests.findUnique({
       where: {

@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { NextResponse } from 'next/server'
 const { hash, compare } = require('bcrypt')
+import logger from '@/logger/logger'
 
 export async function POST(request) {
   const prisma = new PrismaClient()
@@ -26,6 +27,8 @@ export async function POST(request) {
       date_requested: new Date().toISOString()
     }
   })
+
+  logger('New change password request for ' + params['email'], true)
 
   await prisma.$disconnect()
   return NextResponse.json(newPass)
