@@ -16,7 +16,7 @@ model Admin {
   type     String  @db.Text
   password String  @db.Text
   access   Boolean @default(false)
-
+  archive  Boolean @default(false)
 }
 
 model Books {
