@@ -85,7 +85,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   };
 
   const validateInputChange = (value, refValue, setErrorState) => {
-    if (value == "" || value == null || value.current == "None") {
+    if (value.replace(/\s/g, "") == "" || value == null || value == "None") {
       // If the value is empty or contains only whitespace
       setErrorState(true); // Set state to true
       refValue.current = value;
@@ -367,7 +367,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
             hideControls
             allowNegative={false}
             allowDecimal={false}
-            max={2090}
+            max={2099}
             clampBehavior="strict"
             placeholder="2024"
             defaultValue={selectedRows[0]?.copyright_date}
