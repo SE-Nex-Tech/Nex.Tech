@@ -25,12 +25,25 @@
 }
 
 .titleDiv {
-  width: 95px;
+  width: 95px; /* Adjust width as needed */
+  text-align: center;
+  overflow: hidden;
+  min-height: 50px;
+  min-width: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.image {
+  margin-top: 10px;
 }
 
 .title {
-  font-family: "Plus Jakarta Sans", sans-serif;
-  font-size: 0.8em;
+  margin: 0;
+  font-size: 0.7em;
 }
 
 .button {
