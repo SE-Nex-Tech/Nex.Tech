@@ -278,9 +278,9 @@ const QRScanner = () => {
   };
 
   const processReceipt = () => {
-    console.log("SCANNING ID " + receipt_no);
+    console.log("SCANNING ID " + receipt_no.current);
     let text = {
-      text: '{ "id": ' + receipt_no + " }",
+      text: '{ "id": ' + receipt_no.current + " }",
     };
     console.log(JSON.parse(text.text));
 
