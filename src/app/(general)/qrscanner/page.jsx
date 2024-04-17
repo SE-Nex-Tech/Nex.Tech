@@ -1,7 +1,7 @@
 "use client";
 
 import Header from "@/_components/header/Header";
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useRef } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./qrscanner.module.scss";
 import StudentFields from "./studentFields";
@@ -34,7 +34,7 @@ const QRScanner = () => {
   var borrowDate;
   var returnDate;
 
-  let receipt_no;
+  const receipt_no = useRef('');
   let next_in_q;
 
   if (status === "unauthenticated") {
@@ -325,7 +325,7 @@ const QRScanner = () => {
               placeholder="Receipt Number"
               classNames={styles}
               radius="xl"
-              onChange={(e) => (receipt_no = e.target.value)}
+              onChange={(e) => (receipt_no.current = e.target.value)}
             />
             <Button
               variant="filled"
