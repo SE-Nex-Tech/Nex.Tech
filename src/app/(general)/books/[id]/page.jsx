@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import Navigator from "@/_components/navigator/navigator";
 import Image from "next/image";
 import placeholderImg from "@/images/placeholder.jpg";
+import NotFound from "@/_errors/notfound";
 
 const BookPage = () => {
   const { id } = useParams();
@@ -67,7 +68,7 @@ const BookPage = () => {
   }, []);
 
   if (!book) {
-    return <div>Book not found</div>;
+    return <NotFound />;
   }
 
   return (
