@@ -11,6 +11,7 @@ import { format } from "date-fns";
 import Navigator from "@/_components/navigator/navigator";
 import Image from "next/image";
 import placeholderImg from "@/images/placeholder.jpg";
+import NotFound from "@/_errors/notfound";
 
 const GamePage = () => {
   const { id } = useParams();
@@ -44,10 +45,6 @@ const GamePage = () => {
     fetchGame();
   }, [id]);
 
-  if (!game) {
-    return <div>Game not found</div>;
-  }
-
   const [showHeader, setShowHeader] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
 
@@ -70,6 +67,10 @@ const GamePage = () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+  if (!game) {
+    return <NotFound />;
+  }
 
   return (
     <>

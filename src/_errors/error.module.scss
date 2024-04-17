@@ -1,0 +1,25 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: white;
+  padding: 1em;
+  border-radius: 15px;
+  box-shadow: 1px 5px 9px -5px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 1px 5px 9px -5px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 1px 5px 9px -5px rgba(0, 0, 0, 0.75);
+
+  h1 {
+    color: #222222;
+  }
+
+  h3 {
+    color: #333333;
+  }
+  p {
+    color: #555555;
+    margin-top: 0.8em;
+  }
+}
