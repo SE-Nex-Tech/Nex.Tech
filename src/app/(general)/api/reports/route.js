@@ -293,14 +293,73 @@ const countGameDept = async (ls, prisma) => {
 };
 
 
-const chartColors = ['#FF0000', '#CC0000', '#990000', '#660000'];
+const chartColors = [
+  '#c11149', 
+  '#92173f', 
+  '#b00d42', 
+  '#6e213a'];
 
 
 const mapStatToBook1 = async (ls, prisma) => {
   const stats = await countBookUserType(ls, prisma);
 
-  // Index to keep track of which shade to use
-  let shadeIndex = 0;
+  const data = stats.map((r, index) => ({
+    name: r.user_type,
+    value: r._count.user_type,
+    color: chartColors[index],
+  }));
+
+  return data;
+};
+
+const mapStatToBook2 = async (ls, prisma) => {
+  const stats = await countBookYearLevel(ls, prisma);
+
+  // const randomHEX = () => {
+  //   const alph = "ABCDEF0123456789";
+  //   let hex = "#";
+  //   for (let i = 0; i < 6; i++) {
+  //     let random = Math.floor(Math.random() * alph.length);
+  //     hex += alph[random];
+  //   }
+
+  //   return hex;
+  // };
+
+  const data = stats.map((r, index) => ({
+    name: r.year_level,
+    value: r._count.year_level,
+    color: chartColors[index],
+  }));
+
+  return data;
+};
+
+const mapStatToBook3 = async (ls, prisma) => {
+  const stats = await countBookDept(ls, prisma);
+
+  // const randomHEX = () => {
+  //   const alph = "ABCDEF0123456789";
+  //   let hex = "#";
+  //   for (let i = 0; i < 6; i++) {
+  //     let random = Math.floor(Math.random() * alph.length);
+  //     hex += alph[random];
+  //   }
+
+  //   return hex;
+  // };
+
+  const data = stats.map((r, index) => ({
+    name: r.department,
+    value: r._count.department,
+    color: chartColors[index],
+  }));
+
+  return data;
+};
+
+const mapStatToGame1 = async (ls, prisma) => {
+  let stats = await countGameUserType(ls, prisma);
 
   const randomHEX = () => {
     const alph = "ABCDEF0123456789";
@@ -322,75 +381,6 @@ const mapStatToBook1 = async (ls, prisma) => {
   return data;
 };
 
-const mapStatToBook2 = async (ls, prisma) => {
-  const stats = await countBookYearLevel(ls, prisma);
-
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
-    name: r.year_level,
-    value: r._count.year_level,
-    color: randomHEX(),
-  }));
-
-  return data;
-};
-
-const mapStatToBook3 = async (ls, prisma) => {
-  const stats = await countBookDept(ls, prisma);
-
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
-    name: r.department,
-    value: r._count.department,
-    color: randomHEX(),
-  }));
-
-  return data;
-};
-
-const mapStatToGame1 = async (ls, prisma) => {
-  let stats = await countGameUserType(ls, prisma);
-
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
-    name: r.user_type,
-    value: r._count.user_type,
-    color: randomHEX(),
-  }));
-
-  return data;
-};
-
 const mapStatToGame2 = async (ls, prisma) => {
   let stats = await countGameYearLevel(ls, prisma);
 
@@ -405,10 +395,10 @@ const mapStatToGame2 = async (ls, prisma) => {
     return hex;
   };
 
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.year_level,
     value: r._count.year_level,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
@@ -428,10 +418,10 @@ const mapStatToGame3 = async (ls, prisma) => {
     return hex;
   };
 
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.department,
     value: r._count.department,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
