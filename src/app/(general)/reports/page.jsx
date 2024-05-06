@@ -16,7 +16,7 @@ import {
 import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
-import PieChart from "@/_components/charts/PieChart";
+import PieCharts from "@/_components/charts/PieCharts";
 import { data } from "@/data/pie";
 import { ToastContainer, toast } from "react-toastify";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
@@ -706,7 +706,7 @@ const Reports = ({ hideHeader }) => {
                   value={selectedBookPieChart}
                 />
               </div>
-              <PieChart data={bookPieChartData} count={bookPieChartCount} />
+              <PieCharts data={bookPieChartData} count={bookPieChartCount} />
             </div>
             <div className={styles.chart2}>
               <div className={styles.header}>
@@ -718,7 +718,7 @@ const Reports = ({ hideHeader }) => {
                   value={selectedGamePieChart}
                 />
               </div>
-              <PieChart data={gamePieChartData} count={gamePieChartCount} />
+              <PieCharts data={gamePieChartData} count={gamePieChartCount} />
             </div>
           </div>
 

@@ -293,8 +293,14 @@ const countGameDept = async (ls, prisma) => {
 };
 
 
+const chartColors = ['#FF0000', '#CC0000', '#990000', '#660000'];
+
+
 const mapStatToBook1 = async (ls, prisma) => {
   const stats = await countBookUserType(ls, prisma);
+
+  // Index to keep track of which shade to use
+  let shadeIndex = 0;
 
   const randomHEX = () => {
     const alph = "ABCDEF0123456789";
@@ -307,10 +313,10 @@ const mapStatToBook1 = async (ls, prisma) => {
     return hex;
   };
 
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.user_type,
     value: r._count.user_type,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
