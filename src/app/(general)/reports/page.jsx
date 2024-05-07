@@ -707,6 +707,14 @@ const Reports = ({ hideHeader }) => {
                 />
               </div>
               <PieCharts data={bookPieChartData} count={bookPieChartCount} />
+              <div className={styles.legend}>
+                {bookPieChartData.map((item, index) => (
+                  <div key={index} className={styles.legendItem}>
+                    <span className={styles.legendColor} style={{ backgroundColor: item.color }}></span>
+                    <span className={styles.legendLabel}>{item.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className={styles.chart2}>
               <div className={styles.header}>
@@ -719,6 +727,16 @@ const Reports = ({ hideHeader }) => {
                 />
               </div>
               <PieCharts data={gamePieChartData} count={gamePieChartCount} />
+
+              <div className={styles.legend}>
+                {gamePieChartData.map((item, index) => (
+                  <div key={index} className={styles.legendItem}>
+                    <span className={styles.legendColor} style={{ backgroundColor: item.color }}></span>
+                    <span className={styles.legendLabel}>{item.name}</span>
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
 

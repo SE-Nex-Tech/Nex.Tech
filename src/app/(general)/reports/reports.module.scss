@@ -15,7 +15,7 @@
     flex-direction: column;
     gap: 1em;
     width: 60%;
-    max-height: 700px;
+    max-height: 800px;
 
     .date_selector {
       display: flex;
@@ -41,13 +41,13 @@
     flex-direction: column;
     gap: 1em;
     width: 40%;
-    max-height: 550px;
+    max-height: 800px;
 
     .charts {
       display: flex;
       flex-direction: row;
       justify-content: space-around;
-      height: 220px;
+      height: 350px;
 
       .chart1,
       .chart2 {
@@ -61,6 +61,33 @@
         border: 1px solid black;
         border-radius: 15px;
       }
+    }
+
+    .legend {
+      // margin-top: 20px;
+      display: flex;
+      align-items: left;
+      flex-direction: column;
+      width: 100%;
+      margin-left: 15px;
+    }
+    
+    .legendItem {
+      display: flex;
+      align-items: center;
+      margin-bottom: 2px;
+    }
+    
+    .legendColor {
+      width: 15px;
+      height: 15px;
+      border-radius: 25%;
+      display: inline-block;
+      margin-right: 8px;
+    }
+    
+    .legendLabel {
+      font-size: 14px;
     }
   }
 }

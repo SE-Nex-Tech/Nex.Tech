@@ -294,14 +294,25 @@ const countGameDept = async (ls, prisma) => {
 
 
 const chartColors = [
-  '#c11149', 
-  '#92173f', 
-  '#b00d42', 
-  '#6e213a'];
+  '#6e213a',
+  '#315991',
+  '#ffc000',
+  '#1d7f34',];
 
 
 const mapStatToBook1 = async (ls, prisma) => {
   const stats = await countBookUserType(ls, prisma);
+
+  // const randomHEX = () => {
+  //   const alph = "ABCDEF0123456789";
+  //   let hex = "#";
+  //   for (let i = 0; i < 6; i++) {
+  //     let random = Math.floor(Math.random() * alph.length);
+  //     hex += alph[random];
+  //   }
+
+  //   return hex;
+  // };
 
   const data = stats.map((r, index) => ({
     name: r.user_type,
@@ -315,16 +326,16 @@ const mapStatToBook1 = async (ls, prisma) => {
 const mapStatToBook2 = async (ls, prisma) => {
   const stats = await countBookYearLevel(ls, prisma);
 
-  // const randomHEX = () => {
-  //   const alph = "ABCDEF0123456789";
-  //   let hex = "#";
-  //   for (let i = 0; i < 6; i++) {
-  //     let random = Math.floor(Math.random() * alph.length);
-  //     hex += alph[random];
-  //   }
+  // Custom sorting function to sort year levels numerically
+  const customSort = (a, b) => {
+    // Extract the numeric part of the year level strings
+    const numA = parseInt(a.year_level);
+    const numB = parseInt(b.year_level);
+    return numA - numB; // Sort in ascending order, change to numB - numA for descending
+  };
 
-  //   return hex;
-  // };
+  // Sort stats by year level using the custom sorting function
+  stats.sort(customSort);
 
   const data = stats.map((r, index) => ({
     name: r.year_level,
@@ -338,17 +349,6 @@ const mapStatToBook2 = async (ls, prisma) => {
 const mapStatToBook3 = async (ls, prisma) => {
   const stats = await countBookDept(ls, prisma);
 
-  // const randomHEX = () => {
-  //   const alph = "ABCDEF0123456789";
-  //   let hex = "#";
-  //   for (let i = 0; i < 6; i++) {
-  //     let random = Math.floor(Math.random() * alph.length);
-  //     hex += alph[random];
-  //   }
-
-  //   return hex;
-  // };
-
   const data = stats.map((r, index) => ({
     name: r.department,
     value: r._count.department,
@@ -360,17 +360,6 @@ const mapStatToBook3 = async (ls, prisma) => {
 
 const mapStatToGame1 = async (ls, prisma) => {
   let stats = await countGameUserType(ls, prisma);
-
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
 
   const data = stats.map((r, index) => ({
     name: r.user_type,
@@ -384,16 +373,16 @@ const mapStatToGame1 = async (ls, prisma) => {
 const mapStatToGame2 = async (ls, prisma) => {
   let stats = await countGameYearLevel(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
+  // Custom sorting function to sort year levels numerically
+  const customSort = (a, b) => {
+    // Extract the numeric part of the year level strings
+    const numA = parseInt(a.year_level);
+    const numB = parseInt(b.year_level);
+    return numA - numB; // Sort in ascending order, change to numB - numA for descending
   };
+
+  // Sort stats by year level using the custom sorting function
+  stats.sort(customSort);
 
   const data = stats.map((r, index) => ({
     name: r.year_level,
@@ -406,17 +395,6 @@ const mapStatToGame2 = async (ls, prisma) => {
 
 const mapStatToGame3 = async (ls, prisma) => {
   let stats = await countGameDept(ls, prisma);
-
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
 
   const data = stats.map((r, index) => ({
     name: r.department,
@@ -536,7 +514,7 @@ export async function POST(request) {
   const bookPie1 = await mapStatToBook1(requestIDs, prisma);
   const bookPie2 = await mapStatToBook2(requestIDs, prisma);
   const bookPie3 = await mapStatToBook3(requestIDs, prisma);
-  
+
   const gamePie1 = await mapStatToGame1(requestIDs, prisma);
   const gamePie2 = await mapStatToGame2(requestIDs, prisma);
   const gamePie3 = await mapStatToGame3(requestIDs, prisma);

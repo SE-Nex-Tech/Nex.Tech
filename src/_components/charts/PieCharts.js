@@ -22,7 +22,7 @@ const PieCharts = ({ data, count }) => {
           labelsType="percent"
           withLabels
           data={data}
-          size={130}
+          size={110}
           thickness={30}
           withTooltip 
           tooltipDataSource="segment"
