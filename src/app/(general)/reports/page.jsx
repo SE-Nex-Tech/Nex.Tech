@@ -169,7 +169,21 @@ const Reports = ({ hideHeader }) => {
 
   const [barChartData, setBarChartData] = useState([]);
 
-  const [reqSummaryView, setReqSummaryView] = useState([]);
+  const [reqSummaryView, setReqSummaryView] = useState("Graph View");
+
+  const handleRequestSummaryView = (event) => {
+    const selectedValue = event.target.value;
+    setReqSummaryView(selectedValue);
+    console.log(selectedValue);
+  };
+
+  const [usageStatisticsView, setUsageStatisticsView] = useState("Books");
+
+  const handleUsageStatisticsView = (event) => {
+    const selectedValue = event.target.value;
+    setUsageStatisticsView(selectedValue);
+    console.log(selectedValue);
+  };
 
   const handleBookPieChart = (event) => {
     const selectedValue = event.target.value;
@@ -184,12 +198,6 @@ const Reports = ({ hideHeader }) => {
       setBookPieChartData(bookDepartmentPie);
       setBookPieChartCount(studentBookReqs);
     }
-  };
-
-  const handleRequestSummaryView = (event) => {
-    const selectedValue = event.target.value;
-    setReqSummaryView(selectedValue);
-    console.log(selectedValue);
   };
 
   const handleGamePieChart = (event) => {
@@ -772,8 +780,17 @@ const Reports = ({ hideHeader }) => {
           </div>
 
           <div className={styles.summary_container}>
-            <h3>Usage Statistics</h3>
-            <div className={styles.summary_usage}>
+            <div className={styles.summary_header}>
+              <h3>Usage Statistics</h3>
+              <NativeSelect
+                radius="xl"
+                data={["Books", "Boardgames"]}
+                onChange={handleUsageStatisticsView}
+                value={usageStatisticsView}
+              />
+            </div>
+
+            {/* <div className={styles.summary_usage}>
               <Table
                 striped
                 highlightOnHover
@@ -797,7 +814,29 @@ const Reports = ({ hideHeader }) => {
                   ))}
                 </Table.Tbody>
               </Table>
+            </div> */}
+
+            <div className={styles.summary_usage}>
+              <Table striped highlightOnHover withTableBorder className={styles.table}>
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>Game Title</Table.Th>
+                    <Table.Th>Total Requests</Table.Th>
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody className={styles.table_body}>
+                  {gameRCounts.map((r) => (
+                    <Table.Tr key={r.boardgame_id}>
+                      <Table.Td>
+                        {gameR.find((e) => e.boardgame_id === r.boardgame_id).boardgame.title}
+                      </Table.Td>
+                      <Table.Td>{r._count.boardgame_id}</Table.Td>
+                    </Table.Tr>
+                  ))}
+                </Table.Tbody>
+              </Table>
             </div>
+
 
           </div>
         </div>
