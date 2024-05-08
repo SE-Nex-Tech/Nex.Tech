@@ -169,6 +169,8 @@ const Reports = ({ hideHeader }) => {
 
   const [barChartData, setBarChartData] = useState([]);
 
+  const [reqSummaryView, setReqSummaryView] = useState([]);
+
   const handleBookPieChart = (event) => {
     const selectedValue = event.target.value;
     setSelectedBookPieChart(selectedValue);
@@ -182,6 +184,12 @@ const Reports = ({ hideHeader }) => {
       setBookPieChartData(bookDepartmentPie);
       setBookPieChartCount(studentBookReqs);
     }
+  };
+
+  const handleRequestSummaryView = (event) => {
+    const selectedValue = event.target.value;
+    setReqSummaryView(selectedValue);
+    console.log(selectedValue);
   };
 
   const handleGamePieChart = (event) => {
@@ -672,9 +680,9 @@ const Reports = ({ hideHeader }) => {
               <h3>Request Summary</h3>
               <NativeSelect
                 radius="xl"
-                data={["User Type", "Year Level", "Department"]}
-                onChange={handleBookPieChart}
-                value={selectedBookPieChart}
+                data={["Graph View", "List View"]}
+                onChange={handleRequestSummaryView}
+                value={reqSummaryView}
               />
             </div>
 
@@ -682,7 +690,7 @@ const Reports = ({ hideHeader }) => {
               <BarCharts data={barChartData} />
             </div>
 
-            {/* <div className={styles.summary_request}>
+            <div className={styles.summary_request}>
               <Table
                 striped
                 highlightOnHover
@@ -710,7 +718,8 @@ const Reports = ({ hideHeader }) => {
                   ))}
                 </Table.Tbody>
               </Table>
-            </div> */}
+            </div>
+
           </div>
         </div>
 
