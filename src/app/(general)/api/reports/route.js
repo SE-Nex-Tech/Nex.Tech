@@ -407,7 +407,7 @@ const mapStatToGame3 = async (ls, prisma) => {
 
 
 const getBarChartData = async (requestIDs, prisma) => {
-  // Function to get the start date of the week
+
   const getWeekStartDate = (date) => {
     const d = new Date(date);
     const day = d.getDay();
@@ -415,21 +415,18 @@ const getBarChartData = async (requestIDs, prisma) => {
     return new Date(d.setDate(diff));
   };
 
-  // Function to get the end date of the week
   const getWeekEndDate = (date) => {
     const d = new Date(date);
     const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 7); // Adjusted to get end of the week
+    const diff = d.getDate() - day + (day === 0 ? -6 : 7);
     return new Date(d.setDate(diff));
   };
 
-  // Function to get the start date of the month
   const getMonthStartDate = (date) => {
     const d = new Date(date);
     return new Date(d.getFullYear(), d.getMonth(), 1);
   };
 
-  // Function to format date range
   const formatDateRange = (startDate, endDate) => {
     const startMonth = startDate.toLocaleString('default', { month: 'short' });
     const endMonth = endDate.toLocaleString('default', { month: 'short' });
@@ -438,32 +435,28 @@ const getBarChartData = async (requestIDs, prisma) => {
     return `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
   };
 
-  // Fetch all requests for books
   const bookRequests = await prisma.requests.findMany({
     where: {
       id: { in: requestIDs },
       type: 'Book',
     },
     orderBy: {
-      date: 'asc', // Order by date in ascending order
+      date: 'asc', 
     },
   });
 
-  // Fetch all requests for board games
   const boardGameRequests = await prisma.requests.findMany({
     where: {
       id: { in: requestIDs },
       type: 'Boardgame',
     },
     orderBy: {
-      date: 'asc', // Order by date in ascending order
+      date: 'asc', 
     },
   });
 
-  // Combine book and board game requests
   const allRequests = [...bookRequests, ...boardGameRequests];
 
-  // Group requests by week or month based on the number of weeks
   const numWeeks = Math.ceil((allRequests[allRequests.length - 1].date - allRequests[0].date) / (7 * 24 * 60 * 60 * 1000));
   const isMonthly = numWeeks > 10;
 
@@ -510,7 +503,6 @@ const getBarChartData = async (requestIDs, prisma) => {
     }
   });
 
-  // Convert object to array if it's not already
   const barChartData = Array.isArray(requestsByPeriod) ? requestsByPeriod : Object.values(requestsByPeriod);
 
   return barChartData;

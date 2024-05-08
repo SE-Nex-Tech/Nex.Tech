@@ -14,7 +14,6 @@ const BarCharts = ({ data, count }) => {
                     h={450}
                     data={data}
                     dataKey="dateRange"
-                    // type="stacked"
                     withLegend
                     xAxisLabel="Date"
                     yAxisLabel="Requests"
