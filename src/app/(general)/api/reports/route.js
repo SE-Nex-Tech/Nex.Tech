@@ -294,10 +294,10 @@ const countGameDept = async (ls, prisma) => {
 
 
 const chartColors = [
-  '#6e213a',
+  '#af1526',
   '#315991',
   '#ffc000',
-  '#1d7f34',];
+  '#1d7f34'];
 
 
 const mapStatToBook1 = async (ls, prisma) => {
@@ -405,6 +405,79 @@ const mapStatToGame3 = async (ls, prisma) => {
   return data;
 };
 
+
+const getBarChartData = async (requestIDs, prisma) => {
+  // Function to get the start date of the week
+  const getWeekStartDate = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  };
+
+  // Function to format date range
+  const formatDateRange = (startDate, endDate) => {
+    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
+    return `${startDate.toLocaleDateString(undefined, options)} - ${endDate.toLocaleDateString(undefined, options)}`;
+  };
+
+  // Fetch all requests for books
+  const bookRequests = await prisma.requests.findMany({
+    where: {
+      id: { in: requestIDs },
+      type: 'Book',
+    },
+    orderBy: {
+      date: 'asc', // Order by date in ascending order
+    },
+  });
+
+  // Fetch all requests for board games
+  const boardGameRequests = await prisma.requests.findMany({
+    where: {
+      id: { in: requestIDs },
+      type: 'Boardgame', // Adjusted to 'Boardgame'
+    },
+    orderBy: {
+      date: 'asc', // Order by date in ascending order
+    },
+  });
+
+  // Combine book and board game requests
+  const allRequests = [...bookRequests, ...boardGameRequests];
+
+  // Group requests by week
+  const requestsByWeek = {};
+  allRequests.forEach((request) => {
+    const weekStartDate = getWeekStartDate(request.date);
+    const weekEndDate = new Date(weekStartDate);
+    weekEndDate.setDate(weekEndDate.getDate() + 6); // Add 6 days for the end of the week
+    const weekKey = formatDateRange(weekStartDate, weekEndDate);
+    if (!requestsByWeek[weekKey]) {
+      requestsByWeek[weekKey] = {
+        dateRange: weekKey,
+        bookCount: 0,
+        gameCount: 0,
+      };
+    }
+    if (request.type === 'Book') {
+      requestsByWeek[weekKey].bookCount++;
+    } else if (request.type === 'Boardgame') { // Adjusted to 'Boardgame'
+      requestsByWeek[weekKey].gameCount++; // Adjusted to 'gameCount'
+    }
+  });
+
+  // Convert object to array
+  const barChartData = Object.values(requestsByWeek);
+
+  return barChartData;
+};
+
+
+
+
+
+
 export async function POST(request) {
   const prisma = new PrismaClient();
   const params = await request.json();
@@ -465,6 +538,9 @@ export async function POST(request) {
     const gamePie2 = await mapStatToGame2(requestIDs, prisma);
     const gamePie3 = await mapStatToGame3(requestIDs, prisma);
 
+    const barData = await getBarChartData(requestIDs, prisma);
+
+
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -486,6 +562,7 @@ export async function POST(request) {
       gamePie1,
       gamePie2,
       gamePie3,
+      barData,
     });
   }
 
@@ -519,6 +596,8 @@ export async function POST(request) {
   const gamePie2 = await mapStatToGame2(requestIDs, prisma);
   const gamePie3 = await mapStatToGame3(requestIDs, prisma);
 
+  const barData = await getBarChartData(requestIDs, prisma);
+
   prisma.$disconnect();
 
   return NextResponse.json({
@@ -541,5 +620,6 @@ export async function POST(request) {
     gamePie1,
     gamePie2,
     gamePie3,
+    barData,
   });
 }

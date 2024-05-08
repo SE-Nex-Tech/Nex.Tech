@@ -17,6 +17,7 @@ import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
 import PieCharts from "@/_components/charts/PieCharts";
+import BarCharts from "@/_components/charts/BarCharts";
 import { data } from "@/data/pie";
 import { ToastContainer, toast } from "react-toastify";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
@@ -166,6 +167,8 @@ const Reports = ({ hideHeader }) => {
   const [bookPieChartCount, setBookPieChartCount] = useState(0);
   const [gamePieChartCount, setGamePieChartCount] = useState(0);
 
+  const [barChartData, setBarChartData] = useState([]);
+
   const handleBookPieChart = (event) => {
     const selectedValue = event.target.value;
     setSelectedBookPieChart(selectedValue);
@@ -251,6 +254,7 @@ const Reports = ({ hideHeader }) => {
         gamePie1,
         gamePie2,
         gamePie3,
+        barData,
       } = await response.json();
 
       if (value != null && value2 != null) {
@@ -262,6 +266,7 @@ const Reports = ({ hideHeader }) => {
       console.log(bookUserTypeC);
       console.log(bookYearLevelC);
       console.log(bookDeptC);
+      console.log(barData);
 
       setBookUserTypePie(bookPie1);
       setBookYearLevelPie(bookPie2);
@@ -324,6 +329,8 @@ const Reports = ({ hideHeader }) => {
         setGamePieChartData(gamePie3);
         setGamePieChartCount(getTotalCount("Boardgame"));
       }
+
+      setBarChartData(barData);
 
       if (invalid_dates != undefined && inval != undefined) {
         toast.warning("Invalid date range");
@@ -662,7 +669,7 @@ const Reports = ({ hideHeader }) => {
 
           <div className={styles.summary_container}>
             <h3>Request Summary</h3>
-            <div className={styles.summary}>
+            <div className={styles.summary_request}>
               <Table
                 striped
                 highlightOnHover
@@ -727,7 +734,6 @@ const Reports = ({ hideHeader }) => {
                 />
               </div>
               <PieCharts data={gamePieChartData} count={gamePieChartCount} />
-
               <div className={styles.legend}>
                 {gamePieChartData.map((item, index) => (
                   <div key={index} className={styles.legendItem}>
@@ -742,7 +748,7 @@ const Reports = ({ hideHeader }) => {
 
           <div className={styles.summary_container}>
             <h3>Usage Statistics</h3>
-            <div className={styles.summary}>
+            {/* <div className={styles.summary_usage}>
               <Table
                 striped
                 highlightOnHover
@@ -766,7 +772,8 @@ const Reports = ({ hideHeader }) => {
                   ))}
                 </Table.Tbody>
               </Table>
-            </div>
+            </div> */}
+            <BarCharts data={barChartData}/>
           </div>
         </div>
       </Center>
