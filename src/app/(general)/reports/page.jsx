@@ -686,40 +686,43 @@ const Reports = ({ hideHeader }) => {
               />
             </div>
 
-            <div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
-              <BarCharts data={barChartData} />
-            </div>
+            {reqSummaryView === "Graph View" && (
+              <div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
+                <BarCharts data={barChartData} />
+              </div>
+            )}
 
-            <div className={styles.summary_request}>
-              <Table
-                striped
-                highlightOnHover
-                withTableBorder
-                className={styles.table}
-              >
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Date</Table.Th>
-                    <Table.Th>Code</Table.Th>
-                    <Table.Th>User Type</Table.Th>
-                    <Table.Th>Name</Table.Th>
-                    <Table.Th>Type</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody className={styles.table_body}>
-                  {borrows.map((r) => (
+            {reqSummaryView === "List View" && (
+              <div className={styles.summary_request}>
+                <Table
+                  striped
+                  highlightOnHover
+                  withTableBorder
+                  className={styles.table}
+                >
+                  <Table.Thead>
                     <Table.Tr>
-                      <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
-                      <Table.Th>{r.id}</Table.Th>
-                      <Table.Th>{r.user_type}</Table.Th>
-                      <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
-                      <Table.Th>{r.type}</Table.Th>
+                      <Table.Th>Date</Table.Th>
+                      <Table.Th>Code</Table.Th>
+                      <Table.Th>User Type</Table.Th>
+                      <Table.Th>Name</Table.Th>
+                      <Table.Th>Type</Table.Th>
                     </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
-            </div>
-
+                  </Table.Thead>
+                  <Table.Tbody className={styles.table_body}>
+                    {borrows.map((r) => (
+                      <Table.Tr>
+                        <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
+                        <Table.Th>{r.id}</Table.Th>
+                        <Table.Th>{r.user_type}</Table.Th>
+                        <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
+                        <Table.Th>{r.type}</Table.Th>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
           </div>
         </div>
 
