@@ -668,8 +668,21 @@ const Reports = ({ hideHeader }) => {
           </Modal>
 
           <div className={styles.summary_container}>
-            <h3>Request Summary</h3>
-            <div className={styles.summary_request}>
+            <div className={styles.summary_header}>
+              <h3>Request Summary</h3>
+              <NativeSelect
+                radius="xl"
+                data={["User Type", "Year Level", "Department"]}
+                onChange={handleBookPieChart}
+                value={selectedBookPieChart}
+              />
+            </div>
+
+            <div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
+              <BarCharts data={barChartData} />
+            </div>
+
+            {/* <div className={styles.summary_request}>
               <Table
                 striped
                 highlightOnHover
@@ -697,7 +710,7 @@ const Reports = ({ hideHeader }) => {
                   ))}
                 </Table.Tbody>
               </Table>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -748,7 +761,7 @@ const Reports = ({ hideHeader }) => {
 
           <div className={styles.summary_container}>
             <h3>Usage Statistics</h3>
-            {/* <div className={styles.summary_usage}>
+            <div className={styles.summary_usage}>
               <Table
                 striped
                 highlightOnHover
@@ -772,8 +785,8 @@ const Reports = ({ hideHeader }) => {
                   ))}
                 </Table.Tbody>
               </Table>
-            </div> */}
-            <BarCharts data={barChartData}/>
+            </div>
+
           </div>
         </div>
       </Center>

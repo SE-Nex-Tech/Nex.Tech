@@ -415,10 +415,27 @@ const getBarChartData = async (requestIDs, prisma) => {
     return new Date(d.setDate(diff));
   };
 
+  // Function to get the end date of the week
+  const getWeekEndDate = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 7); // Adjusted to get end of the week
+    return new Date(d.setDate(diff));
+  };
+
+  // Function to get the start date of the month
+  const getMonthStartDate = (date) => {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth(), 1);
+  };
+
   // Function to format date range
   const formatDateRange = (startDate, endDate) => {
-    const options = { year: 'numeric', month: 'numeric', day: 'numeric' };
-    return `${startDate.toLocaleDateString(undefined, options)} - ${endDate.toLocaleDateString(undefined, options)}`;
+    const startMonth = startDate.toLocaleString('default', { month: 'short' });
+    const endMonth = endDate.toLocaleString('default', { month: 'short' });
+    const startDay = startDate.getDate();
+    const endDay = endDate.getDate();
+    return `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
   };
 
   // Fetch all requests for books
@@ -436,7 +453,7 @@ const getBarChartData = async (requestIDs, prisma) => {
   const boardGameRequests = await prisma.requests.findMany({
     where: {
       id: { in: requestIDs },
-      type: 'Boardgame', // Adjusted to 'Boardgame'
+      type: 'Boardgame',
     },
     orderBy: {
       date: 'asc', // Order by date in ascending order
@@ -446,32 +463,61 @@ const getBarChartData = async (requestIDs, prisma) => {
   // Combine book and board game requests
   const allRequests = [...bookRequests, ...boardGameRequests];
 
-  // Group requests by week
-  const requestsByWeek = {};
+  // Group requests by week or month based on the number of weeks
+  const numWeeks = Math.ceil((allRequests[allRequests.length - 1].date - allRequests[0].date) / (7 * 24 * 60 * 60 * 1000));
+  const isMonthly = numWeeks > 10;
+
+  const requestsByPeriod = isMonthly ? {} : [];
+
   allRequests.forEach((request) => {
-    const weekStartDate = getWeekStartDate(request.date);
-    const weekEndDate = new Date(weekStartDate);
-    weekEndDate.setDate(weekEndDate.getDate() + 6); // Add 6 days for the end of the week
-    const weekKey = formatDateRange(weekStartDate, weekEndDate);
-    if (!requestsByWeek[weekKey]) {
-      requestsByWeek[weekKey] = {
-        dateRange: weekKey,
-        bookCount: 0,
-        gameCount: 0,
-      };
+    const startDate = isMonthly ? getMonthStartDate(request.date) : getWeekStartDate(request.date);
+    const endDate = isMonthly ? new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0) : getWeekEndDate(startDate); // Adjusted to get end of the week
+
+    const periodKey = isMonthly ? startDate.toLocaleString('default', { month: 'short', year: 'numeric' }) : formatDateRange(startDate, endDate);
+
+    if (isMonthly) {
+      if (!requestsByPeriod[periodKey]) {
+        requestsByPeriod[periodKey] = {
+          dateRange: periodKey,
+          bookCount: 0,
+          gameCount: 0,
+        };
+      }
+    } else {
+      if (!requestsByPeriod.some(period => period.dateRange === periodKey)) {
+        requestsByPeriod.push({
+          dateRange: periodKey,
+          bookCount: 0,
+          gameCount: 0,
+        });
+      }
     }
+
     if (request.type === 'Book') {
-      requestsByWeek[weekKey].bookCount++;
-    } else if (request.type === 'Boardgame') { // Adjusted to 'Boardgame'
-      requestsByWeek[weekKey].gameCount++; // Adjusted to 'gameCount'
+      if (isMonthly) {
+        requestsByPeriod[periodKey].bookCount++;
+      } else {
+        const period = requestsByPeriod.find(period => period.dateRange === periodKey);
+        period.bookCount++;
+      }
+    } else if (request.type === 'Boardgame') {
+      if (isMonthly) {
+        requestsByPeriod[periodKey].gameCount++;
+      } else {
+        const period = requestsByPeriod.find(period => period.dateRange === periodKey);
+        period.gameCount++;
+      }
     }
   });
 
-  // Convert object to array
-  const barChartData = Object.values(requestsByWeek);
+  // Convert object to array if it's not already
+  const barChartData = Array.isArray(requestsByPeriod) ? requestsByPeriod : Object.values(requestsByPeriod);
 
   return barChartData;
 };
+
+
+
 
 
 

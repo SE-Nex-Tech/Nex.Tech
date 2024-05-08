@@ -10,11 +10,16 @@ const BarCharts = ({ data, count }) => {
         <>
             <div classname={styles.container}>
                 <BarChart
-                    h={300}
+                    
+                    h={450}
                     data={data}
                     dataKey="dateRange"
-                    type="stacked"
+                    // type="stacked"
                     withLegend
+                    xAxisLabel="Date"
+                    yAxisLabel="Requests"
+                    yAxisProps={{ orientation: 'left'  }}
+                    xAxisProps={{ orientation: 'bottom', padding: { left: 30, right: 30 }}}
                     legendProps={{ verticalAlign: 'bottom' }}
                     series={[
                         { name: 'bookCount', label: 'Book Requests', color: 'violet.6' },
