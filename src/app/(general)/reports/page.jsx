@@ -790,52 +790,56 @@ const Reports = ({ hideHeader }) => {
               />
             </div>
 
-            {/* <div className={styles.summary_usage}>
-              <Table
-                striped
-                highlightOnHover
-                withTableBorder
-                className={styles.table}
-              >
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Book Title</Table.Th>
-                    <Table.Th>Total Requests</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody className={styles.table_body}>
-                  {bookRCounts.map((r) => (
+            {usageStatisticsView === "Books" && (
+              <div className={styles.summary_usage}>
+                <Table
+                  striped
+                  highlightOnHover
+                  withTableBorder
+                  className={styles.table}
+                >
+                  <Table.Thead>
                     <Table.Tr>
-                      <Table.Td>
-                        {bookR.find((e) => e.book_id === r.book_id).book.title}
-                      </Table.Td>
-                      <Table.Td>{r._count.book_id}</Table.Td>
+                      <Table.Th>Book Title</Table.Th>
+                      <Table.Th>Total Requests</Table.Th>
                     </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
-            </div> */}
+                  </Table.Thead>
+                  <Table.Tbody className={styles.table_body}>
+                    {bookRCounts.map((r) => (
+                      <Table.Tr>
+                        <Table.Td>
+                          {bookR.find((e) => e.book_id === r.book_id).book.title}
+                        </Table.Td>
+                        <Table.Td>{r._count.book_id}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
 
-            <div className={styles.summary_usage}>
-              <Table striped highlightOnHover withTableBorder className={styles.table}>
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Game Title</Table.Th>
-                    <Table.Th>Total Requests</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody className={styles.table_body}>
-                  {gameRCounts.map((r) => (
-                    <Table.Tr key={r.boardgame_id}>
-                      <Table.Td>
-                        {gameR.find((e) => e.boardgame_id === r.boardgame_id).boardgame.title}
-                      </Table.Td>
-                      <Table.Td>{r._count.boardgame_id}</Table.Td>
+            {usageStatisticsView === "Boardgames" && (
+              <div className={styles.summary_usage}>
+                <Table striped highlightOnHover withTableBorder className={styles.table}>
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Game Title</Table.Th>
+                      <Table.Th>Total Requests</Table.Th>
                     </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
-            </div>
+                  </Table.Thead>
+                  <Table.Tbody className={styles.table_body}>
+                    {gameRCounts.map((r) => (
+                      <Table.Tr key={r.boardgame_id}>
+                        <Table.Td>
+                          {gameR.find((e) => e.boardgame_id === r.boardgame_id).boardgame.title}
+                        </Table.Td>
+                        <Table.Td>{r._count.boardgame_id}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
 
 
           </div>
