@@ -70,12 +70,13 @@ const Signup = () => {
     if (result.invalid == undefined) {
       toast.success("Signed up successfully, please wait for authorization.", {
         autoClose: 4000,
+        position: "top-center",
       });
       setTimeout(() => {
         router.push("/login");
       }, 4200);
     } else {
-      toast.warning("Invalid email");
+      toast.warning("Invalid email", { position: "top-center" });
     }
   };
 

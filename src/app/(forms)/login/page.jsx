@@ -73,7 +73,10 @@ const Login = () => {
     ).json();
 
     if (result.ok) {
-      toast.success("Logged in successfully, please wait", { autoClose: 2000 });
+      toast.success("Logged in successfully, please wait", {
+        autoClose: 2000,
+        position: "top-center",
+      });
       setTimeout(() => {
         if (type.type == "admin") {
           router.push("/dashboard");
@@ -82,7 +85,10 @@ const Login = () => {
         }
       }, 2000);
     } else {
-      toast.error("Incorrect Credentials!");
+      toast.error("Incorrect Credentials!", {
+        autoClose: 90000,
+        position: "top-center",
+      });
       setLoginAttempts((prevAttempts) => prevAttempts + 1);
       if (loginAttempts + 1 >= 5) {
         setIsButtonDisabled(true);
