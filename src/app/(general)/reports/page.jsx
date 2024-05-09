@@ -48,6 +48,7 @@ const findUser = (user_type, req_id, users) => {
 
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 // // Register font
 // Font.register({ family: 'Plus Jakarta Sans', src: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" });
@@ -170,6 +171,8 @@ const Reports = ({ hideHeader }) => {
   const [barChartData, setBarChartData] = useState([]);
 
   const [reqSummaryView, setReqSummaryView] = useState("Graph View");
+
+  const tableRef = useRef(null);
 
   const handleRequestSummaryView = (event) => {
     const selectedValue = event.target.value;
@@ -553,11 +556,13 @@ const Reports = ({ hideHeader }) => {
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); 
-  const day = String(currentDate.getDate()).padStart(2, "0"); 
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0");
+  const day = String(currentDate.getDate()).padStart(2, "0");
   const formattedDate = year + month + day;
 
   const buttonStyle = validDateRange ? styles.activeBtn : styles.inactiveBtn;
+
+
 
   return (
     <>
@@ -675,6 +680,36 @@ const Reports = ({ hideHeader }) => {
                     Download PDF
                   </button>
                 </PDFDownloadLink>
+
+                <DownloadTableExcel
+                  fileName={"reports" + formattedDate}
+                  sheet="report"
+                  currentTableRef={tableRef.current}
+                >
+
+                  <button> Export excel </button>
+
+                </DownloadTableExcel>
+
+                <table ref={tableRef}>
+                  <tbody>
+                    <tr>
+                      <th>Firstname</th>
+                      <th>Lastname</th>
+                      <th>Age</th>
+                    </tr>
+                    <tr>
+                      <td>Edison</td>
+                      <td>Padilla</td>
+                      <td>20</td>
+                    </tr>
+                    <tr>
+                      <td>Alberto</td>
+                      <td>Lopez</td>
+                      <td>94</td>
+                    </tr>
+                  </tbody>
+                </table>
 
                 <button className={styles.cancelBtn} onClick={close}>
                   Cancel
