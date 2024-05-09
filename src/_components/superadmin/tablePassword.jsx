@@ -12,31 +12,33 @@ const TablePassword = ({ data }) => {
             <Table.Th>ID</Table.Th>
             <Table.Th>Request Date</Table.Th>
             <Table.Th>Email</Table.Th>
-            <Table.Th>New Password</Table.Th>
             <Table.Th />
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
           {data.map((r) => {
-            const raw_date = new Date(r.date_requested)
-            const date = (raw_date.getMonth()+1) + '/' + raw_date.getDate() + '/' + raw_date.getFullYear()
+            const raw_date = new Date(r.date_requested);
+            const date =
+              raw_date.getMonth() +
+              1 +
+              "/" +
+              raw_date.getDate() +
+              "/" +
+              raw_date.getFullYear();
             return (
               <Table.Tr>
                 <Table.Td>
-                  <Avatar color="red" radius="xl">
-                  </Avatar>
+                  <Avatar color="red" radius="xl"></Avatar>
                 </Table.Td>
                 <Table.Td>{r.id}</Table.Td>
                 <Table.Td>{date}</Table.Td>
                 <Table.Td>{r.email}</Table.Td>
-                <Table.Td>{r.new_pass}</Table.Td>
                 <Table.Td>
                   <MenuPassword id={r.id} />
                 </Table.Td>
               </Table.Tr>
-            )
-          }
-          )}
+            );
+          })}
         </Table.Tbody>
       </Table>
     </Table.ScrollContainer>
