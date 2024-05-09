@@ -2,7 +2,17 @@ import React from 'react';
 import * as XLSX from 'xlsx';
 import styles from "./reports.module.scss";
 
-const DownloadTableExcel = ({ filename, sheets }) => {
+const DownloadTableExcel = ({
+  filename,
+  sheets,
+  bookSummary,
+  gameSummary,
+  usagePerYearLevel,
+  usagePerDepartment,
+  usagePerUserType,
+  totalCount
+}) => {
+
   const handleExport = () => {
     const wb = XLSX.utils.book_new();
 
@@ -43,7 +53,18 @@ const DownloadTableExcel = ({ filename, sheets }) => {
   };
 
   return (
-    <button onClick={handleExport}>Export Excel</button>
+    <button
+      disabled={!bookSummary && !gameSummary}
+      className={
+        (bookSummary || gameSummary) && (usagePerUserType || usagePerDepartment || usagePerYearLevel || totalCount)
+          ? styles.activeDownloadBtn
+          : styles.inactiveDownloadBtn
+      }
+      onClick={handleExport}
+    >
+      Download Excel
+    </button >
+
   );
 };
 
@@ -262,6 +283,12 @@ const ExportToExcel = ({
       <DownloadTableExcel
         filename={fileName}
         sheets={sheets}
+        bookSummary={bookSummary}
+        gameSummary={gameSummary}
+        usagePerYearLevel={usagePerYearLevel}
+        usagePerDepartment={usagePerDepartment}
+        usagePerUserType={usagePerUserType}
+        totalCount={totalCount}
       />
     </>
   );
