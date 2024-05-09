@@ -133,7 +133,7 @@ const Login = () => {
             )}
             <Button
               variant="filled"
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               radius="xl"
               classNames={{ root: styles.btn }}
               onClick={onSubmit}
@@ -145,7 +145,7 @@ const Login = () => {
             <Link href="/signup">
               <Button
                 variant="outline"
-                color="rgb(141, 16, 56)"
+                color="gray"
                 radius="xl"
                 classNames={{ root: styles.btn2 }}
               >
