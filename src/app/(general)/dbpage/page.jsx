@@ -40,24 +40,22 @@ const Database = () => {
   const bookDB = useRef("");
   const gameDB = useRef("");
 
-
   const selectedType = useRef("books");
 
-
-
-
   const handleTabChange = (value) => {
-
     setActiveTab(value);
     selectedType.current = value;
     setSelectedRows([]);
   };
 
-
   const setNotification = (notification) => {
     console.log(notification);
     if (notification != "") {
-      toast.success(notification, { position: "bottom-right", autoClose: 2000 });
+      toast.success(notification, {
+        position: "bottom-right",
+        autoClose: 2000,
+        position: "top-center",
+      });
     }
 
     setTimeout(() => {
@@ -67,8 +65,7 @@ const Database = () => {
         setRefreshKey(1);
       }
     }, 2500);
-  }
-
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -96,12 +93,12 @@ const Database = () => {
       });
 
       const resultDB = await response.json();
-      
+
       bookDB.current = resultDB;
       // console.log(resultDB);
-    }
+    };
 
-    fetchBooksDB()
+    fetchBooksDB();
 
     const fetchGamesDB = async () => {
       const response = await fetch("/api/db", {
@@ -113,18 +110,15 @@ const Database = () => {
       });
 
       const resultDB = await response.json();
-    
+
       gameDB.current = resultDB;
       // console.log(resultDB);
-    }
+    };
 
     fetchGamesDB();
 
     console.log(bookDB.current);
     console.log(gameDB.current);
-   
-
-
   }, [refreshKey]);
 
   const { data: session, status } = useSession();
@@ -177,7 +171,7 @@ const Database = () => {
   };
 
   const sorter = async (by) => {
-    if (selectedType.current === 'books') {
+    if (selectedType.current === "books") {
       let new_data = structuredClone(sortby(by, data));
       setData(new_data);
     } else {
@@ -227,6 +221,7 @@ const Database = () => {
             <option value="author_descending">Author -Descending</option>
           </NativeSelect>
           <AddButton
+            selectedRows={selectedRows}
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
             setNotification={setNotification}

@@ -293,24 +293,31 @@ const countGameDept = async (ls, prisma) => {
 };
 
 
+const chartColors = [
+  '#af1526',
+  '#315991',
+  '#ffc000',
+  '#1d7f34'];
+
+
 const mapStatToBook1 = async (ls, prisma) => {
   const stats = await countBookUserType(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
+  // const randomHEX = () => {
+  //   const alph = "ABCDEF0123456789";
+  //   let hex = "#";
+  //   for (let i = 0; i < 6; i++) {
+  //     let random = Math.floor(Math.random() * alph.length);
+  //     hex += alph[random];
+  //   }
 
-    return hex;
-  };
+  //   return hex;
+  // };
 
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.user_type,
     value: r._count.user_type,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
@@ -319,21 +326,21 @@ const mapStatToBook1 = async (ls, prisma) => {
 const mapStatToBook2 = async (ls, prisma) => {
   const stats = await countBookYearLevel(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
+  // Custom sorting function to sort year levels numerically
+  const customSort = (a, b) => {
+    // Extract the numeric part of the year level strings
+    const numA = parseInt(a.year_level);
+    const numB = parseInt(b.year_level);
+    return numA - numB; // Sort in ascending order, change to numB - numA for descending
   };
 
-  const data = stats.map((r) => ({
+  // Sort stats by year level using the custom sorting function
+  stats.sort(customSort);
+
+  const data = stats.map((r, index) => ({
     name: r.year_level,
     value: r._count.year_level,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
@@ -342,21 +349,10 @@ const mapStatToBook2 = async (ls, prisma) => {
 const mapStatToBook3 = async (ls, prisma) => {
   const stats = await countBookDept(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.department,
     value: r._count.department,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
@@ -365,21 +361,10 @@ const mapStatToBook3 = async (ls, prisma) => {
 const mapStatToGame1 = async (ls, prisma) => {
   let stats = await countGameUserType(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.user_type,
     value: r._count.user_type,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
@@ -388,21 +373,21 @@ const mapStatToGame1 = async (ls, prisma) => {
 const mapStatToGame2 = async (ls, prisma) => {
   let stats = await countGameYearLevel(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
+  // Custom sorting function to sort year levels numerically
+  const customSort = (a, b) => {
+    // Extract the numeric part of the year level strings
+    const numA = parseInt(a.year_level);
+    const numB = parseInt(b.year_level);
+    return numA - numB; // Sort in ascending order, change to numB - numA for descending
   };
 
-  const data = stats.map((r) => ({
+  // Sort stats by year level using the custom sorting function
+  stats.sort(customSort);
+
+  const data = stats.map((r, index) => ({
     name: r.year_level,
     value: r._count.year_level,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
@@ -411,25 +396,125 @@ const mapStatToGame2 = async (ls, prisma) => {
 const mapStatToGame3 = async (ls, prisma) => {
   let stats = await countGameDept(ls, prisma);
 
-  const randomHEX = () => {
-    const alph = "ABCDEF0123456789";
-    let hex = "#";
-    for (let i = 0; i < 6; i++) {
-      let random = Math.floor(Math.random() * alph.length);
-      hex += alph[random];
-    }
-
-    return hex;
-  };
-
-  const data = stats.map((r) => ({
+  const data = stats.map((r, index) => ({
     name: r.department,
     value: r._count.department,
-    color: randomHEX(),
+    color: chartColors[index],
   }));
 
   return data;
 };
+
+
+const getBarChartData = async (requestIDs, prisma) => {
+
+  const getWeekStartDate = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+    return new Date(d.setDate(diff));
+  };
+
+  const getWeekEndDate = (date) => {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 7);
+    return new Date(d.setDate(diff));
+  };
+
+  const getMonthStartDate = (date) => {
+    const d = new Date(date);
+    return new Date(d.getFullYear(), d.getMonth(), 1);
+  };
+
+  const formatDateRange = (startDate, endDate) => {
+    const startMonth = startDate.toLocaleString('default', { month: 'short' });
+    const endMonth = endDate.toLocaleString('default', { month: 'short' });
+    const startDay = startDate.getDate();
+    const endDay = endDate.getDate();
+    return `${startMonth} ${startDay} - ${endMonth} ${endDay}`;
+  };
+
+  const bookRequests = await prisma.requests.findMany({
+    where: {
+      id: { in: requestIDs },
+      type: 'Book',
+    },
+    orderBy: {
+      date: 'asc', 
+    },
+  });
+
+  const boardGameRequests = await prisma.requests.findMany({
+    where: {
+      id: { in: requestIDs },
+      type: 'Boardgame',
+    },
+    orderBy: {
+      date: 'asc', 
+    },
+  });
+
+  const allRequests = [...bookRequests, ...boardGameRequests];
+
+  const numWeeks = Math.ceil((allRequests[allRequests.length - 1].date - allRequests[0].date) / (7 * 24 * 60 * 60 * 1000));
+  const isMonthly = numWeeks > 10;
+
+  const requestsByPeriod = isMonthly ? {} : [];
+
+  allRequests.forEach((request) => {
+    const startDate = isMonthly ? getMonthStartDate(request.date) : getWeekStartDate(request.date);
+    const endDate = isMonthly ? new Date(startDate.getFullYear(), startDate.getMonth() + 1, 0) : getWeekEndDate(startDate); // Adjusted to get end of the week
+
+    const periodKey = isMonthly ? startDate.toLocaleString('default', { month: 'short', year: 'numeric' }) : formatDateRange(startDate, endDate);
+
+    if (isMonthly) {
+      if (!requestsByPeriod[periodKey]) {
+        requestsByPeriod[periodKey] = {
+          dateRange: periodKey,
+          bookCount: 0,
+          gameCount: 0,
+        };
+      }
+    } else {
+      if (!requestsByPeriod.some(period => period.dateRange === periodKey)) {
+        requestsByPeriod.push({
+          dateRange: periodKey,
+          bookCount: 0,
+          gameCount: 0,
+        });
+      }
+    }
+
+    if (request.type === 'Book') {
+      if (isMonthly) {
+        requestsByPeriod[periodKey].bookCount++;
+      } else {
+        const period = requestsByPeriod.find(period => period.dateRange === periodKey);
+        period.bookCount++;
+      }
+    } else if (request.type === 'Boardgame') {
+      if (isMonthly) {
+        requestsByPeriod[periodKey].gameCount++;
+      } else {
+        const period = requestsByPeriod.find(period => period.dateRange === periodKey);
+        period.gameCount++;
+      }
+    }
+  });
+
+  const barChartData = Array.isArray(requestsByPeriod) ? requestsByPeriod : Object.values(requestsByPeriod);
+
+  return barChartData;
+};
+
+
+
+
+
+
+
+
 
 export async function POST(request) {
   const prisma = new PrismaClient();
@@ -491,6 +576,9 @@ export async function POST(request) {
     const gamePie2 = await mapStatToGame2(requestIDs, prisma);
     const gamePie3 = await mapStatToGame3(requestIDs, prisma);
 
+    const barData = await getBarChartData(requestIDs, prisma);
+
+
     return NextResponse.json({
       invalid_dates: 1,
       result,
@@ -512,6 +600,7 @@ export async function POST(request) {
       gamePie1,
       gamePie2,
       gamePie3,
+      barData,
     });
   }
 
@@ -540,10 +629,12 @@ export async function POST(request) {
   const bookPie1 = await mapStatToBook1(requestIDs, prisma);
   const bookPie2 = await mapStatToBook2(requestIDs, prisma);
   const bookPie3 = await mapStatToBook3(requestIDs, prisma);
-  
+
   const gamePie1 = await mapStatToGame1(requestIDs, prisma);
   const gamePie2 = await mapStatToGame2(requestIDs, prisma);
   const gamePie3 = await mapStatToGame3(requestIDs, prisma);
+
+  const barData = await getBarChartData(requestIDs, prisma);
 
   prisma.$disconnect();
 
@@ -567,5 +658,6 @@ export async function POST(request) {
     gamePie1,
     gamePie2,
     gamePie3,
+    barData,
   });
 }

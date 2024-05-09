@@ -16,7 +16,8 @@ import {
 import Navigator from "@/_components/navigator/navigator";
 import { DatePickerInput } from "@mantine/dates";
 import { Table, rem } from "@mantine/core";
-import PieChart from "@/_components/charts/PieChart";
+import PieCharts from "@/_components/charts/PieCharts";
+import BarCharts from "@/_components/charts/BarCharts";
 import { data } from "@/data/pie";
 import { ToastContainer, toast } from "react-toastify";
 import { closeModal, modals, openConfirmModal } from "@mantine/modals";
@@ -166,6 +167,24 @@ const Reports = ({ hideHeader }) => {
   const [bookPieChartCount, setBookPieChartCount] = useState(0);
   const [gamePieChartCount, setGamePieChartCount] = useState(0);
 
+  const [barChartData, setBarChartData] = useState([]);
+
+  const [reqSummaryView, setReqSummaryView] = useState("Graph View");
+
+  const handleRequestSummaryView = (event) => {
+    const selectedValue = event.target.value;
+    setReqSummaryView(selectedValue);
+    console.log(selectedValue);
+  };
+
+  const [usageStatisticsView, setUsageStatisticsView] = useState("Books");
+
+  const handleUsageStatisticsView = (event) => {
+    const selectedValue = event.target.value;
+    setUsageStatisticsView(selectedValue);
+    console.log(selectedValue);
+  };
+
   const handleBookPieChart = (event) => {
     const selectedValue = event.target.value;
     setSelectedBookPieChart(selectedValue);
@@ -251,6 +270,7 @@ const Reports = ({ hideHeader }) => {
         gamePie1,
         gamePie2,
         gamePie3,
+        barData,
       } = await response.json();
 
       if (value != null && value2 != null) {
@@ -262,6 +282,7 @@ const Reports = ({ hideHeader }) => {
       console.log(bookUserTypeC);
       console.log(bookYearLevelC);
       console.log(bookDeptC);
+      console.log(barData);
 
       setBookUserTypePie(bookPie1);
       setBookYearLevelPie(bookPie2);
@@ -325,9 +346,13 @@ const Reports = ({ hideHeader }) => {
         setGamePieChartCount(getTotalCount("Boardgame"));
       }
 
+      setBarChartData(barData);
+
       if (invalid_dates != undefined && inval != undefined) {
-        toast.warning("Invalid date range");
-        toast.warning("Fetching records starting from 4 weeks ago");
+        toast.warning("Invalid date range", { position: "top-center" });
+        toast.warning("Fetching records starting from 4 weeks ago", {
+          position: "top-center",
+        });
       } else {
         setInval(invalid_dates);
       }
@@ -532,8 +557,8 @@ const Reports = ({ hideHeader }) => {
 
   const currentDate = new Date();
   const year = currentDate.getFullYear();
-  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); // Zero-padding the month
-  const day = String(currentDate.getDate()).padStart(2, "0"); // Zero-padding the day
+  const month = String(currentDate.getMonth() + 1).padStart(2, "0"); 
+  const day = String(currentDate.getDate()).padStart(2, "0"); 
   const formattedDate = year + month + day;
 
   const buttonStyle = validDateRange ? styles.activeBtn : styles.inactiveBtn;
@@ -666,36 +691,53 @@ const Reports = ({ hideHeader }) => {
           </Modal>
 
           <div className={styles.summary_container}>
-            <h3>Request Summary</h3>
-            <div className={styles.summary}>
-              <Table
-                striped
-                highlightOnHover
-                withTableBorder
-                className={styles.table}
-              >
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Date</Table.Th>
-                    <Table.Th>Code</Table.Th>
-                    <Table.Th>User Type</Table.Th>
-                    <Table.Th>Name</Table.Th>
-                    <Table.Th>Type</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody className={styles.table_body}>
-                  {borrows.map((r) => (
-                    <Table.Tr>
-                      <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
-                      <Table.Th>{r.id}</Table.Th>
-                      <Table.Th>{r.user_type}</Table.Th>
-                      <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
-                      <Table.Th>{r.type}</Table.Th>
-                    </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
+            <div className={styles.summary_header}>
+              <h3>Request Summary</h3>
+              <NativeSelect
+                radius="xl"
+                data={["Graph View", "List View"]}
+                onChange={handleRequestSummaryView}
+                value={reqSummaryView}
+              />
             </div>
+
+            {reqSummaryView === "Graph View" && (
+              <div style={{ width: '100%', overflowX: 'auto', overflowY: 'hidden', whiteSpace: 'nowrap' }}>
+                <BarCharts data={barChartData} />
+              </div>
+            )}
+
+            {reqSummaryView === "List View" && (
+              <div className={styles.summary_request}>
+                <Table
+                  striped
+                  highlightOnHover
+                  withTableBorder
+                  className={styles.table}
+                >
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Date</Table.Th>
+                      <Table.Th>Code</Table.Th>
+                      <Table.Th>User Type</Table.Th>
+                      <Table.Th>Name</Table.Th>
+                      <Table.Th>Type</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody className={styles.table_body}>
+                    {borrows.map((r) => (
+                      <Table.Tr>
+                        <Table.Th>{new Date(r.date).toDateString()}</Table.Th>
+                        <Table.Th>{r.id}</Table.Th>
+                        <Table.Th>{r.user_type}</Table.Th>
+                        <Table.Th>{findUser(r.user_type, r.id, users)}</Table.Th>
+                        <Table.Th>{r.type}</Table.Th>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
           </div>
         </div>
 
@@ -711,7 +753,15 @@ const Reports = ({ hideHeader }) => {
                   value={selectedBookPieChart}
                 />
               </div>
-              <PieChart data={bookPieChartData} count={bookPieChartCount} />
+              <PieCharts data={bookPieChartData} count={bookPieChartCount} />
+              <div className={styles.legend}>
+                {bookPieChartData.map((item, index) => (
+                  <div key={index} className={styles.legendItem}>
+                    <span className={styles.legendColor} style={{ backgroundColor: item.color }}></span>
+                    <span className={styles.legendLabel}>{item.name}</span>
+                  </div>
+                ))}
+              </div>
             </div>
             <div className={styles.chart2}>
               <div className={styles.header}>
@@ -723,37 +773,82 @@ const Reports = ({ hideHeader }) => {
                   value={selectedGamePieChart}
                 />
               </div>
-              <PieChart data={gamePieChartData} count={gamePieChartCount} />
+              <PieCharts data={gamePieChartData} count={gamePieChartCount} />
+              <div className={styles.legend}>
+                {gamePieChartData.map((item, index) => (
+                  <div key={index} className={styles.legendItem}>
+                    <span className={styles.legendColor} style={{ backgroundColor: item.color }}></span>
+                    <span className={styles.legendLabel}>{item.name}</span>
+                  </div>
+                ))}
+              </div>
+
             </div>
           </div>
 
           <div className={styles.summary_container}>
-            <h3>Usage Statistics</h3>
-            <div className={styles.summary}>
-              <Table
-                striped
-                highlightOnHover
-                withTableBorder
-                className={styles.table}
-              >
-                <Table.Thead>
-                  <Table.Tr>
-                    <Table.Th>Book Title</Table.Th>
-                    <Table.Th>Total Requests</Table.Th>
-                  </Table.Tr>
-                </Table.Thead>
-                <Table.Tbody className={styles.table_body}>
-                  {bookRCounts.map((r) => (
-                    <Table.Tr>
-                      <Table.Td>
-                        {bookR.find((e) => e.book_id === r.book_id).book.title}
-                      </Table.Td>
-                      <Table.Td>{r._count.book_id}</Table.Td>
-                    </Table.Tr>
-                  ))}
-                </Table.Tbody>
-              </Table>
+            <div className={styles.summary_header}>
+              <h3>Usage Statistics</h3>
+              <NativeSelect
+                radius="xl"
+                data={["Books", "Boardgames"]}
+                onChange={handleUsageStatisticsView}
+                value={usageStatisticsView}
+              />
             </div>
+
+            {usageStatisticsView === "Books" && (
+              <div className={styles.summary_usage}>
+                <Table
+                  striped
+                  highlightOnHover
+                  withTableBorder
+                  className={styles.table}
+                >
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Book Title</Table.Th>
+                      <Table.Th>Total Requests</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody className={styles.table_body}>
+                    {bookRCounts.map((r) => (
+                      <Table.Tr>
+                        <Table.Td>
+                          {bookR.find((e) => e.book_id === r.book_id).book.title}
+                        </Table.Td>
+                        <Table.Td>{r._count.book_id}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
+
+            {usageStatisticsView === "Boardgames" && (
+              <div className={styles.summary_usage}>
+                <Table striped highlightOnHover withTableBorder className={styles.table}>
+                  <Table.Thead>
+                    <Table.Tr>
+                      <Table.Th>Game Title</Table.Th>
+                      <Table.Th>Total Requests</Table.Th>
+                    </Table.Tr>
+                  </Table.Thead>
+                  <Table.Tbody className={styles.table_body}>
+                    {gameRCounts.map((r) => (
+                      <Table.Tr key={r.boardgame_id}>
+                        <Table.Td>
+                          {gameR.find((e) => e.boardgame_id === r.boardgame_id).boardgame.title}
+                        </Table.Td>
+                        <Table.Td>{r._count.boardgame_id}</Table.Td>
+                      </Table.Tr>
+                    ))}
+                  </Table.Tbody>
+                </Table>
+              </div>
+            )}
+
+
           </div>
         </div>
       </Center>

@@ -71,7 +71,9 @@ const QRScanner = () => {
       bq[0].id !== transaction.borrowTicket.id &&
       transaction.borrowTicket.status === "Pending Borrow"
     ) {
-      toast.warning("This borrow ticket is behind person/s in the queue");
+      toast.warning("This borrow ticket is behind person/s in the queue", {
+        position: "top-center",
+      });
     }
 
     if (
@@ -100,9 +102,13 @@ const QRScanner = () => {
       next_in_q = bq != undefined && bq.length >= 1 ? bq[0] : undefined;
       openModal(transaction);
     } else if (biu.find((e) => e.id === transaction.material.id) != undefined) {
-      toast.warning("Book is still in use by another person");
+      toast.warning("Book is still in use by another person", {
+        position: "top-center",
+      });
     } else {
-      toast.warning("This borrow ticket has expired");
+      toast.warning("This borrow ticket has expired", {
+        position: "top-center",
+      });
     }
   };
 
@@ -301,7 +307,10 @@ const QRScanner = () => {
           className={styles.qr_reader}
           onResult={(result, error) => {
             if (!!result) {
-              toast.success("Scanned successfully!", { autoClose: 2000 });
+              toast.success("Scanned successfully!", {
+                autoClose: 2000,
+                position: "top-center",
+              });
               setData(result?.text);
               handleScanSuccess(result);
             }
