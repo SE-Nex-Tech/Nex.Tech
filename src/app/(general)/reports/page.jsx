@@ -36,6 +36,7 @@ import { useDisclosure } from "@mantine/hooks";
 import TableRows from "./tableRows";
 import logoCICS from "@/images/cicslogo.png";
 import filter from "./filter.js";
+import barChart from "./barChart.js";
 
 const findUser = (user_type, req_id, users) => {
   if (user_type === "Student") {
@@ -184,6 +185,7 @@ const Reports = ({ hideHeader }) => {
     let newdata = filter(event.target.value, ogData)
     setSummaryFilter(event.target.value);
     setBorrows(newdata)
+    setBarChartData(barChart(newdata))
   }
 
   const [usageStatisticsView, setUsageStatisticsView] = useState("Books");
