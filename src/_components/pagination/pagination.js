@@ -34,7 +34,7 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
         >
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={() => paginate(1)}
             className="page-link"
@@ -52,7 +52,7 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
           >
             <Button
               variant="filled"
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               radius="xl"
               onClick={() => paginate(number)}
               className="page-link"
@@ -69,7 +69,7 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
         >
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={() => paginate(totalPages)}
             className="page-link"

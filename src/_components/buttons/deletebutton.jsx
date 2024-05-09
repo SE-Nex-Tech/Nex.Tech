@@ -3,7 +3,14 @@ import { useState } from "react";
 import { Modal, Button } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import ArchiveForm from "../crudforms/archive";
-const DeleteButton = ({ selectedRows, setSelectedRows, refreshKey, setRefreshKey,setNotification, selectedType }) => {
+const DeleteButton = ({
+  selectedRows,
+  setSelectedRows,
+  refreshKey,
+  setRefreshKey,
+  setNotification,
+  selectedType,
+}) => {
   const [opened, { open, close }] = useDisclosure(false);
   return (
     <>
@@ -25,15 +32,15 @@ const DeleteButton = ({ selectedRows, setSelectedRows, refreshKey, setRefreshKey
           closeModal={close}
           setRefreshKey={setRefreshKey}
           refreshKey={refreshKey}
-          setNotification={setNotification} 
+          setNotification={setNotification}
           selectedType={selectedType}
-          />
+        />
       </Modal>
 
       <Button
         onClick={open}
         variant="filled"
-        color="rgb(141, 16, 56)"
+        color="#e8b031"
         radius="xl"
         disabled={selectedRows.length === 0}
         style={{ transition: "all 0.2s" }}

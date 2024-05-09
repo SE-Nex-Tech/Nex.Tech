@@ -269,7 +269,7 @@ const Dashboard = () => {
                 component={Link}
                 href="/dbpage"
                 variant="filled"
-                color="rgb(141, 16, 56)"
+                color="#e8b031"
                 radius="xl"
               >
                 View

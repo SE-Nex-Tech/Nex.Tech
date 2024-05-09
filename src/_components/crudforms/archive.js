@@ -4,8 +4,15 @@ import TableBody from "../tables/tableBooks";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType }) => {
-
+const ArchiveForm = ({
+  selectedRows,
+  setSelectedRows,
+  closeModal,
+  setRefreshKey,
+  refreshKey,
+  setNotification,
+  selectedType,
+}) => {
   const type = useRef(selectedType.current);
 
   const archiveRecords = async () => {
@@ -33,8 +40,7 @@ const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey,
           },
         }),
       });
-    }
-    else {
+    } else {
       const response = await fetch("/api/db", {
         method: "POST",
         body: JSON.stringify({
@@ -49,11 +55,9 @@ const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey,
       });
     }
 
-
     setNotification("Item/s Archived successfully!");
     closeModal();
     setSelectedRows([]);
-
   };
 
   return (
@@ -62,8 +66,7 @@ const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey,
         Are you sure to archive selected field/s?
       </h2>
 
-
-      {(type.current === 'books') && (
+      {type.current === "books" && (
         <>
           {selectedRows.map((row) => (
             <p key={row.id}>
@@ -78,7 +81,7 @@ const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey,
           ))}
         </>
       )}
-      {(type.current === 'games') && (
+      {type.current === "games" && (
         <>
           {selectedRows.map((row) => (
             <p key={row.id}>
@@ -94,22 +97,16 @@ const ArchiveForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey,
         </>
       )}
 
-
       <Stack justify="center" mt="xl">
         <Button
           variant="filled"
-          color="rgb(141, 16, 56)"
+          color="#e8b031"
           radius="xl"
           onClick={archiveRecords}
         >
           Archive
         </Button>
-        <Button
-          variant="outline"
-          color="rgb(141, 16, 56)"
-          radius="xl"
-          onClick={closeModal}
-        >
+        <Button variant="outline" color="gray" radius="xl" onClick={closeModal}>
           Cancel
         </Button>
       </Stack>

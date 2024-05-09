@@ -34,7 +34,7 @@ const QRScanner = () => {
   var borrowDate;
   var returnDate;
 
-  const receipt_no = useRef('');
+  const receipt_no = useRef("");
   let next_in_q;
 
   if (status === "unauthenticated") {
@@ -329,7 +329,7 @@ const QRScanner = () => {
             />
             <Button
               variant="filled"
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               radius="xl"
               classNames={{ root: styles.btn }}
               onClick={processReceipt}

@@ -708,7 +708,11 @@ const BorrowForm = () => {
     <div>
       {showHeader && (
         <div>
-          <Header currentRoute={(item.status === 'Available') ? "/borrowform" : "/reserveform"} />
+          <Header
+            currentRoute={
+              item.status === "Available" ? "/borrowform" : "/reserveform"
+            }
+          />
         </div>
       )}
       <div className={styles.mainBody}>
@@ -852,12 +856,15 @@ const BorrowForm = () => {
                 </div>
               </div>
               <div className={styles.buttonContainer}>
-                <button
+                <Button
+                  variant="filled"
+                  color="#e8b031"
+                  radius="xl"
                   className={styles.submitBtn}
                   onClick={validateFormSubmit}
                 >
                   Submit Form
-                </button>
+                </Button>
                 <Link
                   href={`/${typeParam + "s"}/${item.id}`}
                   className={styles.backBtnContainer}
@@ -895,22 +902,20 @@ const BorrowForm = () => {
                     </p>
                     <Button
                       variant="filled"
-                      color="rgb(141, 16, 56)"
+                      color="#e8b031"
                       radius="xl"
                       w="40%"
                       h={"35px"}
-                      className={styles.confirmBtn}
                       onClick={makeReservation}
                     >
                       Confirm
                     </Button>
                     <Button
-                      variant="filled"
-                      color="rgb(141, 16, 56)"
+                      variant="outline"
+                      color="gray"
                       radius="xl"
                       w="40%"
                       h={"35px"}
-                      className={styles.cancelBtn}
                       onClick={closeConfirmation}
                     >
                       Cancel
@@ -967,7 +972,7 @@ const BorrowForm = () => {
                     <div className={styles.receiptBtnContainer}>
                       <Button
                         variant="filled"
-                        color="rgb(141, 16, 56)"
+                        color="#e8b031"
                         radius="xl"
                         h={"40px"}
                         className={styles.downloadBtn}
@@ -977,7 +982,7 @@ const BorrowForm = () => {
                       </Button>
                       <Button
                         variant="outline"
-                        color="rgb(141, 16, 56)"
+                        color="gray"
                         radius="xl"
                         h={"40px"}
                         onClick={close}

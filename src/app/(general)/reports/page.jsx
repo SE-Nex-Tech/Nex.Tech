@@ -218,7 +218,7 @@ const Reports = ({ hideHeader }) => {
 
   const handleTotalCount = () => {
     setTotalCount(!totalCount);
-  }
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -339,7 +339,6 @@ const Reports = ({ hideHeader }) => {
   }, [value, value2]);
 
   const { data: session, status } = useSession();
-
 
   console.log(session);
 
@@ -486,28 +485,31 @@ const Reports = ({ hideHeader }) => {
           </View>
         )}
 
-        {(gameSummary) && (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
-          <View style={stylesPDF.user_demographics}>
-            <Text style={{ paddingLeft: 60 }}>User Demographics (Boardgames):</Text>
-            <View style={stylesPDF.tableContainer}>
-              <View style={stylesPDF.table}>
-                <TableRows data={gameUserType} />
-              </View>
-              <View style={stylesPDF.table}>
-                <TableRows data={gameYearLevel} />
-              </View>
-              <View style={stylesPDF.table}>
-                <TableRows data={gameDept} />
-
+        {gameSummary &&
+          (usagePerYearLevel || usagePerDepartment || usagePerUserType) && (
+            <View style={stylesPDF.user_demographics}>
+              <Text style={{ paddingLeft: 60 }}>
+                User Demographics (Boardgames):
+              </Text>
+              <View style={stylesPDF.tableContainer}>
+                <View style={stylesPDF.table}>
+                  <TableRows data={gameUserType} />
+                </View>
+                <View style={stylesPDF.table}>
+                  <TableRows data={gameYearLevel} />
+                </View>
+                <View style={stylesPDF.table}>
+                  <TableRows data={gameDept} />
+                </View>
               </View>
             </View>
-          </View>
-        )}
+          )}
 
         {gameSummary && totalCount && (
           <View style={stylesPDF.usage_statistics}>
-
-            <Text style={{ paddingLeft: 60 }}>Usage Statistics (Boardgames):</Text>
+            <Text style={{ paddingLeft: 60 }}>
+              Usage Statistics (Boardgames):
+            </Text>
 
             <View style={stylesPDF.tableContainer}>
               <View style={stylesPDF.table}>
@@ -572,11 +574,10 @@ const Reports = ({ hideHeader }) => {
             />
             <Button
               variant="filled"
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               radius="xl"
               onClick={open}
               disabled={!validDateRange}
-              className={buttonStyle}
             >
               Generate Report
             </Button>
@@ -644,7 +645,11 @@ const Reports = ({ hideHeader }) => {
                   <button
                     disabled={!bookSummary && !gameSummary}
                     className={
-                      (bookSummary || gameSummary) && (usagePerUserType || usagePerDepartment || usagePerYearLevel || totalCount)
+                      (bookSummary || gameSummary) &&
+                      (usagePerUserType ||
+                        usagePerDepartment ||
+                        usagePerYearLevel ||
+                        totalCount)
                         ? styles.activeDownloadBtn
                         : styles.inactiveDownloadBtn
                     }
