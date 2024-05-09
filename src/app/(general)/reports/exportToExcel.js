@@ -175,19 +175,20 @@ const ExportToExcel = ({
   ] : [];
 
   const bookRequestsPerDept = usagePerDepartment ? [
+    [""],
     ["Student requests per department"],
     ["Information Technology", "Computer Science", "Information Systems", "Total"],
     [getBookCountByDept("Information Technology"), getBookCountByDept("Computer Science"), getBookCountByDept("Information Systems"), bookDept.studentBookReqs],
   ] : [];
 
   const gameRequestsPerDept = usagePerDepartment ? [
+    [""],
     ["Student requests per department"],
     ["Information Technology", "Computer Science", "Information Systems", "Total"],
     [getGameCountByDept("Information Technology"), getGameCountByDept("Computer Science"), getGameCountByDept("Information Systems"), gameDept.studentGameReqs],
   ] : [];
 
   const bookUsageStatistics = totalCount ? [
-    [""],
     ["Usage Statistics"],
     [""],
     ["Popular Books"],
@@ -195,7 +196,6 @@ const ExportToExcel = ({
   ] : [];
 
   const gameUsageStatistics = totalCount ? [
-    [""],
     ["Usage Statistics"],
     [""],
     ["Popular Boardgames"],
