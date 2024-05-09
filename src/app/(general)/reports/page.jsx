@@ -702,6 +702,12 @@ const Reports = ({ hideHeader }) => {
                   gameYearLevel={gameYearLevel}
                   gameDept={gameDept}
                   gameUsage={gameUsage}
+                  bookSummary={bookSummary}
+                  gameSummary={gameSummary}
+                  usagePerYearLevel={usagePerYearLevel}
+                  usagePerDepartment={usagePerDepartment}
+                  usagePerUserType={usagePerUserType}
+                  totalCount={totalCount}
                 />
 
 

@@ -60,6 +60,12 @@ const ExportToExcel = ({
   gameYearLevel,
   gameDept,
   gameUsage,
+  bookSummary,
+  gameSummary,
+  usagePerYearLevel,
+  usagePerDepartment,
+  usagePerUserType,
+  totalCount,
 }) => {
 
   const getBookCountByUserType = (userType) => {
@@ -119,63 +125,79 @@ const ExportToExcel = ({
     }
   }
 
-  const bookRequestsPerUserType = [
+  const bookRequestsPerUserType = usagePerUserType ? [
     ["Requests per user type"],
     ["Student", "Faculty", "Staff", "Total"],
     [getBookCountByUserType("Student"), getBookCountByUserType("Faculty"), getBookCountByUserType("Staff"), bookUserType.bookReqCount],
     [""],
-  ]
+  ] : [];
 
-  const bookRequestsPerYearLevel = [
-    ["Student requests per year level"],
-    ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
-    [getBookCountByYearLevel("1st Year"), getBookCountByYearLevel("2nd Year"), getBookCountByYearLevel("3rd Year"), getBookCountByYearLevel("4th Year"), bookYearLevel.studentBookReqs],
-    [""],
-  ]
-
-  const bookRequestsPerDept = [
-    ["Student requests per department"],
-    ["Information Technology", "Computer Science", "Information Systems", "Total"],
-    [getBookCountByDept("Information Technology"), getBookCountByDept("Computer Science"), getBookCountByDept("Information Systems"), bookDept.studentBookReqs],
-  ]
-
-  const gameRequestsPerUserType = [
+  const gameRequestsPerUserType = usagePerUserType ? [
     ["Requests per user type"],
     ["Student", "Faculty", "Staff", "Total"],
     [getGameCountByUserType("Student"), getGameCountByUserType("Faculty"), getGameCountByUserType("Staff"), gameUserType.gameReqCount],
     [""],
-  ]
+  ] : [];
 
-  const gameRequestsPerYearLevel = [
+  const bookRequestsPerYearLevel = usagePerYearLevel ? [
+    ["Student requests per year level"],
+    ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
+    [getBookCountByYearLevel("1st Year"), getBookCountByYearLevel("2nd Year"), getBookCountByYearLevel("3rd Year"), getBookCountByYearLevel("4th Year"), bookYearLevel.studentBookReqs],
+    [""],
+  ] : [];
+
+  const gameRequestsPerYearLevel = usagePerYearLevel ? [
     ["Student requests per year level"],
     ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
     [getGameCountByYearLevel("1st Year"), getGameCountByYearLevel("2nd Year"), getGameCountByYearLevel("3rd Year"), getGameCountByYearLevel("4th Year"), gameYearLevel.studentGameReqs],
     [""],
-  ]
+  ] : [];
 
-  const gameRequestsPerDept = [
+  const bookRequestsPerDept = usagePerDepartment ? [
+    ["Student requests per department"],
+    ["Information Technology", "Computer Science", "Information Systems", "Total"],
+    [getBookCountByDept("Information Technology"), getBookCountByDept("Computer Science"), getBookCountByDept("Information Systems"), bookDept.studentBookReqs],
+  ] : [];
+
+  const gameRequestsPerDept = usagePerDepartment ? [
     ["Student requests per department"],
     ["Information Technology", "Computer Science", "Information Systems", "Total"],
     [getGameCountByDept("Information Technology"), getGameCountByDept("Computer Science"), getGameCountByDept("Information Systems"), gameDept.studentGameReqs],
-  ]
+  ] : [];
 
-  const bookUsageStatistics = [
+  const bookUsageStatistics = totalCount ? [
+    [""],
+    ["Usage Statistics"],
+    [""],
     ["Popular Books"],
     ["Book Title", "Usage Count"],
-  ]
+  ] : [];
 
-  const rows = bookUsage.bookRCounts.map((r) => {
+  const gameUsageStatistics = totalCount ? [
+    [""],
+    ["Usage Statistics"],
+    [""],
+    ["Popular Boardgames"],
+    ["Boardgame Title", "Usage Count"],
+  ] : [];
+
+
+  const bookRows = totalCount ? bookUsage.bookRCounts.map((r) => {
     const book = bookUsage.bookR.find((e) => e.book_id === r.book_id).book;
     const count = r._count.book_id;
     return [book.title, count];
-  });
+  }) : [];
 
-  bookUsageStatistics.push(...rows);
 
-  const gameUsageStatistics = [
+  const gameRows = totalCount ? gameUsage.gameRCounts.map((r) => {
+    const boardgame = gameUsage.gameR.find((e) => e.boardgame_id === r.boardgame_id).boardgame;
+    const count = r._count.boardgame_id;
+    return [boardgame.title, count];
+  }) : [];
 
-  ]
+  bookUsageStatistics.push(...bookRows);
 
+  gameUsageStatistics.push(...gameRows);
 
   const sheets = [
     {
@@ -190,7 +212,10 @@ const ExportToExcel = ({
         ["Report Creation Date:", reportDate],
       ]
     },
-    {
+  ];
+
+  if (bookSummary) {
+    sheets.push({
       sheetName: 'Books',
       tableData: [
         ["User Demographics"],
@@ -207,10 +232,12 @@ const ExportToExcel = ({
         { columnIndex: 2, width: 20 },
         { columnIndex: 3, width: 20 },
         { columnIndex: 4, width: 20 },
-
       ],
-    },
-    {
+    });
+  }
+
+  if (gameSummary) {
+    sheets.push({
       sheetName: 'Boardgames',
       tableData: [
         ["User Demographics"],
@@ -218,8 +245,7 @@ const ExportToExcel = ({
         ...gameRequestsPerUserType,
         ...gameRequestsPerYearLevel,
         ...gameRequestsPerDept,
-
-
+        ...gameUsageStatistics
       ],
       fixedColumnWidths: [
         { columnIndex: 0, width: 20 },
@@ -227,10 +253,9 @@ const ExportToExcel = ({
         { columnIndex: 2, width: 20 },
         { columnIndex: 3, width: 20 },
         { columnIndex: 4, width: 20 },
-
       ],
-    }
-  ];
+    });
+  }
 
   return (
     <>
