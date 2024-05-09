@@ -599,11 +599,10 @@ const Reports = ({ hideHeader }) => {
             />
             <Button
               variant="filled"
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               radius="xl"
               onClick={open}
               disabled={!validDateRange}
-              className={buttonStyle}
             >
               Generate Report
             </Button>

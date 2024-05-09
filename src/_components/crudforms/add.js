@@ -1,10 +1,27 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Button, Group, Stack, Input, FileInput, Textarea, NumberInput } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Stack,
+  Input,
+  FileInput,
+  Textarea,
+  NumberInput,
+} from "@mantine/core";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotification, selectedType, bookDB, gameDB }) => {
+const AddForm = ({
+  selectedRows,
+  closeModal,
+  refreshKey,
+  setRefreshKey,
+  setNotification,
+  selectedType,
+  bookDB,
+  gameDB,
+}) => {
   const barcode = useRef("");
   const title = useRef("");
   const author = useRef("");
@@ -22,8 +39,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
   const [copyrightDate, setCopyrightDate] = useState("");
   const [barcodeValue, setBarcodeValue] = useState("");
 
-
-
   const [imageData, setImageData] = useState(image.current);
 
   const fileInputRef = useRef(null);
@@ -31,8 +46,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
   const [condition, setCondition] = useState("");
 
   const type = useRef(selectedType.current);
-
-
 
   const [bookTitleError, setBookTitleError] = useState(false);
   const [gameTitleError, setGameTitleError] = useState(false);
@@ -68,8 +81,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
       return gameDB.some((game) => game.call_num === callNumber);
     };
 
-
-
     if (type.current == "books") {
       isValid = !bookTitleError
         ? checkEmptyField(title, setBookTitleError) && isValid
@@ -91,14 +102,12 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     if (isValid) {
       const callNumber = callnum.current;
       if (type.current == "books") {
-
         if (isValid && checkBookDuplicateCallNumber(callNumber)) {
           toast.error("Call number already exists", { autoClose: 2000 });
         } else {
           create();
         }
-      }
-      else {
+      } else {
         if (isValid && checkGameDuplicateCallNumber(callNumber)) {
           toast.error("Call number already exists", { autoClose: 2000 });
         } else {
@@ -108,7 +117,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     } else {
       toast.error("Missing/Incorrect fields", { autoClose: 2000 });
     }
-
   };
 
   const validateInputChange = (value, refValue, setErrorState) => {
@@ -140,10 +148,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     ? "This field is required"
     : "QA76.56.F1 .Tb21c 2024";
 
-  const authorText = authorError
-    ? "This field is required"
-    : "John Smith";
-
+  const authorText = authorError ? "This field is required" : "John Smith";
 
   // When the file is selected, set the file state
   const onFileChange = (e) => {
@@ -152,24 +157,19 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     }
 
     if (e.target.files[0]) {
-
       const base64 = toBase64(e.target.files[0]);
 
-      base64.then(result => {
-        console.log(result);
-        image.current = result;
-        setImageData(image.current);
-      }).catch(error => {
-
-        console.error(error);
-      });
-
-
-
+      base64
+        .then((result) => {
+          console.log(result);
+          image.current = result;
+          setImageData(image.current);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
-
   };
-
 
   // Convert a file to base64 string
   const toBase64 = (file) => {
@@ -192,15 +192,13 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
     image.current = null;
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Resetting the value (not directly setting it)
+      fileInputRef.current.value = ""; // Resetting the value (not directly setting it)
     }
 
     setImageData(null);
-  }
-
+  };
 
   const create = async () => {
-
     if (barcode.current == "") {
       barcode.current = null;
     }
@@ -211,7 +209,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
 
     barcode.current = parseInt(barcode.current);
     accnum.current = parseInt(accnum.current);
-
 
     if (selectedType.current == "books") {
       const atts = {
@@ -237,7 +234,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
         }),
       });
     } else {
-
       const atts = {
         barcode: barcode.current,
         title: title.current,
@@ -258,7 +254,6 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           data: atts,
         }),
       });
-
     }
 
     setNotification("Item Created successfully!");
@@ -267,11 +262,8 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
   return (
     <>
       <div style={{ overflow: "auto" }}>
-
-
         <Group grow mb={20}>
-
-          {(type.current === 'books') && (
+          {type.current === "books" && (
             <Input.Wrapper label={<strong>Book Title</strong>} required>
               <Input
                 onChange={(e) => {
@@ -280,12 +272,11 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
                 }}
                 error={bookTitleError}
                 placeholder={bookTitleText}
-
               />
             </Input.Wrapper>
           )}
 
-          {(type.current === 'games') && (
+          {type.current === "games" && (
             <Input.Wrapper label={<strong>Boardgame Title</strong>} required>
               <Input
                 onChange={(e) => {
@@ -297,12 +288,9 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               />
             </Input.Wrapper>
           )}
-
-
         </Group>
 
         <Group grow mb={20}>
-
           <Input.Wrapper label={<strong>Call Number</strong>} required>
             <Input
               onChange={(e) => {
@@ -314,7 +302,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
             />
           </Input.Wrapper>
 
-          {(type.current === 'books') && (
+          {type.current === "books" && (
             <Input.Wrapper label={<strong>Book Author</strong>} required>
               <Input
                 onChange={(e) => {
@@ -326,9 +314,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               />
             </Input.Wrapper>
           )}
-
         </Group>
-
 
         <Group grow mb={20}>
           <Input.Wrapper label={<strong>Barcode</strong>}>
@@ -355,7 +341,7 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
             />
           </Input.Wrapper>
 
-          {(type.current === 'books') && (
+          {type.current === "books" && (
             <Input.Wrapper label={<strong>Edition</strong>}>
               <Input
                 placeholder="18th"
@@ -366,11 +352,8 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               />
             </Input.Wrapper>
           )}
-
-
         </Group>
         <Group grow>
-
           <Input.Wrapper label={<strong>Publisher</strong>}>
             <Input
               placeholder="TechPress"
@@ -386,13 +369,12 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
               max={2099}
               clampBehavior="strict"
               placeholder="2024"
-              onChange={(value) => (setCopyrightDate(value.toString()))}
+              onChange={(value) => setCopyrightDate(value.toString())}
             />
           </Input.Wrapper>
-
         </Group>
 
-        <h5>Upload Image  </h5>
+        <h5>Upload Image </h5>
         <Input
           ref={fileInputRef}
           type="file"
@@ -400,26 +382,37 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           accept="image/*"
           onChange={onFileChange}
         />
-        <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "Center" }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            gap: 5,
+            alignItems: "Center",
+          }}
+        >
           <h5>Preview </h5>
           {imageData && (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "Center" }}>
+            <div
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "Center",
+              }}
+            >
               <Image src={imageData} width={110} height={140} alt="" />
               <Button
                 variant="transparent"
                 color="rgb(141, 16, 56)"
                 radius="xl"
-                style={{ width: 150, height: 30, fontSize: 12, }}
+                style={{ width: 150, height: 30, fontSize: 12 }}
                 onClick={deleteImage}
               >
                 Remove Image
               </Button>
             </div>
           )}
-          {!imageData && (<h5>No Image Set</h5>)}
-
+          {!imageData && <h5>No Image Set</h5>}
         </div>
-
 
         <Input.Wrapper label={<strong>Condition</strong>}>
           <Textarea
@@ -430,24 +423,19 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           />
         </Input.Wrapper>
 
-
-
         <Stack justify="center" grow mt="xl">
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={validateFormSubmit}
-            disabled={
-              !titleValue ||
-              !callNumValue || !authorValue
-            }
+            disabled={!titleValue || !callNumValue || !authorValue}
           >
             Save
           </Button>
           <Button
             variant="outline"
-            color="rgb(141, 16, 56)"
+            color="gray"
             radius="xl"
             onClick={closeModal}
           >
@@ -455,13 +443,13 @@ const AddForm = ({ selectedRows, closeModal, refreshKey, setRefreshKey, setNotif
           </Button>
         </Stack>
         <ToastContainer
-        position="top-right"
-        limit={3}
-        closeOnClick
-        rtl={false}
-        draggable
-        theme="light"
-      />
+          position="top-right"
+          limit={3}
+          closeOnClick
+          rtl={false}
+          draggable
+          theme="light"
+        />
       </div>
     </>
   );

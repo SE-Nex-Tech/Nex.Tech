@@ -13,7 +13,7 @@ const Unauthenticated = () => {
           <p>You do not have the permission to view this directory.</p>
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             mt="0.8em"
             w="100%"

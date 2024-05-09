@@ -167,7 +167,7 @@ const TableBody = ({
         <div className={styles.page_btn}>
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={() => table.setPageIndex(0)}
           >
@@ -176,7 +176,7 @@ const TableBody = ({
 
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -185,7 +185,7 @@ const TableBody = ({
           </Button>
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
@@ -194,7 +194,7 @@ const TableBody = ({
           </Button>
           <Button
             variant="filled"
-            color="rgb(141, 16, 56)"
+            color="#e8b031"
             radius="xl"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
           >

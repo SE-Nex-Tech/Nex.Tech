@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Header from "@/_components/header/Header";
-import { Center, Skeleton } from "@mantine/core";
+import { Center, Skeleton, Button } from "@mantine/core";
 import styles from "./bookpage.module.scss";
 import Link from "next/link";
 import { IconChevronLeft } from "@tabler/icons-react";
@@ -144,11 +144,16 @@ const BookPage = () => {
                 </div>
               </div>
               <Link href={`/borrowform/${book.id}?type=book`}>
-                <button className={styles.btn}>
+                <Button
+                  variant="filled"
+                  color="#e8b031"
+                  radius="xl"
+                  className={styles.btn}
+                >
                   {book.status === "Unavailable"
                     ? "Reserve (Wait in queue)"
                     : "Borrow"}
-                </button>
+                </Button>
               </Link>
             </div>
           </div>

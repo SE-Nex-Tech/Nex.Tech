@@ -203,7 +203,7 @@ const Signup = () => {
               classNames={{ root: styles.btn }}
               radius={"xl"}
               w={"400px"}
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               onClick={onSubmit}
               disabled={
                 !emailValue ||

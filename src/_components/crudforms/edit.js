@@ -1,11 +1,31 @@
-import { Button, Group, Select, Input, Table, Stack, Center, Textarea, NumberInput, } from "@mantine/core";
+import {
+  Button,
+  Group,
+  Select,
+  Input,
+  Table,
+  Stack,
+  Center,
+  Textarea,
+  NumberInput,
+} from "@mantine/core";
 import React, { useState, useEffect, useRef } from "react";
 import TableBody from "../tables/tableBooks";
 import Image from "next/image";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, refreshKey, setNotification, selectedType, bookDB, gameDB }) => {
+const EditForm = ({
+  selectedRows,
+  setSelectedRows,
+  closeModal,
+  setRefreshKey,
+  refreshKey,
+  setNotification,
+  selectedType,
+  bookDB,
+  gameDB,
+}) => {
   const [selectedValue, setSelectedValue] = useState("");
 
   const handleSelectChange = (value) => {
@@ -82,25 +102,21 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         : !gameTitleError;
     }
 
-
     isValid = !callNumError
       ? checkEmptyField(callnum, setCallNumError) && isValid
       : !callNumError;
-
 
     console.log(isValid);
 
     if (isValid) {
       const callNumber = callnum.current;
       if (type.current == "books") {
-
         if (isValid && checkBookDuplicateCallNumber(callNumber)) {
           toast.error("Call number already exists", { autoClose: 2000 });
         } else {
           editRecord();
         }
-      }
-      else {
+      } else {
         if (isValid && checkGameDuplicateCallNumber(callNumber)) {
           toast.error("Call number already exists", { autoClose: 2000 });
         } else {
@@ -110,9 +126,6 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     } else {
       toast.error("Missing/Incorrect fields", { autoClose: 2000 });
     }
-
-
-
   };
 
   const validateInputChange = (value, refValue, setErrorState) => {
@@ -138,12 +151,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     ? "This field is required"
     : "QA76.56.F1 .Tb21c 2024";
 
-  const authorText = authorError
-    ? "This field is required"
-    : "John Smith";
-
-
-
+  const authorText = authorError ? "This field is required" : "John Smith";
 
   const [imageData, setImageData] = useState(image.current);
 
@@ -156,21 +164,17 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     }
 
     if (e.target.files[0]) {
-
       const base64 = toBase64(e.target.files[0]);
 
-      base64.then(result => {
-        image.current = result;
-        setImageData(image.current);
-      }).catch(error => {
-
-        console.error(error);
-      });
-
-
-
+      base64
+        .then((result) => {
+          image.current = result;
+          setImageData(image.current);
+        })
+        .catch((error) => {
+          console.error(error);
+        });
     }
-
   };
 
   // Convert a file to base64 string
@@ -194,17 +198,13 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
     image.current = null;
 
     if (fileInputRef.current) {
-      fileInputRef.current.value = ''; // Resetting the value (not directly setting it)
+      fileInputRef.current.value = ""; // Resetting the value (not directly setting it)
     }
 
     setImageData(null);
-  }
-
-
-
+  };
 
   const editRecord = async () => {
-
     // console.log(data);
     // console.log(data2);
 
@@ -238,7 +238,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         copyright_date: copyright_date.current,
         publisher: publisher.current,
         image: image.current,
-        condition: condition.current
+        condition: condition.current,
       };
 
       console.log("proceeding");
@@ -251,9 +251,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           data: atts,
         }),
       });
-
     } else {
-
       const filter = {
         id: selectedRows[0].actual_id,
       };
@@ -265,7 +263,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         copyright_date: copyright_date.current,
         publisher: publisher.current,
         image: image.current,
-        condition: condition.current
+        condition: condition.current,
       };
 
       console.log("proceeding");
@@ -278,7 +276,6 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           data: atts,
         }),
       });
-
     }
 
     setNotification("Item Edited successfully!");
@@ -288,23 +285,20 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
   return (
     <>
       <Group grow mb={20}>
-        {(type.current === 'books') && (
+        {type.current === "books" && (
           <Input.Wrapper label={<strong>Book Title</strong>}>
             <Input
               defaultValue={selectedRows[0]?.title}
-
               onChange={(e) => {
                 validateInputChange(e.target.value, title, setBookTitleError);
               }}
-
               error={bookTitleError}
               placeholder={bookTitleText}
-
             />
           </Input.Wrapper>
         )}
 
-        {(type.current === 'games') && (
+        {type.current === "games" && (
           <Input.Wrapper label={<strong>Boardgame Title</strong>}>
             <Input
               defaultValue={selectedRows[0]?.title}
@@ -330,8 +324,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           />
         </Input.Wrapper>
 
-
-        {(type.current === 'books') && (
+        {type.current === "books" && (
           <Input.Wrapper label={<strong>Book Author</strong>}>
             <Input
               defaultValue={selectedRows[0]?.author}
@@ -343,10 +336,8 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
             />
           </Input.Wrapper>
         )}
-
       </Group>
       <Group grow mb={20}>
-
         <Input.Wrapper label={<strong>Barcode</strong>}>
           <NumberInput
             hideControls
@@ -373,7 +364,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
           />
         </Input.Wrapper>
 
-        {(type.current === 'books') && (
+        {type.current === "books" && (
           <Input.Wrapper label={<strong>Edition</strong>}>
             <Input
               placeholder="12th"
@@ -382,8 +373,6 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
             />
           </Input.Wrapper>
         )}
-
-
       </Group>
       <Group grow>
         <Input.Wrapper label={<strong>Publisher</strong>}>
@@ -407,7 +396,7 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         </Input.Wrapper>
       </Group>
 
-      <h5>Upload Image  </h5>
+      <h5>Upload Image </h5>
       <Input
         ref={fileInputRef}
         type="file"
@@ -415,26 +404,37 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         accept="image/*"
         onChange={onFileChange}
       />
-      <div style={{ display: "flex", flexDirection: "column", gap: 5, alignItems: "Center" }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 5,
+          alignItems: "Center",
+        }}
+      >
         <h5>Preview </h5>
         {imageData && (
-          <div style={{ display: "flex", flexDirection: "column", alignItems: "Center" }}>
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "Center",
+            }}
+          >
             <Image src={imageData} width={110} height={140} alt="" />
             <Button
               variant="transparent"
               color="rgb(141, 16, 56)"
               radius="xl"
-              style={{ width: 150, height: 30, fontSize: 12, }}
+              style={{ width: 150, height: 30, fontSize: 12 }}
               onClick={deleteImage}
             >
               Remove Image
             </Button>
           </div>
         )}
-        {!imageData && (<h5>No Image Set</h5>)}
-
+        {!imageData && <h5>No Image Set</h5>}
       </div>
-
 
       <Input.Wrapper label={<strong>Condition</strong>}>
         <Textarea
@@ -445,22 +445,16 @@ const EditForm = ({ selectedRows, setSelectedRows, closeModal, setRefreshKey, re
         />
       </Input.Wrapper>
 
-
       <Stack justify="center" grow mt="xl" style={{ margin: 0 }}>
         <Button
           variant="filled"
-          color="rgb(141, 16, 56)"
+          color="#e8b031"
           radius="xl"
           onClick={validateFormSubmit}
         >
           Save
         </Button>
-        <Button
-          variant="outline"
-          color="rgb(141, 16, 56)"
-          radius="xl"
-          onClick={closeModal}
-        >
+        <Button variant="outline" color="gray" radius="xl" onClick={closeModal}>
           Discard
         </Button>
       </Stack>

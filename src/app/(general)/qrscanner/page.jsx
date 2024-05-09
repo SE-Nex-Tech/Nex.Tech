@@ -338,7 +338,7 @@ const QRScanner = () => {
             />
             <Button
               variant="filled"
-              color="rgb(141, 16, 56)"
+              color="#e8b031"
               radius="xl"
               classNames={{ root: styles.btn }}
               onClick={processReceipt}
