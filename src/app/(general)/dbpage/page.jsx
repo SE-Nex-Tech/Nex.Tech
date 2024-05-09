@@ -227,6 +227,7 @@ const Database = () => {
             <option value="author_descending">Author -Descending</option>
           </NativeSelect>
           <AddButton
+            selectedRows={selectedRows}
             setRefreshKey={setRefreshKey}
             refreshKey={refreshKey}
             setNotification={setNotification}
