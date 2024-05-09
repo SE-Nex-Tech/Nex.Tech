@@ -34,7 +34,14 @@ import {
 } from "@react-pdf/renderer";
 import { useDisclosure } from "@mantine/hooks";
 import TableRows from "./tableRows";
+import TableComponent from "./excel";
 import logoCICS from "@/images/cicslogo.png";
+
+import { useSession, getSession } from "next-auth/react";
+import Unauthenticated from "@/_components/authentication/unauthenticated";
+
+import XLSX from 'xlsx';
+// import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 const findUser = (user_type, req_id, users) => {
   if (user_type === "Student") {
@@ -46,9 +53,7 @@ const findUser = (user_type, req_id, users) => {
   }
 };
 
-import { useSession, getSession } from "next-auth/react";
-import Unauthenticated from "@/_components/authentication/unauthenticated";
-import { DownloadTableExcel } from 'react-export-table-to-excel';
+
 
 // // Register font
 // Font.register({ family: 'Plus Jakarta Sans', src: "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&display=swap" });
@@ -172,7 +177,8 @@ const Reports = ({ hideHeader }) => {
 
   const [reqSummaryView, setReqSummaryView] = useState("Graph View");
 
-  const tableRef = useRef(null);
+  // const tableRef = useRef(null);
+
 
   const handleRequestSummaryView = (event) => {
     const selectedValue = event.target.value;
@@ -563,6 +569,8 @@ const Reports = ({ hideHeader }) => {
   const buttonStyle = validDateRange ? styles.activeBtn : styles.inactiveBtn;
 
 
+  
+  
 
   return (
     <>
@@ -681,8 +689,8 @@ const Reports = ({ hideHeader }) => {
                   </button>
                 </PDFDownloadLink>
 
-                <DownloadTableExcel
-                  fileName={"reports" + formattedDate}
+                {/* <DownloadTableExcel
+                  filename={"reports" + formattedDate}
                   sheet="report"
                   currentTableRef={tableRef.current}
                 >
@@ -709,7 +717,8 @@ const Reports = ({ hideHeader }) => {
                       <td>94</td>
                     </tr>
                   </tbody>
-                </table>
+                </table> */}
+                <TableComponent />
 
                 <button className={styles.cancelBtn} onClick={close}>
                   Cancel
