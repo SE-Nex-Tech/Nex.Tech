@@ -113,11 +113,68 @@ const ExportToExcel = ({
     const r = gameDept.gameDeptC.find(obj => obj.department === department);
 
     if (r) {
-        return r._count.department;
+      return r._count.department;
     } else {
-        return 0;
+      return 0;
     }
-}
+  }
+
+  const bookRequestsPerUserType = [
+    ["Requests per user type"],
+    ["Student", "Faculty", "Staff", "Total"],
+    [getBookCountByUserType("Student"), getBookCountByUserType("Faculty"), getBookCountByUserType("Staff"), bookUserType.bookReqCount],
+    [""],
+  ]
+
+  const bookRequestsPerYearLevel = [
+    ["Student requests per year level"],
+    ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
+    [getBookCountByYearLevel("1st Year"), getBookCountByYearLevel("2nd Year"), getBookCountByYearLevel("3rd Year"), getBookCountByYearLevel("4th Year"), bookYearLevel.studentBookReqs],
+    [""],
+  ]
+
+  const bookRequestsPerDept = [
+    ["Student requests per department"],
+    ["Information Technology", "Computer Science", "Information Systems", "Total"],
+    [getBookCountByDept("Information Technology"), getBookCountByDept("Computer Science"), getBookCountByDept("Information Systems"), bookDept.studentBookReqs],
+  ]
+
+  const gameRequestsPerUserType = [
+    ["Requests per user type"],
+    ["Student", "Faculty", "Staff", "Total"],
+    [getGameCountByUserType("Student"), getGameCountByUserType("Faculty"), getGameCountByUserType("Staff"), gameUserType.gameReqCount],
+    [""],
+  ]
+
+  const gameRequestsPerYearLevel = [
+    ["Student requests per year level"],
+    ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
+    [getGameCountByYearLevel("1st Year"), getGameCountByYearLevel("2nd Year"), getGameCountByYearLevel("3rd Year"), getGameCountByYearLevel("4th Year"), gameYearLevel.studentGameReqs],
+    [""],
+  ]
+
+  const gameRequestsPerDept = [
+    ["Student requests per department"],
+    ["Information Technology", "Computer Science", "Information Systems", "Total"],
+    [getGameCountByDept("Information Technology"), getGameCountByDept("Computer Science"), getGameCountByDept("Information Systems"), gameDept.studentGameReqs],
+  ]
+
+  const bookUsageStatistics = [
+    ["Popular Books"],
+    ["Book Title", "Usage Count"],
+  ]
+
+  const rows = bookUsage.bookRCounts.map((r) => {
+    const book = bookUsage.bookR.find((e) => e.book_id === r.book_id).book;
+    const count = r._count.book_id;
+    return [book.title, count];
+  });
+
+  bookUsageStatistics.push(...rows);
+
+  const gameUsageStatistics = [
+
+  ]
 
 
   const sheets = [
@@ -137,19 +194,12 @@ const ExportToExcel = ({
       sheetName: 'Books',
       tableData: [
         ["User Demographics"],
+        [""],
 
-        ["Requests per user type"],
-        ["Student", "Faculty", "Staff", "Total"],
-        [getBookCountByUserType("Student"), getBookCountByUserType("Faculty"), getBookCountByUserType("Staff"), bookUserType.bookReqCount],
-
-        ["Student requests per year level"],
-        ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
-        [getBookCountByYearLevel("1st Year"), getBookCountByYearLevel("2nd Year"), getBookCountByYearLevel("3rd Year"), getBookCountByYearLevel("4th Year"), bookYearLevel.studentBookReqs],
-
-        ["Student requests per department"],
-        ["Information Technology", "Computer Science", "Information Systems", "Total"],
-        [getBookCountByDept("Information Technology"), getBookCountByDept("Computer Science"), getBookCountByDept("Information Systems"), bookDept.studentBookReqs],
-
+        ...bookRequestsPerUserType,
+        ...bookRequestsPerYearLevel,
+        ...bookRequestsPerDept,
+        ...bookUsageStatistics,
       ],
       fixedColumnWidths: [
         { columnIndex: 0, width: 20 },
@@ -161,21 +211,14 @@ const ExportToExcel = ({
       ],
     },
     {
-      sheetName: 'Boardgame',
+      sheetName: 'Boardgames',
       tableData: [
         ["User Demographics"],
+        [""],
+        ...gameRequestsPerUserType,
+        ...gameRequestsPerYearLevel,
+        ...gameRequestsPerDept,
 
-        ["Requests per user type"],
-        ["Student", "Faculty", "Staff", "Total"],
-        [getGameCountByUserType("Student"), getGameCountByUserType("Faculty"), getGameCountByUserType("Staff"), gameUserType.bookReqCount],
-
-        ["Student requests per year level"],
-        ["1st Year", "2nd Year", "3rd year", "4th Year", "Total"],
-        [getGameCountByYearLevel("1st Year"), getGameCountByYearLevel("2nd Year"), getGameCountByYearLevel("3rd Year"), getGameCountByYearLevel("4th Year"), gameYearLevel.studentBookReqs],
-
-        ["Student requests per department"],
-        ["Information Technology", "Computer Science", "Information Systems", "Total"],
-        [getGameCountByDept("Information Technology"), getGameCountByDept("Computer Science"), getGameCountByDept("Information Systems"), gameDept.studentBookReqs],
 
       ],
       fixedColumnWidths: [
