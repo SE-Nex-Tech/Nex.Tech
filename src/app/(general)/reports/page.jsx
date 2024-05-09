@@ -35,6 +35,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import TableRows from "./tableRows";
 import logoCICS from "@/images/cicslogo.png";
+import filter from "./filter.js";
 
 const findUser = (user_type, req_id, users) => {
   if (user_type === "Student") {
@@ -170,12 +171,20 @@ const Reports = ({ hideHeader }) => {
   const [barChartData, setBarChartData] = useState([]);
 
   const [reqSummaryView, setReqSummaryView] = useState("Graph View");
+  const [summaryFilter, setSummaryFilter] = useState("None");
+  const [ogData, setOgData] = useState([]);
 
   const handleRequestSummaryView = (event) => {
     const selectedValue = event.target.value;
     setReqSummaryView(selectedValue);
     console.log(selectedValue);
   };
+
+  const handleSummaryFilter = (event) => {
+    let newdata = filter(event.target.value, ogData)
+    setSummaryFilter(event.target.value);
+    setBorrows(newdata)
+  }
 
   const [usageStatisticsView, setUsageStatisticsView] = useState("Books");
 
@@ -312,6 +321,7 @@ const Reports = ({ hideHeader }) => {
       SetGameDeptC(gameDeptC);
 
       setBorrows(result);
+      setOgData(result);
 
       setBookR(bookReqs);
       setGameR(gameReqs);
@@ -691,6 +701,15 @@ const Reports = ({ hideHeader }) => {
                 data={["Graph View", "List View"]}
                 onChange={handleRequestSummaryView}
                 value={reqSummaryView}
+              />
+            </div>
+            <div className={styles.summary_header}>
+              <h3>Filter</h3>
+              <NativeSelect
+                radius="xl"
+                data={["None", "Faculty", "Staff", "Student", "Book", "Boardgame"]}
+                onChange={handleSummaryFilter}
+                value={summaryFilter}
               />
             </div>
 
