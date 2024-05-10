@@ -437,7 +437,7 @@ const getBarChartData = async (startDate, endDate, prisma) => {
 
   const numDays = Math.ceil((endDate - startDate) / (24 * 60 * 60 * 1000));
   const numWeeks = Math.ceil(numDays / 7);
-  const isMonthly = numWeeks > 4; // Adjust this threshold as needed
+  const isMonthly = numWeeks > 10; // Adjust this threshold as needed
 
   const requestsByPeriod = isMonthly ? {} : [];
 
