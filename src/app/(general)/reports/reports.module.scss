@@ -55,7 +55,6 @@
     height: 280px;
   }
 
-
   .right_container {
     display: flex;
     flex-direction: column;
@@ -132,7 +131,6 @@
   flex-direction: column;
   height: 100%;
 
-
   .modal_container {
     display: flex;
     flex-direction: row;
@@ -141,16 +139,12 @@
     gap: 10rem;
     margin: 2rem;
 
-
     .customization_container {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       gap: 0.3rem;
-
-
     }
-
   }
 
   .btn_container {
@@ -163,7 +157,7 @@
   border-radius: 100rem;
   border: none;
   background-color: $neutral2;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.7vh 0vw 0.7vh 0vw;
   font-weight: 500;
   height: 100%;
@@ -177,7 +171,7 @@
   border-radius: 100rem;
   border: none;
   background-color: $redMain;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.7vh 0vw 0.7vh 0vw;
   font-weight: 500;
 }
@@ -188,8 +182,7 @@
   height: 100%;
   border-radius: 5rem;
   border: none;
-  background-color: $redMain;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.7vh 0vw 0.7vh 0vw;
   font-weight: 500;
   cursor: pointer;
@@ -201,20 +194,17 @@
   height: 100%;
   border-radius: 5rem;
   border: none;
-  background-color: var(--neutral1);
   color: var(--neutral5);
   padding: 0.7vh 0vw 0.7vh 0vw;
   font-weight: 500;
   cursor: not-allowed;
 }
 
-
 .activeBtn {
   height: 100%;
   border-radius: 5rem;
   border: none;
-  background-color: $redMain;
-  color: #FFFFFF;
+  color: #ffffff;
   padding: 0.6rem 1rem 0.6rem 1rem;
   font-weight: 400;
   cursor: pointer;
@@ -224,7 +214,6 @@
   height: 100%;
   border-radius: 5rem;
   border: none;
-  background-color: var(--neutral1);
   color: var(--neutral5);
   padding: 0.6rem 1rem 0.6rem 1rem;
   font-weight: 400;
