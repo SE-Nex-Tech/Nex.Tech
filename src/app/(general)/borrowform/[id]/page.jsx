@@ -190,7 +190,7 @@ const BorrowForm = () => {
     : "2021523418";
   const firstNameText = firstNameError
     ? "This field is required"
-    : "John Doe Smith";
+    : "Dela Cruz, Juan";
   const emailText = emailError
     ? "This field is required"
     : "johndoe.smith@ust.edu.ph";
@@ -378,9 +378,17 @@ const BorrowForm = () => {
                 placeholder={firstNameText}
                 onChange={(e) => {
                   const value = e.target.value;
-                  const validValue = value.replace(/[^a-zA-Z\s]/g, "");
-                  e.target.value = validValue;
-                  validateInputChange(validValue, firstName, setFirstNameError);
+                  // Regular expression to match "Last Name, First Name" format
+                  const nameRegex = /^([a-zA-Z]+),? ([a-zA-Z]+\s*)+$/;
+                  if (nameRegex.test(value)) {
+                    // If input matches the format, set it as valid
+                    setFirstNameError(""); // Clear any existing error
+                    // Here you can use the value directly or further process it as needed
+                    validateInputChange(value, firstName, setFirstNameError);
+                  } else {
+                    // If input doesn't match the format, set an error message
+                    setFirstNameError("Please enter the name in the format: Last Name, First Name");
+                  }
                 }}
                 error={firstNameError}
               />
