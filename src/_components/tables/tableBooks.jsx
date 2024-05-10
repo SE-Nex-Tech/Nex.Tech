@@ -8,6 +8,12 @@ import {
   getPaginationRowModel,
 } from "@tanstack/react-table";
 import styles from "./table.module.scss";
+import {
+  IconChevronLeftPipe,
+  IconChevronRightPipe,
+  IconChevronsLeft,
+  IconChevronsRight,
+} from "@tabler/icons-react";
 
 const TableBody = ({
   data,
@@ -165,41 +171,27 @@ const TableBody = ({
       </Table>
       {!disablePageButton && (
         <div className={styles.page_btn}>
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+          <IconChevronLeftPipe
             onClick={() => table.setPageIndex(0)}
-          >
-            First
-          </Button>
+            className={styles.navigator}
+          />
 
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+          <IconChevronsLeft
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+            className={styles.navigator}
+          />
+
+          <IconChevronsRight
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+            className={styles.navigator}
+          />
+
+          <IconChevronRightPipe
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          >
-            Last
-          </Button>
+            className={styles.navigator}
+          />
         </div>
       )}
     </div>

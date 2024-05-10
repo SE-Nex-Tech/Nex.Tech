@@ -1,6 +1,12 @@
 import React from "react";
 import styles from "./pagination.module.scss";
 import { Button } from "@mantine/core";
+import {
+  IconChevronLeftPipe,
+  IconChevronRightPipe,
+  IconChevronsLeft,
+  IconChevronsRight,
+} from "@tabler/icons-react";
 
 const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
   const pageNumbers = [];
@@ -32,15 +38,10 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
             currentPage === 1 ? styles.current_page : ""
           }`}
         >
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+          <IconChevronLeftPipe
             onClick={() => paginate(1)}
-            className="page-link"
-          >
-            First
-          </Button>
+            className={styles.pagelink}
+          />
         </li>
         {pageNumbers.map((number) => (
           <li
@@ -55,7 +56,7 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
               color="#e8b031"
               radius="xl"
               onClick={() => paginate(number)}
-              className="page-link"
+              className="pagelink"
             >
               {number}
             </Button>
@@ -67,15 +68,10 @@ const Pagination = ({ booksPerPage, totalBooks, currentPage, paginate }) => {
             currentPage === totalPages ? styles.current_page : ""
           }`}
         >
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+          <IconChevronRightPipe
             onClick={() => paginate(totalPages)}
-            className="page-link"
-          >
-            Last
-          </Button>
+            className={styles.pagelink}
+          />
         </li>
       </div>
     </nav>
