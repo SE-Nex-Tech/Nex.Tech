@@ -13,12 +13,14 @@ import Sort from "@/_components/sort/sort";
 import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
+import UnarchiveButton from "@/_components/buttons/unarchivebutton";
 import TableBody from "@/_components/tables/tableBooks";
 import sortby from "./sortby";
 
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import TableBodyGames from "@/_components/tables/tableGames";
+import TableArchive from "@/_components/tables/tableArchive";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,6 +30,8 @@ const Database = () => {
 
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
+  const [bookArchived, setBookArchived] = useState([]);
+  const [gameArchived, setGameArchived] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -46,6 +50,10 @@ const Database = () => {
     setActiveTab(value);
     selectedType.current = value;
     setSelectedRows([]);
+    console.log('BOOKS ARCHIVED')
+    console.log(bookArchived)
+    console.log('GAMES ARCHIVED')
+    console.log(gameArchived)
   };
 
   const setNotification = (notification) => {
@@ -74,10 +82,20 @@ const Database = () => {
       const data = await response.json();
       const data2 = await response2.json();
 
+      let r = await fetch('api/archive/books')
+      let d = await r.json()
+
       console.log(data);
       console.log(data2);
       setData(data);
       setData2(data2);
+      setBookArchived(d);
+
+      r = await fetch('api/archive/games')
+      d = await r.json()
+
+      setGameArchived(d)
+
       setLoading(false);
     };
 
@@ -220,35 +238,49 @@ const Database = () => {
             <option value="author_ascending">Author - Ascending</option>
             <option value="author_descending">Author -Descending</option>
           </NativeSelect>
-          <AddButton
-            selectedRows={selectedRows}
-            setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey}
-            setNotification={setNotification}
-            selectedType={selectedType}
-            bookDB={bookDB.current}
-            gameDB={gameDB.current}
-          />
+          {(activeTab != 'bookarchive' && activeTab != 'gamearchive') && (
+            <>
+            <AddButton
+              selectedRows={selectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+              bookDB={bookDB.current}
+              gameDB={gameDB.current}
+            />
 
-          <EditButton
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey}
-            setNotification={setNotification}
-            selectedType={selectedType}
-            bookDB={bookDB.current}
-            gameDB={gameDB.current}
-          />
+            <EditButton
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+              bookDB={bookDB.current}
+              gameDB={gameDB.current}
+            />
 
-          <DeleteButton
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey}
-            setNotification={setNotification}
-            selectedType={selectedType}
-          />
+            <DeleteButton
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+            />
+            </>
+          )}
+          {(activeTab == 'bookarchive' || activeTab == 'gamearchive') && (
+            <UnarchiveButton
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+            />
+          )}
         </div>
         <div className={styles.table_container}>
           <Tabs
@@ -270,6 +302,8 @@ const Database = () => {
             <Tabs.List justify="flex-end">
               <Tabs.Tab value="books">Books</Tabs.Tab>
               <Tabs.Tab value="games">Board Games</Tabs.Tab>
+              <Tabs.Tab value="bookarchive">Archived Books</Tabs.Tab>
+              <Tabs.Tab value="gamearchive">Archived Games</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="books">
@@ -284,6 +318,24 @@ const Database = () => {
             <Tabs.Panel value="games">
               <TableBodyGames
                 data={data2}
+                pageSize={6}
+                disablePageButton={false}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="bookarchive">
+              <TableArchive
+                data={bookArchived}
+                pageSize={6}
+                disablePageButton={false}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="gamearchive">
+              <TableArchive
+                data={gameArchived}
                 pageSize={6}
                 disablePageButton={false}
                 selectedRows={selectedRows}
