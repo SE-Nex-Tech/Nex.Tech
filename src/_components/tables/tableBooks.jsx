@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Button, Table, Checkbox } from "@mantine/core";
+import { Checkbox, Table } from "@mantine/core";
 import { Prisma } from "@prisma/client";
-import {
-  useReactTable,
-  getCoreRowModel,
-  flexRender,
-  getPaginationRowModel,
-} from "@tanstack/react-table";
-import styles from "./table.module.scss";
 import {
   IconChevronLeftPipe,
   IconChevronRightPipe,
   IconChevronsLeft,
   IconChevronsRight,
 } from "@tabler/icons-react";
+import {
+  flexRender,
+  getCoreRowModel,
+  getPaginationRowModel,
+  useReactTable,
+} from "@tanstack/react-table";
+import { useEffect, useState } from "react";
+import styles from "./table.module.scss";
 
 const TableBody = ({
   data,
@@ -169,7 +169,7 @@ const TableBody = ({
           ))}
         </Table.Tbody>
       </Table>
-      {!disablePageButton && (
+      {!disablePageButton && data.length > 6 && (
         <div className={styles.page_btn}>
           <IconChevronLeftPipe
             onClick={() => table.setPageIndex(0)}

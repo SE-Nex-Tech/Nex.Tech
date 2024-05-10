@@ -1,12 +1,18 @@
-import React, { useState, useEffect } from "react";
-import { Button, Table, Checkbox } from "@mantine/core";
+import { Checkbox, Table } from "@mantine/core";
 import { Prisma } from "@prisma/client";
 import {
-  useReactTable,
-  getCoreRowModel,
+  IconChevronLeftPipe,
+  IconChevronRightPipe,
+  IconChevronsLeft,
+  IconChevronsRight,
+} from "@tabler/icons-react";
+import {
   flexRender,
+  getCoreRowModel,
   getPaginationRowModel,
+  useReactTable,
 } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 import styles from "./table.module.scss";
 
 const TableBody = ({
@@ -163,43 +169,29 @@ const TableBody = ({
           ))}
         </Table.Tbody>
       </Table>
-      {!disablePageButton && (
+      {!disablePageButton && data.length > 6 && (
         <div className={styles.page_btn}>
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+          <IconChevronLeftPipe
             onClick={() => table.setPageIndex(0)}
-          >
-            First
-          </Button>
+            className={styles.navigator}
+          />
 
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+          <IconChevronsLeft
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
-          >
-            Previous
-          </Button>
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+            className={styles.navigator}
+          />
+
+          <IconChevronsRight
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
-          >
-            Next
-          </Button>
-          <Button
-            variant="filled"
-            color="#e8b031"
-            radius="xl"
+            className={styles.navigator}
+          />
+
+          <IconChevronRightPipe
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-          >
-            Last
-          </Button>
+            className={styles.navigator}
+          />
         </div>
       )}
     </div>

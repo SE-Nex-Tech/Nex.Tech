@@ -163,7 +163,7 @@ const TableBodyGames = ({
           ))}
         </Table.Tbody>
       </Table>
-      {!disablePageButton && (
+      {!disablePageButton && data.length > 6 && (
         <div className={styles.page_btn}>
           <IconChevronLeftPipe
             onClick={() => table.setPageIndex(0)}
