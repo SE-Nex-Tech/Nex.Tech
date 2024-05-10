@@ -52,7 +52,7 @@ const UnarchiveForm = ({
       });
     }
 
-    setNotification("Item/s Archived successfully!");
+    setNotification("Item/s removed from archive!");
     closeModal();
     setSelectedRows([]);
   };
@@ -101,7 +101,7 @@ const UnarchiveForm = ({
           radius="xl"
           onClick={archiveRecords}
         >
-          Archive
+          Unarchive
         </Button>
         <Button variant="outline" color="gray" radius="xl" onClick={closeModal}>
           Cancel
