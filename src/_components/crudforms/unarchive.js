@@ -28,30 +28,26 @@ const UnarchiveForm = ({
     console.log("IDs identified");
     console.log(ids);
 
-    if (selectedType.current == "books") {
-      const response = await fetch("/api/db", {
+    if (selectedType.current == "bookarchive") {
+      const response = await fetch("/api/unarchive/books", {
         method: "POST",
         body: JSON.stringify({
-          entity: "books",
-          delete: 1,
           where: {
             id: {
-              in: ids,
-            },
-          },
+              in: ids
+            }
+          }
         }),
       });
     } else {
-      const response = await fetch("/api/db", {
+      const response = await fetch("/api/unarchive/games", {
         method: "POST",
         body: JSON.stringify({
-          entity: "boardgames",
-          delete: 1,
           where: {
             id: {
-              in: ids,
-            },
-          },
+              in: ids
+            }
+          }
         }),
       });
     }

@@ -50,6 +50,10 @@ const Database = () => {
     setActiveTab(value);
     selectedType.current = value;
     setSelectedRows([]);
+    console.log('BOOKS ARCHIVED')
+    console.log(bookArchived)
+    console.log('GAMES ARCHIVED')
+    console.log(gameArchived)
   };
 
   const setNotification = (notification) => {
