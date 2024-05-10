@@ -1,26 +1,22 @@
 "use client";
-import React from "react";
-import { usePathname } from "next/navigation";
 import Header from "@/_components/header/Header";
-import styles from "./database.module.scss";
-import { Center, Tabs, rem, Loader } from "@mantine/core";
-import { useState, useEffect, useRef } from "react";
-import { Input } from "@mantine/core";
+import { Center, Input, Loader, NativeSelect, Tabs, rem } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
-import { NativeSelect } from "@mantine/core";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState } from "react";
+import styles from "./database.module.scss";
 
-import Sort from "@/_components/sort/sort";
-import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
+import EditButton from "@/_components/buttons/editbutton";
 import UnarchiveButton from "@/_components/buttons/unarchivebutton";
 import TableBody from "@/_components/tables/tableBooks";
 import sortby from "./sortby";
 
-import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
-import TableBodyGames from "@/_components/tables/tableGames";
 import TableArchive from "@/_components/tables/tableArchive";
+import TableBodyGames from "@/_components/tables/tableGames";
+import { useSession } from "next-auth/react";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,10 +46,10 @@ const Database = () => {
     setActiveTab(value);
     selectedType.current = value;
     setSelectedRows([]);
-    console.log('BOOKS ARCHIVED')
-    console.log(bookArchived)
-    console.log('GAMES ARCHIVED')
-    console.log(gameArchived)
+    console.log("BOOKS ARCHIVED");
+    console.log(bookArchived);
+    console.log("GAMES ARCHIVED");
+    console.log(gameArchived);
   };
 
   const setNotification = (notification) => {
@@ -82,8 +78,8 @@ const Database = () => {
       const data = await response.json();
       const data2 = await response2.json();
 
-      let r = await fetch('api/archive/books')
-      let d = await r.json()
+      let r = await fetch("api/archive/books");
+      let d = await r.json();
 
       console.log(data);
       console.log(data2);
@@ -91,10 +87,10 @@ const Database = () => {
       setData2(data2);
       setBookArchived(d);
 
-      r = await fetch('api/archive/games')
-      d = await r.json()
+      r = await fetch("api/archive/games");
+      d = await r.json();
 
-      setGameArchived(d)
+      setGameArchived(d);
 
       setLoading(false);
     };
@@ -238,40 +234,40 @@ const Database = () => {
             <option value="author_ascending">Author - Ascending</option>
             <option value="author_descending">Author -Descending</option>
           </NativeSelect>
-          {(activeTab != 'bookarchive' && activeTab != 'gamearchive') && (
+          {activeTab != "bookarchive" && activeTab != "gamearchive" && (
             <>
-            <AddButton
-              selectedRows={selectedRows}
-              setRefreshKey={setRefreshKey}
-              refreshKey={refreshKey}
-              setNotification={setNotification}
-              selectedType={selectedType}
-              bookDB={bookDB.current}
-              gameDB={gameDB.current}
-            />
+              <AddButton
+                selectedRows={selectedRows}
+                setRefreshKey={setRefreshKey}
+                refreshKey={refreshKey}
+                setNotification={setNotification}
+                selectedType={selectedType}
+                bookDB={bookDB.current}
+                gameDB={gameDB.current}
+              />
 
-            <EditButton
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-              setRefreshKey={setRefreshKey}
-              refreshKey={refreshKey}
-              setNotification={setNotification}
-              selectedType={selectedType}
-              bookDB={bookDB.current}
-              gameDB={gameDB.current}
-            />
+              <EditButton
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+                setRefreshKey={setRefreshKey}
+                refreshKey={refreshKey}
+                setNotification={setNotification}
+                selectedType={selectedType}
+                bookDB={bookDB.current}
+                gameDB={gameDB.current}
+              />
 
-            <DeleteButton
-              selectedRows={selectedRows}
-              setSelectedRows={setSelectedRows}
-              setRefreshKey={setRefreshKey}
-              refreshKey={refreshKey}
-              setNotification={setNotification}
-              selectedType={selectedType}
-            />
+              <DeleteButton
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+                setRefreshKey={setRefreshKey}
+                refreshKey={refreshKey}
+                setNotification={setNotification}
+                selectedType={selectedType}
+              />
             </>
           )}
-          {(activeTab == 'bookarchive' || activeTab == 'gamearchive') && (
+          {(activeTab == "bookarchive" || activeTab == "gamearchive") && (
             <UnarchiveButton
               selectedRows={selectedRows}
               setSelectedRows={setSelectedRows}
