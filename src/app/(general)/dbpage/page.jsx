@@ -19,6 +19,7 @@ import sortby from "./sortby";
 import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
 import TableBodyGames from "@/_components/tables/tableGames";
+import TableArchive from "@/_components/tables/tableArchive";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -28,6 +29,7 @@ const Database = () => {
 
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
+  const [archived, setArchived] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -74,10 +76,14 @@ const Database = () => {
       const data = await response.json();
       const data2 = await response2.json();
 
+      let r = await fetch('api/archive')
+      let d = await r.json()
+
       console.log(data);
       console.log(data2);
       setData(data);
       setData2(data2);
+      setArchived(d);
       setLoading(false);
     };
 
@@ -270,6 +276,7 @@ const Database = () => {
             <Tabs.List justify="flex-end">
               <Tabs.Tab value="books">Books</Tabs.Tab>
               <Tabs.Tab value="games">Board Games</Tabs.Tab>
+              <Tabs.Tab value="archive">Archived</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="books">
@@ -284,6 +291,15 @@ const Database = () => {
             <Tabs.Panel value="games">
               <TableBodyGames
                 data={data2}
+                pageSize={6}
+                disablePageButton={false}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="archive">
+              <TableArchive
+                data={archived}
                 pageSize={6}
                 disablePageButton={false}
                 selectedRows={selectedRows}
