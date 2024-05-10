@@ -378,20 +378,25 @@ const BorrowForm = () => {
                 placeholder={firstNameText}
                 onChange={(e) => {
                   const value = e.target.value;
-                  // Regular expression to match "Last Name, First Name" format
-                  const nameRegex = /^([a-zA-Z]+),? ([a-zA-Z]+\s*)+$/;
+                  // Regular expression to match "Last Name, First Name" format with multi-word last name and first name
+                  const nameRegex = /^(([A-Z][a-zA-Z]+)( [A-Z][a-zA-Z]+)*),? ((?:[A-Z][a-zA-Z]+\s*)+)$/;
                   if (nameRegex.test(value)) {
-                    // If input matches the format, set it as valid
-                    setFirstNameError(""); // Clear any existing error
-                    // Here you can use the value directly or further process it as needed
-                    validateInputChange(value, firstName, setFirstNameError);
-                  } else {
-                    // If input doesn't match the format, set an error message
-                    setFirstNameError("Please enter the name in the format: Last Name, First Name");
+                    // Additional validation to ensure first letters are uppercase
+                    const [lastName, firstName] = value.split(/,?\s+/);
+                    if (lastName.charAt(0) === lastName.charAt(0).toUpperCase() && firstName.charAt(0) === firstName.charAt(0).toUpperCase()) {
+                      // If input matches the format and the first letters are uppercase, set it as valid
+                      setFirstNameError(""); // Clear any existing error
+                      // Here you can use the value directly or further process it as needed
+                      validateInputChange(value, firstName, setFirstNameError);
+                      return;
+                    }
                   }
+                  // If input doesn't match the format or first letters are not uppercase, set an error message
+                  setFirstNameError("Please enter the name in the format: Last Name, First Name with the first letters uppercase");
                 }}
                 error={firstNameError}
               />
+
             </div>
 
             <div className={styles.input}>
