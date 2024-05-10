@@ -1,24 +1,21 @@
 "use client";
 
 import Header from "@/_components/header/Header";
-import React, { useState, useCallback, useEffect, useRef } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import styles from "./qrscanner.module.scss";
-import StudentFields from "./studentFields";
-import FacultyFields from "./facultyFields";
-import StaffFields from "./staffFields";
+import { Button, Center, Input } from "@mantine/core";
+import { modals } from "@mantine/modals";
+import { IconInfoCircle } from "@tabler/icons-react";
+import { usePathname } from "next/navigation";
+import { useRef, useState } from "react";
 import { QrReader } from "react-qr-reader";
-import { Center, Text, Loader } from "@mantine/core";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useDisclosure } from "@mantine/hooks";
-import { Modal, Button } from "@mantine/core";
-import { closeModal, modals, openConfirmModal } from "@mantine/modals";
-import { IconInfoCircle } from "@tabler/icons-react";
-import { Input } from "@mantine/core";
+import FacultyFields from "./facultyFields";
+import styles from "./qrscanner.module.scss";
+import StaffFields from "./staffFields";
+import StudentFields from "./studentFields";
 
-import { useSession, getSession } from "next-auth/react";
 import Unauthenticated from "@/_components/authentication/unauthenticated";
+import { useSession } from "next-auth/react";
 
 const QRScanner = () => {
   const [book, setBook] = useState([]);
@@ -146,7 +143,7 @@ const QRScanner = () => {
       labels: { confirm: confirmLabel, cancel: "Cancel" },
       confirmProps: {
         radius: "xl",
-        bg: "rgb(141, 16, 56)",
+        bg: "#e8b031",
       },
 
       cancelProps: {
