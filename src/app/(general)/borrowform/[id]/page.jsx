@@ -174,6 +174,7 @@ const BorrowForm = () => {
   const [employeeNumberError, setEmployeeNumberError] = useState(false);
 
   const validateInputChange = (value, refValue, setErrorState) => {
+    console.log("value:"+value)
     if (value == "" || value == null || value.current == "None") {
       // If the value is empty or contains only whitespace
       setErrorState(true); // Set state to true
@@ -289,6 +290,7 @@ const BorrowForm = () => {
 
     var isValid = true;
 
+    console.log("name:"+ firstName.current)
     switch (selectedUserType) {
       case "Student":
         isValid = !studentNumberError
@@ -379,11 +381,11 @@ const BorrowForm = () => {
                 onChange={(e) => {
                   const value = e.target.value;
                   // Regular expression to match "Last Name, First Name" format with multi-word last name and first name
-                  const nameRegex = /^(([A-Z][a-zA-Z]+)( [A-Z][a-zA-Z]+)*),? ((?:[A-Z][a-zA-Z]+\s*)+)$/;
+                  const nameRegex = /^(([A-Z][a-zA-Z]+)( [A-Z][a-zA-Z]+)*), ((?:[A-Z][a-zA-Z]+\s*)+)$/;
                   if (nameRegex.test(value)) {
                     // Additional validation to ensure first letters are uppercase
-                    const [lastName, firstName] = value.split(/,?\s+/);
-                    if (lastName.charAt(0) === lastName.charAt(0).toUpperCase() && firstName.charAt(0) === firstName.charAt(0).toUpperCase()) {
+                    const [lastN, firstN] = value.split(/,?\s+/);
+                    if (lastN.charAt(0) === lastN.charAt(0).toUpperCase() && firstN.charAt(0) === firstN.charAt(0).toUpperCase()) {
                       // If input matches the format and the first letters are uppercase, set it as valid
                       setFirstNameError(""); // Clear any existing error
                       // Here you can use the value directly or further process it as needed
