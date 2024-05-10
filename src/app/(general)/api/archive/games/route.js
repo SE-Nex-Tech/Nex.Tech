@@ -22,5 +22,5 @@ export async function GET(request) {
 
   const ll = [...booksArchived, ...gamesArchived]
 
-  return NextResponse.json(ll);
+  return NextResponse.json(gamesArchived);
 }

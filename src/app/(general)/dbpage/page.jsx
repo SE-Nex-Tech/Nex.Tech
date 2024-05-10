@@ -13,6 +13,7 @@ import Sort from "@/_components/sort/sort";
 import EditButton from "@/_components/buttons/editbutton";
 import AddButton from "@/_components/buttons/addbutton";
 import DeleteButton from "@/_components/buttons/deletebutton";
+import UnarchiveButton from "@/_components/buttons/unarchivebutton";
 import TableBody from "@/_components/tables/tableBooks";
 import sortby from "./sortby";
 
@@ -29,7 +30,8 @@ const Database = () => {
 
   const [data, setData] = useState([]);
   const [data2, setData2] = useState([]);
-  const [archived, setArchived] = useState([]);
+  const [bookArchived, setBookArchived] = useState([]);
+  const [gameArchived, setGameArchived] = useState([]);
   const [selectedRows, setSelectedRows] = useState([]);
   const [loading, setLoading] = useState(true);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -76,14 +78,20 @@ const Database = () => {
       const data = await response.json();
       const data2 = await response2.json();
 
-      let r = await fetch('api/archive')
+      let r = await fetch('api/archive/books')
       let d = await r.json()
 
       console.log(data);
       console.log(data2);
       setData(data);
       setData2(data2);
-      setArchived(d);
+      setBookArchived(d);
+
+      r = await fetch('api/archive/games')
+      d = await r.json()
+
+      setGameArchived(d)
+
       setLoading(false);
     };
 
@@ -226,35 +234,49 @@ const Database = () => {
             <option value="author_ascending">Author - Ascending</option>
             <option value="author_descending">Author -Descending</option>
           </NativeSelect>
-          <AddButton
-            selectedRows={selectedRows}
-            setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey}
-            setNotification={setNotification}
-            selectedType={selectedType}
-            bookDB={bookDB.current}
-            gameDB={gameDB.current}
-          />
+          {activeTab != 'bookarchive' && (
+            <>
+            <AddButton
+              selectedRows={selectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+              bookDB={bookDB.current}
+              gameDB={gameDB.current}
+            />
 
-          <EditButton
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey}
-            setNotification={setNotification}
-            selectedType={selectedType}
-            bookDB={bookDB.current}
-            gameDB={gameDB.current}
-          />
+            <EditButton
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+              bookDB={bookDB.current}
+              gameDB={gameDB.current}
+            />
 
-          <DeleteButton
-            selectedRows={selectedRows}
-            setSelectedRows={setSelectedRows}
-            setRefreshKey={setRefreshKey}
-            refreshKey={refreshKey}
-            setNotification={setNotification}
-            selectedType={selectedType}
-          />
+            <DeleteButton
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+            />
+            </>
+          )}
+          {activeTab == 'bookarchive' && (
+            <UnarchiveButton
+              selectedRows={selectedRows}
+              setSelectedRows={setSelectedRows}
+              setRefreshKey={setRefreshKey}
+              refreshKey={refreshKey}
+              setNotification={setNotification}
+              selectedType={selectedType}
+            />
+          )}
         </div>
         <div className={styles.table_container}>
           <Tabs
@@ -276,7 +298,7 @@ const Database = () => {
             <Tabs.List justify="flex-end">
               <Tabs.Tab value="books">Books</Tabs.Tab>
               <Tabs.Tab value="games">Board Games</Tabs.Tab>
-              <Tabs.Tab value="archive">Archived</Tabs.Tab>
+              <Tabs.Tab value="bookarchive">Archived Books</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="books">
@@ -297,9 +319,9 @@ const Database = () => {
                 setSelectedRows={setSelectedRows}
               />
             </Tabs.Panel>
-            <Tabs.Panel value="archive">
+            <Tabs.Panel value="bookarchive">
               <TableArchive
-                data={archived}
+                data={bookArchived}
                 pageSize={6}
                 disablePageButton={false}
                 selectedRows={selectedRows}
