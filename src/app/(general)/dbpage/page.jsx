@@ -234,7 +234,7 @@ const Database = () => {
             <option value="author_ascending">Author - Ascending</option>
             <option value="author_descending">Author -Descending</option>
           </NativeSelect>
-          {activeTab != 'bookarchive' && (
+          {(activeTab != 'bookarchive' && activeTab != 'gamearchive') && (
             <>
             <AddButton
               selectedRows={selectedRows}
@@ -267,7 +267,7 @@ const Database = () => {
             />
             </>
           )}
-          {activeTab == 'bookarchive' && (
+          {(activeTab == 'bookarchive' || activeTab == 'gamearchive') && (
             <UnarchiveButton
               selectedRows={selectedRows}
               setSelectedRows={setSelectedRows}
@@ -299,6 +299,7 @@ const Database = () => {
               <Tabs.Tab value="books">Books</Tabs.Tab>
               <Tabs.Tab value="games">Board Games</Tabs.Tab>
               <Tabs.Tab value="bookarchive">Archived Books</Tabs.Tab>
+              <Tabs.Tab value="gamearchive">Archived Games</Tabs.Tab>
             </Tabs.List>
 
             <Tabs.Panel value="books">
@@ -322,6 +323,15 @@ const Database = () => {
             <Tabs.Panel value="bookarchive">
               <TableArchive
                 data={bookArchived}
+                pageSize={6}
+                disablePageButton={false}
+                selectedRows={selectedRows}
+                setSelectedRows={setSelectedRows}
+              />
+            </Tabs.Panel>
+            <Tabs.Panel value="gamearchive">
+              <TableArchive
+                data={gameArchived}
                 pageSize={6}
                 disablePageButton={false}
                 selectedRows={selectedRows}
