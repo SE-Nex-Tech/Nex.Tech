@@ -253,13 +253,13 @@ const QRScanner = () => {
 
       console.log("SENDING EMAIL TO: " + email);
 
-      const response = await fetch("/api/mail", {
-        method: "POST",
-        body: JSON.stringify({
-          to: email,
-          text: text,
-        }),
-      });
+      // const response = await fetch("/api/mail", {
+      //   method: "POST",
+      //   body: JSON.stringify({
+      //     to: email,
+      //     text: text,
+      //   }),
+      // });
     };
   };
 
