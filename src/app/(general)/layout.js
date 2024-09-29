@@ -8,7 +8,11 @@ import { ModalsProvider } from "@mantine/modals";
 import "@mantine/dates/styles.css";
 import "@mantine/charts/styles.css";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  adjustFontFallback: false,
+});
 
 export const metadata = {
   title: "BiblioTechAI Portal",
