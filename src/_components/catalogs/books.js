@@ -95,7 +95,7 @@ const Books = () => {
         onChange={(event) => searchItems(event.currentTarget.value)}
       />
       <div className={styles.book_container}>
-        {currentBooks.map((book, index) => (
+        {data.length >= 1 && currentBooks.map((book, index) => (
           <Link href={`/books/${book.id}`} className={styles.container}>
             <div style={{ maxWidth: "250px" }} key={book.id}>
 
@@ -112,14 +112,19 @@ const Books = () => {
             </div>
           </Link>
         ))}
+        {data.length < 1 && (
+        <h1>No Results Found!</h1>
+        )}
       </div>
 
+      {data.length >= 1 && (
       <Pagination
         booksPerPage={booksPerPage}
         totalBooks={totalBooks}
         currentPage={currentPage}
         paginate={paginate}
       />
+      )}
     </div>
   );
 };

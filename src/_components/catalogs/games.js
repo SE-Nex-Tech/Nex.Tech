@@ -93,7 +93,7 @@ const Games = () => {
         onChange={(event) => searchItems(event.currentTarget.value)}
       />
       <div className={styles.book_container}>
-        {currentGames.map((game, index) => (
+        {data.length >= 1 && currentGames.map((game, index) => (
           <Link href={`/games/${game.id}`} className={styles.container}>
             <div style={{ maxWidth: "250px" }} key={game.id}>
               {!game.image && (
@@ -122,14 +122,19 @@ const Games = () => {
             </div>
           </Link>
         ))}
+        {data.length < 1 && (
+        <h1>No Results Found!</h1>
+        )}
       </div>
 
+      {data.length >= 1 && (
       <Pagination
         booksPerPage={gamesPerPage}
         totalBooks={totalGames}
         currentPage={currentPage}
         paginate={paginate}
       />
+      )}
     </div>
   );
 };
